@@ -8,47 +8,77 @@ const chapters = [
   {
     number: "02",
     title: "Context",
-    description: "Context management is the foundation of agentic engineering — agents are only as good as what they can see and understand about the system."
+    description: "The single most important skill in agentic engineering isn't prompting — it's context management. Learn to curate what your agents see."
   },
   {
     number: "03",
     title: "What Is an Agent?",
-    description: "Defining what constitutes an agent by placing AI tools on a spectrum from simple autocomplete to fully autonomous systems."
+    description: "Placing AI tools on a spectrum from autocomplete to autonomous systems, and understanding the captain-crew relationship that makes agentic work effective."
   },
   {
     number: "04",
     title: "Building My Own IDE: Clovr Code Terminal",
-    description: "Lessons from building an IDE designed specifically for managing multiple agentic engineering workflows."
+    description: "Lessons from spending 100+ hours building a multi-agent control plane — sessions, handovers, permissions, and worktree isolation."
   },
   {
     number: "05",
     title: "Guardrails",
-    description: "Establishing trust boundaries that allow agents to operate autonomously while preventing catastrophic mistakes."
+    description: "The trust gradient, permission scoping, approval gates, and environment-specific rules. How to give agents power without giving them the keys to production."
   },
   {
     number: "06",
     title: "Git as Agent Infrastructure",
-    description: "Git reframed as essential infrastructure — serving as an undo button, parallel execution framework, and review interface."
+    description: "Small commits, descriptive messages, branch-per-task, and worktrees for parallel agents. Git as your undo button and review interface."
   },
   {
     number: "07",
     title: "Sandboxes",
-    description: "Enabling agents to experiment freely without consequences, fundamentally changing how productive and bold they can be."
+    description: "Giving agents the freedom to be wrong. Worktrees, containers, and ephemeral environments that make failure cheap and experimentation free."
   },
   {
     number: "08",
     title: "Testing as the Feedback Loop",
-    description: "Tests as the agent's feedback mechanism — shifting from verification tools to essential communication channels between engineer and AI."
+    description: "Tests become the agent's eyes. TDD as a superpower, fast test suites as agent infrastructure, and the virtuous cycle of better tests and more autonomous agents."
   },
   {
     number: "09",
     title: "Convention Over Configuration",
-    description: "Why standardized conventions in codebases are essential for agents to navigate unfamiliar systems, just as they help new human team members."
+    description: "Why consistent file naming, formatters, project layouts, and CLAUDE.md files make agents dramatically more effective."
   },
   {
     number: "10",
     title: "Local LLMs vs. Commercial LLMs",
-    description: "The trade-offs between data privacy, cost, and capability when choosing between local and commercial models for agentic work."
+    description: "Privacy, cost, and capability trade-offs. The practical hybrid approach of matching the model to the task."
+  },
+  {
+    number: "11",
+    title: "Prompting as Engineering",
+    description: "How to write effective agent prompts — task decomposition, constraint specification, the prompt-as-spec pattern, and anti-patterns to avoid."
+  },
+  {
+    number: "12",
+    title: "Multi-Agent Orchestration",
+    description: "Running agents in parallel, the handover pattern for sequential work, branch-per-agent isolation, and knowing when more agents isn't better."
+  },
+  {
+    number: "13",
+    title: "When Agents Get It Wrong",
+    description: "War stories from the field — the eager refactorer, the hallucinated library, the infinite loop, and other failures that teach you how to work better."
+  },
+  {
+    number: "14",
+    title: "When Not to Use Agents",
+    description: "The overhead tax, architecture decisions, security-critical code, and the craft argument. Knowing when to put the agent away."
+  },
+  {
+    number: "15",
+    title: "Agentic Teams",
+    description: "How agent-assisted development changes code review, the junior engineer question, knowledge distribution, hiring, and team rhythms."
+  },
+  {
+    number: "16",
+    title: "Final Words",
+    description: "The craft isn't dying — it's shedding its skin. What endures, what changes, and why the captain still matters."
   },
 ];
 ---
@@ -56,7 +86,7 @@ const chapters = [
 <section class="chapters" id="chapters">
   <div class="chapters-inner">
     <h2>What's inside</h2>
-    <p class="chapters-subtitle">10 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
+    <p class="chapters-subtitle">16 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
     <div class="chapter-list">
       {chapters.map((chapter) => (
         <div class="chapter-item">
@@ -68,7 +98,7 @@ const chapters = [
         </div>
       ))}
     </div>
-    <p class="more-coming">More chapters being written — the book is a living draft.</p>
+    <p class="more-coming">~18,000 words — the book is a living draft with updates included.</p>
   </div>
 </section>
 
