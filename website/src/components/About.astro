@@ -1,0 +1,104 @@
+---
+---
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <h2>The ground is shifting</h2>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="card-icon">01</div>
+        <h3>The craft is evolving</h3>
+        <p>
+          We're moving from writing every line by hand to directing, orchestrating, and
+          collaborating. Less typing, more thinking. Less editor, more engineering.
+        </p>
+      </div>
+      <div class="about-card">
+        <div class="card-icon">02</div>
+        <h3>No playbook exists</h3>
+        <p>
+          The tools showed up fast — Copilot, then Claude, then agents that run entire tasks
+          autonomously — and we're all figuring it out in real time.
+        </p>
+      </div>
+      <div class="about-card">
+        <div class="card-icon">03</div>
+        <h3>Your skills matter more</h3>
+        <p>
+          Systems thinking, taste, judgement, knowing what to build and why — those matter
+          <em>more</em> now, not less. This book shows you how to wield them.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: 6rem 2rem;
+    position: relative;
+  }
+
+  .about-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .about-card {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .about-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-4px);
+  }
+
+  .card-icon {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-accent-light);
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+
+  .about-card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-card p {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .about-card em {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

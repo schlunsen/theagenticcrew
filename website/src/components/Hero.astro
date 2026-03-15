@@ -1,0 +1,263 @@
+---
+---
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p class="eyebrow">New Book — March 2026</p>
+      <h1>The Agentic Crew</h1>
+      <p class="subtitle">How software engineers learn to build with agents</p>
+      <p class="description">
+        AI agents don't just autocomplete your code. They read your codebase, reason about it,
+        make changes across files, run your tests, and iterate. This book is your practical guide
+        to the transition — from writing software to <em>engineering</em> it.
+      </p>
+      <div class="hero-actions">
+        <a href="#buy" class="btn-primary">Buy for €25</a>
+        <a href="#chapters" class="btn-secondary">See what's inside</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="book-mock">
+        <div class="book-cover">
+          <div class="book-spine"></div>
+          <div class="book-front">
+            <p class="book-label">The Agentic Crew</p>
+            <div class="book-decoration">
+              <div class="line"></div>
+              <div class="line short"></div>
+              <div class="line"></div>
+            </div>
+            <p class="book-author">Rasmus Schlünsen</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(ellipse, var(--color-accent-glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-light);
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+
+  .description {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    max-width: 520px;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+
+  .description em {
+    color: var(--color-text);
+    font-style: italic;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px var(--color-accent-glow);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-accent-light);
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(108, 99, 255, 0.3);
+    color: #fff;
+  }
+
+  .btn-secondary {
+    color: var(--color-text-muted);
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 1.05rem;
+    border: 1px solid var(--color-border);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text);
+  }
+
+  /* Book mockup */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .book-mock {
+    perspective: 800px;
+  }
+
+  .book-cover {
+    width: 260px;
+    height: 370px;
+    position: relative;
+    transform: rotateY(-15deg) rotateX(5deg);
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
+  }
+
+  .book-cover:hover {
+    transform: rotateY(-5deg) rotateX(2deg);
+  }
+
+  .book-front {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #1e1b4b, #312e81, #4338ca);
+    border-radius: 4px 12px 12px 4px;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow:
+      10px 10px 30px rgba(0, 0, 0, 0.5),
+      0 0 60px var(--color-accent-glow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-front::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .book-spine {
+    position: absolute;
+    left: -20px;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(to right, #1a1747, #1e1b4b);
+    transform: rotateY(90deg);
+    transform-origin: right;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .book-label {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .book-decoration {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .book-decoration .line {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 1px;
+  }
+
+  .book-decoration .line.short {
+    width: 60%;
+  }
+
+  .book-author {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .description {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+
+    .hero-visual {
+      order: -1;
+    }
+
+    .book-cover {
+      width: 200px;
+      height: 285px;
+    }
+  }
+</style>

@@ -1,0 +1,148 @@
+---
+const chapters = [
+  {
+    number: "01",
+    title: "Introduction",
+    description: "The fundamental loop of software engineering is breaking. What it means to go from writing software to engineering it — with a crew of agents at your side."
+  },
+  {
+    number: "02",
+    title: "Context",
+    description: "Context management is the foundation of agentic engineering — agents are only as good as what they can see and understand about the system."
+  },
+  {
+    number: "03",
+    title: "What Is an Agent?",
+    description: "Defining what constitutes an agent by placing AI tools on a spectrum from simple autocomplete to fully autonomous systems."
+  },
+  {
+    number: "04",
+    title: "Building My Own IDE: Clovr Code Terminal",
+    description: "Lessons from building an IDE designed specifically for managing multiple agentic engineering workflows."
+  },
+  {
+    number: "05",
+    title: "Guardrails",
+    description: "Establishing trust boundaries that allow agents to operate autonomously while preventing catastrophic mistakes."
+  },
+  {
+    number: "06",
+    title: "Git as Agent Infrastructure",
+    description: "Git reframed as essential infrastructure — serving as an undo button, parallel execution framework, and review interface."
+  },
+  {
+    number: "07",
+    title: "Sandboxes",
+    description: "Enabling agents to experiment freely without consequences, fundamentally changing how productive and bold they can be."
+  },
+  {
+    number: "08",
+    title: "Testing as the Feedback Loop",
+    description: "Tests as the agent's feedback mechanism — shifting from verification tools to essential communication channels between engineer and AI."
+  },
+  {
+    number: "09",
+    title: "Convention Over Configuration",
+    description: "Why standardized conventions in codebases are essential for agents to navigate unfamiliar systems, just as they help new human team members."
+  },
+  {
+    number: "10",
+    title: "Local LLMs vs. Commercial LLMs",
+    description: "The trade-offs between data privacy, cost, and capability when choosing between local and commercial models for agentic work."
+  },
+];
+---
+
+<section class="chapters" id="chapters">
+  <div class="chapters-inner">
+    <h2>What's inside</h2>
+    <p class="chapters-subtitle">10 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
+    <div class="chapter-list">
+      {chapters.map((chapter) => (
+        <div class="chapter-item">
+          <span class="chapter-num">{chapter.number}</span>
+          <div class="chapter-info">
+            <h3>{chapter.title}</h3>
+            <p>{chapter.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="more-coming">More chapters being written — the book is a living draft.</p>
+  </div>
+</section>
+
+<style>
+  .chapters {
+    padding: 6rem 2rem;
+    background: var(--color-bg-elevated);
+  }
+
+  .chapters-inner {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .chapters-subtitle {
+    text-align: center;
+    color: var(--color-text-muted);
+    margin-bottom: 3rem;
+    font-size: 1.05rem;
+  }
+
+  .chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .chapter-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .chapter-item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .chapter-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-accent-light);
+    min-width: 2rem;
+    padding-top: 0.2rem;
+  }
+
+  .chapter-info h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .chapter-info p {
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .more-coming {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+</style>

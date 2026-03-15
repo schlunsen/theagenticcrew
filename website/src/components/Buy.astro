@@ -1,0 +1,323 @@
+---
+---
+
+<section class="buy" id="buy">
+  <div class="buy-inner">
+    <div class="buy-card">
+      <p class="buy-eyebrow">Get the book</p>
+      <h2>The Agentic Crew</h2>
+      <p class="buy-subtitle">How software engineers learn to build with agents</p>
+      <div class="price">
+        <span class="amount">&euro;25</span>
+      </div>
+      <ul class="features">
+        <li>Complete book in PDF & EPUB</li>
+        <li>All future updates included</li>
+        <li>Code examples & templates</li>
+      </ul>
+      <button class="btn-buy" id="buy-btn">Buy Now — &euro;25</button>
+      <p class="guarantee">30-day money-back guarantee. No questions asked.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Coming Soon Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <p class="modal-eyebrow">In progress</p>
+    <h3 class="modal-title">The book is being built</h3>
+    <p class="modal-text">
+      The Agentic Crew is actively being written. Leave your email to get notified when it's available.
+    </p>
+    <form class="modal-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="you@example.com" class="modal-input" />
+      <button type="submit" class="modal-submit">Notify me</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  .buy {
+    padding: 6rem 2rem;
+    position: relative;
+  }
+
+  .buy::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 60%;
+    height: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, var(--color-accent-glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  .buy-inner {
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .buy-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+
+  .buy-card:hover {
+    border-color: var(--color-accent);
+  }
+
+  .buy-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-light);
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .buy-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .price {
+    margin-bottom: 2rem;
+  }
+
+  .amount {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--color-text), var(--color-accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .features {
+    list-style: none;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .features li {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .features li::before {
+    content: '✓ ';
+    color: var(--color-accent-light);
+    font-weight: 700;
+  }
+
+  .btn-buy {
+    display: inline-block;
+    width: 100%;
+    background: var(--color-accent);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 40px var(--color-accent-glow);
+    margin-bottom: 1rem;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .btn-buy:hover {
+    background: var(--color-accent-light);
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(108, 99, 255, 0.35);
+    color: #fff;
+  }
+
+  .guarantee {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    transform: scale(0.95) translateY(10px);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.active .modal {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover {
+    color: var(--color-text);
+  }
+
+  .modal-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .modal-text {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .modal-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .modal-input:focus {
+    border-color: var(--color-accent);
+  }
+
+  .modal-input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.5;
+  }
+
+  .modal-submit {
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    border: none;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .modal-submit:hover {
+    background: var(--color-accent-light);
+  }
+
+  @media (max-width: 480px) {
+    .modal-form {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  const buyBtn = document.getElementById('buy-btn');
+  const overlay = document.getElementById('modal-overlay');
+  const closeBtn = document.getElementById('modal-close');
+
+  // Also catch any link that points to #buy (nav + hero buttons)
+  document.querySelectorAll('a[href="#buy"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      overlay?.classList.add('active');
+    });
+  });
+
+  buyBtn?.addEventListener('click', () => {
+    overlay?.classList.add('active');
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    overlay?.classList.remove('active');
+  });
+
+  overlay?.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove('active');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      overlay?.classList.remove('active');
+    }
+  });
+</script>

@@ -1,0 +1,51 @@
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-bg: #0a0a0f;
+  --color-bg-elevated: #13131a;
+  --color-bg-card: #1a1a24;
+  --color-text: #e8e8ed;
+  --color-text-muted: #9a9ab0;
+  --color-accent: #6c63ff;
+  --color-accent-light: #8b83ff;
+  --color-accent-glow: rgba(108, 99, 255, 0.15);
+  --color-border: #2a2a3a;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Lora', 'Georgia', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --max-width: 1100px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-accent-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #fff;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
