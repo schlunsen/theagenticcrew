@@ -156,17 +156,6 @@
 
 #pagebreak()
 
-// ─── Dedication ───
-
-#align(center + horizon)[
-  #text(size: 12pt, style: "italic")[
-    For my beloved children. \
-    You are my crew.
-  ]
-]
-
-#pagebreak()
-
 // ─── Foreword ───
 
 #heading(outlined: false, numbering: none)[Foreword]
