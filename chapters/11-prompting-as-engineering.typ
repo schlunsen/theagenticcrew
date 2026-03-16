@@ -83,6 +83,28 @@ Experienced agentic engineers develop a feedback instinct. They see the agent's 
 
 Each iteration tightens the loop. First prompt gets you 70% of the way. A follow-up correction gets you to 90%. A final refinement gets you to done. Over time, your first prompts get better, and you need fewer iterations. But you never need zero.
 
+== Voice-Driven Development
+
+Most of us prompt by typing. That makes sense — we are engineers, we live in text. But there is another input channel that is faster, more natural, and surprisingly underused: your voice.
+
+Modern speech-to-text has reached the point where you can speak a prompt into your terminal and have it transcribed with near-perfect accuracy. Tools like Whisper, macOS Dictation, and SuperWhisper let you talk to your agent instead of typing. The result is the same — text goes in, code comes out. But the experience is fundamentally different.
+
+Here is why: typing and speaking are different modes of thinking. When you type, you edit as you go. You delete a word, rephrase, backspace, restructure. The text you produce is _polished_ — you had time to smooth out the rough edges before it left your fingers. Speaking doesn't give you that luxury. When you speak, you commit. The words leave your mouth and they're gone. There is no backspace.
+
+This sounds like a disadvantage. It is actually a training ground.
+
+When you speak a prompt, you are forced to organise your thoughts _before_ you open your mouth. You cannot rely on the crutch of editing mid-sentence. You have to know what you want, structure it mentally, and deliver it clearly — in real time. The first few times you try this, you will ramble. You will say "uh" and "um" and circle back and contradict yourself. The agent will receive a messy transcript, and the output will reflect that mess.
+
+But something happens if you keep doing it. You get better. Not just at prompting — at _speaking clearly about technical problems_. You develop the ability to describe a bug, a feature, or a refactoring task in a single coherent stream. You learn to front-load context, state constraints early, and finish with a clear ask. You stop rambling because rambling produces bad results.
+
+This skill transfers everywhere. Standup meetings. Architecture discussions. Pair programming. Incident calls. Every situation where you need to articulate a technical idea clearly, under time pressure, without the safety net of a text editor. Voice-driven development is not just a faster way to prompt — it is practice for every technical conversation you will ever have.
+
+There is also a practical speed advantage. Most people speak at 130 words per minute. Most people type at 40 to 80. For the kind of high-level, intent-driven prompts that produce the best agent output — "here is the problem, here is the context, here is what I want, here is what I don't want" — speaking is simply faster. You spend less time on input and more time reviewing output.
+
+Try it for a week. Pick a speech-to-text tool, wire it into your workflow, and speak your prompts instead of typing them. The first day will feel awkward. By the third day, you will notice your spoken prompts getting tighter. By the end of the week, you will notice your _spoken communication in general_ getting tighter.
+
+The agents don't care whether your prompt was typed or spoken. But _you_ will be a clearer thinker for having spoken it.
+
 == Anti-Patterns
 
 Some prompting habits consistently produce poor results. Learn to recognise them.
