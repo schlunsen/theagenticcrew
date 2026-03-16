@@ -7,6 +7,7 @@ Source for *The Agentic Crew* — a book about how software engineers learn to b
 ## Prerequisites
 
 - [Typst](https://typst.app/) — for compiling the book to PDF
+- [Pandoc](https://pandoc.org/) — for EPUB generation
 - [just](https://github.com/casey/just) — command runner
 - [Node.js](https://nodejs.org/) — for the website
 
@@ -30,6 +31,8 @@ just open
 | `just build` | Compile the book to PDF |
 | `just watch` | Watch for changes and rebuild automatically |
 | `just open` | Build and open the PDF |
+| `just epub` | Build the book to EPUB (mobile-friendly) |
+| `just all` | Build all formats (PDF + EPUB) |
 | `just new-chapter <name>` | Scaffold a new chapter file |
 | `just site` | Start the website dev server |
 | `just site-build` | Build the website for production |
@@ -41,8 +44,9 @@ just open
 
 ```
 book.typ              # Main entry point — title page, foreword, chapter includes
+epub.typ              # EPUB entry point — simplified for reflowable text
 chapters/             # Individual chapter files (.typ)
 assets/               # Images and figures
 website/              # Astro website (theagenticcrew.com)
-build/                # Compiled PDF output
+build/                # Compiled output (PDF + EPUB)
 ```

@@ -41,6 +41,18 @@ deploy:
     rsync -avz --delete website/dist/ root@theagenticcrew.com:/var/www/theagenticcrew.com/
     @echo "Deployed to https://theagenticcrew.com"
 
+# Build the book to EPUB (reflowable, mobile-friendly)
+epub:
+    pandoc epub.typ -f typst -t epub3 -o build/the-agentic-crew.epub \
+        --metadata title="The Agentic Crew" \
+        --metadata "author=Rasmus Bornhøft Schlünsen" \
+        --metadata lang=en \
+        --toc --toc-depth=2 --split-level=1
+    @echo "Built build/the-agentic-crew.epub"
+
+# Build all formats (PDF + EPUB)
+all: build epub
+
 # Word count (approximate)
 wc:
     @cat chapters/*.typ | wc -w | xargs echo "Approximate word count:"
