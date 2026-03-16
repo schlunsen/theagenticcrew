@@ -68,6 +68,22 @@ Sometimes the right move is to clean up before you bring agents in. Refactor the
 
 Think of it like a workshop. You don't hand power tools to someone in a cluttered, disorganized shop. You clean up first, _then_ bring in the tools.
 
+== Working with Legacy Code
+
+That workshop metaphor is nice. But not everyone has the luxury of cleaning up first. Some of us maintain 500,000-line Java monoliths that were started in 2014 and have been through three framework migrations, two acquisitions, and a brief period where someone thought XML configuration was a good idea. The advice to "refactor before bringing in agents" is sound in theory and laughable in practice when you're staring at a codebase that would take years to refactor.
+
+So how _do_ you use agents in legacy code? Carefully. And with a specific strategy.
+
+*Start with the tests.* Before pointing an agent at legacy code, write characterisation tests — tests that capture what the code _currently_ does, not what it _should_ do. These aren't aspirational. They're descriptive. They say "when you call this function with these inputs, this is what comes out, and that's the current contract whether anyone intended it or not."
+
+Characterisation tests give the agent a safety net. Without them, the agent will change behaviour it doesn't understand, and you won't know until production tells you. With them, any behavioural change shows up as a test failure _before_ the code leaves your machine. This is non-negotiable. Legacy code without tests is legacy code you can't safely let agents touch.
+
+*Scope ruthlessly.* In a legacy codebase, the agent can't understand the whole system. Don't try to make it. Point it at one file, one function, one bug. Give it the immediate context — the function signature, the callers, the expected behaviour — and nothing else. Legacy code is full of implicit assumptions, undocumented side effects, and load-bearing quirks. The less the agent sees, the less it can misinterpret. A narrow scope with clear context beats a broad scope with archaeological complexity.
+
+*Use agents for the tedious parts.* Legacy codebases are full of mechanical work: updating deprecated API calls across hundreds of files, migrating from one dependency version to another, adding type annotations to untyped code, standardising error handling patterns, replacing one logging framework with another. These are _perfect_ agent tasks — repetitive, well-defined, easily verified by automated checks. Let agents do the drudgery. Save your energy for the parts that require understanding _why_ the code is the way it is. That's the work only a human who's lived with the system can do.
+
+*Document as you go.* Every time an agent works on a legacy file successfully, add a brief comment explaining what the code does, or update the project's `CLAUDE.md` with context about that module. Over time, something interesting happens: the parts of the legacy codebase that agents have touched become better documented than the parts they haven't. Not because you set out to document the system, but because using agents _forced_ you to articulate what each piece does in order to prompt effectively. The agents are slowly making the codebase more legible — not by refactoring it, but by making you explain it.
+
 == The Craft Argument
 
 There's one more reason to sometimes put the agent away, and it's not about efficiency or risk. It's about craft.

@@ -135,6 +135,4 @@ This isn't a minor adjustment. It changes how you think about code structure at 
 
 *Documentation is ground truth (whether it's accurate or not).* Agents treat your README, your API docs, your inline comments as authoritative. If your docs say the API returns a `user_id` field but the actual response returns `userId`, the agent will write code against the documentation and produce a bug. Stale documentation was always a nuisance. With agents, it's an active source of defects. The bar for documentation accuracy goes up — not because agents need better docs than humans, but because agents will follow bad docs more faithfully than a human would.
 
-The way you structure your code, your repos, your infrastructure — it all becomes part of the context you're providing to your crew. The engineers who understand this early will build systems that are not just maintainable by humans, but _navigable_ by agents.
-
-And that's a competitive advantage that compounds over time.
+The way you structure your code, your repos, your infrastructure — it all becomes part of the context you're providing to your crew. The engineers who understand this early will build systems that are not just maintainable by humans, but _navigable_ by agents. And over time, that navigability compounds — each new agent session benefits from every structural decision you made before it.

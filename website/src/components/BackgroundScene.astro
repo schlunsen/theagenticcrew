@@ -54,7 +54,7 @@
   pointsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
   const pointsMaterial = new THREE.PointsMaterial({
-    color: 0x6c63ff,
+    color: 0xc9a84c,
     size: 0.08,
     transparent: true,
     opacity: 0.6,
@@ -117,9 +117,9 @@
 
     pointsGeometry.attributes.position.needsUpdate = true;
 
-    // Build connections
+    // Build connections — gold accent color
     let lineIndex = 0;
-    const r = 0.42, g = 0.39, b = 1.0; // accent color
+    const r = 0.79, g = 0.66, b = 0.30;
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       for (let j = i + 1; j < PARTICLE_COUNT; j++) {
