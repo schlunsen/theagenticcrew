@@ -14,6 +14,8 @@ There's an old principle in software: convention over configuration. Make the de
 
 This principle was always useful for human teams. For agentic engineering, it's essential.
 
+If this sounds like I'm telling you to do the unglamorous work — writing documentation, enforcing naming conventions, maintaining project structure — I am. And I know how that feels. You didn't become an engineer to write style guides. But this is one of those moments where the craft asks you to care about something that used to feel like overhead, because the stakes have changed. Convention used to be a courtesy to your future self. Now it's the operating system your agents run on.
+
 == Why Agents Love Convention
 
 An agent navigating an unfamiliar codebase does the same thing a new hire does: it looks for patterns. Where do tests live? How are files named? What's the import convention? Where's the config?
@@ -98,7 +100,7 @@ Some teams go further: they put `CLAUDE.md` files in subdirectories too. A `pack
 
 == Conventions as Agent Memory
 
-Here's an insight that changes how you think about conventions: they're the closest thing agents have to long-term memory.
+Conventions are the closest thing agents have to long-term memory. Once you see this, it changes how you think about all of them.
 
 An agent's context window resets every session. It doesn't remember what it did yesterday. It doesn't remember the architectural discussion you had last week. It doesn't remember that the last three times it used `fetch` directly, you asked it to use the API client wrapper instead.
 
@@ -162,7 +164,7 @@ Writing a `CLAUDE.md` takes an afternoon. Setting up linters and formatters take
 
 There's a real temptation to skip all of this. The code works. The tests pass. Why spend time on naming conventions when there are features to ship?
 
-Here's the honest answer: if you're a solo developer building a throwaway prototype, the convention tax probably isn't worth it. Move fast, ship it, throw it away.
+The honest answer: if you're a solo developer building a throwaway prototype, the convention tax probably isn't worth it. Move fast, ship it, throw it away.
 
 But the moment a second pair of eyes touches your codebase — human _or_ agent — conventions start paying for themselves. And the returns compound.
 
@@ -172,7 +174,7 @@ This compounds across the team. Five engineers, each running multiple agent sess
 
 The teams that invest in conventions early look slower at first. They spend time on "boring" things — linter configs, project structure, documentation. But three months in, their agents are producing code that requires minimal review. Six months in, they're shipping twice as fast as the team that skipped the convention work. A year in, the gap is embarrassing.
 
-This is the same dynamic as technical debt, just inverted. Convention is technical _wealth_. It accrues interest.
+This is the same dynamic as technical debt, just inverted. Convention is technical _wealth_ — and like financial wealth, the earlier you start investing, the more dramatic the compounding.
 
 The biggest mistake I see is teams that wait until their codebase is a mess before trying to establish conventions. That's the most expensive time to do it. The cheapest time is at the start of a project — but the second cheapest time is today.
 

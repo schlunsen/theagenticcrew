@@ -87,6 +87,20 @@ The granularity changes. Work moves faster, so coordination needs to keep up. An
 
 Some teams are moving to async standups with more frequent check-ins. Others use shared dashboards that track active agent sessions. The right answer depends on the team, but the old rhythm of "one update per person per day" often isn't enough.
 
+== Compliance and the Audit Trail
+
+If an agent writes code that causes a production incident, who's responsible? The engineer who prompted it? The reviewer who approved the PR? The team lead who decided to adopt agentic workflows? This isn't a philosophical question you debate over pints. It's a legal and compliance question, and regulated industries need clear answers _before_ the incident happens, not during the postmortem.
+
+The good news is that the answer isn't actually that complicated. The tooling and processes already exist. You just need to be explicit about them.
+
+*Git is your audit trail.* Every agent-generated commit should be attributable. The commit message should indicate it was agent-assisted — a `Co-Authored-By` tag, a prefix, whatever convention your team adopts. The PR should show who reviewed it. The merge approval is the sign-off. This is already how most teams work; the key is making it _consistent_. Ad-hoc attribution — sometimes tagging, sometimes not — is worse than no system at all, because it creates the impression of a process without the reliability of one.
+
+*The reviewer owns it.* The practical answer for most organisations is straightforward: the engineer who reviews and approves the PR takes responsibility, same as they would for any code from any source. Agent-generated code doesn't get a different accountability standard. If you approve a PR, you're saying "I've reviewed this and I believe it's correct." The tool that generated the code is irrelevant to that statement. This also means reviews of agent-generated code need to be _real_ reviews, not rubber stamps. If the volume of agent-generated PRs is making thorough review impossible, that's a workflow problem to solve, not a standard to lower.
+
+*For regulated industries.* Document your agentic workflow as part of your SDLC documentation. Which models are used, what version, what guardrails are in place, what review process agent-generated code goes through before it reaches production. Auditors want to see a _process_, not perfection. A documented process that includes "AI-assisted code generation with mandatory human review and CI verification" is auditable. An undocumented process where engineers use whatever tools they like with no consistent approach is not. If you're in fintech, healthcare, or anything with regulatory oversight, get this documented before someone asks for it.
+
+*Keep session logs.* Retain logs of agent sessions, especially for code that touches sensitive systems — billing, authentication, data handling, anything with regulatory implications. Not because you'll read them routinely, but because you might need them during an incident review. "What did the agent see when it generated this code? What prompt produced this output? What context was it working with?" These are questions you want to be able to answer six months later. Most agentic tools can export or log sessions. Set up the retention before you need it. The cost of storage is trivial compared to the cost of not having the logs when compliance comes knocking.
+
 == Hiring Changes
 
 If agents handle the mechanical parts of coding, what do you actually need from an engineer?

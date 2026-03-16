@@ -92,7 +92,7 @@ None of this means local models are useless. A 32B model running locally can han
 
 == The Cost of Agentic Work
 
-Here's a number that surprises people: a single agentic coding session can easily consume 100,000–500,000 tokens. Not because you're chatting — because the agent is _working_.
+A single agentic coding session can easily consume 100,000–500,000 tokens. This surprises people when they first see the numbers. Not because you're chatting — because the agent is _working_.
 
 Consider what happens when an agent tackles a moderately complex bug fix. It reads three or four files to understand the context (maybe 8,000 tokens of input). It reasons about the problem (2,000 tokens of output). It reads two more files (4,000 tokens). It writes a fix (1,000 tokens). It runs the tests (tool call, 500 tokens of output). The tests fail. It reads the error (1,000 tokens). It revises the fix (1,500 tokens). It runs the tests again. They pass. It reads the diff to double-check (1,000 tokens). Total: maybe 25,000 tokens for a straightforward bug fix.
 
@@ -122,6 +122,20 @@ The solution isn't to stop using agents. It's to be smart about it.
 
 *Review your failures.* When a task fails or takes way too many tokens, figure out why. Was the prompt vague? Was the agent missing context it needed? Was the model not capable enough for the task? Each failure is a tuning opportunity.
 
+=== Managing Costs Across a Team
+
+Individual cost control is one thing. Managing spend across a team of eight or twelve engineers, each running agents all day, is a different problem entirely. It's the difference between watching your own diet and running a restaurant kitchen.
+
+*Per-engineer budgets.* Set a monthly token budget per engineer — not to restrict, but to make costs visible. When everyone can see their own spend, behaviour changes naturally. People start scoping tasks more carefully, choosing the right model for the job, killing runaway sessions earlier. A reasonable starting point: \$200–400 per month per engineer for a team actively using agents. Some engineers will consistently come in under budget. Others will spike during intense debugging weeks. That's fine — the point is awareness, not enforcement.
+
+*Dashboard and visibility.* You can't manage what you can't see. Track spend per engineer, per project, per task type. Most API providers give you usage breakdowns by API key, and if you assign keys per engineer or per project, the data is already there. Pipe it into a dashboard the team can see — even a shared spreadsheet works to start. The engineer who discovers they burned \$80 on a single debugging session will naturally start scoping tasks more tightly next time. You don't need to have a conversation about it. The number does the talking.
+
+*Alerts and circuit breakers.* Set alerts at 50% and 80% of monthly budget so nobody gets surprised. More importantly, set a hard per-session token limit as a circuit breaker. If a single agent session exceeds 500K tokens, something has gone wrong — the agent is looping, the task is too vague, or the model is struggling with something beyond its capability. Kill it and investigate. This is what prevents the "\$2,200 surprise bill" scenario from the opening of this chapter. You don't need to catch every runaway session manually. Automated limits do the job.
+
+*The ROI conversation.* At some point, someone in management will ask why the API bill is five figures. You need the maths ready. Frame it like this: a senior engineer costs \$150K per year fully loaded. If agents make them 30% more productive, that's \$45K of value. The agent costs run \$3–4K per year per engineer. The ROI is roughly 10x. Even if you're conservative — say 15% productivity gain instead of 30% — the numbers still work comfortably. The harder part is measuring that productivity gain precisely. You probably can't, not with scientific rigour. But you can track concrete signals: time to merge PRs, number of tasks completed per sprint, reduction in context-switching. Pair those metrics with the cost data and you have a story that finance can work with.
+
+*Cost as a quality signal.* High token consumption on a task isn't just expensive — it's a signal that something went wrong. The task was poorly scoped, the context was insufficient, or the model wasn't capable enough for the job. Start tracking cost per task type over time. If costs for a particular category trend upward, investigate — your prompts may have drifted, or the codebase has grown complex enough to need a different approach. If costs trend downward, that's your team getting better at agentic engineering. They're writing tighter prompts, choosing better models, and scoping tasks more effectively. Cost data, used well, becomes a mirror for team skill.
+
 == Privacy and Compliance
 
 Some code genuinely cannot leave the building. This isn't paranoia — it's law.
@@ -146,7 +160,7 @@ These aren't cheap. You're paying for dedicated compute, not shared API infrastr
 
 == Model Routing in Practice
 
-Here's where the conversation gets interesting. The question isn't "local or commercial?" It's "which model, for which part of the workflow?"
+The real question isn't "local or commercial?" It's "which model, for which part of the workflow?"
 
 A sophisticated agentic setup routes different parts of the workflow to different models. This isn't theoretical — teams are doing this today, and it's the direction the ecosystem is moving.
 
@@ -188,6 +202,46 @@ Model routing also solves the privacy problem more gracefully than an all-or-not
 Say you're building a healthcare application. The data models and business logic touch patient data — that needs to stay local. But the frontend components, the build configuration, the CI pipeline? Those don't contain sensitive data. There's no reason you can't use a frontier commercial model for the non-sensitive parts while routing sensitive work to a local model.
 
 This requires tooling that's aware of sensitivity boundaries — which files can go external, which can't. That tooling is still maturing, but the pattern is clear. Instead of "all local" or "all commercial," you get "local where it matters, commercial everywhere else."
+
+== Getting Started Without Paying the Farm
+
+You don't need a budget to start learning agentic engineering. You need a laptop and an evening. Here's a practical ramp from zero cost to real productivity.
+
+=== The Free Tier
+
+Most commercial providers offer free tiers or trial credits. As of early 2026, you can get started with Claude, GPT, or Gemini without entering a credit card. The free tiers are rate-limited and context-restricted, but they're more than enough to learn the fundamentals — write your first agentic prompt, watch an agent iterate on a test failure, get a feel for the feedback loop.
+
+Pair a free-tier API key with an open-source agent framework — Claude Code's free tier, or Aider with its free-model support — and you have a complete agentic setup at zero cost. It won't be fast. It won't handle complex multi-file work. But it will teach you everything in chapters two through five of this book without spending a cent.
+
+=== The Local-First Path
+
+If you have a MacBook Pro with 16GB or more of RAM, you can run useful models locally for free, forever.
+
+Install Ollama — it takes one command. Pull a model — `ollama pull qwen2.5-coder:14b` takes a few minutes. Point an agent framework at it. You now have an agentic coding setup with no API costs, no rate limits, and no data leaving your machine.
+
+The experience won't match a frontier commercial model. Context windows are smaller. Multi-file reasoning is weaker. Tool use is less reliable. But for focused, well-scoped tasks — "write tests for this function," "refactor this class to use dependency injection," "add error handling to this endpoint" — a local 14B model is surprisingly capable. And because it's free, you can iterate without watching the meter.
+
+A practical starting stack for zero-cost agentic engineering:
+- *Ollama* for model serving (free, local)
+- *Qwen 2.5 Coder 14B* or *DeepSeek Coder V2* for code tasks
+- *Aider* or *Claude Code* (with local model support) as the agent framework
+- A project with a test suite (the agent needs feedback)
+
+That's it. No subscription. No API key. No cloud compute. You'll hit the ceiling eventually — a task that needs a bigger context window, or multi-file reasoning that the local model can't handle. That's when you reach for a commercial model. But the free setup will carry you further than you expect.
+
+=== The Sweet Spot: \$20/Month
+
+When you're ready to spend money, the most cost-effective setup I've found is a combination of local models for exploration and a commercial subscription for reasoning.
+
+Most commercial providers offer a developer plan in the \$20/month range that includes a generous token allowance. Use this for the tasks that actually need frontier capability — complex debugging, multi-file refactoring, architectural planning. Use your local model for everything else — reading code, generating boilerplate, writing commit messages, running through test iterations.
+
+This hybrid approach typically covers 80-90% of a solo developer's agentic work. The local model handles the high-volume, low-reasoning tasks. The commercial model handles the moments that need genuine intelligence. Your monthly bill stays predictable, and you're not choosing between quality and cost — you're using each where it makes sense.
+
+=== Scaling Up Intentionally
+
+The mistake is starting with the most expensive option and optimising later. Start free. Learn the workflows. Understand where model quality actually matters and where "good enough" is good enough. Then spend money on the specific gaps that free tools can't fill.
+
+By the time you're spending real money on API calls, you'll know exactly what you're paying for — and more importantly, what you're _not_ paying for. That knowledge is worth more than any amount of credits.
 
 == The Landscape Is Shifting
 
