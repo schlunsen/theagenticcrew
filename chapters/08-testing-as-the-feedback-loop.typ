@@ -10,6 +10,8 @@ Same agent. Same task. Night and day outcomes. The difference was the test suite
 
 In traditional development, tests verify that your code works. In agentic engineering, tests do something more fundamental: they tell the agent whether it succeeded. This changes everything about how you think about testing.
 
+There's something unsettling about this at first. Your test suite — the thing you wrote to verify _your_ code — becomes the spec that an agent implements against. The tests you sweated over aren't just quality assurance anymore. They're the definition of what "correct" means. That's a strange feeling: your past effort becoming the foundation for a workflow that didn't exist when you wrote it. But it's also, if you let it be, deeply validating. All those hours writing thorough tests? They weren't just good practice. They were _investment_ — and the returns are arriving now.
+
 == The Agent's Eyes
 
 An agent can't look at a UI and tell if it looks right. It can't feel whether an API response is "fast enough." It can't intuit whether a refactor preserved the subtle behaviour that users depend on. What it _can_ do is run your test suite and read the results.
@@ -116,7 +118,7 @@ The agentic engineer thinks about testability broadly: not "does my function ret
 
 == When Tests Mislead
 
-Here's the uncomfortable truth: a bad test suite is worse than no test suite.
+A bad test suite is worse than no test suite. This is uncomfortable but worth sitting with.
 
 With no tests, the agent knows it's flying blind. It'll be conservative. It'll tell you it can't verify its changes. You'll review more carefully. The lack of signal is at least an honest lack of signal.
 
@@ -136,7 +138,7 @@ The defence is straightforward but requires discipline. Review your tests with t
 
 == The Virtuous Cycle
 
-Here's what happens when you put all of this together: good tests, fast feedback, sandboxed environments, and an agent in the loop.
+When you put all of this together — good tests, fast feedback, sandboxed environments, and an agent in the loop — something clicks.
 
 The agent picks up a task. It reads the existing tests to understand expected behaviour. It makes a change. It runs the fast test suite — ten seconds. Two failures. It reads the error messages, understands the problem, adjusts. Runs again. Green. It writes new tests for the new behaviour. Runs the full integration suite — one minute. All green. It commits with a descriptive message, and hands you a diff that you know passes every automated check in your system.
 

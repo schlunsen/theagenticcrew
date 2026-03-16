@@ -91,3 +91,35 @@ None of these are agent bugs. They're _workflow_ bugs. The fix is never "use a s
 Agents get things wrong. So do humans. The difference is that humans get things wrong slowly enough to notice. Agents get things wrong at the speed of autocomplete, and by the time you look up from your coffee, thirty-two files have changed.
 
 Stay in the loop. Check the diffs. Trust but verify. And when things go sideways — because they will — remember that the delete-branch-and-start-over button is the most underrated tool in your workflow.
+
+== The Diagnostic Playbook
+
+War stories are entertaining. But you can't tape anecdotes to your monitor. What you need is a systematic approach — a checklist for when the agent produces something wrong, so you can diagnose the failure quickly and fix the right thing instead of flailing.
+
+When an agent gives you bad output, run through these questions in order. Most failures fall into one of six categories, and knowing which category you're in determines what you do next.
+
+*1. Is it a scoping problem?*
+
+Did you ask for too much in one prompt? The Eager Refactorer happened because "fix the z-index" was too vague — it didn't say "touch nothing else." If the agent changed files you didn't expect, or did work you didn't ask for, the scope was too loose. Tighten the prompt. Be explicit about what _not_ to do. Constraints are more useful than instructions when dealing with an enthusiastic agent.
+
+*2. Is it a context problem?*
+
+Did the agent have what it needed to solve the actual problem? Think back to the billing bug story from Chapter 2 — one engineer gave vague context and got a vague answer, the other gave specific files and error traces and got a working fix. If the agent solved the _wrong_ problem, it probably couldn't see the right one. Feed it the relevant files, the error output, the constraints it can't infer. Agents don't guess well. They work with what you give them.
+
+*3. Is it a feedback signal problem?*
+
+Are your tests actually verifying the right thing? The Confident Wrong Answer happened because the tests passed — but they didn't test under realistic conditions. The 500ms sleep "fix" was green in CI and wrong in production. If the agent's solution feels dubious but the tests pass, _your tests are the problem_. The agent optimised for the signal you gave it. Give it a better signal.
+
+*4. Is it a capability problem?*
+
+Some tasks are genuinely beyond what the model can do. Multi-file reasoning across a sprawling system with implicit dependencies. Subtle concurrency issues that require understanding runtime behaviour, not just code structure. Security-sensitive logic where "plausible" isn't good enough. If the agent keeps trying different approaches and failing, it might not be capable of this particular task. That's not a prompt problem — it's a limitation. Recognise it and take over. Your time is better spent doing the work than engineering the perfect prompt for a task the agent can't handle.
+
+*5. Is it a context window problem?*
+
+Long sessions degrade. Full stop. The Context Amnesia story demonstrated this — constraints set early in a session simply get lost as the context fills up with intermediate work. If the agent contradicts something it did correctly earlier in the same session, or ignores a constraint you set an hour ago, the context window is the culprit. Start a fresh session. Restate the relevant constraints. Give it only the context it needs for the current task, not the archaeological record of everything you've discussed today.
+
+*6. Is it a loop?*
+
+Three attempts at the same error is the limit. If the agent hasn't solved it in three passes, it won't solve it in thirty. The Infinite Loop story burned 200,000 tokens across nineteen attempts with no progress. When you see the pattern — error, fix, different error, fix, original error — break the loop immediately. Stop the agent. Read the errors yourself. Either give the agent a completely different approach with a fresh diagnosis, or take over entirely. The agent's context is now polluted with failed theories, and more attempts will only add more pollution.
+
+Print this checklist. Tape it to your monitor. The first few times you'll run through it consciously. After a month, it becomes instinct. After three months, you'll catch the problem before the agent even finishes its first attempt.

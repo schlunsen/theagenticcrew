@@ -62,7 +62,7 @@ This takes discipline. But it's the same discipline you'd apply when writing a t
 
 == The Merge Problem
 
-Here's where multi-agent work gets genuinely hard.
+This is where multi-agent work gets genuinely hard.
 
 Three agents worked in parallel. Each produced a clean, tested branch. Now you need to merge them all into main. Sometimes this is painless — three branches touching completely different files merge without a single conflict. Beautiful.
 

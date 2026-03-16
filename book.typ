@@ -119,6 +119,7 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 #include "chapters/10-local-vs-commercial-llms.typ"
 #include "chapters/11-prompting-as-engineering.typ"
 #include "chapters/12-multi-agent-orchestration.typ"
+#include "chapters/12b-cicd-and-agents.typ"
 #include "chapters/13-war-stories.typ"
 #include "chapters/14-when-not-to-use-agents.typ"
 #include "chapters/15-agentic-teams.typ"

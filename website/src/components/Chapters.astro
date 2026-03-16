@@ -13,12 +13,12 @@ const chapters = [
   {
     number: "03",
     title: "What Is an Agent?",
-    description: "Placing AI tools on a spectrum from autocomplete to autonomous systems, and understanding the captain-crew relationship that makes agentic work effective."
+    description: "Placing AI tools on a spectrum from autocomplete to autonomous systems. What makes something truly agentic, how agents fail, and the right mental model for working with them."
   },
   {
     number: "04",
-    title: "Building My Own IDE: Clovr Code Terminal",
-    description: "Lessons from spending 100+ hours building a multi-agent control plane — sessions, handovers, permissions, and worktree isolation."
+    title: "Principles from Building My Own Agentic Tooling",
+    description: "Parallel visibility, structured handovers, configurable trust, and version control as infrastructure — principles that emerged from building a multi-agent control plane."
   },
   {
     number: "05",
@@ -48,7 +48,7 @@ const chapters = [
   {
     number: "10",
     title: "Local LLMs vs. Commercial LLMs",
-    description: "Privacy, cost, and capability trade-offs. The practical hybrid approach of matching the model to the task."
+    description: "Privacy, cost, capability trade-offs, team cost management, and getting started without paying the farm. The practical hybrid approach of matching the model to the task."
   },
   {
     number: "11",
@@ -62,21 +62,26 @@ const chapters = [
   },
   {
     number: "13",
-    title: "When Agents Get It Wrong",
-    description: "War stories from the field — the eager refactorer, the hallucinated library, the infinite loop, and other failures that teach you how to work better."
+    title: "Agents in the Pipeline",
+    description: "Using agents in CI/CD — PR pre-screening, overnight agents, cost control in automation, and the trust question when nobody's watching."
   },
   {
     number: "14",
-    title: "When Not to Use Agents",
-    description: "The overhead tax, architecture decisions, security-critical code, and the craft argument. Knowing when to put the agent away."
+    title: "When Agents Get It Wrong",
+    description: "War stories from the field — the eager refactorer, the hallucinated library, the infinite loop — plus a diagnostic playbook for systematically debugging agent failures."
   },
   {
     number: "15",
-    title: "Agentic Teams",
-    description: "How agent-assisted development changes code review, the junior engineer question, knowledge distribution, hiring, and team rhythms."
+    title: "When Not to Use Agents",
+    description: "The overhead tax, architecture decisions, security-critical code, working with legacy codebases, and the craft argument. Knowing when to put the agent away."
   },
   {
     number: "16",
+    title: "Agentic Teams",
+    description: "How agent-assisted development changes code review, the junior engineer question, knowledge distribution, compliance and audit trails, hiring, and team rhythms."
+  },
+  {
+    number: "17",
     title: "Final Words",
     description: "The craft isn't dying — it's shedding its skin. What endures, what changes, and why the captain still matters."
   },
@@ -86,7 +91,7 @@ const chapters = [
 <section class="chapters" id="chapters">
   <div class="chapters-inner">
     <h2>What's inside</h2>
-    <p class="chapters-subtitle">16 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
+    <p class="chapters-subtitle">17 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
     <div class="chapter-list">
       {chapters.map((chapter) => (
         <div class="chapter-item">

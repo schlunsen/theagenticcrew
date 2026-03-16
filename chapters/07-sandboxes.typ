@@ -23,7 +23,7 @@ The workflow looks like this:
 + Review the result
 + Merge if good, delete the worktree if not
 
-Here's what this looks like in practice:
+In practice, this looks like:
 
 ```bash
 # Create an isolated workspace for the agent
