@@ -47,18 +47,107 @@
   v(0.6em)
 }
 
-// ─── Title Page ───
+// ─── Cover Page ───
 
-#align(center + horizon)[
-  #text(size: 28pt, weight: "bold")[The Agentic Crew]
-  #v(0.8em)
-  #text(size: 13pt, fill: luma(80))[A field guide to engineering in the age of AI agents]
-  #v(2.5em)
-  #text(size: 12pt)[Rasmus Bornhøft Schlünsen]
-  #v(0.8em)
-  #text(size: 10pt, fill: luma(120))[Draft — March 2026]
-  #v(2em)
-  #text(size: 11pt, weight: "bold")[€25]
+#page(margin: 0pt, header: none)[
+  #let cover-bg = rgb("#0f0d2e")
+  #let cover-accent = rgb("#6c63ff")
+  #let cover-accent-light = rgb("#a8a3ff")
+  #let cover-muted = rgb("#8888bb")
+
+  #block(width: 100%, height: 100%, fill: cover-bg)[
+
+    // Decorative circles — abstract "nodes" suggesting connected agents
+    #place(dx: 72%, dy: 12%)[
+      #circle(radius: 28pt, stroke: 0.6pt + cover-accent.lighten(60%).transparentize(70%))
+    ]
+    #place(dx: 80%, dy: 18%)[
+      #circle(radius: 6pt, fill: cover-accent.transparentize(40%))
+    ]
+    #place(dx: 62%, dy: 8%)[
+      #circle(radius: 4pt, fill: cover-accent-light.transparentize(50%))
+    ]
+    #place(dx: 85%, dy: 30%)[
+      #circle(radius: 16pt, stroke: 0.4pt + cover-accent.transparentize(60%))
+    ]
+    #place(dx: 58%, dy: 22%)[
+      #circle(radius: 10pt, stroke: 0.5pt + cover-accent-light.transparentize(65%))
+    ]
+
+    // Connecting lines between nodes
+    #place(dx: 73%, dy: 15%)[
+      #line(length: 45pt, angle: 35deg, stroke: 0.3pt + cover-accent.transparentize(70%))
+    ]
+    #place(dx: 82%, dy: 21%)[
+      #line(length: 35pt, angle: 60deg, stroke: 0.3pt + cover-accent.transparentize(75%))
+    ]
+    #place(dx: 64%, dy: 11%)[
+      #line(length: 50pt, angle: 20deg, stroke: 0.3pt + cover-accent.transparentize(70%))
+    ]
+
+    // Bottom decorative elements
+    #place(dx: 8%, dy: 78%)[
+      #circle(radius: 20pt, stroke: 0.5pt + cover-accent.transparentize(75%))
+    ]
+    #place(dx: 15%, dy: 85%)[
+      #circle(radius: 5pt, fill: cover-accent.transparentize(60%))
+    ]
+    #place(dx: 22%, dy: 82%)[
+      #circle(radius: 12pt, stroke: 0.4pt + cover-accent-light.transparentize(70%))
+    ]
+    #place(dx: 12%, dy: 80%)[
+      #line(length: 40pt, angle: -30deg, stroke: 0.3pt + cover-accent.transparentize(75%))
+    ]
+
+    // Accent bar
+    #place(dx: 8%, dy: 35%)[
+      #rect(width: 3pt, height: 80pt, fill: cover-accent)
+    ]
+
+    // Title block
+    #place(dx: 8%, dy: 38%)[
+      #block(width: 80%)[
+        #text(
+          size: 32pt,
+          weight: "bold",
+          fill: white,
+          font: "New Computer Modern",
+          tracking: -0.5pt,
+        )[The Agentic\ Crew]
+
+        #v(1em)
+
+        #text(
+          size: 11pt,
+          fill: cover-muted,
+          style: "italic",
+        )[A field guide to engineering\ in the age of AI agents]
+      ]
+    ]
+
+    // Horizontal rule
+    #place(dx: 8%, dy: 72%)[
+      #line(length: 84%, stroke: 0.4pt + cover-accent.transparentize(60%))
+    ]
+
+    // Author
+    #place(dx: 8%, dy: 75%)[
+      #text(
+        size: 11pt,
+        fill: cover-accent-light,
+        weight: "regular",
+      )[Rasmus Bornhøft Schlünsen]
+    ]
+
+    // Edition
+    #place(dx: 8%, dy: 90%)[
+      #text(
+        size: 8pt,
+        fill: cover-muted.transparentize(30%),
+        weight: "regular",
+      )[March 2026]
+    ]
+  ]
 ]
 
 #pagebreak()

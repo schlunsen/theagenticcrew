@@ -47,26 +47,7 @@ The quality bar for unattended agents is higher than for interactive ones. When 
 
 A simple setup script looks like this:
 
-```bash
-#!/bin/bash
-# overnight-agent.sh — fire and forget before you leave
-
-TICKET_ID="$1"
-BRANCH_NAME="agent/overnight-${TICKET_ID}"
-WORKTREE_DIR="../overnight-${TICKET_ID}"
-
-# Create isolated workspace
-git worktree add "$WORKTREE_DIR" -b "$BRANCH_NAME"
-
-# Run the agent with a token budget and timeout
-timeout 4h claude --worktree "$WORKTREE_DIR" \
-  --max-tokens 200000 \
-  --prompt "Implement ticket ${TICKET_ID}. Read TICKETS/${TICKET_ID}.md for requirements. Write tests. Commit your work. Do not modify any CI config or lint rules." \
-  2>&1 | tee "logs/overnight-${TICKET_ID}.log"
-
-# Push the branch so you can review in the morning
-cd "$WORKTREE_DIR" && git push -u origin "$BRANCH_NAME"
-```
+#raw(block: true, lang: "bash", "#!/bin/bash\n# overnight-agent.sh — fire and forget before you leave\n\nTICKET_ID=\"$1\"\nBRANCH_NAME=\"agent/overnight-${TICKET_ID}\"\nWORKTREE_DIR=\"../overnight-${TICKET_ID}\"\n\n# Create isolated workspace\ngit worktree add \"$WORKTREE_DIR\" -b \"$BRANCH_NAME\"\n\n# Run the agent with a token budget and timeout\ntimeout 4h claude --worktree \"$WORKTREE_DIR\" \\\n  --max-tokens 200000 \\\n  --prompt \"Implement ticket ${TICKET_ID}. Read TICKETS/${TICKET_ID}.md for requirements. Write tests. Commit your work. Do not modify any CI config or lint rules.\" \\\n  2>&1 | tee \"logs/overnight-${TICKET_ID}.log\"\n\n# Push the branch so you can review in the morning\ncd \"$WORKTREE_DIR\" && git push -u origin \"$BRANCH_NAME\"")
 
 You refine this over time. Add Slack notifications when it finishes. Add a summary of what it did. Add a check that verifies the test suite passes before pushing.
 
@@ -80,7 +61,7 @@ The core loop is simple: isolate, constrain, run, review in the morning.
 
 When you run an agent interactively, you have a natural circuit breaker: yourself. You see the tokens ticking up, you see the agent going in circles, you hit Ctrl+C. In CI, there's nobody watching.
 
-A team running a busy monorepo learned this the hard way. They'd set up an agent to auto-review every PR. Reasonable enough — except their monorepo saw forty to fifty PRs a day, and each review consumed around fifteen thousand tokens. That's manageable. What wasn't manageable was the retry logic. When the agent hit a rate limit, the CI job retried. Three retries per failure, exponential backoff, but each retry started a fresh agent run from scratch. Over a bank holiday weekend, with a batch of automated dependency updates flooding in, the pipeline generated a $4,000 bill. Nobody was in the office to notice.
+A team running a busy monorepo learned this the hard way. They'd set up an agent to auto-review every PR. Reasonable enough — except their monorepo saw forty to fifty PRs a day, and each review consumed around fifteen thousand tokens. That's manageable. What wasn't manageable was the retry logic. When the agent hit a rate limit, the CI job retried. Three retries per failure, exponential backoff, but each retry started a fresh agent run from scratch. Over a bank holiday weekend, with a batch of automated dependency updates flooding in, the pipeline generated a \$4,000 bill. Nobody was in the office to notice.
 
 Protect yourself:
 
@@ -92,19 +73,7 @@ Protect yourself:
 
 A simple circuit breaker in your CI config looks like this:
 
-```yaml
-agent-review:
-  timeout-minutes: 15
-  env:
-    MAX_TOKENS: 50000
-    COST_ALERT_THRESHOLD: "$5.00"
-  steps:
-    - name: Run agent review
-      run: |
-        claude review --max-tokens $MAX_TOKENS \
-          --on-budget-exceeded "exit 1" \
-          pr/${{ github.event.pull_request.number }}
-```
+#raw(block: true, lang: "yaml", "agent-review:\n  timeout-minutes: 15\n  env:\n    MAX_TOKENS: 50000\n    COST_ALERT_THRESHOLD: \"$5.00\"\n  steps:\n    - name: Run agent review\n      run: |\n        claude review --max-tokens $MAX_TOKENS \\\n          --on-budget-exceeded \"exit 1\" \\\n          pr/$PR_NUMBER")
 
 The specifics will vary by tool and platform, but the pattern is constant: set a ceiling, fail loudly when you hit it, and make the ceiling easy to adjust.
 
