@@ -58,7 +58,7 @@ They will fail. Understanding _how_ they fail helps you build better workflows.
 
 *Context loss.* On long tasks, the agent loses track of earlier decisions. It contradicts itself, rewrites code it already wrote, or forgets constraints you mentioned earlier. This is why small commits and clear context management matter.
 
-Every failure mode has a mitigation, and those mitigations are the chapters that follow: context, guardrails, git, sandboxes, testing, conventions. The principles in this book aren't theoretical — they're direct responses to how agents fail in practice.
+Every failure mode has a mitigation, and those mitigations are the chapters of this book: context, guardrails, git, sandboxes, testing, conventions. The principles aren't theoretical — they're direct responses to how agents fail in practice.
 
 == The Right Mental Model
 
