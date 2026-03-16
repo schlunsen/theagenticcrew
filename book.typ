@@ -50,102 +50,106 @@
 // ─── Cover Page ───
 
 #page(margin: 0pt, header: none)[
-  #let cover-bg = rgb("#0f0d2e")
-  #let cover-accent = rgb("#6c63ff")
-  #let cover-accent-light = rgb("#a8a3ff")
-  #let cover-muted = rgb("#8888bb")
+  #let bg = rgb("#0a0e1a")
+  #let gold = rgb("#c9a84c")
+  #let gold-light = rgb("#e0c878")
+  #let gold-dim = rgb("#6b5a2e")
+  #let cream = rgb("#f0ead6")
+  #let navy = rgb("#1a2040")
 
-  #block(width: 100%, height: 100%, fill: cover-bg)[
+  // Ship's wheel (helm) drawn with Typst primitives
+  #let helm(cx, cy, outer-r, spoke-count: 8, col: gold) = {
+    // Outer ring
+    place(dx: cx - outer-r, dy: cy - outer-r)[
+      #circle(radius: outer-r, stroke: 2pt + col)
+    ]
+    // Inner ring
+    place(dx: cx - outer-r * 0.55, dy: cy - outer-r * 0.55)[
+      #circle(radius: outer-r * 0.55, stroke: 1.2pt + col)
+    ]
+    // Centre hub
+    place(dx: cx - outer-r * 0.12, dy: cy - outer-r * 0.12)[
+      #circle(radius: outer-r * 0.12, fill: col)
+    ]
+    // Spokes
+    for i in range(spoke-count) {
+      let angle = i * 360deg / spoke-count
+      let spoke-len = outer-r * 2
+      place(dx: cx, dy: cy)[
+        #line(length: spoke-len, angle: angle, stroke: 1.5pt + col)
+      ]
+    }
+    // Handle pegs at end of each spoke (small circles)
+    for i in range(spoke-count) {
+      let angle = i * 360deg / spoke-count
+      let peg-x = cx + outer-r * 1.15 * calc.cos(angle) - 3.5pt
+      let peg-y = cy + outer-r * 1.15 * calc.sin(angle) - 3.5pt
+      place(dx: peg-x, dy: peg-y)[
+        #circle(radius: 3.5pt, fill: col)
+      ]
+    }
+  }
 
-    // Decorative circles — abstract "nodes" suggesting connected agents
-    #place(dx: 72%, dy: 12%)[
-      #circle(radius: 28pt, stroke: 0.6pt + cover-accent.lighten(60%).transparentize(70%))
-    ]
-    #place(dx: 80%, dy: 18%)[
-      #circle(radius: 6pt, fill: cover-accent.transparentize(40%))
-    ]
-    #place(dx: 62%, dy: 8%)[
-      #circle(radius: 4pt, fill: cover-accent-light.transparentize(50%))
-    ]
-    #place(dx: 85%, dy: 30%)[
-      #circle(radius: 16pt, stroke: 0.4pt + cover-accent.transparentize(60%))
-    ]
-    #place(dx: 58%, dy: 22%)[
-      #circle(radius: 10pt, stroke: 0.5pt + cover-accent-light.transparentize(65%))
-    ]
+  #block(width: 100%, height: 100%, fill: bg)[
 
-    // Connecting lines between nodes
-    #place(dx: 73%, dy: 15%)[
-      #line(length: 45pt, angle: 35deg, stroke: 0.3pt + cover-accent.transparentize(70%))
-    ]
-    #place(dx: 82%, dy: 21%)[
-      #line(length: 35pt, angle: 60deg, stroke: 0.3pt + cover-accent.transparentize(75%))
-    ]
-    #place(dx: 64%, dy: 11%)[
-      #line(length: 50pt, angle: 20deg, stroke: 0.3pt + cover-accent.transparentize(70%))
-    ]
-
-    // Bottom decorative elements
-    #place(dx: 8%, dy: 78%)[
-      #circle(radius: 20pt, stroke: 0.5pt + cover-accent.transparentize(75%))
-    ]
-    #place(dx: 15%, dy: 85%)[
-      #circle(radius: 5pt, fill: cover-accent.transparentize(60%))
-    ]
-    #place(dx: 22%, dy: 82%)[
-      #circle(radius: 12pt, stroke: 0.4pt + cover-accent-light.transparentize(70%))
-    ]
-    #place(dx: 12%, dy: 80%)[
-      #line(length: 40pt, angle: -30deg, stroke: 0.3pt + cover-accent.transparentize(75%))
+    // Subtle gradient overlay at top
+    #place(dx: 0%, dy: 0%)[
+      #rect(width: 100%, height: 40%, fill: gradient.linear(navy, bg))
     ]
 
-    // Accent bar
-    #place(dx: 8%, dy: 35%)[
-      #rect(width: 3pt, height: 80pt, fill: cover-accent)
+    // Ship's wheel — centred, large, slightly faded
+    #helm(52%, 42%, 55pt, col: gold.transparentize(25%))
+
+    // Left gold accent strip
+    #place(dx: 0%, dy: 0%)[
+      #rect(width: 3.5pt, height: 100%, fill: gold)
     ]
 
-    // Title block
-    #place(dx: 8%, dy: 38%)[
-      #block(width: 80%)[
+    // Eyebrow
+    #place(dx: 8%, dy: 8%)[
+      #text(size: 7.5pt, fill: gold, weight: "bold", tracking: 3pt)[A FIELD GUIDE]
+    ]
+
+    // Title
+    #place(dx: 8%, dy: 14%)[
+      #block(width: 84%)[
         #text(
-          size: 32pt,
+          size: 34pt,
           weight: "bold",
-          fill: white,
+          fill: cream,
           font: "New Computer Modern",
-          tracking: -0.5pt,
-        )[The Agentic\ Crew]
-
-        #v(1em)
-
-        #text(
-          size: 11pt,
-          fill: cover-muted,
-          style: "italic",
-        )[A field guide to engineering\ in the age of AI agents]
+          tracking: -0.6pt,
+        )[The Agentic Crew]
       ]
     ]
 
-    // Horizontal rule
+    // Subtitle — below the wheel
     #place(dx: 8%, dy: 72%)[
-      #line(length: 84%, stroke: 0.4pt + cover-accent.transparentize(60%))
+      #block(width: 84%)[
+        #text(
+          size: 11pt,
+          fill: gold-light.transparentize(20%),
+          style: "italic",
+        )[Engineering in the age of AI agents]
+      ]
+    ]
+
+    // Separator
+    #place(dx: 8%, dy: 82%)[
+      #line(length: 84%, stroke: 0.4pt + gold-dim)
     ]
 
     // Author
-    #place(dx: 8%, dy: 75%)[
+    #place(dx: 8%, dy: 86%)[
       #text(
-        size: 11pt,
-        fill: cover-accent-light,
-        weight: "regular",
+        size: 10.5pt,
+        fill: cream.transparentize(25%),
       )[Rasmus Bornhøft Schlünsen]
     ]
 
-    // Edition
-    #place(dx: 8%, dy: 90%)[
-      #text(
-        size: 8pt,
-        fill: cover-muted.transparentize(30%),
-        weight: "regular",
-      )[March 2026]
+    // Date
+    #place(dx: 8%, dy: 93%)[
+      #text(size: 7.5pt, fill: gold-dim)[March 2026]
     ]
   ]
 ]
@@ -213,3 +217,16 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 #include "chapters/14-when-not-to-use-agents.typ"
 #include "chapters/15-agentic-teams.typ"
 #include "chapters/16-final-words.typ"
+
+// ─── Dedication (End) ───
+
+#pagebreak()
+
+#align(center + horizon)[
+  #text(size: 14pt, style: "italic")[
+    To my beloved children — \
+    every page of this book was written \
+    with you in my heart. \
+    You are my reason, my crew, my everything.
+  ]
+]
