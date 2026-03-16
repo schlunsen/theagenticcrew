@@ -13,7 +13,7 @@
         to the transition — from writing software to <em>engineering</em> it.
       </p>
       <div class="hero-actions">
-        <a href="#buy" class="btn-primary">Buy for &euro;25</a>
+        <a href="#download" class="btn-primary">Get the Book — Free</a>
         <a href="#chapters" class="btn-secondary">See what's inside</a>
       </div>
     </div>
@@ -24,13 +24,7 @@
           <div class="book-cover">
             <div class="book-spine"></div>
             <div class="book-front">
-              <p class="book-label">The Agentic Crew</p>
-              <div class="book-decoration">
-                <div class="line"></div>
-                <div class="line short"></div>
-                <div class="line"></div>
-              </div>
-              <p class="book-author">Rasmus Schlünsen</p>
+              <img src="/book-cover.png" alt="The Agentic Crew book cover" class="cover-image" />
             </div>
           </div>
         </div>
@@ -116,7 +110,7 @@
 
   .btn-primary {
     background: var(--color-accent);
-    color: #fff;
+    color: #0a0e1a;
     padding: 0.85rem 2rem;
     border-radius: 10px;
     font-weight: 600;
@@ -128,8 +122,8 @@
   .btn-primary:hover {
     background: var(--color-accent-light);
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(108, 99, 255, 0.3);
-    color: #fff;
+    box-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
+    color: #0a0e1a;
   }
 
   .btn-secondary {
@@ -193,28 +187,19 @@
   .book-front {
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #1e1b4b, #312e81, #4338ca);
     border-radius: 4px 12px 12px 4px;
-    padding: 2.5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    overflow: hidden;
     box-shadow:
       10px 10px 30px rgba(0, 0, 0, 0.5),
       0 0 60px var(--color-accent-glow);
     position: relative;
-    overflow: hidden;
   }
 
-  .book-front::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
-    pointer-events: none;
+  .cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .book-spine {
@@ -223,40 +208,10 @@
     top: 0;
     width: 20px;
     height: 100%;
-    background: linear-gradient(to right, #1a1747, #1e1b4b);
+    background: linear-gradient(to right, #0a0e1a, #111827);
     transform: rotateY(90deg);
     transform-origin: right;
     border-radius: 4px 0 0 4px;
-  }
-
-  .book-label {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #fff;
-    line-height: 1.3;
-  }
-
-  .book-decoration {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .book-decoration .line {
-    height: 2px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 1px;
-  }
-
-  .book-decoration .line.short {
-    width: 60%;
-  }
-
-  .book-author {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 500;
   }
 
   @media (max-width: 768px) {
@@ -321,17 +276,18 @@
       width: 280px;
       height: 350px;
     }
-
-    .book-label {
-      font-size: 1.25rem;
-    }
   }
 </style>
 
 <script>
   import lottie from 'lottie-web';
 
-  // Inline Lottie animation: orbiting sparkle particles around the book
+  // Gold nautical Lottie animation: orbiting particles + compass ring around the book
+  const gold = [0.79, 0.66, 0.30, 1];
+  const goldLight = [0.88, 0.78, 0.47, 1];
+  const goldDim = [0.42, 0.35, 0.18, 1];
+  const cream = [0.94, 0.92, 0.84, 1];
+
   const animationData = {
     v: "5.7.4",
     fr: 30,
@@ -343,7 +299,7 @@
     ddd: 0,
     assets: [],
     layers: [
-      // Orbiting dot 1 — slow elliptical orbit
+      // Orbiting dot 1 — slow elliptical orbit (gold)
       {
         ddd: 0, ind: 0, ty: 4, nm: "dot1", sr: 1, ks: {
           o: { a: 1, k: [
@@ -370,10 +326,10 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [6, 6] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: [0.42, 0.39, 1, 1] }, o: { a: 0, k: 80 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: gold }, o: { a: 0, k: 80 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Orbiting dot 2 — offset phase
+      // Orbiting dot 2 — offset phase (light gold)
       {
         ddd: 0, ind: 1, ty: 4, nm: "dot2", sr: 1, ks: {
           o: { a: 1, k: [
@@ -399,10 +355,10 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [5, 5] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: [0.55, 0.51, 1, 1] }, o: { a: 0, k: 70 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: goldLight }, o: { a: 0, k: 70 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Orbiting dot 3 — small, fast
+      // Orbiting dot 3 — small, fast (cream)
       {
         ddd: 0, ind: 2, ty: 4, nm: "dot3", sr: 1, ks: {
           o: { a: 1, k: [
@@ -424,10 +380,10 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [4, 4] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: [0.65, 0.62, 1, 1] }, o: { a: 0, k: 60 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: cream }, o: { a: 0, k: 60 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Pulsing glow ring
+      // Pulsing compass ring — dashed, rotating slowly (gold)
       {
         ddd: 0, ind: 3, ty: 4, nm: "ring", sr: 1, ks: {
           o: { a: 1, k: [
@@ -450,7 +406,7 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [340, 430] }, p: { a: 0, k: [0, 0] }, nm: "ring-shape"
         }, {
-          ty: "st", c: { a: 0, k: [0.42, 0.39, 1, 1] }, o: { a: 0, k: 25 }, w: { a: 0, k: 1.5 },
+          ty: "st", c: { a: 0, k: gold }, o: { a: 0, k: 25 }, w: { a: 0, k: 1.5 },
           lc: 2, lj: 2, bm: 0, nm: "stroke", d: [
             { n: "d", nm: "dash", v: { a: 0, k: 8 } },
             { n: "g", nm: "gap", v: { a: 0, k: 16 } },
@@ -461,7 +417,7 @@
           ]
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Sparkle dot 4 — tiny twinkle
+      // Sparkle 1 — twinkle (cream)
       {
         ddd: 0, ind: 4, ty: 4, nm: "sparkle1", sr: 1, ks: {
           o: { a: 1, k: [
@@ -484,10 +440,10 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [3, 3] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: [0.8, 0.78, 1, 1] }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: cream }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Sparkle dot 5 — another twinkle, different position/timing
+      // Sparkle 2 — different position/timing (gold light)
       {
         ddd: 0, ind: 5, ty: 4, nm: "sparkle2", sr: 1, ks: {
           o: { a: 1, k: [
@@ -511,10 +467,10 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [3, 3] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: [0.7, 0.68, 1, 1] }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: goldLight }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Sparkle 3 — top right
+      // Sparkle 3 — top right (gold)
       {
         ddd: 0, ind: 6, ty: 4, nm: "sparkle3", sr: 1, ks: {
           o: { a: 1, k: [
@@ -538,7 +494,7 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [3, 3] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: [0.9, 0.88, 1, 1] }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: gold }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       }
     ],

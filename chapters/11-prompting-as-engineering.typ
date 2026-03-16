@@ -6,6 +6,8 @@ If you've ever written a good bug report, you know how to prompt. If you've ever
 
 The skills transfer directly. Clarity, specificity, context, constraints. The same things that make human collaboration efficient make agent collaboration efficient. The difference is that agents won't ask clarifying questions when your prompt is vague. They'll just guess. And they'll guess confidently.
 
+This is where a lot of experienced engineers quietly struggle. You've spent years building the skill of _doing_ — writing code, debugging, building systems. Now the skill that matters is _articulating_ — explaining what you want with enough precision that someone else can do it. It's a different muscle. And it can feel, in the early days, like a demotion. It's not. But the discomfort is real, and pretending it isn't doesn't help.
+
 == The Anatomy of a Good Task Prompt
 
 A good prompt has three parts: _what_ you want done, _why_ it matters, and _how_ success looks. Most people only provide the first, and even that is usually vague.
@@ -42,7 +44,7 @@ The more experienced you become with agentic engineering, the more your prompts 
 
 == Task Decomposition
 
-Here's a common mistake: asking an agent to build something large in a single prompt. "Build a user dashboard with real-time metrics, role-based access, and export to CSV." That's not a prompt — that's a project. And projects need to be broken into tasks.
+A common mistake: asking an agent to build something large in a single prompt. "Build a user dashboard with real-time metrics, role-based access, and export to CSV." That's not a prompt — that's a project. And projects need to be broken into tasks.
 
 Task decomposition is the practice of splitting big requests into small, _verifiable_ steps. Each step has a clear input, a clear output, and a clear way to check whether it worked.
 

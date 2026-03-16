@@ -8,11 +8,19 @@ And yet guardrails are not a solved problem. They're a living thing — somethin
 
 Not every task deserves the same level of autonomy. Reading files? Low risk, let it run. Writing code in a feature branch? Medium risk, check the diff. Running database migrations? High risk, require explicit approval.
 
-The agentic engineer develops an intuition for this gradient. You don't configure it once and forget — you adjust it per project, per task, per phase of development. Early exploration gets a long leash. Production deployment gets a short one.
-
 Think of it like a mixing board. Each category of action has its own slider: file reads, file writes, shell commands, network access, git operations. You push each slider to the level of autonomy you're comfortable with. Some sliders stay low forever. Others you nudge up as confidence builds.
 
 The mistake most people make is treating the gradient as binary — either the agent can do something or it can't. The reality is more nuanced. An agent might be allowed to run `npm test` without asking, but `npm install` requires a prompt. Both are shell commands. The risk profile is completely different.
+
+And the gradient shifts over time. On day one, your agent runs in a tight sandbox. Every shell command gets approved. Every file write gets reviewed. You don't know yet where it's brilliant and where it's brittle, so you watch everything.
+
+After a week, patterns emerge. The agent is flawless at writing unit tests. It's solid at refactoring. It occasionally makes questionable choices about dependency management. Now your sliders reflect that: tests and refactoring run freely, dependency changes get reviewed.
+
+After a month, you've seen a hundred tasks complete successfully. You loosen the sliders further. The agent commits to feature branches on its own. It runs the full test suite without asking. After three months, it's like a trusted colleague — you give it a task, check back in an hour, and review the PR. The guardrails are still there, but they're invisible for the 95% of work that's routine.
+
+This is the key insight: _guardrails should be barely noticeable for everyday work, and absolutely rigid for exceptional situations._ The agent should flow through its normal tasks without friction, and hit a hard wall the moment it tries something unusual. That wall is where you show up.
+
+The engineers who never adjust the sliders end up abandoning agentic workflows entirely. The engineers who push them too fast get burned. The sweet spot is a steady, evidence-based ratchet.
 
 == Permission Scoping
 
@@ -69,27 +77,7 @@ Good candidates for approval gates:
 
 The goal isn't to slow the agent down. The goal is to create natural checkpoints where you, the engineer, can verify that the agent's trajectory still matches your intent. A quick glance at a diff takes five seconds. Recovering from a bad deploy takes hours.
 
-Approval gates also serve a second purpose that's easy to miss: they keep you in the loop. An agent that runs for forty minutes without a single checkpoint is an agent you've lost track of. Even if it does everything correctly, you've lost your mental model of what's happening. Regular approval gates force the agent to surface its work, and they force you to stay engaged.
-
 The best gate is one you almost never reject. If you're rejecting approvals constantly, your agent is misconfigured or miscommunicating — and you should fix the root cause, not keep clicking "no."
-
-== Building Trust Incrementally
-
-You wouldn't give a new hire the production database password on their first day. You'd start them with code reviews on every PR. After a few weeks, you'd let them merge to staging without a second pair of eyes. After a few months, they'd have deploy access. After a year, they'd be the one reviewing _your_ code.
-
-Agents follow the same trajectory, just compressed.
-
-On day one, your agent runs in a tight sandbox. Every shell command gets approved. Every file write gets reviewed. You're watching it like a hawk — not because you distrust the technology, but because you haven't _calibrated_ your expectations yet. You don't know where it's brilliant and where it's brittle.
-
-After a week, patterns emerge. The agent is flawless at writing unit tests. It's solid at refactoring. It occasionally makes questionable choices about dependency management. Now your guardrails reflect that: tests and refactoring run freely, dependency changes get reviewed.
-
-After a month, you've seen a hundred tasks complete successfully. You loosen the leash further. The agent commits to feature branches on its own. It runs the full test suite without asking. It installs dev dependencies when tests require them.
-
-After three months, the agent is like a trusted colleague. You give it a task, check back in an hour, and review the PR. The guardrails are still there — it still can't push to main, still can't touch production, still can't modify CI — but they're invisible for the 95% of work that's routine.
-
-This is the key insight: _guardrails should be barely noticeable for everyday work, and absolutely rigid for exceptional situations._ The agent should flow through its normal tasks without friction, and hit a hard wall the moment it tries something unusual. That wall is where you show up.
-
-The engineers who never loosen guardrails end up abandoning agentic workflows entirely. The agents feel sluggish and frustrating, so they go back to doing everything manually. The engineers who loosen guardrails _too fast_ get burned by an agent that does something unexpected. The sweet spot is a steady, evidence-based ratchet.
 
 == When Guardrails Fail
 
@@ -112,13 +100,9 @@ The best agentic engineers don't fear agent mistakes. They build systems where m
 
 == The Cost of Too Many Guardrails
 
-There's a failure mode that nobody talks about because it doesn't look like a failure. It looks like caution.
+There's a failure mode that looks like caution but isn't. You configure your agent with approval gates on everything — every file write, every shell command, every git operation. Fifteen minutes into a task, you've clicked "yes" forty times and you're not reading them any more.
 
-You configure your agent with approval gates on everything. Every file write: approval. Every shell command: approval. Every git operation: approval. The agent asks, you approve, the agent asks, you approve. Fifteen minutes into a task, you've clicked "yes" forty times and you're exhausted.
-
-At this point, you're not using an agentic workflow. You're using a very slow, very annoying autocomplete. The agent does the typing and you do the thinking — which is exactly the same division of labour you had _before_ agents, except now there's a confirmation dialog in the way.
-
-Over-constrained agents produce two outcomes, both bad. Either the engineer gives up and stops using agents, concluding they're "not ready yet." Or — worse — the engineer starts approving everything without reading it, because the approval fatigue has trained them to click "yes" reflexively. Now you have guardrails that _feel_ safe but provide zero actual protection.
+That's the danger. Over-constrained agents produce two outcomes, both bad. Either the engineer gives up and stops using agents, concluding they're "not ready yet." Or — worse — approval fatigue trains them to click "yes" reflexively. Now you have guardrails that _feel_ safe but provide zero actual protection.
 
 The skill is in finding the sweet spot. You want guardrails tight enough to catch genuine mistakes, and loose enough that the agent can _flow_. A good heuristic: if you're approving the same type of action more than five times in a session, it should probably be on the allowlist.
 
@@ -142,4 +126,4 @@ Some teams allow agents to execute pre-approved runbooks in production: restart 
 
 The pattern is simple: the closer you are to real users and real data, the tighter the guardrails get. Your local agent is a collaborator. Your staging agent is a supervised worker. Your production agent is a read-only observer.
 
-Set this up once, and it becomes invisible. The agent adjusts its behaviour based on the environment it's operating in. It moves fast locally, checks in on staging, and goes hands-off in production. That's not friction — that's engineering.
+Set this up once, and it becomes invisible. The agent adjusts its behaviour based on the environment it's operating in. It moves fast locally, checks in on staging, and goes hands-off in production. Once your team agrees on these boundaries, they rarely need revisiting — and when they do, it's because something went wrong in production, which is exactly when you want to be rethinking guardrails anyway.

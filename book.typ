@@ -47,28 +47,110 @@
   v(0.6em)
 }
 
-// ─── Title Page ───
+// ─── Cover Page ───
 
-#align(center + horizon)[
-  #text(size: 28pt, weight: "bold")[The Agentic Crew]
-  #v(0.8em)
-  #text(size: 13pt, fill: luma(80))[A field guide to engineering in the age of AI agents]
-  #v(2.5em)
-  #text(size: 12pt)[Rasmus Bornhøft Schlünsen]
-  #v(0.8em)
-  #text(size: 10pt, fill: luma(120))[Draft — March 2026]
-  #v(2em)
-  #text(size: 11pt, weight: "bold")[€25]
-]
+#page(margin: 0pt, header: none)[
+  #let bg = rgb("#0a0e1a")
+  #let gold = rgb("#c9a84c")
+  #let gold-light = rgb("#e0c878")
+  #let gold-dim = rgb("#6b5a2e")
+  #let cream = rgb("#f0ead6")
+  #let navy = rgb("#1a2040")
 
-#pagebreak()
+  // Ship's wheel (helm) drawn with Typst primitives
+  #let helm(cx, cy, outer-r, spoke-count: 8, col: gold) = {
+    // Outer ring
+    place(dx: cx - outer-r, dy: cy - outer-r)[
+      #circle(radius: outer-r, stroke: 2pt + col)
+    ]
+    // Inner ring
+    place(dx: cx - outer-r * 0.55, dy: cy - outer-r * 0.55)[
+      #circle(radius: outer-r * 0.55, stroke: 1.2pt + col)
+    ]
+    // Centre hub
+    place(dx: cx - outer-r * 0.12, dy: cy - outer-r * 0.12)[
+      #circle(radius: outer-r * 0.12, fill: col)
+    ]
+    // Spokes
+    for i in range(spoke-count) {
+      let angle = i * 360deg / spoke-count
+      let spoke-len = outer-r * 2
+      place(dx: cx, dy: cy)[
+        #line(length: spoke-len, angle: angle, stroke: 1.5pt + col)
+      ]
+    }
+    // Handle pegs at end of each spoke (small circles)
+    for i in range(spoke-count) {
+      let angle = i * 360deg / spoke-count
+      let peg-x = cx + outer-r * 1.15 * calc.cos(angle) - 3.5pt
+      let peg-y = cy + outer-r * 1.15 * calc.sin(angle) - 3.5pt
+      place(dx: peg-x, dy: peg-y)[
+        #circle(radius: 3.5pt, fill: col)
+      ]
+    }
+  }
 
-// ─── Dedication ───
+  #block(width: 100%, height: 100%, fill: bg)[
 
-#align(center + horizon)[
-  #text(size: 12pt, style: "italic")[
-    For my beloved children. \
-    You are my crew.
+    // Subtle gradient overlay at top
+    #place(dx: 0%, dy: 0%)[
+      #rect(width: 100%, height: 40%, fill: gradient.linear(navy, bg))
+    ]
+
+    // Ship's wheel — centred, large, slightly faded
+    #helm(52%, 42%, 55pt, col: gold.transparentize(25%))
+
+    // Left gold accent strip
+    #place(dx: 0%, dy: 0%)[
+      #rect(width: 3.5pt, height: 100%, fill: gold)
+    ]
+
+    // Eyebrow
+    #place(dx: 8%, dy: 8%)[
+      #text(size: 7.5pt, fill: gold, weight: "bold", tracking: 3pt)[A FIELD GUIDE]
+    ]
+
+    // Title
+    #place(dx: 8%, dy: 14%)[
+      #block(width: 84%)[
+        #text(
+          size: 34pt,
+          weight: "bold",
+          fill: cream,
+          font: "New Computer Modern",
+          tracking: -0.6pt,
+        )[The Agentic Crew]
+      ]
+    ]
+
+    // Subtitle — below the wheel
+    #place(dx: 8%, dy: 72%)[
+      #block(width: 84%)[
+        #text(
+          size: 11pt,
+          fill: gold-light.transparentize(20%),
+          style: "italic",
+        )[Engineering in the age of AI agents]
+      ]
+    ]
+
+    // Separator
+    #place(dx: 8%, dy: 82%)[
+      #line(length: 84%, stroke: 0.4pt + gold-dim)
+    ]
+
+    // Author
+    #place(dx: 8%, dy: 86%)[
+      #text(
+        size: 10.5pt,
+        fill: cream.transparentize(25%),
+      )[Rasmus Bornhøft Schlünsen]
+    ]
+
+    // Date
+    #place(dx: 8%, dy: 93%)[
+      #text(size: 7.5pt, fill: gold-dim)[March 2026]
+    ]
   ]
 ]
 
@@ -119,7 +201,21 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 #include "chapters/10-local-vs-commercial-llms.typ"
 #include "chapters/11-prompting-as-engineering.typ"
 #include "chapters/12-multi-agent-orchestration.typ"
+#include "chapters/12b-cicd-and-agents.typ"
 #include "chapters/13-war-stories.typ"
 #include "chapters/14-when-not-to-use-agents.typ"
 #include "chapters/15-agentic-teams.typ"
 #include "chapters/16-final-words.typ"
+
+// ─── Dedication (End) ───
+
+#pagebreak()
+
+#align(center + horizon)[
+  #text(size: 14pt, style: "italic")[
+    To my beloved children — \
+    every page of this book was written \
+    with you in my heart. \
+    You are my reason, my crew, my everything.
+  ]
+]
