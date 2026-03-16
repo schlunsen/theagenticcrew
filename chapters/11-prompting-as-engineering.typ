@@ -103,6 +103,8 @@ There is also a practical speed advantage. Most people speak at 130 words per mi
 
 Try it for a week. Pick a speech-to-text tool, wire it into your workflow, and speak your prompts instead of typing them. The first day will feel awkward. By the third day, you will notice your spoken prompts getting tighter. By the end of the week, you will notice your _spoken communication in general_ getting tighter.
 
+It is also worth noting that speech-to-text models can run entirely on your machine. NVIDIA's Parakeet family of models — compact, high-accuracy ASR models — run locally without any cloud dependency. Tools like SuperWhisper and whisper.cpp do the same using OpenAI's Whisper weights. A modern MacBook can run these models in near real-time with accurate transcription and low latency. You do not need a cloud service to turn speech into text — the local tooling is already there.
+
 The agents don't care whether your prompt was typed or spoken. But _you_ will be a clearer thinker for having spoken it.
 
 == Anti-Patterns
