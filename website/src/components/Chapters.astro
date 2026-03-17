@@ -95,8 +95,16 @@ const chapters = [
 
 <section class="chapters" id="chapters">
   <div class="chapters-inner">
-    <h2>What's inside</h2>
-    <p class="chapters-subtitle">18 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
+    <div class="chapters-header">
+      <h2>What's inside</h2>
+      <p class="chapters-subtitle">18 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
+    </div>
+
+    <div class="chapters-illustration">
+      <img src="/generated/chapters-illustration.png" alt="Nautical treasure map with circuit traces" loading="lazy" />
+      <div class="chapters-illustration-overlay"></div>
+    </div>
+
     <div class="chapter-list">
       {chapters.map((chapter) => (
         <div class="chapter-item">
@@ -115,6 +123,27 @@ const chapters = [
   .chapters {
     padding: 6rem 2rem;
     background: var(--color-bg-elevated);
+    position: relative;
+  }
+
+  .chapters::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+  }
+
+  .chapters::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
   }
 
   .chapters-inner {
@@ -122,20 +151,52 @@ const chapters = [
     margin: 0 auto;
   }
 
+  .chapters-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
   h2 {
     font-family: var(--font-serif);
     font-size: clamp(1.8rem, 3vw, 2.5rem);
     font-weight: 600;
-    text-align: center;
     margin-bottom: 0.75rem;
     letter-spacing: -0.02em;
+    color: var(--color-text);
   }
 
   .chapters-subtitle {
-    text-align: center;
     color: var(--color-text-muted);
-    margin-bottom: 3rem;
     font-size: 1.05rem;
+  }
+
+  .chapters-illustration {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  }
+
+  .chapters-illustration img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.75;
+    transition: opacity 0.5s ease;
+  }
+
+  .chapters-illustration:hover img {
+    opacity: 0.9;
+  }
+
+  .chapters-illustration-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 30%, var(--color-bg-elevated) 100%);
+    pointer-events: none;
   }
 
   .chapter-list {
@@ -150,38 +211,46 @@ const chapters = [
     align-items: flex-start;
     padding: 1.75rem 0;
     border-bottom: 1px solid var(--color-border);
+    transition: background 0.3s;
   }
 
   .chapter-item:first-child {
     border-top: 1px solid var(--color-border);
   }
 
+  .chapter-item:hover {
+    background: rgba(232, 150, 62, 0.04);
+  }
+
   .chapter-num {
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    color: var(--color-accent-light);
+    color: var(--color-accent);
     min-width: 2rem;
     padding-top: 0.2rem;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .chapter-item:hover .chapter-num {
+    opacity: 1;
   }
 
   .chapter-info h3 {
     font-size: 1.15rem;
     font-weight: 600;
     margin-bottom: 0.4rem;
+    transition: color 0.3s;
+    color: var(--color-text);
+  }
+
+  .chapter-item:hover .chapter-info h3 {
+    color: var(--color-accent-deep);
   }
 
   .chapter-info p {
     font-size: 0.92rem;
     color: var(--color-text-muted);
     line-height: 1.7;
-  }
-
-  .more-coming {
-    text-align: center;
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
-    font-style: italic;
-    margin-top: 2rem;
-    opacity: 0.7;
   }
 </style>
