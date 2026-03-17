@@ -59,6 +59,37 @@ Each step is a self-contained prompt. Each has a verifiable outcome. Each builds
 
 This isn't just good prompting — it's good engineering. You're applying the same decomposition skills you'd use when planning a sprint or breaking down a pull request. The unit of work is small enough to review, small enough to test, and small enough to throw away if it's wrong.
 
+== Prompting for Parallelism
+
+Here's something most people miss: you can tell the agent to parallelise.
+
+Modern agentic tools — Claude Code, Cursor, Cline — can launch sub-agents. Each sub-agent gets its own context, its own workspace, its own thread of execution. They run simultaneously. The parent agent coordinates, waits for results, and assembles the output. This isn't some hidden feature you need to unlock. It's right there. But almost nobody prompts for it.
+
+Consider the difference. You have a feature that touches three independent modules — the API, the worker, and the notification service. The sequential approach:
+
+_"Implement the webhook handler in the API module. Then update the worker to process webhook events. Then add notifications for failed webhooks."_
+
+The agent does each step one at a time. Twenty minutes, maybe thirty. Fine.
+
+Now the parallel approach:
+
+_"This feature touches three independent modules. Launch sub-agents to work on them in parallel: one for the webhook handler in the API module, one for the worker that processes webhook events, and one for the notification service that alerts on failures. Each module has its own directory and its own tests. Merge the results when all three are done."_
+
+Same work. A third of the wall-clock time. The key word in that prompt is _independent_ — you're telling the agent that these pieces don't depend on each other, so it's safe to parallelise. You're giving it permission to be fast.
+
+This works because _you_ have the architectural overview. You know which modules are coupled and which aren't. You know which pieces can be built simultaneously and which need to be sequential. The agent doesn't always know this — it defaults to doing things one at a time, because sequential is safe. Your job is to see the parallelism and make it explicit.
+
+Some prompting patterns that encourage parallelism:
+
+- *"These tasks are independent — run them in parallel."* Direct and effective. The agent knows it has permission.
+- *"Launch a sub-agent for each of these."* Explicit instruction to use the parallel execution capability.
+- *"Work on the API and the frontend simultaneously — they share the interface defined in `types.ts` but don't depend on each other's implementation."* Context about _why_ parallelism is safe.
+- *"Start all three and report back when they're done."* Frames it as a coordination task, which is exactly what it is.
+
+The mental model shift is subtle but important. You're not just telling the agent _what_ to build — you're telling it _how to organise the work_. You're being a tech lead, not just a ticket writer. You're saying "I've looked at this problem, I see three independent streams, and I want you to staff all three simultaneously."
+
+This is the engineering leverage that experienced developers bring to agentic work. A junior engineer might not know which pieces are safe to parallelise. You do. And when you encode that knowledge into the prompt, the agent becomes dramatically faster — not because it's smarter, but because you gave it a better plan.
+
 == The Prompt as a Spec
 
 The best prompts I've seen read like miniature design documents. They describe the desired outcome, not the implementation steps. They list the constraints. They define acceptance criteria. They provide just enough context for the agent to make good decisions without drowning it in irrelevant information.

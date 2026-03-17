@@ -121,3 +121,5 @@ Total time: maybe forty minutes. The API agent took thirty, the frontend agent t
 A single agent doing everything sequentially? Probably ninety minutes.
 
 The maths works when the task is big enough. And as you get better at decomposition, you'll develop an intuition for which tasks are worth splitting and which aren't. Like most things in engineering, it's a judgement call. But now you have the tools to make it.
+
+One more thing worth noting: you don't always have to orchestrate manually. As we discussed in the prompting chapter, you can _tell_ the agent to parallelise. "These three modules are independent — launch sub-agents and work on them simultaneously." The agent handles the worktrees, the branching, and the coordination. Your job is the part the agent can't do: knowing which pieces are safe to run in parallel. That architectural judgement is the highest-leverage prompt you can write.
