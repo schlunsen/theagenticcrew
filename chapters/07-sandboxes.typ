@@ -1,5 +1,9 @@
 = Sandboxes
 
+#figure(
+  image("../assets/illustrations/ch07-sandbox.jpg", width: 60%),
+)
+
 A sandbox is a gift you give your agent: the freedom to be wrong.
 
 When an agent operates in a sandbox, it can try things without consequences. Install a weird dependency. Rewrite a module from scratch. Run a script that might crash. If it works, great — you pull the result out. If it doesn't, you throw the sandbox away. No cleanup, no rollback, no damage.

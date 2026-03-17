@@ -1,5 +1,9 @@
 = Testing as the Feedback Loop
 
+#figure(
+  image("../assets/illustrations/ch08-feedback-loop.jpg", width: 50%),
+)
+
 Two codebases. Same agent. Same task: "Add a rate limiter to the API that returns 429 after 100 requests per minute per user."
 
 In the first codebase, there are no tests. The agent reads the route handlers, picks a middleware insertion point, writes the rate-limiting logic, and... stops. It has no way to know if it worked. It can't start the server and send 101 requests to see what happens. It can't check whether existing endpoints still respond correctly. It produces a diff, says "I've added rate limiting," and hopes for the best. You review the code, squint at it, think it looks reasonable, merge it, and discover in production three days later that the middleware was mounted in the wrong order and never executed. Every request sailed through. The rate limiter was decoration.

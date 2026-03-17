@@ -1,5 +1,9 @@
 = Extending the Agent's Reach
 
+#figure(
+  image("../assets/illustrations/ch09b-mcp-connections.jpg", width: 70%),
+)
+
 Last month I was debugging a production issue — intermittent 502s on a checkout endpoint. The logs were in Datadog. The relevant config was in our Kubernetes cluster. The ticket history was in Linear. The database schema was in PostgreSQL. The code was in my editor.
 
 I had six browser tabs open, copying and pasting between them, trying to assemble enough context to understand the problem. The agent sat in my terminal, ready to help, but it could only see my local files. It was like having a brilliant colleague chained to a desk — eager to help, but blind to everything outside the repo.
