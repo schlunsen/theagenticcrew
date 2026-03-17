@@ -1,5 +1,9 @@
 = Git as Agent Infrastructure
 
+#figure(
+  image("../assets/illustrations/ch06-git-branches.jpg", width: 80%),
+)
+
 You already know Git. You've been committing, branching, and merging for years. But in agentic engineering, Git isn't just version control — it's the backbone of your entire workflow. It's your undo button, your parallel execution framework, your review interface, and your documentation system all at once.
 
 Most engineers use maybe 20% of what Git offers. Agentic engineering demands the other 80%.

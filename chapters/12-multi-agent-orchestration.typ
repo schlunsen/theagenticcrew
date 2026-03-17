@@ -1,5 +1,9 @@
 = Multi-Agent Orchestration
 
+#figure(
+  image("../assets/illustrations/ch12-orchestration.jpg", width: 80%),
+)
+
 One agent is powerful. Multiple agents working together is something else entirely.
 
 Think of it this way. A single carpenter can build a shed. But a house? You need an electrician, a plumber, a roofer — specialists working in parallel, each focused on what they do best, coordinating just enough to stay out of each other's way. The house goes up faster and the work is better than one person trying to do everything.

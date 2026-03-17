@@ -1,5 +1,9 @@
 = When Agents Get It Wrong
 
+#figure(
+  image("../assets/illustrations/ch13-storm.jpg", width: 80%),
+)
+
 Every engineer who works with agents long enough has a collection of these stories. The moments where you lean back in your chair, stare at the screen, and mutter something unprintable. They're humbling. They're educational. And they're _inevitable_.
 
 This chapter is a collection of war stories — things that actually go wrong when you hand real work to an agent. Not hypotheticals. Not contrived demos. The kind of failures that cost you an afternoon, a deploy, or your faith in automation. Each one maps back to principles from earlier chapters, because principles are cheap until you learn them the hard way.
