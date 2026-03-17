@@ -19,8 +19,27 @@ build-da:
 build-es:
     typst compile --input revision={{revision}} book-es.typ build/the-agentic-crew-es.pdf
 
-# Build all PDFs
-build-all: build build-ca build-da build-es
+# Build English kids' edition
+build-kids:
+    typst compile --input revision={{revision}} book-kids.typ build/the-agentic-crew-kids.pdf
+
+# Build Spanish kids' edition
+build-kids-es:
+    typst compile --input revision={{revision}} book-kids-es.typ build/the-agentic-crew-kids-es.pdf
+
+# Build Catalan kids' edition
+build-kids-ca:
+    typst compile --input revision={{revision}} book-kids-ca.typ build/the-agentic-crew-kids-ca.pdf
+
+# Build Danish kids' edition
+build-kids-da:
+    typst compile --input revision={{revision}} book-kids-da.typ build/the-agentic-crew-kids-da.pdf
+
+# Build all kids' editions
+build-kids-all: build-kids build-kids-es build-kids-ca build-kids-da
+
+# Build all PDFs (adult + kids)
+build-all: build build-ca build-da build-es build-kids-all
 
 # Watch for changes and rebuild automatically
 watch:
@@ -67,6 +86,12 @@ deploy:
     typst compile --input revision="$rev" book-da.typ build/the-agentic-crew-da.pdf
     typst compile --input revision="$rev" book-es.typ build/the-agentic-crew-es.pdf
 
+    # Build all kids' PDFs
+    typst compile --input revision="$rev" book-kids.typ build/the-agentic-crew-kids.pdf
+    typst compile --input revision="$rev" book-kids-es.typ build/the-agentic-crew-kids-es.pdf
+    typst compile --input revision="$rev" book-kids-ca.typ build/the-agentic-crew-kids-ca.pdf
+    typst compile --input revision="$rev" book-kids-da.typ build/the-agentic-crew-kids-da.pdf
+
     # Build all EPUBs
     pandoc epub.typ -f typst -t epub3 -o build/the-agentic-crew.epub \
         --metadata title="The Agentic Crew" \
@@ -101,6 +126,10 @@ deploy:
     cp build/the-agentic-crew-da.epub website/public/the-agentic-crew-da.epub
     cp build/the-agentic-crew-es.pdf website/public/the-agentic-crew-es.pdf
     cp build/the-agentic-crew-es.epub website/public/the-agentic-crew-es.epub
+    cp build/the-agentic-crew-kids.pdf website/public/the-agentic-crew-kids.pdf
+    cp build/the-agentic-crew-kids-es.pdf website/public/the-agentic-crew-kids-es.pdf
+    cp build/the-agentic-crew-kids-ca.pdf website/public/the-agentic-crew-kids-ca.pdf
+    cp build/the-agentic-crew-kids-da.pdf website/public/the-agentic-crew-kids-da.pdf
 
     # Archive revisions
     mkdir -p website/public/revisions
@@ -112,6 +141,10 @@ deploy:
     cp build/the-agentic-crew-da.epub "website/public/revisions/the-agentic-crew-da-rev${rev}.epub"
     cp build/the-agentic-crew-es.pdf "website/public/revisions/the-agentic-crew-es-rev${rev}.pdf"
     cp build/the-agentic-crew-es.epub "website/public/revisions/the-agentic-crew-es-rev${rev}.epub"
+    cp build/the-agentic-crew-kids.pdf "website/public/revisions/the-agentic-crew-kids-rev${rev}.pdf"
+    cp build/the-agentic-crew-kids-es.pdf "website/public/revisions/the-agentic-crew-kids-es-rev${rev}.pdf"
+    cp build/the-agentic-crew-kids-ca.pdf "website/public/revisions/the-agentic-crew-kids-ca-rev${rev}.pdf"
+    cp build/the-agentic-crew-kids-da.pdf "website/public/revisions/the-agentic-crew-kids-da-rev${rev}.pdf"
 
     # Build website
     cd website && npm run build && cd ..
