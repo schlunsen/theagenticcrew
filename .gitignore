@@ -5,3 +5,8 @@ book.pdf
 node_modules/
 output/
 test-results/
+
+# Generated book files (built by justfile, deployed separately)
+website/public/*.pdf
+website/public/*.epub
+website/public/revisions/
