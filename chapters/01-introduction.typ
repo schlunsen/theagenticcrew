@@ -38,7 +38,7 @@ This is the guide I wish someone had given me.
 
 You're a software engineer. You've shipped real things. You know what a production incident feels like at 2am. You're not afraid of the terminal.
 
-But lately, something feels different. Maybe you've tried AI coding tools and found them impressive but chaotic — like pairing with someone who's incredibly fast but has no concept of scope. Maybe you've watched a developer with two years of experience ship a full feature in an afternoon using agent assistance, and it made you feel something you didn't expect. Maybe you're excited but don't know where to start. Maybe you're skeptical and want someone to convince you with substance, not hype.
+But lately, something feels different. Maybe you've tried AI coding tools and found them impressive but chaotic — like pairing with someone who's incredibly fast but has no concept of scope. Like being Tom Cruise in _Rain Man_, except your Dustin Hoffman can refactor an entire codebase instead of counting cards. Maybe you've watched a developer with two years of experience ship a full feature in an afternoon using agent assistance, and it made you feel something you didn't expect. Maybe you're excited but don't know where to start. Maybe you're skeptical and want someone to convince you with substance, not hype.
 
 This book is for you. It assumes you can code. It assumes you've been around. It meets you where you are.
 

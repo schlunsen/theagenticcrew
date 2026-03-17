@@ -107,6 +107,29 @@ It is also worth noting that speech-to-text models can run entirely on your mach
 
 The agents don't care whether your prompt was typed or spoken. But _you_ will be a clearer thinker for having spoken it.
 
+== Visual Context: When Words Aren't Enough
+
+Not everything is easy to describe in text. A broken layout, a weird rendering glitch, an error dialog with a stack trace — sometimes the fastest way to communicate what you're seeing is to _show_ it.
+
+Modern LLMs are multimodal. They can read screenshots, diagrams, photos of whiteboards, and error messages captured from your screen. This is not a novelty feature — it is one of the most underused tools in the agentic engineering workflow.
+
+Here is a workflow I use daily: I see a bug on my phone — a layout that's broken, a modal that's off-centre, a form that's eating input. I screenshot it on iOS, and thanks to Universal Clipboard, I paste it directly into my terminal session on my Mac. The agent sees what I see. No need to describe "the button is overlapping the header on mobile viewport" — the screenshot _is_ the description.
+
+This matters because visual bugs are notoriously hard to describe in text. You end up writing three paragraphs about padding and z-index when a single screenshot communicates the problem instantly. The agent can see the broken state, reason about what's wrong, and propose a fix — often faster than you could finish typing the description.
+
+But it goes beyond bug reports. Some common visual context workflows:
+
+- *Error screenshots.* A browser console full of red, a terminal stack trace, a deployment dashboard showing failed health checks. Screenshot it, paste it, ask the agent to diagnose. This is especially useful when error messages are long or contain formatting that's painful to copy as text.
+- *Design references.* A Figma mockup, a sketch, a competitor's UI you want to approximate. Paste the image and say "make our settings page look like this." The agent can extract layout structure, colour choices, and component hierarchy from a visual reference.
+- *Debugging visual state.* "Why does this page look wrong?" is a terrible prompt. A screenshot of the page _plus_ "why does this page look wrong?" is a great one. The agent can compare what it sees against the expected layout and identify CSS issues, missing data, or rendering bugs.
+- *Whiteboard photos.* After an architecture discussion, snap a photo of the whiteboard and paste it in. The agent can read the boxes, arrows, and labels, and help you translate that sketch into code structure, API definitions, or documentation.
+
+The iOS-to-Mac clipboard pipeline deserves special mention because it removes all friction from this workflow. You don't need to save the screenshot, AirDrop it, find it in Finder, and drag it into a tool. You see the problem, you capture it, you paste it. Three seconds from "that's broken" to "the agent is looking at it." That speed matters because it keeps you in flow. Any extra steps — even thirty seconds of file management — create enough friction that you default back to typing a text description, which is slower and less precise.
+
+The key insight is that _context is not just text_. When we talked about context being the most important ingredient in agentic work, we were talking about all forms of context — code files, documentation, test output, _and_ visual state. A screenshot is worth a thousand tokens, and agents that can see are dramatically more useful than agents that can only read.
+
+If you're not already using visual context in your agentic workflow, start. Screenshot your bugs. Paste your error messages. Share your design references. The agents can see now. Let them.
+
 == Anti-Patterns
 
 Some prompting habits consistently produce poor results. Learn to recognise them.

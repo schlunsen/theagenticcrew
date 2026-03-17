@@ -50,4 +50,12 @@ They're fast where you're slow. They're patient where you're impatient. They can
 
 But they don't know what matters. They don't know what the user actually needs. They don't know which technical debt is acceptable and which is a ticking bomb. They don't know when to push back on a requirement. They don't know when the spec is wrong.
 
+The best analogy I've found is _Rain Man_. You're Tom Cruise. The agent is Dustin Hoffman.
+
+Raymond can count cards like no human alive — he sees patterns in mountains of data, processes them instantly, never gets tired, never loses focus. But he can't navigate a casino floor. He doesn't know _why_ they're counting cards. He doesn't know when to walk away from the table, when the pit boss is getting suspicious, or what to do with the money. Left to his own devices, he'd count cards forever in an empty room.
+
+Charlie is the one with the plan. He knows which casino to hit, when to bet big, when to cash out, when to change strategy entirely. He can't count cards himself — not at Raymond's speed, not at Raymond's scale. But he doesn't need to. His job is direction, judgment, and knowing what the whole operation is _for_.
+
+That's agentic engineering. Your agent will process your entire codebase, generate solutions at a speed you can't match, and iterate tirelessly. But it doesn't know which problem is worth solving. It doesn't know when the elegant solution is the wrong one. It doesn't know when to stop.
+
 That's your job. And it always will be.
