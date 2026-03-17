@@ -4,9 +4,22 @@
 <section class="about" id="about">
   <div class="about-inner">
     <h2>The ground is shifting</h2>
+
+    <div class="about-illustration">
+      <img src="/generated/about-illustration.png" alt="Robot crew working together on a ship" loading="lazy" />
+      <div class="about-illustration-overlay"></div>
+    </div>
+
     <div class="about-grid">
       <div class="about-card">
-        <div class="card-icon">01</div>
+        <div class="card-icon-wrapper">
+          <svg class="card-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+          </svg>
+        </div>
+        <div class="card-number">01</div>
         <h3>The craft is evolving</h3>
         <p>
           We're moving from writing every line by hand to directing, orchestrating, and
@@ -14,7 +27,14 @@
         </p>
       </div>
       <div class="about-card">
-        <div class="card-icon">02</div>
+        <div class="card-icon-wrapper">
+          <svg class="card-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
+          </svg>
+        </div>
+        <div class="card-number">02</div>
         <h3>No playbook exists</h3>
         <p>
           The tools showed up fast — Copilot, then Claude, then agents that run entire tasks
@@ -22,7 +42,12 @@
         </p>
       </div>
       <div class="about-card">
-        <div class="card-icon">03</div>
+        <div class="card-icon-wrapper">
+          <svg class="card-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        </div>
+        <div class="card-number">03</div>
         <h3>Your skills matter more</h3>
         <p>
           Systems thinking, taste, judgement, knowing what to build and why — those matter
@@ -31,6 +56,7 @@
       </div>
     </div>
     <div class="personal-note">
+      <div class="note-border"></div>
       <p>
         Why does this book exist? Because I have a genuine, slightly irrational desire to share
         everything I've learned about agentic engineering. Because I want to shine in the eyes of
@@ -57,8 +83,38 @@
     font-size: clamp(1.8rem, 3vw, 2.5rem);
     font-weight: 600;
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
     letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .about-illustration {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 16/7;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .about-illustration img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: opacity 0.5s ease;
+  }
+
+  .about-illustration:hover img {
+    opacity: 1;
+  }
+
+  .about-illustration-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, var(--color-bg) 100%);
+    pointer-events: none;
   }
 
   .about-grid {
@@ -68,30 +124,48 @@
   }
 
   .about-card {
-    background: var(--color-bg-elevated);
+    background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: 16px;
     padding: 2rem;
-    transition: border-color 0.3s, transform 0.3s;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    position: relative;
   }
 
   .about-card:hover {
-    border-color: var(--color-accent-light);
+    border-color: var(--color-accent);
     transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(232, 150, 62, 0.12);
   }
 
-  .card-icon {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-accent-light);
+  .card-icon-wrapper {
     margin-bottom: 1rem;
+  }
+
+  .card-svg {
+    color: var(--color-accent);
     opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  .about-card:hover .card-svg {
+    opacity: 1;
+  }
+
+  .card-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+    opacity: 0.5;
+    letter-spacing: 0.05em;
   }
 
   .about-card h3 {
     font-size: 1.15rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
+    color: var(--color-text);
   }
 
   .about-card p {
@@ -101,15 +175,24 @@
   }
 
   .about-card em {
-    color: var(--color-text);
+    color: var(--color-accent-deep);
+    font-weight: 600;
   }
 
   .personal-note {
-    margin-top: 3rem;
+    margin-top: 3.5rem;
     text-align: center;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .note-border {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-pirate-teal));
+    margin: 0 auto 1.5rem;
+    border-radius: 1px;
   }
 
   .personal-note p {
@@ -117,12 +200,16 @@
     color: var(--color-text-muted);
     line-height: 1.8;
     font-style: italic;
-    opacity: 0.8;
+    opacity: 0.85;
   }
 
   @media (max-width: 768px) {
     .about-grid {
       grid-template-columns: 1fr;
+    }
+
+    .about-illustration {
+      aspect-ratio: 16/9;
     }
   }
 </style>

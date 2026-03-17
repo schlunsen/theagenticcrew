@@ -4,8 +4,17 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <p class="eyebrow">New Book — March 2026</p>
-      <h1>The Agentic Crew</h1>
+      <p class="eyebrow">
+        <span class="eyebrow-flag">&#9760;</span>
+        New Book — March 2026
+      </p>
+      <h1 class="title-gradient">
+        <span class="title-bg-wrap">
+          <span class="title-fluid" aria-hidden="true"></span>
+          <span class="title-fluid title-fluid-2" aria-hidden="true"></span>
+        </span>
+        The Agentic<br/>Crew
+      </h1>
       <p class="subtitle">How software engineers learn to build with agents</p>
       <p class="description">
         AI agents don't just autocomplete your code. They read your codebase, reason about it,
@@ -13,11 +22,20 @@
         to the transition — from writing software to <em>engineering</em> it.
       </p>
       <div class="hero-actions">
-        <a href="#download" class="btn-primary">Get the Book — Free</a>
+        <a href="#download" class="btn-primary">
+          <span>Get the Book — Free</span>
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
+          </svg>
+        </a>
         <a href="#chapters" class="btn-secondary">See what's inside</a>
       </div>
     </div>
     <div class="hero-visual">
+      <div class="hero-illustration-wrapper">
+        <img src="/generated/hero-illustration.png" alt="" class="hero-illustration" loading="eager" />
+        <div class="illustration-overlay"></div>
+      </div>
       <div class="book-wrapper">
         <div id="lottie-glow" class="lottie-glow"></div>
         <div class="book-mock">
@@ -31,6 +49,25 @@
       </div>
     </div>
   </div>
+  <!-- Decorative compass rose -->
+  <div class="compass-decoration" aria-hidden="true">
+    <svg viewBox="0 0 200 200" width="400" height="400" fill="none" stroke="currentColor" opacity="0.06">
+      <circle cx="100" cy="100" r="90" stroke-width="0.5" />
+      <circle cx="100" cy="100" r="70" stroke-width="0.3" stroke-dasharray="4 8" />
+      <circle cx="100" cy="100" r="50" stroke-width="0.3" />
+      <line x1="100" y1="5" x2="100" y2="195" stroke-width="0.5" />
+      <line x1="5" y1="100" x2="195" y2="100" stroke-width="0.5" />
+      <line x1="30" y1="30" x2="170" y2="170" stroke-width="0.3" />
+      <line x1="170" y1="30" x2="30" y2="170" stroke-width="0.3" />
+      <polygon points="100,10 105,40 100,35 95,40" fill="currentColor" opacity="0.5" />
+    </svg>
+  </div>
+  <!-- Decorative wave at bottom -->
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="var(--color-bg)" opacity="0.5" />
+    </svg>
+  </div>
 </section>
 
 <style>
@@ -41,6 +78,7 @@
     padding: 6rem 2rem 4rem;
     position: relative;
     overflow: hidden;
+    background: linear-gradient(180deg, #fff8ed 0%, var(--color-bg) 100%);
   }
 
   .hero::before {
@@ -50,8 +88,47 @@
     left: -20%;
     width: 60%;
     height: 100%;
-    background: radial-gradient(ellipse, var(--color-accent-glow), transparent 70%);
+    background: radial-gradient(ellipse, rgba(245, 166, 35, 0.08), transparent 70%);
     pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    right: -15%;
+    width: 50%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(46, 155, 183, 0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .compass-decoration {
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    color: var(--color-accent);
+    pointer-events: none;
+    animation: spin-slow 120s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    pointer-events: none;
+  }
+
+  .hero-wave svg {
+    width: 100%;
+    height: 100%;
   }
 
   .hero-inner {
@@ -69,8 +146,15 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-light);
+    color: var(--color-accent);
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .eyebrow-flag {
+    font-size: 1rem;
   }
 
   h1 {
@@ -80,6 +164,74 @@
     line-height: 1.1;
     margin-bottom: 0.75rem;
     letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .title-gradient {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent) 0%,
+      var(--color-accent-deep) 35%,
+      #c97b1e 50%,
+      var(--color-pirate-teal) 75%,
+      var(--color-accent) 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Subtle fluid blobs behind title */
+  .title-bg-wrap {
+    position: absolute;
+    inset: -20px -30px;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  .title-fluid {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 166, 35, 0.1) 0%, transparent 70%);
+    filter: blur(30px);
+    animation: fluid-drift 12s ease-in-out infinite;
+    top: 10%;
+    left: 10%;
+  }
+
+  .title-fluid-2 {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(46, 155, 183, 0.08) 0%, transparent 70%);
+    animation: fluid-drift-2 15s ease-in-out infinite;
+    top: 40%;
+    left: 60%;
+  }
+
+  @keyframes fluid-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(60px, 20px) scale(1.2); }
+    50% { transform: translate(30px, -15px) scale(0.9); }
+    75% { transform: translate(-20px, 25px) scale(1.1); }
+  }
+
+  @keyframes fluid-drift-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    30% { transform: translate(-40px, -20px) scale(1.15); }
+    60% { transform: translate(20px, 30px) scale(0.85); }
+    80% { transform: translate(-15px, -10px) scale(1.05); }
   }
 
   .subtitle {
@@ -109,21 +261,24 @@
   }
 
   .btn-primary {
-    background: var(--color-accent);
-    color: #0a0e1a;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
+    color: #fff;
     padding: 0.85rem 2rem;
     border-radius: 10px;
     font-weight: 600;
     font-size: 1.05rem;
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 30px var(--color-accent-glow);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(232, 150, 62, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
   }
 
   .btn-primary:hover {
-    background: var(--color-accent-light);
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
-    color: #0a0e1a;
+    box-shadow: 0 8px 24px rgba(232, 150, 62, 0.4);
+    color: #fff;
   }
 
   .btn-secondary {
@@ -137,7 +292,7 @@
   }
 
   .btn-secondary:hover {
-    border-color: var(--color-text-muted);
+    border-color: var(--color-accent);
     color: var(--color-text);
   }
 
@@ -145,6 +300,32 @@
   .hero-visual {
     display: flex;
     justify-content: center;
+    position: relative;
+  }
+
+  .hero-illustration-wrapper {
+    position: absolute;
+    top: -60px;
+    left: -40px;
+    right: -40px;
+    bottom: -60px;
+    z-index: 0;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .hero-illustration {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.18;
+    filter: blur(1px) saturate(1.2);
+  }
+
+  .illustration-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 20%, var(--color-bg) 75%);
   }
 
   .book-wrapper {
@@ -152,6 +333,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
   }
 
   .lottie-glow {
@@ -172,16 +354,18 @@
   }
 
   .book-cover {
-    width: 260px;
-    height: 370px;
+    width: 280px;
+    height: 400px;
     position: relative;
     transform: rotateY(-15deg) rotateX(5deg);
     transform-style: preserve-3d;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
   }
 
   .book-cover:hover {
-    transform: rotateY(-5deg) rotateX(2deg);
+    transform: rotateY(-5deg) rotateX(2deg) scale(1.02);
+    filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15));
   }
 
   .book-front {
@@ -190,9 +374,27 @@
     border-radius: 4px 12px 12px 4px;
     overflow: hidden;
     box-shadow:
-      10px 10px 30px rgba(0, 0, 0, 0.5),
-      0 0 60px var(--color-accent-glow);
+      10px 10px 30px rgba(0, 0, 0, 0.15),
+      0 0 60px rgba(245, 166, 35, 0.12),
+      0 0 100px rgba(245, 166, 35, 0.06),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     position: relative;
+  }
+
+  .book-front::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 40%,
+      transparent 60%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
   }
 
   .cover-image {
@@ -208,7 +410,7 @@
     top: 0;
     width: 20px;
     height: 100%;
-    background: linear-gradient(to right, #0a0e1a, #111827);
+    background: linear-gradient(to right, #c97b1e, #e8963e);
     transform: rotateY(90deg);
     transform-origin: right;
     border-radius: 4px 0 0 4px;
@@ -224,6 +426,10 @@
       grid-template-columns: 1fr;
       text-align: center;
       gap: 2.5rem;
+    }
+
+    .eyebrow {
+      justify-content: center;
     }
 
     .description {
@@ -255,6 +461,14 @@
       padding: 0.75rem 1.5rem;
       font-size: 0.95rem;
     }
+
+    .compass-decoration {
+      display: none;
+    }
+
+    .hero-illustration-wrapper {
+      display: none;
+    }
   }
 
   @media (max-width: 400px) {
@@ -282,11 +496,11 @@
 <script>
   import lottie from 'lottie-web';
 
-  // Gold nautical Lottie animation: orbiting particles + compass ring around the book
-  const gold = [0.79, 0.66, 0.30, 1];
-  const goldLight = [0.88, 0.78, 0.47, 1];
-  const goldDim = [0.42, 0.35, 0.18, 1];
-  const cream = [0.94, 0.92, 0.84, 1];
+  // Sunny warm Lottie animation: orbiting particles + compass ring
+  const orange = [0.96, 0.65, 0.14, 1];
+  const gold = [0.91, 0.76, 0.24, 1];
+  const teal = [0.18, 0.61, 0.72, 1];
+  const warm = [0.95, 0.85, 0.55, 1];
 
   const animationData = {
     v: "5.7.4",
@@ -299,13 +513,13 @@
     ddd: 0,
     assets: [],
     layers: [
-      // Orbiting dot 1 — slow elliptical orbit (gold)
+      // Orbiting dot 1 (orange)
       {
         ddd: 0, ind: 0, ty: 4, nm: "dot1", sr: 1, ks: {
           o: { a: 1, k: [
             { t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 30, s: [60], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 150, s: [60], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 30, s: [50], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 150, s: [50], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 180, s: [0] }
           ]},
           r: { a: 0, k: 0 },
@@ -326,16 +540,16 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [6, 6] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: gold }, o: { a: 0, k: 80 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: orange }, o: { a: 0, k: 60 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Orbiting dot 2 — offset phase (light gold)
+      // Orbiting dot 2 (teal)
       {
         ddd: 0, ind: 1, ty: 4, nm: "dot2", sr: 1, ks: {
           o: { a: 1, k: [
-            { t: 0, s: [50], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 90, s: [70], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 180, s: [50] }
+            { t: 0, s: [40], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 90, s: [60], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 180, s: [40] }
           ]},
           r: { a: 0, k: 0 },
           p: { a: 1, k: [
@@ -355,17 +569,17 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [5, 5] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: goldLight }, o: { a: 0, k: 70 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: teal }, o: { a: 0, k: 50 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Orbiting dot 3 — small, fast (cream)
+      // Orbiting dot 3 — small, warm
       {
         ddd: 0, ind: 2, ty: 4, nm: "dot3", sr: 1, ks: {
           o: { a: 1, k: [
-            { t: 0, s: [40], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 60, s: [80], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 120, s: [40], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 180, s: [40] }
+            { t: 0, s: [30], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 60, s: [60], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 120, s: [30], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 180, s: [30] }
           ]},
           r: { a: 0, k: 0 },
           p: { a: 1, k: [
@@ -380,16 +594,16 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [4, 4] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: cream }, o: { a: 0, k: 60 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: warm }, o: { a: 0, k: 50 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Pulsing compass ring — dashed, rotating slowly (gold)
+      // Pulsing compass ring — dashed, rotating slowly (orange)
       {
         ddd: 0, ind: 3, ty: 4, nm: "ring", sr: 1, ks: {
           o: { a: 1, k: [
-            { t: 0, s: [15], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 90, s: [30], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 180, s: [15] }
+            { t: 0, s: [10], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 90, s: [20], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 180, s: [10] }
           ]},
           r: { a: 1, k: [
             { t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
@@ -406,7 +620,7 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [340, 430] }, p: { a: 0, k: [0, 0] }, nm: "ring-shape"
         }, {
-          ty: "st", c: { a: 0, k: gold }, o: { a: 0, k: 25 }, w: { a: 0, k: 1.5 },
+          ty: "st", c: { a: 0, k: orange }, o: { a: 0, k: 18 }, w: { a: 0, k: 1.5 },
           lc: 2, lj: 2, bm: 0, nm: "stroke", d: [
             { n: "d", nm: "dash", v: { a: 0, k: 8 } },
             { n: "g", nm: "gap", v: { a: 0, k: 16 } },
@@ -417,15 +631,15 @@
           ]
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Sparkle 1 — twinkle (cream)
+      // Sparkle 1 (warm)
       {
         ddd: 0, ind: 4, ty: 4, nm: "sparkle1", sr: 1, ks: {
           o: { a: 1, k: [
             { t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 20, s: [90], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 20, s: [70], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 40, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 100, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 120, s: [80], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 120, s: [60], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 140, s: [0] }
           ]},
           r: { a: 0, k: 0 },
@@ -440,19 +654,19 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [3, 3] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: cream }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: gold }, o: { a: 0, k: 80 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Sparkle 2 — different position/timing (gold light)
+      // Sparkle 2 (teal)
       {
         ddd: 0, ind: 5, ty: 4, nm: "sparkle2", sr: 1, ks: {
           o: { a: 1, k: [
             { t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 50, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 70, s: [90], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 70, s: [70], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 90, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 140, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 160, s: [70], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 160, s: [50], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 180, s: [0] }
           ]},
           r: { a: 0, k: 0 },
@@ -467,19 +681,19 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [3, 3] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: goldLight }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: teal }, o: { a: 0, k: 80 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       },
-      // Sparkle 3 — top right (gold)
+      // Sparkle 3 (orange)
       {
         ddd: 0, ind: 6, ty: 4, nm: "sparkle3", sr: 1, ks: {
           o: { a: 1, k: [
             { t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 30, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 45, s: [100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 45, s: [80], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 60, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 130, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-            { t: 145, s: [85], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+            { t: 145, s: [65], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
             { t: 160, s: [0] }
           ]},
           r: { a: 0, k: 0 },
@@ -494,7 +708,7 @@
         ao: 0, shapes: [{
           ty: "el", d: 1, s: { a: 0, k: [3, 3] }, p: { a: 0, k: [0, 0] }, nm: "dot"
         }, {
-          ty: "fl", c: { a: 0, k: gold }, o: { a: 0, k: 100 }, r: 1, bm: 0, nm: "fill"
+          ty: "fl", c: { a: 0, k: orange }, o: { a: 0, k: 80 }, r: 1, bm: 0, nm: "fill"
         }], ip: 0, op: 180, st: 0, bm: 0
       }
     ],

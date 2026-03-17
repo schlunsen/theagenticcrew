@@ -3,28 +3,40 @@
 
 <section class="author" id="author">
   <div class="author-inner">
-    <div class="author-content">
-      <h2>About the author</h2>
-      <h3>Rasmus Bornhøft Schlünsen</h3>
-      <p>
-        With over 15 years in the software industry, Rasmus has built everything from Django
-        database backends and embedded systems to Rust CLI tools and open-source libraries
-        used by thousands. He's an active open-source contributor with projects like
-        <a href="https://github.com/schlunsen/django-timescaledb" target="_blank">django-timescaledb</a>
-        and <a href="https://github.com/schlunsen/rana" target="_blank">rana</a>.
-        Currently, he works as an AI R&D Engineer at <a href="https://clovrlabs.com" target="_blank">Clovrlabs.com</a>.
-      </p>
-      <p>
-        He knows what a production incident feels like at 2am and what it takes to ship real
-        products. Now he's navigating the shift to agentic engineering — and writing the
-        playbook he wished he had.
-      </p>
-      <p>
-        <a href="https://www.linkedin.com/in/rasmusbs/" target="_blank" class="linkedin-link">Connect on LinkedIn &rarr;</a>
-      </p>
-      <p class="dedication">
-        <em>"To my kids — you're the best crew I've ever had. Always."</em>
-      </p>
+    <div class="author-grid">
+      <div class="author-photo-wrapper">
+        <img src="/author-photo.jpeg" alt="Rasmus Bornhoft Schlunsen" class="author-photo" loading="lazy" />
+      </div>
+      <div class="author-content">
+        <h2>About the author</h2>
+        <h3>Rasmus Bornhoft Schlunsen</h3>
+        <p>
+          With over 15 years in the software industry, Rasmus has built everything from Django
+          database backends and embedded systems to Rust CLI tools and open-source libraries
+          used by thousands. He's an active open-source contributor with projects like
+          <a href="https://github.com/schlunsen/django-timescaledb" target="_blank">django-timescaledb</a>
+          and <a href="https://github.com/schlunsen/rana" target="_blank">rana</a>.
+          Currently, he works as an AI R&D Engineer at <a href="https://clovrlabs.com" target="_blank">Clovrlabs.com</a>.
+        </p>
+        <p>
+          He knows what a production incident feels like at 2am and what it takes to ship real
+          products. Now he's navigating the shift to agentic engineering — and writing the
+          playbook he wished he had.
+        </p>
+        <p>
+          <a href="https://www.linkedin.com/in/rasmusbs/" target="_blank" class="linkedin-link">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" style="vertical-align: -2px; margin-right: 4px;">
+              <path d="M5 12l5-5 5 5" />
+              <path d="M10 7v10" />
+              <rect x="2" y="2" width="16" height="16" rx="3" />
+            </svg>
+            Connect on LinkedIn &rarr;
+          </a>
+        </p>
+        <div class="dedication">
+          <em>"To my kids — you're the best crew I've ever had. Always."</em>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -33,11 +45,49 @@
   .author {
     padding: 6rem 2rem;
     background: var(--color-bg-elevated);
+    position: relative;
+  }
+
+  .author::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
   }
 
   .author-inner {
-    max-width: 650px;
+    max-width: 900px;
     margin: 0 auto;
+  }
+
+  .author-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .author-photo-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--color-border);
+  }
+
+  .author-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .author-photo-wrapper:hover .author-photo {
+    transform: scale(1.03);
   }
 
   h2 {
@@ -45,7 +95,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-light);
+    color: var(--color-accent);
     margin-bottom: 0.75rem;
   }
 
@@ -55,6 +105,7 @@
     font-weight: 600;
     margin-bottom: 1.25rem;
     letter-spacing: -0.02em;
+    color: var(--color-text);
   }
 
   p {
@@ -65,13 +116,15 @@
   }
 
   .linkedin-link {
-    color: var(--color-accent-light);
+    color: var(--color-accent-deep);
     font-weight: 600;
     transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
   }
 
   .linkedin-link:hover {
-    color: var(--color-text);
+    color: var(--color-accent);
   }
 
   .dedication {
@@ -79,5 +132,20 @@
     font-family: var(--font-serif);
     color: var(--color-text);
     opacity: 0.8;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-accent);
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .author-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .author-illustration {
+      aspect-ratio: 16/9;
+      max-height: 250px;
+    }
   }
 </style>

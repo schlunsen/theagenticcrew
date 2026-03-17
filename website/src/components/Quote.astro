@@ -2,7 +2,16 @@
 ---
 
 <section class="quote-section">
+  <div class="quote-bg">
+    <img src="/generated/quote-bg.png" alt="" loading="lazy" />
+    <div class="quote-bg-overlay"></div>
+  </div>
   <div class="quote-inner">
+    <div class="quote-mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M8 20c0-6 4-12 10-14l1 2c-4 2-6 6-6 8h5v10H8V20zm16 0c0-6 4-12 10-14l1 2c-4 2-6 6-6 8h5v10h-10V20z" fill="currentColor" opacity="0.2" stroke="none" />
+      </svg>
+    </div>
     <blockquote>
       <p>I've been a software engineer for a long time. I know what it feels like to have a codebase in your head — to open an editor, navigate to the right file, and just <em>write</em> the thing. That muscle memory, built over years of keystrokes and debugging sessions, is real. It's earned.</p>
       <p class="second">And now the ground is shifting under our feet.</p>
@@ -13,8 +22,29 @@
 
 <style>
   .quote-section {
-    padding: 5rem 2rem;
+    padding: 6rem 2rem;
     position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fff8ed, #f0f8ff);
+  }
+
+  .quote-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .quote-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.08;
+  }
+
+  .quote-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 253, 247, 0.7), transparent 30%, transparent 70%, rgba(255, 253, 247, 0.7));
   }
 
   .quote-section::before {
@@ -25,14 +55,22 @@
     width: 40%;
     height: 60%;
     transform: translateY(-50%);
-    background: radial-gradient(ellipse, var(--color-accent-glow), transparent 70%);
+    background: radial-gradient(ellipse, rgba(245, 166, 35, 0.06), transparent 70%);
     pointer-events: none;
+    z-index: 1;
   }
 
   .quote-inner {
     max-width: 700px;
     margin: 0 auto;
     text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .quote-mark {
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
   }
 
   blockquote p {
@@ -45,7 +83,7 @@
 
   blockquote .second {
     margin-top: 1rem;
-    color: var(--color-accent-light);
+    color: var(--color-accent-deep);
     font-weight: 600;
   }
 

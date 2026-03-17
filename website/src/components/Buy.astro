@@ -4,6 +4,16 @@
 <section class="download" id="download">
   <div class="download-inner">
     <div class="download-card">
+      <div class="download-book-display">
+        <div class="mini-book-mock">
+          <div class="mini-book-cover">
+            <div class="mini-book-spine"></div>
+            <div class="mini-book-front">
+              <img src="/book-cover.png" alt="The Agentic Crew book cover" class="mini-cover-image" />
+            </div>
+          </div>
+        </div>
+      </div>
       <p class="download-eyebrow">Free download</p>
       <h2>Get the book</h2>
       <p class="download-subtitle">Choose your language and format</p>
@@ -83,6 +93,16 @@
 
     <!-- Kids' Edition Card -->
     <div class="download-card kids-card">
+      <div class="download-book-display">
+        <div class="mini-book-mock">
+          <div class="mini-book-cover kids-book-cover">
+            <div class="mini-book-spine kids-spine"></div>
+            <div class="mini-book-front">
+              <img src="/book-cover-kids.jpg" alt="The Agentic Crew Kids' Edition cover" class="mini-cover-image" />
+            </div>
+          </div>
+        </div>
+      </div>
       <p class="download-eyebrow">For young captains (ages 9+)</p>
       <h2>Kids' Edition</h2>
       <p class="download-subtitle">The same ideas, told through ships, robots &amp; exploding sandwiches</p>
@@ -199,7 +219,7 @@
     width: 60%;
     height: 50%;
     transform: translateX(-50%);
-    background: radial-gradient(ellipse, var(--color-accent-glow), transparent 70%);
+    background: radial-gradient(ellipse, rgba(245, 166, 35, 0.06), transparent 70%);
     pointer-events: none;
   }
 
@@ -215,11 +235,13 @@
     border-radius: 20px;
     padding: 3rem;
     text-align: center;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
   }
 
   .download-card:hover {
     border-color: var(--color-accent);
+    box-shadow: 0 8px 40px rgba(232, 150, 62, 0.12);
   }
 
   .download-eyebrow {
@@ -227,7 +249,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent-light);
+    color: var(--color-accent);
     margin-bottom: 0.75rem;
   }
 
@@ -236,6 +258,7 @@
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    color: var(--color-text);
   }
 
   .download-subtitle {
@@ -270,9 +293,9 @@
   }
 
   .lang-tab.active {
-    background: var(--color-accent-glow);
+    background: rgba(232, 150, 62, 0.1);
     border-color: var(--color-accent);
-    color: var(--color-accent-light);
+    color: var(--color-accent-deep);
     font-weight: 600;
   }
 
@@ -304,7 +327,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
-    background: var(--color-bg-elevated);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 14px;
     padding: 2rem 1.5rem;
@@ -316,7 +339,7 @@
   .format-card:hover {
     border-color: var(--color-accent);
     transform: translateY(-3px);
-    box-shadow: 0 0 30px var(--color-accent-glow);
+    box-shadow: 0 8px 30px rgba(232, 150, 62, 0.1);
     color: inherit;
   }
 
@@ -324,8 +347,8 @@
     font-family: var(--font-mono);
     font-size: 0.8rem;
     font-weight: 600;
-    color: var(--color-accent-light);
-    background: var(--color-accent-glow);
+    color: var(--color-accent-deep);
+    background: rgba(232, 150, 62, 0.1);
     padding: 0.5rem 1rem;
     border-radius: 8px;
     letter-spacing: 0.05em;
@@ -334,6 +357,7 @@
   .format-card h3 {
     font-size: 1.1rem;
     font-weight: 600;
+    color: var(--color-text);
   }
 
   .format-card p {
@@ -372,40 +396,125 @@
     padding: 0.9rem 2.25rem;
     border-radius: 12px;
     border: none;
-    background: linear-gradient(135deg, #d4a754, #e8c373);
-    color: #0a0e1a;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
+    color: #fff;
     font-weight: 700;
     font-size: 1.1rem;
     font-family: inherit;
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 30px rgba(212, 167, 84, 0.2);
+    box-shadow: 0 4px 20px rgba(232, 150, 62, 0.25);
     text-decoration: none;
   }
 
   .btn-coffee:hover {
-    background: linear-gradient(135deg, #e8c373, #f0d48a);
-    color: #0a0e1a;
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+    color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 0 50px rgba(212, 167, 84, 0.35);
+    box-shadow: 0 8px 30px rgba(232, 150, 62, 0.35);
   }
 
   .coffee-icon {
     font-size: 1.25rem;
   }
 
+  /* 3D Book mockup in download cards */
+  .download-book-display {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .mini-book-mock {
+    perspective: 600px;
+  }
+
+  .mini-book-cover {
+    width: 160px;
+    height: 228px;
+    position: relative;
+    transform: rotateY(-15deg) rotateX(3deg);
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.12));
+  }
+
+  .mini-book-cover:hover {
+    transform: rotateY(-5deg) rotateX(1deg) scale(1.03);
+    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.18));
+  }
+
+  .mini-book-front {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px 8px 8px 3px;
+    overflow: hidden;
+    box-shadow:
+      6px 6px 20px rgba(0, 0, 0, 0.12),
+      0 0 40px rgba(245, 166, 35, 0.08),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+  }
+
+  .mini-book-front::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      transparent 40%,
+      transparent 60%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  .mini-cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .mini-book-spine {
+    position: absolute;
+    left: -14px;
+    top: 0;
+    width: 14px;
+    height: 100%;
+    background: linear-gradient(to right, #c97b1e, #e8963e);
+    transform: rotateY(90deg);
+    transform-origin: right;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .kids-spine {
+    background: linear-gradient(to right, #1a8a9e, #2e9bb7);
+  }
+
+  .kids-book-cover {
+    filter: drop-shadow(0 12px 24px rgba(46, 155, 183, 0.15));
+  }
+
+  .kids-book-cover:hover {
+    filter: drop-shadow(0 16px 32px rgba(46, 155, 183, 0.22));
+  }
+
   /* Kids' Edition styles */
   .kids-card {
     margin-top: 2rem;
-    border-color: rgba(74, 144, 217, 0.3);
-    background: linear-gradient(135deg, var(--color-bg-card), rgba(74, 144, 217, 0.05));
+    border-color: rgba(46, 155, 183, 0.3);
+    background: linear-gradient(135deg, #ffffff, rgba(46, 155, 183, 0.04));
   }
 
   .kids-card:hover {
-    border-color: #4a90d9;
+    border-color: var(--color-pirate-teal);
   }
 
   .kids-card .download-eyebrow {
-    color: #4a90d9;
+    color: var(--color-pirate-teal);
   }
 
   .lang-tab-kids {
@@ -422,14 +531,14 @@
   }
 
   .lang-tab-kids:hover {
-    border-color: #4a90d9;
+    border-color: var(--color-pirate-teal);
     color: var(--color-text);
   }
 
   .lang-tab-kids.active {
-    background: rgba(74, 144, 217, 0.15);
-    border-color: #4a90d9;
-    color: #6ab0ff;
+    background: rgba(46, 155, 183, 0.1);
+    border-color: var(--color-pirate-teal);
+    color: var(--color-pirate-teal);
     font-weight: 600;
   }
 
@@ -442,19 +551,20 @@
   }
 
   .kids-icon {
-    color: #6ab0ff !important;
-    background: rgba(74, 144, 217, 0.15) !important;
+    color: var(--color-pirate-teal) !important;
+    background: rgba(46, 155, 183, 0.1) !important;
   }
 
   .kids-format:hover {
-    border-color: #4a90d9 !important;
-    box-shadow: 0 0 30px rgba(74, 144, 217, 0.2) !important;
+    border-color: var(--color-pirate-teal) !important;
+    box-shadow: 0 8px 30px rgba(46, 155, 183, 0.1) !important;
   }
 
   .support-card {
     margin-top: 2rem;
     border: none;
     background: transparent;
+    box-shadow: none;
   }
 
   @media (max-width: 480px) {
