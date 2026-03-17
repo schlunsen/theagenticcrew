@@ -38,9 +38,19 @@ That's what agentic engineering feels like on a good day. You at the helm, agent
 
 And then there are the bad days. The days the wind dies and an agent hallucinates an API that doesn't exist, or rewrites a module you didn't ask it to touch, or passes all the tests because it deleted the ones that were failing. Those days, you're bailing water and swearing. That's sailing too.
 
-The point of the metaphor was never that it's effortless. The point is that a crew — a _real_ crew, with trust and roles and shared understanding — can go places a solo sailor never could. Not because any one crew member is extraordinary, but because the _system_ works.
+But I should be honest about something, because this book doesn't work if I'm not.
 
-You're the captain. You were always the captain. The crew just arrived.
+The metaphor of a _crew_ implies loyalty. Continuity. Shipmates you've sailed with before, who know your habits, who anticipate the next command. That's a beautiful image. It's also not how I actually work.
+
+Most days, what I actually do is spin up an agent, give it a job, take the output, and throw it overboard. Then I spin up another one. They don't remember the last session. They don't know what I asked the previous agent to do. Each one arrives fresh, does its work, and disappears. It's less a loyal crew and more like hiring dockworkers at every port — you brief them, you watch them work, you pay them off, and at the next port you do it again.
+
+And that's fine. That's how most real crews worked throughout maritime history. The ship was the continuity. The captain was the continuity. The charts, the logbook, the rigging — those persisted between voyages. The crew was often assembled for a single crossing and dissolved at the destination. What made it work was not that the sailors knew the captain. It was that the captain knew the _ship_ — and had systems good enough that any competent sailor could step aboard and be useful.
+
+That's what your codebase is. That's what your conventions, your test suites, your CLAUDE.md files, your guardrails are. They're the ship. Every new agent you spin up is a fresh crew member stepping aboard a well-rigged vessel. They don't need to know your history. They need to know the ship. And if you've built the ship well, they'll be productive in minutes.
+
+So yes — throw them overboard. Spin up new ones. That's not a failure of the metaphor. That's the metaphor working exactly as intended. The crew is disposable. The ship is not.
+
+You're the captain. You were always the captain. The crew just arrived — and they'll keep arriving, fresh and ready, every time you need them.
 
 == Thank You
 

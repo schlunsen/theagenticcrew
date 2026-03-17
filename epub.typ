@@ -21,7 +21,7 @@ Draft — March 2026
 
 // ─── Dedication ───
 
-_For my beloved children. You are my crew._
+_To my kids — you're the best crew I've ever had. This whole thing was for you. Always._
 
 // ─── Foreword ───
 

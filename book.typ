@@ -1,6 +1,9 @@
 // The Agentic Crew
 // Main entry point — compiles all chapters into a single PDF
 
+// Revision stamp — auto-incremented on deploy
+#let revision = sys.inputs.at("revision", default: "dev")
+
 #set document(
   title: "The Agentic Crew",
   author: "Rasmus Bornhøft Schlünsen",
@@ -147,9 +150,15 @@
       )[Rasmus Bornhøft Schlünsen]
     ]
 
-    // Date
+    // Date & revision
     #place(dx: 8%, dy: 93%)[
       #text(size: 7.5pt, fill: gold-dim)[March 2026]
+      #h(1fr)
+    ]
+    #place(dx: 0%, dy: 93%)[
+      #h(1fr)
+      #text(size: 6pt, fill: gold-dim.transparentize(50%))[rev #revision]
+      #h(8%)
     ]
   ]
 ]
@@ -198,6 +207,7 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 #include "chapters/07-sandboxes.typ"
 #include "chapters/08-testing-as-the-feedback-loop.typ"
 #include "chapters/09-convention-over-configuration.typ"
+#include "chapters/09b-tool-integrations.typ"
 #include "chapters/10-local-vs-commercial-llms.typ"
 #include "chapters/11-prompting-as-engineering.typ"
 #include "chapters/12-multi-agent-orchestration.typ"
@@ -213,9 +223,9 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 
 #align(center + horizon)[
   #text(size: 14pt, style: "italic")[
-    To my beloved children — \
-    every page of this book was written \
-    with you in my heart. \
-    You are my reason, my crew, my everything.
+    To my kids — \
+    you're the best crew I've ever had. \
+    This whole thing was for you. \
+    Always.
   ]
 ]

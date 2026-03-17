@@ -6,20 +6,79 @@
     <div class="download-card">
       <p class="download-eyebrow">Free download</p>
       <h2>Get the book</h2>
-      <p class="download-subtitle">Choose the format that works best for you</p>
-      <div class="format-grid">
-        <a href="/the-agentic-crew.pdf" class="format-card" download>
-          <div class="format-icon">PDF</div>
-          <h3>PDF</h3>
-          <p>Best for desktop & tablet. Fixed layout with full formatting.</p>
-        </a>
-        <a href="/the-agentic-crew.epub" class="format-card" download>
-          <div class="format-icon">EPUB</div>
-          <h3>EPUB</h3>
-          <p>Reflowable text for iPad, Kindle, Kobo & other e-readers.</p>
-        </a>
+      <p class="download-subtitle">Choose your language and format</p>
+
+      <div class="lang-tabs">
+        <button class="lang-tab active" data-lang="en">English</button>
+        <button class="lang-tab" data-lang="es">Español</button>
+        <button class="lang-tab" data-lang="ca">Català</button>
+        <button class="lang-tab" data-lang="da">Dansk</button>
       </div>
-      <p class="download-note">Both formats included. Download as many times as you like.</p>
+
+      <div class="lang-panel active" data-lang="en">
+        <div class="format-grid">
+          <a href="/the-agentic-crew.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Best for desktop & tablet. Fixed layout with full formatting.</p>
+          </a>
+          <a href="/the-agentic-crew.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Reflowable text for iPad, Kindle, Kobo & other e-readers.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="lang-panel" data-lang="es">
+        <p class="lang-title">La Tripulación Agéntica</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-es.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Para escritorio y tableta. Diseño fijo con formato completo.</p>
+          </a>
+          <a href="/the-agentic-crew-es.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Texto adaptable para iPad, Kindle, Kobo y otros lectores.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="lang-panel" data-lang="ca">
+        <p class="lang-title">La Tripulació Agèntica</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-ca.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Per a escriptori i tauleta. Disseny fix amb format complet.</p>
+          </a>
+          <a href="/the-agentic-crew-ca.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Text adaptable per a iPad, Kindle, Kobo i altres lectors.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="lang-panel" data-lang="da">
+        <p class="lang-title">Det Agentiske Mandskab</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-da.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Bedst til desktop og tablet. Fast layout med fuld formatering.</p>
+          </a>
+          <a href="/the-agentic-crew-da.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Flydende tekst til iPad, Kindle, Kobo og andre e-bogslæsere.</p>
+          </a>
+        </div>
+      </div>
+
+      <p class="download-note">All formats free. Download as many times as you like.</p>
 
       <div class="support">
         <div class="support-divider"></div>
@@ -31,6 +90,23 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.lang-tab');
+    const panels = document.querySelectorAll('.lang-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const lang = tab.getAttribute('data-lang');
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.lang-panel[data-lang="${lang}"]`)?.classList.add('active');
+      });
+    });
+  });
+</script>
 
 <style>
   .download {
@@ -88,7 +164,55 @@
   .download-subtitle {
     color: var(--color-text-muted);
     font-size: 1rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .lang-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .lang-tab {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-tab:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+  }
+
+  .lang-tab.active {
+    background: var(--color-accent-glow);
+    border-color: var(--color-accent);
+    color: var(--color-accent-light);
+    font-weight: 600;
+  }
+
+  .lang-panel {
+    display: none;
+  }
+
+  .lang-panel.active {
+    display: block;
+  }
+
+  .lang-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
   }
 
   .format-grid {
@@ -199,6 +323,10 @@
 
     .download-card {
       padding: 2rem 1.5rem;
+    }
+
+    .lang-tabs {
+      flex-wrap: wrap;
     }
   }
 </style>
