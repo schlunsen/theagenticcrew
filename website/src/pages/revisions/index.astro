@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Scan public/revisions/ for archived files
+const revisionsDir = path.join(process.cwd(), 'public', 'revisions');
+let revisions: { rev: number; pdf: string; epub: string }[] = [];
+
+if (fs.existsSync(revisionsDir)) {
+  const files = fs.readdirSync(revisionsDir);
+  const pdfFiles = files.filter(f => f.endsWith('.pdf')).sort().reverse();
+
+  for (const pdf of pdfFiles) {
+    const match = pdf.match(/rev(\d+)\.pdf$/);
+    if (match) {
+      const rev = parseInt(match[1]);
+      const epub = `the-agentic-crew-rev${rev}.epub`;
+      revisions.push({
+        rev,
+        pdf: `/revisions/${pdf}`,
+        epub: files.includes(epub) ? `/revisions/${epub}` : '',
+      });
+    }
+  }
+}
+---
+
+<BaseLayout title="Revisions — The Agentic Crew">
+  <main class="revisions">
+    <div class="revisions-inner">
+      <a href="/" class="back">&larr; Back</a>
+      <h1>Revisions</h1>
+      <p class="subtitle">Archived builds of The Agentic Crew.</p>
+
+      {revisions.length === 0 ? (
+        <p class="empty">No revisions archived yet.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Revision</th>
+              <th>PDF</th>
+              <th>EPUB</th>
+            </tr>
+          </thead>
+          <tbody>
+            {revisions.map(r => (
+              <tr>
+                <td class="rev-num">rev {r.rev}</td>
+                <td><a href={r.pdf} download>PDF</a></td>
+                <td>{r.epub ? <a href={r.epub} download>EPUB</a> : <span class="na">—</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .revisions {
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .revisions-inner {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .back {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back:hover {
+    color: var(--color-accent-light);
+  }
+
+  h1 {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .empty {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    text-align: left;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  td {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.95rem;
+  }
+
+  .rev-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-accent-light);
+  }
+
+  td a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  td a:hover {
+    color: var(--color-accent-light);
+  }
+
+  .na {
+    color: var(--color-text-muted);
+    opacity: 0.4;
+  }
+</style>
