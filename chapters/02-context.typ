@@ -24,6 +24,8 @@ Think of the context window as a physical workbench. It has limited space. You c
 
 A good agentic engineer curates context the way a good surgeon lays out instruments. Nothing unnecessary. Everything within reach.
 
+#image("../assets/illustrations/ch02-context-workbench.jpg", width: 80%)
+
 This means developing instincts for questions like:
 - What does the agent need to see to understand this task?
 - What will confuse it if I include it?

@@ -2,3 +2,6 @@ build/
 .DS_Store
 book.pdf
 .worktrees/
+node_modules/
+output/
+test-results/

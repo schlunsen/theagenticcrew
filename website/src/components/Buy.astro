@@ -79,7 +79,69 @@
       </div>
 
       <p class="download-note">All formats free. Download as many times as you like.</p>
+    </div>
 
+    <!-- Kids' Edition Card -->
+    <div class="download-card kids-card">
+      <p class="download-eyebrow">For young captains (ages 9+)</p>
+      <h2>Kids' Edition</h2>
+      <p class="download-subtitle">The same ideas, told through ships, robots &amp; exploding sandwiches</p>
+
+      <div class="lang-tabs kids-tabs">
+        <button class="lang-tab-kids active" data-lang-kids="en">English</button>
+        <button class="lang-tab-kids" data-lang-kids="es">Español</button>
+        <button class="lang-tab-kids" data-lang-kids="ca">Català</button>
+        <button class="lang-tab-kids" data-lang-kids="da">Dansk</button>
+      </div>
+
+      <div class="lang-panel-kids active" data-lang-kids="en">
+        <div class="format-grid">
+          <a href="/the-agentic-crew-kids.pdf" class="format-card kids-format" download>
+            <div class="format-icon kids-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Illustrated A5 book. Best for reading together or printing.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="lang-panel-kids" data-lang-kids="es">
+        <p class="lang-title">La Tripulación Agéntica — Guía para Niños</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-kids-es.pdf" class="format-card kids-format" download>
+            <div class="format-icon kids-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Libro ilustrado A5. Ideal para leer juntos o imprimir.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="lang-panel-kids" data-lang-kids="ca">
+        <p class="lang-title">La Tripulació Agèntica — Guia per a Nens</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-kids-ca.pdf" class="format-card kids-format" download>
+            <div class="format-icon kids-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Llibre il·lustrat A5. Ideal per llegir junts o imprimir.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="lang-panel-kids" data-lang-kids="da">
+        <p class="lang-title">Det Agentiske Mandskab — Børneguide</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-kids-da.pdf" class="format-card kids-format" download>
+            <div class="format-icon kids-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Illustreret A5-bog. Bedst til at læse sammen eller printe.</p>
+          </a>
+        </div>
+      </div>
+
+      <p class="download-note">Fully illustrated with AI-generated artwork. Same content, kid-friendly language.</p>
+    </div>
+
+    <!-- Support Section -->
+    <div class="download-card support-card">
       <div class="support">
         <div class="support-divider"></div>
         <p class="support-text">Enjoyed the book? This project is free and always will be.</p>
@@ -93,6 +155,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // Adult book tabs
     const tabs = document.querySelectorAll('.lang-tab');
     const panels = document.querySelectorAll('.lang-panel');
 
@@ -103,6 +166,20 @@
         panels.forEach(p => p.classList.remove('active'));
         tab.classList.add('active');
         document.querySelector(`.lang-panel[data-lang="${lang}"]`)?.classList.add('active');
+      });
+    });
+
+    // Kids book tabs
+    const kidsTabs = document.querySelectorAll('.lang-tab-kids');
+    const kidsPanels = document.querySelectorAll('.lang-panel-kids');
+
+    kidsTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const lang = tab.getAttribute('data-lang-kids');
+        kidsTabs.forEach(t => t.classList.remove('active'));
+        kidsPanels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.lang-panel-kids[data-lang-kids="${lang}"]`)?.classList.add('active');
       });
     });
   });
@@ -314,6 +391,70 @@
 
   .coffee-icon {
     font-size: 1.25rem;
+  }
+
+  /* Kids' Edition styles */
+  .kids-card {
+    margin-top: 2rem;
+    border-color: rgba(74, 144, 217, 0.3);
+    background: linear-gradient(135deg, var(--color-bg-card), rgba(74, 144, 217, 0.05));
+  }
+
+  .kids-card:hover {
+    border-color: #4a90d9;
+  }
+
+  .kids-card .download-eyebrow {
+    color: #4a90d9;
+  }
+
+  .lang-tab-kids {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-tab-kids:hover {
+    border-color: #4a90d9;
+    color: var(--color-text);
+  }
+
+  .lang-tab-kids.active {
+    background: rgba(74, 144, 217, 0.15);
+    border-color: #4a90d9;
+    color: #6ab0ff;
+    font-weight: 600;
+  }
+
+  .lang-panel-kids {
+    display: none;
+  }
+
+  .lang-panel-kids.active {
+    display: block;
+  }
+
+  .kids-icon {
+    color: #6ab0ff !important;
+    background: rgba(74, 144, 217, 0.15) !important;
+  }
+
+  .kids-format:hover {
+    border-color: #4a90d9 !important;
+    box-shadow: 0 0 30px rgba(74, 144, 217, 0.2) !important;
+  }
+
+  .support-card {
+    margin-top: 2rem;
+    border: none;
+    background: transparent;
   }
 
   @media (max-width: 480px) {
