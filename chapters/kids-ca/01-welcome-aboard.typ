@@ -1,6 +1,6 @@
 = Benvingut a Bord
 
-#image("../../assets/kids/ch01-two-captains.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-two-captains.jpg", width: 80%)]
 
 Esta passant una cosa gran amb els ordinadors. Abans nomes feien el que els deies, pas a pas, lletra per lletra. Si volies que un ordinador dibuixes un gat, havies de descriure cada bigoti un per un.
 
@@ -14,7 +14,7 @@ Deixa'm explicar-te una historia sobre dos capitans.
 
 El capita Alex i la capitana Maya tenen el mateix vaixell. La mateixa tripulacio. El mateix ocea. I tots dos han de navegar fins a l'Illa del Tresor per arreglar un moll que goteja.
 
-#image("../../assets/kids/ch01-captain-alex.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captain-alex.jpg", width: 80%)]
 
 El capita Alex s'acosta a la tripulacio i diu: "Hi ha un problema a l'illa. Aneu a arreglar-ho."
 
@@ -24,7 +24,7 @@ Tornen orgullosos. "Hem arreglat moltes coses!"
 
 Pero el moll? Encara goteja.
 
-#image("../../assets/kids/ch01-captain-maya.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captain-maya.jpg", width: 80%)]
 
 La capitana Maya ho fa diferent. Diu: "Navegueu fins a l'Illa del Tresor. Aneu al moll nord -- el de fusta a prop de la palmera gran. Hi ha una esquerda a la tercera post per l'esquerra. Fa uns trenta centimetres de llarg. Agafeu les posts de roure del magatzem numero quatre. Reemplaceu la post esquerdada. Despres aboqueu una galleda d'aigua al moll per assegurar-vos que ja no goteja."
 
@@ -42,7 +42,7 @@ La teva tripulacio robot es intel·ligent. Molt intel·ligent en algunes coses. 
 
 Pero no sempre saben que _vols dir_. Si dius "arregleu el vaixell," potser arreglen la part equivocada. Si dius "feu-ho millor," potser canvien coses que t'agradaven. Si dius "aneu a explorar," potser naveguen cap a l'ocea equivocat.
 
-#image("../../assets/kids/ch01-workbench.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-workbench.jpg", width: 80%)]
 
 == La Regla del Banc de Treball
 
@@ -70,7 +70,7 @@ La teva tripulacio es genial mirant coses i entenent-les. Pero no son gaire bons
 
 == Diari del Capita
 
-#image("../../assets/kids/ch01-captains-log.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captains-log.jpg", width: 80%)]
 
 _Benvolgut Diari del Capita,_
 

@@ -1,5 +1,9 @@
 = Testing Som Feedback Loop
 
+#figure(
+  image("../../assets/illustrations/ch08-feedback-loop.jpg", width: 50%),
+)
+
 To codebases. Samme agent. Samme opgave: "Tilføj en rate limiter til API'et der returnerer 429 efter 100 requests per minut per bruger."
 
 I den første codebase er der ingen tests. Agenten læser route handlers, vælger et middleware-indsætningspunkt, skriver rate-limiting-logikken og... stopper. Den har ingen måde at vide om det virkede. Den kan ikke starte serveren og sende 101 requests for at se hvad der sker. Den kan ikke tjekke om eksisterende endpoints stadig svarer korrekt. Den producerer en diff, siger "Jeg har tilføjet rate limiting," og håber på det bedste. Du reviewer koden, kniber øjnene sammen, synes den ser rimelig ud, merger den, og opdager i produktion tre dage senere at middlewaren var mountet i forkert rækkefølge og aldrig blev eksekveret. Hver request sejlede igennem. Rate limiteren var dekoration.
@@ -17,6 +21,8 @@ Der er noget foruroligende ved det i starten. Din testsuite — den du skrev for
 En agent kan ikke kigge på en UI og fortælle om den ser rigtig ud. Den kan ikke mærke om et API-svar er "hurtigt nok." Den kan ikke intuitivt vide om en refaktorering bevarede den subtile adfærd brugere afhænger af. Hvad den _kan_ gøre er at køre din testsuite og læse resultaterne.
 
 Tests bliver agentens primære feedback-mekanisme. Grønt betyder "fortsæt." Rødt betyder "prøv igen." Ingen tests betyder at agenten flyver blindt — gætter om dens ændringer virker, uden mulighed for at verificere.
+
+Men tests er ikke bare feedback — de er et _værktøj_ agenten bruger autonomt. Når en agent kan køre `npm test` eller `pytest` på egen hånd, bliver testsuiten et selvbetjeningsverifikationssystem. Agenten behøver ikke at du kører testene og indsætter outputtet. Den kører dem, læser dem og itererer — alt via sine værktøjer. Den autonomi er det der forvandler en testsuite fra et sikkerhedsnet til en motor.
 
 Det er derfor utestede codebases er svære at arbejde med agentisk. Det er ikke bare et kvalitetsproblem — det er et informationsproblem. Uden tests har agenten intet signal. Det er som at bede nogen om at hænge en billedramme op med bind for øjnene. De rammer måske rigtigt, men det ville du ikke satse på.
 

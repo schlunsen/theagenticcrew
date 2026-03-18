@@ -1,6 +1,6 @@
 = Cuando las Cosas Salen Mal
 
-#image("../../assets/kids/ch06-storm.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-storm.jpg", width: 80%)]
 
 Todo capitán tiene días malos. Días en que la tripulación hace algo tan tonto, tan inesperado, tan completamente disparatado que lo único que puedes hacer es sentarte, respirar hondo y empezar de nuevo.
 
@@ -8,7 +8,7 @@ Estas son mis historias favoritas del Diario del Capitán. Todas pasaron de verd
 
 == Historia 1: El Reparador Entusiasta
 
-#image("../../assets/kids/ch06-eager-refactorer.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-eager-refactorer.jpg", width: 80%)]
 
 Un martes, noté un pequeño problema. La bandera del mástil principal estaba colgando al revés. Arreglo fácil, ¿verdad? Solo voltear la bandera.
 
@@ -28,7 +28,7 @@ Rusty se veía herido. "¡Pero hice todo _mejor_!"
 
 == Historia 2: El Mapa Inventado
 
-#image("../../assets/kids/ch06-made-up-map.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-made-up-map.jpg", width: 80%)]
 
 Necesitábamos encontrar la Isla de los Cocos. Le pedí a Compass que trazara una ruta.
 
@@ -46,7 +46,7 @@ Navegamos medio día antes de que me diera cuenta de que nos dirigíamos hacia m
 
 == Historia 3: El Bucle
 
-#image("../../assets/kids/ch06-the-loop.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-the-loop.jpg", width: 80%)]
 
 El ancla estaba atascada. Le pedí a Echo que la subiera.
 
@@ -84,7 +84,7 @@ La regla se había desvanecido. Demasiadas otras tareas se habían acumulado enc
 
 == Historia 5: El Empacador Servicial
 
-#image("../../assets/kids/ch06-overpack.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-overpack.jpg", width: 80%)]
 
 Le pedí a Rusty que empacara un almuerzo de picnic para nuestro paseo del día. "Algo sencillo," dije. "Sándwiches y agua."
 
@@ -100,7 +100,7 @@ La canasta del picnic ahora pesaba cien kilos. Ni siquiera podíamos levantarla 
 
 == La Gran Lección
 
-#image("../../assets/kids/ch06-captain-thinking.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-captain-thinking.jpg", width: 80%)]
 
 Esto es lo importante de todas estas historias. La tripulación no estaba _tratando_ de causar problemas. Rusty estaba siendo servicial. Compass estaba siendo seguro de sí mismo. Echo estaba siendo persistente. ¡Esas son todas cualidades _buenas_! Solo necesitan un capitán que las apunte en la dirección correcta.
 

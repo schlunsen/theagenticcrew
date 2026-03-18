@@ -1,6 +1,6 @@
 = La Llista de Comprovacio del Capita
 
-#image("../../assets/kids/ch04-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-checklist.jpg", width: 80%)]
 
 Deixa'm explicar-te la historia de dos vaixells.
 
@@ -10,7 +10,7 @@ Vegem com va anar.
 
 == Vaixell Numero U: La Sort
 
-#image("../../assets/kids/ch04-ship-one.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-ship-one.jpg", width: 80%)]
 
 El capita Finn va dir a la seva tripulacio "Aneu a buscar els mangos de l'Illa dels Mangos."
 
@@ -28,7 +28,7 @@ Tenien rao. Mai no els va dir _que_ havien de comprovar.
 
 == Vaixell Numero Dos: La Llista de Comprovacio
 
-#image("../../assets/kids/ch04-ship-two.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-ship-two.jpg", width: 80%)]
 
 La capitana Lily va fer una cosa diferent. Abans que la seva tripulacio marxes, va escriure una llista de comprovacio en una pissarra gran:
 
@@ -48,7 +48,7 @@ Mateixa tripulacio. Mateixa illa. Mateixos mangos. La diferencia era la llista d
 
 == Per Que les Llistes de Comprovacio Son Magiques
 
-#image("../../assets/kids/ch04-magic-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-magic-checklist.jpg", width: 80%)]
 
 Una llista de comprovacio fa dues coses increibles:
 
@@ -72,7 +72,7 @@ Per que? Perque escriure una llista et forca a _tu_ a pensar amb claredat. Quan 
 
 Si no pots escriure una llista per a una feina, probablement no entens la feina prou be encara. I si _tu_ no l'entens, la teva tripulacio segur que tampoc.
 
-#image("../../assets/kids/ch04-writing-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-writing-checklist.jpg", width: 80%)]
 
 == Que Fa Bona una Llista de Comprovacio?
 
@@ -100,7 +100,7 @@ Amb una llista, la tripulacio fa la feina be la primera vegada. Un viatge. Un di
 
 Uns minuts escrivint una llista et poden estalviar hores de repeticions. Es un tracte forca bo.
 
-#image("../../assets/kids/ch04-time-saved.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-time-saved.jpg", width: 80%)]
 
 == Llistes de Comprovacio per a la Teva Tripulacio Robot
 

@@ -22,6 +22,8 @@ An agent navigating an unfamiliar codebase does the same thing a new hire does: 
 
 If your project follows strong conventions, the agent picks up the patterns quickly and produces code that fits in. If every file is a snowflake — different naming, different structure, different styles — the agent flounders. It doesn't know which pattern to follow, so it invents its own, and the result feels foreign.
 
+There's a deeper reason conventions matter, and it connects to tools. Conventions work because they make the agent's _tools_ more effective. When an agent runs `ls` or `find` or `grep`, consistent naming and structure mean those tools return useful results. A project where tests always live in `__tests__/` means `find . -name "*.test.ts"` always works. Conventions aren't just implicit context — they're what makes the agent's autonomous exploration productive.
+
 Convention is _implicit context_. It's information the agent absorbs from the structure of your code without you having to explain it. When your test files always live next to the source files they test, named `foo.test.ts` beside `foo.ts`, the agent doesn't need to be told where to put a new test. It reads the directory, sees the pattern, and follows it. When your API handlers all export the same shape — a handler function, a schema, a set of middleware — the agent produces a new handler that exports exactly the same shape.
 
 This is why opinionated frameworks have always been productive, and why they're _even more_ productive in the agentic era. Rails, Next.js, Laravel — they impose a structure. That structure isn't just for humans. It's a language the agent speaks fluently.

@@ -22,6 +22,8 @@ An agent can't look at a UI and tell if it looks right. It can't feel whether an
 
 Tests become the agent's primary feedback mechanism. Green means "keep going." Red means "try again." No tests means the agent is flying blind — guessing whether its changes work, with no way to verify.
 
+But tests aren't just feedback — they're a _tool_ the agent uses autonomously. When an agent can run `npm test` or `pytest` on its own, the test suite becomes a self-service verification system. The agent doesn't need you to run the tests and paste the output. It runs them, reads them, and iterates — all through its tools. That autonomy is what turns a test suite from a safety net into an engine.
+
 This is why untested codebases are hard to work with agentically. It's not just a quality problem — it's an information problem. Without tests, the agent has no signal. It's like asking someone to hang a picture frame while blindfolded. They might get it right, but you wouldn't bet on it.
 
 And the quality of that signal matters enormously. A test that says `FAIL: expected 429, got 200` is actionable. The agent knows exactly what went wrong and can reason about why. A test that says `FAIL: assertion error` with no context is barely better than silence. The clarity of your test output is the clarity of the agent's vision.

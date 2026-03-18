@@ -1,6 +1,6 @@
 = Bienvenido a Bordo
 
-#image("../../assets/kids/ch01-two-captains.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-two-captains.jpg", width: 80%)]
 
 Algo grande está pasando con los ordenadores. Antes solo hacían lo que les decías, paso a paso, letra a letra. Si querías que un ordenador dibujara un gato, tenías que describir cada bigote.
 
@@ -14,7 +14,7 @@ Déjame contarte una historia sobre dos capitanes.
 
 La Capitana Alex y la Capitana Maya tienen el mismo barco. La misma tripulación. El mismo océano. Y las dos necesitan navegar hasta la Isla del Tesoro para arreglar un muelle con goteras.
 
-#image("../../assets/kids/ch01-captain-alex.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captain-alex.jpg", width: 80%)]
 
 La Capitana Alex se acerca a la tripulación y dice: "Hay un problema en la isla. Id a arreglarlo."
 
@@ -24,7 +24,7 @@ Vuelven orgullosos. "¡Arreglamos muchas cosas!"
 
 Pero el muelle sigue con goteras.
 
-#image("../../assets/kids/ch01-captain-maya.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captain-maya.jpg", width: 80%)]
 
 La Capitana Maya lo hace de otra manera. Dice: "Navegad hasta la Isla del Tesoro. Id al muelle norte -- el de madera cerca de la palmera grande. Hay una grieta en la tercera tabla desde la izquierda. Mide unos treinta centímetros. Coged las tablas de roble del almacén número cuatro. Reemplazad la tabla agrietada. Luego echad un cubo de agua sobre el muelle para aseguraros de que ya no gotea."
 
@@ -42,7 +42,7 @@ Tu tripulación robot es inteligente. Muy inteligente en algunos sentidos. Puede
 
 Pero no siempre saben lo que _tú_ quieres decir. Si dices "arreglad el barco", podrían arreglar la parte equivocada. Si dices "mejoradlo", podrían cambiar cosas que te gustaban. Si dices "id a explorar", podrían navegar al océano equivocado.
 
-#image("../../assets/kids/ch01-workbench.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-workbench.jpg", width: 80%)]
 
 == La Regla del Banco de Trabajo
 
@@ -70,7 +70,7 @@ Tu tripulación es genial mirando cosas y descubriéndolas. Pero no son buenos l
 
 == Diario del Capitán
 
-#image("../../assets/kids/ch01-captains-log.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captains-log.jpg", width: 80%)]
 
 _Querido Diario del Capitán,_
 

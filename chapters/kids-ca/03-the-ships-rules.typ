@@ -1,6 +1,6 @@
 = Les Regles del Vaixell
 
-#image("../../assets/kids/ch03-rules-board.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-rules-board.jpg", width: 80%)]
 
 Imagina que has contractat un nou membre de la tripulacio. Es el seu primer dia. Esta emocionat. Vol ajudar. Pregunta "Que haig de fer?"
 
@@ -14,7 +14,7 @@ Un bon vaixell necessita regles. I la teva tripulacio robot? _Realment_ necessit
 
 Al teu vaixell, cada feina pertany a una de tres categories. Diguem-ne Verd, Groc i Vermell.
 
-#image("../../assets/kids/ch03-traffic-light.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-traffic-light.jpg", width: 80%)]
 
 *Feines verdes: "Endavant!"* Aquestes son feines segures que la tripulacio pot fer sola. Mirar el mapa. Comptar les provisions. Consultar el temps. Llegir el diari del vaixell. No pot passar res dolent si s'equivoquen. Deixa'ls fer!
 
@@ -30,7 +30,7 @@ Pero tambe notes que Compass segueix suggerint rutes pels "Tunels de Cristall" (
 
 == La Taula de Mescles
 
-#image("../../assets/kids/ch03-mixing-board.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-mixing-board.jpg", width: 80%)]
 
 Pensa en una taula de mescles -- d'aquelles amb cursors que pugen i baixen. Els DJ la fan servir per controlar la musica. Cada cursor controla un so diferent.
 
@@ -63,7 +63,7 @@ Les millors regles son estrictes alla on importa i relaxades alla on no. La teva
 
 == L'Illa de Practiques
 
-#image("../../assets/kids/ch03-practice-island.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-practice-island.jpg", width: 80%)]
 
 Ara aqui tens una de les millors idees que pot tenir un capita: l'Illa de Practiques.
 
@@ -75,7 +75,7 @@ Vols que Compass provi una ruta nova? Deixa-la navegar al voltant de l'Illa de P
 
 Aixo s'anomena una _sandbox_. Com una caixa de sorra al parc, es un lloc segur per provar coses. Pots construir un castell de sorra i aixafar-lo. Pots cavar un forat i tornar-lo a tapar. Res del que facis a la sandbox afecta res fora de la sandbox.
 
-#image("../../assets/kids/ch03-sandbox-play.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-sandbox-play.jpg", width: 80%)]
 
 == Per Que l'Illa de Practiques Es Important
 

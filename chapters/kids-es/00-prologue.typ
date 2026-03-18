@@ -1,6 +1,6 @@
 = ¿Se Está Arreglando Solo el Ordenador?
 
-#image("../../assets/kids/prologue-screen.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-screen.jpg", width: 80%)]
 
 Estás sentado en la mesa de la cocina, comiendo cereales. Tu mamá está en su portátil. Escribe algo y luego se recuesta. Tú la observas.
 
@@ -20,7 +20,7 @@ Observas un minuto más. Las líneas rojas dejan de aparecer. Todo es verde. Tu 
 
 "Listo", dice.
 
-#image("../../assets/kids/prologue-ship-wheel.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-ship-wheel.jpg", width: 80%)]
 
 == Tú Eres el Capitán
 
@@ -40,4 +40,4 @@ Tu trabajo es dirigir. Dar buenas instrucciones. Comprobar el trabajo. Y saber c
 
 ¿Listo para conocer a tu tripulación? Pasa la página.
 
-#image("../../assets/kids/prologue-ship-horizon.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-ship-horizon.jpg", width: 80%)]

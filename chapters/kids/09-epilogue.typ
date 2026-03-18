@@ -1,6 +1,6 @@
 = Go Build Something
 
-#image("../../assets/kids/ch09-sunset.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-sunset.jpg", width: 80%)]
 
 You made it, Captain.
 
@@ -10,7 +10,7 @@ Not bad for someone who's probably still in pajamas. (Kidding. Sort of.)
 
 == The Crew Changes. The Ship Stays.
 
-#image("../../assets/kids/ch09-ship.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-ship.jpg", width: 80%)]
 
 Here's one last thing I want you to remember. It might be the most important thing in the whole book.
 
@@ -30,7 +30,7 @@ The best captains in history weren't the ones who waited for perfect weather. Th
 
 == One Last Order, Captain
 
-#image("../../assets/kids/ch09-horizon.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-horizon.jpg", width: 80%)]
 
 Remember the beginning of this book? You were sitting at the kitchen table, eating cereal. Your mom's AI helper was writing code on the screen. Green lines. Red lines. You asked "Is it fixing itself?"
 

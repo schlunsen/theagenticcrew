@@ -1,6 +1,6 @@
 = Capitán de una Flota
 
-#image("../../assets/kids/ch08-fleet.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-fleet.jpg", width: 80%)]
 
 Hasta ahora, has sido el capitán de un barco con una tripulación pequeña. ¿Pero qué pasa si el trabajo es realmente, _realmente_ grande?
 
@@ -20,7 +20,7 @@ Si un solo miembro de la tripulación hace los tres trabajos, uno tras otro, tom
 
 Esa es la magia de trabajar en paralelo. En vez de un barco haciendo todo, tienes una pequeña flota. Cada barco se encarga de una parte de la misión. Todos trabajan al mismo tiempo. Cuando terminan, juntas las piezas.
 
-#image("../../assets/kids/ch08-three-ships.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-three-ships.jpg", width: 80%)]
 
 == Pero Aquí Viene lo Complicado
 
@@ -50,7 +50,7 @@ Antes de enviar tu flota, necesitas pensar con cuidado cómo dividir el trabajo.
 
 Dividir bien el trabajo es una de las partes más difíciles de ser capitán de flota. Pero también es una de las cosas más poderosas que puedes aprender.
 
-#image("../../assets/kids/ch08-planning-table.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-planning-table.jpg", width: 80%)]
 
 == Juntando las Piezas
 
@@ -74,7 +74,7 @@ Te conviertes más en un entrenador que en un jugador. Un entrenador no corre en
 
 == Equipos de Capitanes
 
-#image("../../assets/kids/ch08-team-captains.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-team-captains.jpg", width: 80%)]
 
 Aquí hay un nivel más para pensar. ¿Qué pasa si no eres el único capitán?
 
@@ -116,4 +116,4 @@ Ahora inténtalo de nuevo. Esta vez, pasen dos minutos _planeando_ juntos primer
 
 ¿El segundo intento salió mejor? ¡Ese es el poder de la coordinación!
 
-#image("../../assets/kids/ch08-harbor.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-harbor.jpg", width: 80%)]

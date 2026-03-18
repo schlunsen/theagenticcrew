@@ -1,6 +1,6 @@
 = Mød Mandskabet
 
-#image("../../assets/kids/ch02-crew-lineup.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-crew-lineup.jpg", width: 80%)]
 
 Nu er det tid til at møde robotsømændene på dit skib. De har hver deres talenter. De har hver deres problemer. Og at lære hvem der er hvem, gør dig til en meget bedre kaptajn.
 
@@ -18,7 +18,7 @@ Kan du se forskellen? Skattejægeren _planlægger_, _prøver_, _tjekker_ og _pr�
 
 Nogle hjælpere er simple. Du spørger, de svarer. Nogle hjælpere er mere avancerede. De kan kigge på dine ting og foreslå større svar. Og nogle hjælpere -- agenterne -- kan faktisk gå ud og _gøre ting_ på egen hånd. De læser filer. De kører tests. De retter fejl. Og de bliver ved, indtil opgaven er færdig, eller de går i stå.
 
-#image("../../assets/kids/ch02-agent-spectrum.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-agent-spectrum.jpg", width: 80%)]
 
 == Fisketælleren
 
@@ -36,7 +36,7 @@ Lad os nu møde dine tre mandskabsmedlemmer.
 
 == Rusty
 
-#image("../../assets/kids/ch02-rusty.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-rusty.jpg", width: 80%)]
 
 Rusty er det mest entusiastiske medlem af dit mandskab. Han _elsker_ at arbejde. Du har aldrig mødt nogen, der gerne vil hjælpe så meget. I det øjeblik du giver ham en opgave, lyser hans øjne op, og han sætter i gang.
 
@@ -56,7 +56,7 @@ Rustys svaghed: han går langt ud over, hvad du bad om. Du er nødt til at holde
 
 == Compass
 
-#image("../../assets/kids/ch02-compass.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-compass.jpg", width: 80%)]
 
 Compass er din navigatør. Hun er god til at lægge planer. Giv hende en destination, og hun finder ruten, vurderer hvor lang tid det vil tage, og lister alt det udstyr, du får brug for.
 
@@ -76,7 +76,7 @@ Compass' svaghed: hun finder nogle gange på fakta, og hun lyder helt sikker, n�
 
 == Echo
 
-#image("../../assets/kids/ch02-echo.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-echo.jpg", width: 80%)]
 
 Echo er mandskabets budbringer. Han husker instruktioner perfekt -- i starten. Du fortæller ham "hent tolv tønder vand, fire kasser appelsiner og det røde ankerreb," og han gentager det ord for ord.
 
@@ -98,7 +98,7 @@ Echos svaghed: han glemmer tidligere instruktioner under lange, komplicerede opg
 
 == Dit Mandskab, Dit Ansvar
 
-#image("../../assets/kids/ch02-crew-ship.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-crew-ship.jpg", width: 80%)]
 
 Så der har du dem. Rusty, Compass og Echo. Ivrige, kloge og pålidelige -- på deres egne måder. Og fejlbehæftede -- på deres egne måder.
 

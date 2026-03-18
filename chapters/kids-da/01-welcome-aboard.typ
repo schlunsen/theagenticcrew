@@ -1,6 +1,6 @@
 = Velkommen Om Bord
 
-#image("../../assets/kids/ch01-two-captains.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-two-captains.jpg", width: 80%)]
 
 Der sker noget stort med computere. De plejede kun at gøre, hvad man sagde til dem, trin for trin, bogstav for bogstav. Hvis du ville have en computer til at tegne en kat, skulle du beskrive hver eneste knurhår.
 
@@ -14,7 +14,7 @@ Lad mig fortælle dig en historie om to kaptajner.
 
 Kaptajn Alex og Kaptajn Maya har begge det samme skib. Det samme mandskab. Det samme hav. Og de skal begge sejle til Skatteøen for at reparere en utæt bro.
 
-#image("../../assets/kids/ch01-captain-alex.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captain-alex.jpg", width: 80%)]
 
 Kaptajn Alex går hen til mandskabet og siger: "Der er et problem på øen. Gå ud og fiks det."
 
@@ -24,7 +24,7 @@ De kommer tilbage, stolte. "Vi fikset en masse ting!"
 
 Men broen? Stadig utæt.
 
-#image("../../assets/kids/ch01-captain-maya.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captain-maya.jpg", width: 80%)]
 
 Kaptajn Maya gør det anderledes. Hun siger: "Sejl til Skatteøen. Gå hen til nordbroen -- den af træ ved den store palme. Der er en revne i det tredje bræt fra venstre. Den er cirka tredive centimeter lang. Tag egebræderne fra lagerkasse nummer fire. Udskift det revnede bræt. Hæld derefter en spand vand på broen for at sikre, at lækagen er væk."
 
@@ -42,7 +42,7 @@ Dit robotmandskab er klogt. Rigtig klogt på nogle måder. De kan tælle en mill
 
 Men de ved ikke altid, hvad _du_ mener. Hvis du siger "fiks skibet," reparerer de måske den forkerte del. Hvis du siger "gør det bedre," ændrer de måske ting, du godt kunne lide. Hvis du siger "gå på opdagelse," sejler de måske ud i det helt forkerte hav.
 
-#image("../../assets/kids/ch01-workbench.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-workbench.jpg", width: 80%)]
 
 == Værkstedsreglen
 
@@ -70,7 +70,7 @@ Dit mandskab er gode til at kigge på ting og finde ud af dem. Men de er ikke go
 
 == Kaptajnens Log
 
-#image("../../assets/kids/ch01-captains-log.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captains-log.jpg", width: 80%)]
 
 _Kære Kaptajnens Log,_
 

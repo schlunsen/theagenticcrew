@@ -1,5 +1,9 @@
 = Når Agenter Tager Fejl
 
+#figure(
+  image("../../assets/illustrations/ch13-storm.jpg", width: 80%),
+)
+
 Enhver ingeniør der arbejder med agenter længe nok har en samling af disse historier. De øjeblikke hvor du læner dig tilbage i stolen, stirrer på skærmen og mumler noget der ikke kan trykkes. De er ydmygende. De er lærerige. Og de er _uundgåelige_.
 
 Dette kapitel er en samling krigshistorier — ting der faktisk går galt når du giver rigtigt arbejde til en agent. Ikke hypotetiske. Ikke konstruerede demoer. Den slags fejl der koster dig en eftermiddag, en deploy eller din tro på automatisering. Hver en kan kobles tilbage til principper fra tidligere kapitler, for principper er billige indtil man lærer dem på den hårde måde.
@@ -87,6 +91,8 @@ Hver eneste af disse historier har den samme grundlæggende årsag: agenten gjor
 Den ivrige refaktør var hjælpsom. Det hallucinerede bibliotek var kreativt. Det uendelige loop var vedholdende. Det selvsikre forkerte svar var testdrevet. Konteksthukommelsestabet var en begrænsning, ikke et valg. Afhængighedslawinen var grundig.
 
 Ingen af disse er agentbugs. De er _workflow_-bugs. Fixet er aldrig "brug en klogere agent." Fixet er altid det samme: strammere scope, bedre feedback loops, mere struktur, kortere sessioner og et menneske der forbliver engageret.
+
+Og i stigende grad inkluderer fixet _at udstyre agenten med bedre værktøjer_. Det Hallucinerede Bibliotek ville være fanget hvis agenten kunne køre `npm install` og testsuiten. Det Uendelige Loop ville have været begrænset af iterationsgrænser i toolingen. Krigshistorier er ofte historier om agenter der manglede de rigtige værktøjer eller guardrails, ikke agenter der manglede intelligens.
 
 Agenter tager fejl. Det gør mennesker også. Forskellen er at mennesker tager fejl langsomt nok til at det bemærkes. Agenter tager fejl med autocomplete-hastighed, og når du kigger op fra din kaffe har toogtyve filer ændret sig.
 

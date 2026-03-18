@@ -1,6 +1,6 @@
 = Is the Computer Fixing Itself?
 
-#image("../../assets/kids/prologue-screen.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-screen.jpg", width: 80%)]
 
 You are sitting at the kitchen table, eating cereal. Your mom is at her laptop. She types something, leans back, and picks up her coffee. You watch.
 
@@ -28,7 +28,7 @@ You go back to your cereal, but you keep thinking about it. A helper that builds
 
 What would _you_ tell it to build?
 
-#image("../../assets/kids/prologue-ship-wheel.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-ship-wheel.jpg", width: 80%)]
 
 == You Are the Captain
 
@@ -54,4 +54,4 @@ We're going to get you ready for that.
 
 Ready to come aboard? Turn the page.
 
-#image("../../assets/kids/prologue-ship-horizon.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-ship-horizon.jpg", width: 80%)]

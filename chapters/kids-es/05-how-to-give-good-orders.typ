@@ -1,6 +1,6 @@
 = Cómo Dar Buenas Órdenes
 
-#image("../../assets/kids/ch05-notepad.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-notepad.jpg", width: 80%)]
 
 == El Bloc de Notas del Capitán
 
@@ -16,7 +16,7 @@ Así es como funciona tu tripulación robot. Tienen un bloc de notas en su cabez
 
 El truco está en poner _justo lo necesario_ en el bloc de notas.
 
-#image("../../assets/kids/ch05-clear-vs-vague.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-clear-vs-vague.jpg", width: 80%)]
 
 == Órdenes Claras vs. Órdenes Confusas
 
@@ -48,7 +48,7 @@ Es mucho mejor dar un trabajo a la vez. Deja que Rusty termine la vela. Comprueb
 
 Los trabajos pequeños son más fáciles de comprobar. Y si algo sale mal, solo tienes que rehacer un poquito -- no todo.
 
-#image("../../assets/kids/ch05-rulebook.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-rulebook.jpg", width: 80%)]
 
 == El Reglamento del Barco
 
@@ -101,4 +101,4 @@ Ahora dale esas cinco oraciones a alguien de tu familia. ¿Puede hacer el sándw
 
 Así se siente dar órdenes a tu tripulación. Cuanto más claro escribas, ¡mejor sale el sándwich -- es decir, mejores son los resultados!
 
-#image("../../assets/kids/ch05-sandwich.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-sandwich.jpg", width: 80%)]

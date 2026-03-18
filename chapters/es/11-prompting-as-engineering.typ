@@ -22,7 +22,13 @@ Esto no le dice casi nada al agente. ¿Qué bug de autenticación? ¿Dónde se m
 
 Esto es un animal completamente diferente. El agente conoce el síntoma, la ubicación sospechada, y cómo verificar la corrección. Puede ir directamente al código relevante, entender el problema y validar su solución — todo sin adivinar.
 
-El patrón es simple. _Qué_ está roto o se necesita. _Dónde_ mirar. _Cómo_ verificar. Cada minuto que pasas haciendo tu prompt preciso te ahorra cinco minutos revisando la salida equivocada.
+*Con herramientas:* "El endpoint de login devuelve 401 para tokens válidos cuando la caché de sesiones está fría. El test que falla es `TestColdCacheLogin`. Investiga, arréglalo y asegúrate de que todos los tests de autenticación pasen."
+
+Fíjate en lo que falta: sin ruta de archivo, sin nombre de función. El agente tiene `grep`, `find` y el ejecutor de tests. Puede _descubrir_ dónde vive `TestColdCacheLogin` y trazar el camino del código por sí mismo. Lo que le diste es el _qué_ y el _por qué_ — el conocimiento de dominio que las herramientas no pueden proporcionar. El detalle de la caché fría, el síntoma, el nombre del test como hilo del que tirar. El agente hace el trabajo mecánico de localizar el código.
+
+Los tres niveles son útiles. A veces _sí_ conoces el archivo y la función exactos, y darlos ahorra al agente treinta segundos de búsqueda. Pero el tercer nivel representa el modelo mental maduro: proporciona solo lo que el agente no puede encontrar por sí mismo. La descripción del problema, el contexto de dominio, la intención. Deja que las herramientas se encarguen del descubrimiento.
+
+El patrón es simple. _Qué_ está roto o se necesita. _Dónde_ mirar (si ya lo sabes — no vayas a buscar solo para completar esto). _Cómo_ verificar. Cada minuto que pasas haciendo tu prompt preciso te ahorra cinco minutos revisando la salida equivocada.
 
 == Especificación de Restricciones
 
@@ -58,6 +64,37 @@ En lugar de "construye un panel de usuario," escribes:
 Cada paso es un prompt autocontenido. Cada uno tiene un resultado verificable. Cada uno se construye sobre la salida verificada del paso anterior. Si el paso dos sale mal, lo detectas antes de haber desperdiciado tiempo en el paso tres.
 
 Esto no es solo buen prompting — es buena ingeniería. Estás aplicando las mismas habilidades de descomposición que usarías al planificar un sprint o desglosar un pull request. La unidad de trabajo es lo suficientemente pequeña para revisar, lo suficientemente pequeña para testear, y lo suficientemente pequeña para tirar si está mal.
+
+== Prompting para Paralelismo
+
+Hay algo que la mayoría de la gente no ve: puedes decirle al agente que paralelice.
+
+Las herramientas agénticas modernas — Claude Code, Cursor, Cline — pueden lanzar sub-agentes. Cada sub-agente tiene su propio contexto, su propio espacio de trabajo, su propio hilo de ejecución. Se ejecutan simultáneamente. El agente padre coordina, espera resultados y ensambla la salida. Esto no es una funcionalidad oculta que necesitas desbloquear. Está ahí. Pero casi nadie hace prompts para ello.
+
+Considera la diferencia. Tienes una funcionalidad que toca tres módulos independientes — la API, el worker y el servicio de notificaciones. El enfoque secuencial:
+
+_"Implementa el handler de webhook en el módulo API. Luego actualiza el worker para procesar eventos webhook. Luego añade notificaciones para webhooks fallidos."_
+
+El agente hace cada paso uno a la vez. Veinte minutos, quizá treinta. Bien.
+
+Ahora el enfoque paralelo:
+
+_"Esta funcionalidad toca tres módulos independientes. Lanza sub-agentes para trabajar en ellos en paralelo: uno para el handler de webhook en el módulo API, uno para el worker que procesa eventos webhook, y uno para el servicio de notificaciones que alerta sobre fallos. Cada módulo tiene su propio directorio y sus propios tests. Fusiona los resultados cuando los tres terminen."_
+
+El mismo trabajo. Un tercio del tiempo de reloj. La palabra clave en ese prompt es _independientes_ — le estás diciendo al agente que estas piezas no dependen unas de otras, así que es seguro paralelizar. Le estás dando permiso para ser rápido.
+
+Esto funciona porque _tú_ tienes la visión general de la arquitectura. Sabes qué módulos están acoplados y cuáles no. Sabes qué piezas se pueden construir simultáneamente y cuáles necesitan ser secuenciales. El agente no siempre sabe esto — por defecto hace las cosas de una en una, porque lo secuencial es seguro. Tu trabajo es ver el paralelismo y hacerlo explícito.
+
+Algunos patrones de prompting que fomentan el paralelismo:
+
+- *"Estas tareas son independientes — ejecútalas en paralelo."* Directo y efectivo. El agente sabe que tiene permiso.
+- *"Lanza un sub-agente para cada una de estas."* Instrucción explícita para usar la capacidad de ejecución paralela.
+- *"Trabaja en la API y el frontend simultáneamente — comparten la interfaz definida en `types.ts` pero no dependen de las implementaciones del otro."* Contexto sobre _por qué_ el paralelismo es seguro.
+- *"Empieza los tres y repórtame cuando estén listos."* Lo enmarca como una tarea de coordinación, que es exactamente lo que es.
+
+El cambio de modelo mental es sutil pero importante. No solo le estás diciendo al agente _qué_ construir — le estás diciendo _cómo organizar el trabajo_. Estás siendo un tech lead, no solo un escritor de tickets. Estás diciendo "he mirado este problema, veo tres flujos independientes, y quiero que atiendas los tres simultáneamente."
+
+Este es el apalancamiento de ingeniería que los desarrolladores experimentados aportan al trabajo agéntico. Un ingeniero junior puede no saber qué piezas es seguro paralelizar. Tú sí. Y cuando codificas ese conocimiento en el prompt, el agente se vuelve dramáticamente más rápido — no porque sea más inteligente, sino porque le diste un mejor plan.
 
 == El Prompt Como Especificación
 
@@ -143,6 +180,8 @@ Algunos hábitos de prompting consistentemente producen malos resultados. Aprend
 *Prompts fregadero.* "Arregla el bug de autenticación, también refactoriza la capa de base de datos, y ya que estás actualiza el README y añade tipos TypeScript al cliente de API." Estas son cuatro tareas separadas metidas en un prompt. El agente intentará todas, no hará ninguna bien, y producirá un diff tan grande que revisarlo toma más tiempo que hacer el trabajo tú mismo. Un prompt, una tarea.
 
 *Asumir contexto compartido.* "Hazlo igual que hicimos con el módulo de pagos." El agente no recuerda tu última sesión. No sabe lo que "nosotros" decidimos en el standup. Cada prompt empieza desde cero. Proporciona el contexto explícitamente, cada vez.
+
+*Hacer el trabajo del agente por él.* Pasas cinco minutos buscando en el código base para encontrar el archivo exacto, número de línea y nombre de función, y luego lo pegas todo en tu prompt. Ese es trabajo que las herramientas del agente pueden hacer en segundos. Proporciona el _problema_ — el síntoma, el contexto, el nombre del test que falla. Deja que el agente investigue. Para eso son sus herramientas. Tu tiempo se emplea mejor en las partes que el agente _no puede_ hacer: entender el dominio, definir las restricciones, saber por qué este comportamiento es incorrecto en primer lugar.
 
 == El Prompting Es una Habilidad
 

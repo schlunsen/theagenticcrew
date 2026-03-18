@@ -14,7 +14,7 @@ Tres capacidades separan a un agente de un chatbot sofisticado:
 
 *Planificación.* Un agente descompone un objetivo en pasos. "Añade autenticación a esta app" se convierte en una serie de acciones — leer el código base, elegir el framework, crear middleware, actualizar rutas, añadir tests, verificar. Un chatbot te da un bloque de código. Un agente te da un proceso.
 
-*Uso de herramientas.* Un agente interactúa con el mundo — lee tus archivos, ejecuta tus tests, examina la salida de errores. Cada llamada a una herramienta proporciona nueva información que da forma a la siguiente decisión. Este bucle de retroalimentación es lo que hace poderosos a los agentes: no están generando código en el vacío, están generando código y _verificándolo_.
+*Uso de herramientas.* Un agente interactúa con el mundo — lee tus archivos, ejecuta tus tests, examina la salida de errores. Cada llamada a una herramienta proporciona nueva información que da forma a la siguiente decisión. Este bucle de retroalimentación es lo que hace poderosos a los agentes: no están generando código en el vacío, están generando código y _verificándolo_. Y aquí está lo que la gente no percibe: las herramientas que le das a un agente definen qué tipo de agente _es_. Un LLM con solo texto de entrada y texto de salida es un chatbot. Dale acceso a archivos, ejecución de comandos e integraciones con sistemas externos, y se convierte en un ingeniero. Las herramientas son el ascenso.
 
 *Iteración.* Un agente puede intentar, fallar e intentar de nuevo. Escribe una función, ejecuta los tests, ve un fallo, lee el error, ajusta, vuelve a ejecutar. Actúa, observa, ajusta. Un chatbot te da un solo intento. Un agente te da un ciclo.
 
@@ -49,5 +49,13 @@ No pienses en los agentes como herramientas. No pienses en ellos como reemplazos
 Son rápidos donde tú eres lento. Son pacientes donde tú eres impaciente. Pueden mantener más texto en la memoria de trabajo que tú. Nunca se cansan, nunca se frustran, nunca tienen un mal día.
 
 Pero no saben qué importa. No saben lo que el usuario realmente necesita. No saben qué deuda técnica es aceptable y cuál es una bomba de relojería. No saben cuándo rechazar un requisito. No saben cuándo la especificación está equivocada.
+
+La mejor analogía que he encontrado es _Rain Man_. Tú eres Tom Cruise. El agente es Dustin Hoffman.
+
+Raymond puede contar cartas como ningún humano vivo — ve patrones en montañas de datos, los procesa instantáneamente, nunca se cansa, nunca pierde el foco. Pero no puede navegar por el suelo de un casino. No sabe _por qué_ están contando cartas. No sabe cuándo alejarse de la mesa, cuándo el jefe de sala empieza a sospechar, o qué hacer con el dinero. Dejado a sus propios medios, contaría cartas para siempre en una habitación vacía.
+
+Charlie es el que tiene el plan. Sabe a qué casino ir, cuándo apostar fuerte, cuándo cobrar, cuándo cambiar de estrategia completamente. No puede contar cartas él mismo — no a la velocidad de Raymond, no a la escala de Raymond. Pero no lo necesita. Su trabajo es la dirección, el criterio y saber para qué sirve toda la operación.
+
+Eso es la ingeniería agéntica. Tu agente procesará todo tu código base, generará soluciones a una velocidad que no puedes igualar e iterará incansablemente. Pero no sabe qué problema vale la pena resolver. No sabe cuándo la solución elegante es la equivocada. No sabe cuándo parar.
 
 Ese es tu trabajo. Y siempre lo será.

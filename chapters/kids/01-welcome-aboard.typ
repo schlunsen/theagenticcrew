@@ -1,6 +1,6 @@
 = Welcome Aboard
 
-#image("../../assets/kids/ch01-two-captains.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-two-captains.jpg", width: 80%)]
 
 Remember your mom's AI helper? The one building a website while she drank coffee? That helper is part of something big that's happening with computers.
 
@@ -16,7 +16,7 @@ Let me tell you a story about two captains.
 
 Captain Alex and Captain Maya both have the same ship. The same crew. The same ocean. And they both need to sail to Treasure Island to fix a leaky dock.
 
-#image("../../assets/kids/ch01-captain-alex.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captain-alex.jpg", width: 80%)]
 
 Captain Alex strolls up to the crew and says: "There's a problem at the island. Go fix it."
 
@@ -26,7 +26,7 @@ They come back beaming. "We fixed lots of things!"
 
 But the dock? Still leaking.
 
-#image("../../assets/kids/ch01-captain-maya.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captain-maya.jpg", width: 80%)]
 
 Captain Maya does it differently. She says: "Sail to Treasure Island. Go to the north dock -- the wooden one near the big palm tree. There's a crack in the third board from the left. It's about one foot long. Take the oak planks from storage bin number four. Replace the cracked board. Then pour a bucket of water on the dock to make sure the leak is gone."
 
@@ -44,7 +44,7 @@ Your robot crew is smart. Scary smart in some ways. They can count a million fis
 
 But they take everything you say very literally. Say "fix the ship," and they might fix the wrong part. Say "make it better," and they might change things you liked. Say "go explore," and they might sail to the wrong ocean entirely and come back with a confused whale.
 
-#image("../../assets/kids/ch01-workbench.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-workbench.jpg", width: 80%)]
 
 == The Workbench Rule
 
@@ -70,7 +70,7 @@ Your crew is fantastic at looking at things and figuring them out. But they're t
 
 == Captain's Log
 
-#image("../../assets/kids/ch01-captains-log.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch01-captains-log.jpg", width: 80%)]
 
 _Dear Captain's Log,_
 

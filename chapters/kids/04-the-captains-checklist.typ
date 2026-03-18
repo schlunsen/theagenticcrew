@@ -1,6 +1,6 @@
 = The Captain's Checklist
 
-#image("../../assets/kids/ch04-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-checklist.jpg", width: 80%)]
 
 Your crew has rules. They have a Practice Island. Things are going better. Rusty hasn't painted anything alive in _days_.
 
@@ -10,7 +10,7 @@ Let me tell you about two very different captains.
 
 == Ship Number One: The Lucky Guess
 
-#image("../../assets/kids/ch04-ship-one.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-ship-one.jpg", width: 80%)]
 
 Captain Finn told his crew "Go get the mangoes from Mango Island."
 
@@ -28,7 +28,7 @@ They weren't wrong. He never told them what to check.
 
 == Ship Number Two: The Checklist
 
-#image("../../assets/kids/ch04-ship-two.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-ship-two.jpg", width: 80%)]
 
 Captain Lily did something different. Before her crew left, she wrote a checklist on a big board:
 
@@ -48,7 +48,7 @@ Same crew. Same island. Same mangoes. The difference was the checklist.
 
 == Why Checklists Are Magic
 
-#image("../../assets/kids/ch04-magic-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-magic-checklist.jpg", width: 80%)]
 
 A checklist does two incredible things:
 
@@ -116,7 +116,7 @@ Why? Because writing a checklist forces _you_ to think clearly. When you sit dow
 
 If you can't write a checklist for a job, you probably don't understand the job well enough yet. And if _you_ don't understand it, your crew definitely won't.
 
-#image("../../assets/kids/ch04-writing-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-writing-checklist.jpg", width: 80%)]
 
 == What Makes a Good Checklist?
 
@@ -132,7 +132,7 @@ Not all checklists are created equal. Here's what separates the good ones from t
 
 == The Blindfold Test
 
-#image("../../assets/kids/ch04-time-saved.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-time-saved.jpg", width: 80%)]
 
 Imagine asking someone to hang a picture frame while wearing a blindfold. They _might_ get it right. But would you bet your allowance on it?
 

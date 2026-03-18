@@ -1,5 +1,9 @@
 = Sandboxes
 
+#figure(
+  image("../../assets/illustrations/ch07-sandbox.jpg", width: 60%),
+)
+
 Un sandbox es un regalo que le das a tu agente: la libertad de equivocarse.
 
 Cuando un agente opera en un sandbox, puede probar cosas sin consecuencias. Instalar una dependencia rara. Reescribir un módulo desde cero. Ejecutar un script que podría fallar. Si funciona, genial — sacas el resultado. Si no, tiras el sandbox. Sin limpieza, sin reversión, sin daño.

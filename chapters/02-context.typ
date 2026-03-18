@@ -8,7 +8,9 @@ An hour later, a second engineer picked up the same ticket after the first attem
 
 The model was the same. The agent was the same. The bug was the same. What differed was what each engineer put in front of the agent before asking it to work. One gave it a vague description and let it guess. The other gave it everything it needed to _see_ the problem.
 
-That difference — what the agent can see — is what this chapter is about.
+But here's the thing: the second engineer didn't just give better context. She gave the agent the _raw materials_ it needed — the error trace, the docs, the relevant files. That's a significant step up. The even better version? Giving the agent _tools_ to find those materials itself. If that Sentry trace was accessible via an MCP integration, if the agent could read the gateway docs from a configured source, if it could run `git log` on the billing pipeline — she wouldn't have needed to hand-assemble the context at all. The agent would have gathered it, and she could have focused on what only she could provide: the judgment that this was a character encoding issue, not a validation issue.
+
+That difference — what the agent can see, and what it can _reach_ — is what this chapter is about.
 
 The single most important skill in agentic engineering isn't prompting. It's context management.
 
@@ -16,13 +18,13 @@ An AI agent is only as good as what it can see. Give it a vague instruction and 
 
 Traditional engineering had a version of this too. A senior engineer didn't just write better code — they held more of the system in their head. They knew which files mattered, where the dragons lived, which abstractions were load-bearing and which were decorative. That mental model was the context, and it lived entirely in the engineer's brain.
 
-Now you have to _externalise_ it. Your agents can't read your mind. They read files, environment variables, error logs, and whatever you put in front of them. The craft of agentic engineering is learning what to surface, when, and how.
+Now you have to _externalise_ it. Your agents can't read your mind. They read files, environment variables, error logs, and whatever you put in front of them — and increasingly, they can go _find_ those things if you give them the right tools. The craft of agentic engineering is learning what to surface, when, and how — and, more importantly, building the infrastructure that lets agents surface things for themselves.
 
 == The Context Window Is Your Workbench
 
 Think of the context window as a physical workbench. It has limited space. You can't dump your entire codebase on it and expect good results. Instead, you lay out the pieces that matter for _this_ task: the relevant source files, the failing test, the schema, maybe a snippet of documentation.
 
-A good agentic engineer curates context the way a good surgeon lays out instruments. Nothing unnecessary. Everything within reach.
+But here's the evolution in thinking: you're not the surgeon's assistant, nervously handing over instruments one at a time. You're the person who _designed the operating room_. A good agentic engineer curates context, yes — but the real skill is building a well-organised workshop where the agent can find what it needs. Clear file structure, accessible tools, well-labelled drawers. When the workshop is set up right, the agent pulls the right instrument off the wall itself. You step in only when it needs something that isn't on any shelf — your judgment, your intent, your knowledge of why things are the way they are.
 
 #image("../assets/illustrations/ch02-context-workbench.jpg", width: 80%)
 
@@ -30,6 +32,28 @@ This means developing instincts for questions like:
 - What does the agent need to see to understand this task?
 - What will confuse it if I include it?
 - Is the context I'm providing _current_, or am I feeding it stale information?
+
+== Context Infrastructure vs. Context Injection
+
+Before we get into the mechanics, it's worth naming the two layers of context that matter in agentic work — because most engineers only think about one of them.
+
+*Layer 1: Context Infrastructure.* This is the durable investment. It's everything you set up _once_ that pays off in every session: filesystem access, command execution, MCP integrations with your error tracker and project management tools, well-organised repo structure, `CLAUDE.md` files that describe your architecture and conventions. When you invest in context infrastructure, you're building a workshop where the agent can find its own tools. This is _engineering_ — it compounds.
+
+*Layer 2: Context Injection.* This is the manual, per-session work: pasting in error logs, writing out constraints, explaining domain knowledge, describing intent. It's still essential — there are things no tool can discover, like why a particular design decision was made, or that the marketing team needs this feature by Thursday. But it should be the _fallback_, not the default. Every time you find yourself repeatedly pasting the same kind of information, that's a signal to promote it from Layer 2 to Layer 1 by setting up a tool or integration.
+
+The best agentic engineers spend most of their effort on Layer 1 and need Layer 2 only for things that are genuinely ephemeral or tacit. The rest spend all their time on Layer 2 and wonder why every session feels like starting from scratch.
+
+=== Levels of Context Delivery
+
+There's a useful way to think about how context reaches your agent, from least effective to most:
+
+*Level 0: Describe the problem in your own words.* "The build is broken, something about types." This is the lossiest form of context. You're compressing a detailed error through the narrow pipe of your paraphrase, and the agent has to decompress it — badly — on the other side. It's like describing a painting to someone over the phone and asking them to reproduce it.
+
+*Level 1: Paste raw data.* Copy the stack trace, the failing test output, the log file, the relevant source code. This is where most competent engineers land today, and it's a meaningful step up. The agent sees exactly what you saw. No lossy compression. The limitation is that it's manual, it's ephemeral, and it doesn't scale — next session, you'll need to paste it all again.
+
+*Level 2: Give the agent tools to find the data itself — and provide only what tools can't discover.* The agent runs the failing test, reads the error trace, greps for the relevant code, checks `git blame` for the history. You provide the _intent_ ("we need to fix this without changing the stored format because three downstream services depend on it") and the _constraints_ ("the payment gateway has a quirk that isn't documented anywhere"). This is where you should aim. It's durable, it scales, and it lets you focus on the part of the job that's actually hard: judgment.
+
+Most teams are somewhere between Level 0 and Level 1. The goal of this chapter is to get you to Level 2 — or at least to show you the path there.
 
 == The Context Window Tax
 
@@ -81,23 +105,37 @@ This is a judgement call — how much access to give, to which systems, with wha
 
 == Feeding Context Deliberately
 
-The best agentic engineers develop habits around context:
+There are two tiers to providing context, and the best agentic engineers invest heavily in the first so they rarely need the second.
 
-*Start with the error.* Don't describe the bug — show the agent the stack trace, the failing test output, the log line. Raw context beats paraphrased context every time.
+=== Tier 1: Context Infrastructure
 
-*Show, don't tell.* Instead of explaining your database schema in prose, give the agent the migration files or the ORM models. Instead of describing the API contract, give it the OpenAPI spec or a curl response.
+The highest-leverage thing you can do is give your agent _tools_ to gather context on its own. This is durable investment — you set it up once and every future session benefits.
 
-*Prune aggressively.* If you're debugging a rendering issue, the agent doesn't need to see your authentication middleware. Every irrelevant file in context is noise that degrades the signal.
+*Give agents access to your tools.* File system access and command execution are the baseline. An agent that can run `git log`, `git blame`, `grep`, and your test suite can answer most of its own questions. But don't stop there. MCP servers can connect agents to external systems — your error tracker (Sentry, Datadog), your project management tool (Linear, Jira), your database, your CI pipeline. Each integration is one less thing you need to copy-paste manually, forever.
 
-*Use the filesystem as context.* A well-organised project _is_ context. Meaningful file names, clear directory structure, a good README — these aren't just for humans anymore. Your agents read them too.
+*Make your project structure navigable.* A well-organised project _is_ context infrastructure. Meaningful file names, clear directory structure, a good README — these aren't just for humans anymore. Your agents read them too. When the filesystem is legible, a tool-equipped agent can find the right file without you pointing at it.
 
-*Give file paths, not scavenger hunts.* When you know which files are relevant, say so explicitly. "The bug is in `src/payments/gateway.ts`, specifically the `encodeAddress` function on line 142" is infinitely better than "there's a bug somewhere in the payments code." Every minute the agent spends searching for the right file is a minute it's not spending on the actual problem — and it's burning tokens the whole time.
+*Maintain CLAUDE.md files (or their equivalent).* A project-level context file that describes architecture, conventions, and current priorities is one of the cheapest and most powerful forms of context infrastructure. It lives in the filesystem, persists across sessions, and gets read automatically. Think of it as a briefing document that every new agent session picks up on its own.
 
-*Use git blame to explain _why_.* Code tells the agent _what_ exists. Git history tells it _why_. When you're asking an agent to modify a piece of code that has a non-obvious design, point it at the relevant commit message or pull request. "This function looks weird but it was written this way because of #1247 — see the commit message at `abc123`" gives the agent the rationale it needs to make changes without breaking the original intent.
+*Scope your tools, don't remove them.* The instinct to restrict agent access is understandable, but over-restricting is just as costly as over-permitting. Instead of preventing file access, scope it to the relevant directories. Instead of blocking command execution, whitelist the commands that matter. A well-scoped agent is both safe and capable.
 
-*Copy-paste over paraphrase.* This is worth repeating because it's the most common mistake I see. Engineers describe an error in their own words instead of pasting the actual error. "The build is failing with some TypeScript error about types" versus pasting the exact compiler output with file path, line number, and error code. The first gives the agent a vague direction. The second gives it a specific target. Always paste the raw output. Let the agent do the interpreting.
+=== Tier 2: Direct Context Injection
+
+Tools can't provide everything. Your mental model of why something was designed a certain way, constraints that were never written down, tribal knowledge about how the team works, domain expertise about the business — this is what _you_ bring. This is where copy-paste and direct instruction still matter.
+
+*Start with the error — or let the agent find it.* If your agent has access to your error tracking system via MCP, let it pull the Sentry trace or Datadog alert itself. If it doesn't, paste the stack trace, the failing test output, the log line. Raw context beats paraphrased context every time — but the best version is the agent accessing the raw source directly.
+
+*Give intent, not just implementation details.* A tool-equipped agent is surprisingly good at finding the right files. What it _can't_ find is your intent. "We need to fix the encoding bug in the billing pipeline, and the fix must not change the stored format because three downstream services depend on it" is the kind of context no tool can discover. Focus your manual input on the _why_ and the _constraints_, not the _where_.
+
+*Raw data over paraphrase — and ideally, let the agent access the source.* This is the most common mistake I see: engineers describing an error in their own words instead of providing the actual error. "The build is failing with some TypeScript error about types" versus the exact compiler output with file path, line number, and error code. The first gives the agent a vague direction. The second gives it a specific target. But the best version is an agent that can run the build itself and see the error firsthand.
+
+*Use git blame to explain _why_ — or let the agent run it.* Code tells the agent _what_ exists. Git history tells it _why_. When you're asking an agent to modify code that has a non-obvious design, the relevant commit message or pull request gives it the rationale it needs. If your agent can run `git blame` and `git log` itself, it can find this history. What it still needs from you is the _interpretation_: "This function looks weird but it was written this way because of a payment gateway quirk that isn't documented anywhere — see `abc123`."
+
+*Prune aggressively — by scoping tools.* If you're debugging a rendering issue, the agent doesn't need to see your authentication middleware. With manual context, this means being selective about what you paste. With tool-equipped agents, it means scoping file access or working in a focused worktree. Every irrelevant file in context is noise that degrades the signal, whether it got there by paste or by tool.
 
 *Layer your context.* For complex tasks, don't dump everything at once. Start with the high-level picture — what the system does, what you're trying to change, why. Then provide the specific files. Then provide the error or test failure. This mirrors how you'd brief a human colleague, and it works for the same reason: it builds a mental model before diving into specifics.
+
+*Equip, don't spoon-feed.* When you catch yourself about to paste a file into the context window, ask: could the agent have found this on its own if it had the right tools? If yes, invest the time in setting up that access instead. Pasting is a one-time fix. Tooling is a permanent upgrade. The goal is an agent that needs you for your judgment, not your clipboard.
 
 == Context Across Sessions
 

@@ -1,6 +1,6 @@
 = The Ship's Rules
 
-#image("../../assets/kids/ch03-rules-board.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-rules-board.jpg", width: 80%)]
 
 You've met your crew. You know their quirks. Now, before you let them loose on the ship, you need something important.
 
@@ -32,7 +32,7 @@ That's Rusty without boundaries. He's not causing trouble on purpose. He just do
 
 On your ship, every job falls into one of three categories. Let's call them Green, Yellow, and Red.
 
-#image("../../assets/kids/ch03-traffic-light.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-traffic-light.jpg", width: 80%)]
 
 *Green jobs: "Go ahead!"* These are safe jobs the crew can do on their own. Looking at the map. Counting the supplies. Checking the weather. Reading the ship's log. Nothing bad can happen if they get it wrong. Let them go!
 
@@ -48,7 +48,7 @@ But you also notice that Compass keeps suggesting routes through "The Crystal Tu
 
 == The Freedom Dial
 
-#image("../../assets/kids/ch03-mixing-board.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-mixing-board.jpg", width: 80%)]
 
 Think of a volume knob on a speaker. You can turn it way up (loud!) or way down (barely a whisper). You're in control of how much sound comes out.
 
@@ -93,7 +93,7 @@ The sweet spot: strict where it matters, relaxed where it doesn't. Mop the deck?
 
 == The Practice Island
 
-#image("../../assets/kids/ch03-practice-island.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-practice-island.jpg", width: 80%)]
 
 Now here's one of the best captain ideas ever: the Practice Island.
 
@@ -107,7 +107,7 @@ Want Compass to test a new route? Let her sail around the Practice Island first.
 
 Want Echo to practice following a long list of orders? Give him practice tasks on the island. If he forgets step number seven, you find out _before_ it matters.
 
-#image("../../assets/kids/ch03-sandbox-play.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-sandbox-play.jpg", width: 80%)]
 
 This is called a _sandbox_. Just like a sandbox at a playground, it's a safe place to try things out. You can build a sandcastle and smash it. You can dig a hole and fill it back in. Nothing you do in the sandbox hurts anything outside the sandbox.
 

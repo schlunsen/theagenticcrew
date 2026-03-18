@@ -1,5 +1,9 @@
 = Git Som Agentinfrastruktur
 
+#figure(
+  image("../../assets/illustrations/ch06-git-branches.jpg", width: 80%),
+)
+
 Du kender allerede Git. Du har committet, branchet og merged i årevis. Men i agentisk ingeniørarbejde er Git ikke bare versionskontrol — det er rygraden i hele dit workflow. Det er din fortrydelsesknap, dit parallelle eksekverings-framework, din review-grænseflade og dit dokumentationssystem på én gang.
 
 De fleste ingeniører bruger måske 20% af hvad Git tilbyder. Agentisk ingeniørarbejde kræver de andre 80%.
@@ -84,6 +88,8 @@ Her er den indsigt de fleste ingeniører misser: agenter læser din git-historik
 Det betyder at din commit-historik er dokumentation. Ikke den slags du skriver i en wiki — den slags der er indlejret i koden selv, permanent, med perfekt proveniens.
 
 Gode commit-beskeder akkumulerer over tid. Seks måneder fra nu, når en agent arbejder på din codebase, vil den læse de beskeder for at forstå kontekst. Forskellen mellem en historik af "fix bug" og "fix race condition in session cleanup" er forskellen mellem en agent der forstår din codebase og en der gætter.
+
+Og hvis din agent har adgang til at køre `git log` og `git blame` — hvilket den bør have — er denne dokumentation ikke noget du behøver at kopiere og indsætte i prompts. Agenten læser den direkte fra repositoriet. Dit job er at gøre historikken værd at læse, ikke at læse den for agenten.
 
 Det gælder også for PR-beskrivelser, branchnavne og merge commit-beskeder. Hver stump tekst du vedhæfter din Git-historik er kontekst for fremtidige agenter. Skriv derefter.
 

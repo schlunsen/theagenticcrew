@@ -28,6 +28,9 @@ import requests
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ADULT_CHAPTERS_DIR = BASE_DIR / "chapters"
+ADULT_CA_CHAPTERS_DIR = BASE_DIR / "chapters" / "ca"
+ADULT_ES_CHAPTERS_DIR = BASE_DIR / "chapters" / "es"
+ADULT_DA_CHAPTERS_DIR = BASE_DIR / "chapters" / "da"
 KIDS_CHAPTERS_DIR = BASE_DIR / "chapters" / "kids"
 OUTPUT_DIR = BASE_DIR / "website" / "public" / "audiobook"
 
@@ -50,11 +53,17 @@ CUSTOM_REF_TEXT = (
     "shipping something that actually works in the real world."
 )
 
-# Background music: 18s loop cut from 12s-30s of the source track, with crossfade
-BGM_SOURCE = BASE_DIR / "assets" / "bgm-source.mp3"
-BGM_LOOP = BASE_DIR / "assets" / "bgm-loop-crossfaded.mp3"
+# Background music config
 BGM_VOICE_VOLUME = 8.0
 BGM_MUSIC_VOLUME = 0.08
+
+# Per-chapter BGM mapping: chapter stem prefix -> BGM source file in assets/
+# Chapters not listed here fall back to the default BGM.
+CHAPTER_BGM = {
+    "01": "bgm-hazelwood.mp3",    # Hazelwood - Coming Of Age
+    "02": "bgm-lighthouse.mp3",   # Zambolino - Lighthouse
+}
+DEFAULT_BGM = "bgm-hazelwood.mp3"
 
 # Title pause duration in seconds
 TITLE_PAUSE_SECONDS = 3
@@ -100,6 +109,69 @@ CHAPTER_TITLES = {
     "14": "Chapter Fourteen. When Not to Use Agents.",
     "15": "Chapter Fifteen. Agentic Teams.",
     "16": "Chapter Sixteen. Final Words.",
+}
+
+CHAPTER_TITLES_CA = {
+    "01": "Capítol Un. Introducció.",
+    "02": "Capítol Dos. Context.",
+    "03": "Capítol Tres. Què és un Agent?",
+    "04": "Capítol Quatre. Claude Code al Terminal.",
+    "05": "Capítol Cinc. Baranes de Seguretat.",
+    "06": "Capítol Sis. Git.",
+    "07": "Capítol Set. Sandboxes.",
+    "08": "Capítol Vuit. Els Tests com a Bucle de Retroalimentació.",
+    "09": "Capítol Nou. Convenció sobre Configuració.",
+    "09b": "Capítol Nou B. Integracions d'Eines.",
+    "10": "Capítol Deu. LLMs Locals versus Comercials.",
+    "11": "Capítol Onze. El Prompting com a Enginyeria.",
+    "12": "Capítol Dotze. Orquestració Multi-Agent.",
+    "12b": "Capítol Dotze B. CI CD i Agents.",
+    "13": "Capítol Tretze. Històries de Guerra.",
+    "14": "Capítol Catorze. Quan No Utilitzar Agents.",
+    "15": "Capítol Quinze. Equips Agèntics.",
+    "16": "Capítol Setze. Paraules Finals.",
+}
+
+CHAPTER_TITLES_ES = {
+    "01": "Capítulo Uno. Introducción.",
+    "02": "Capítulo Dos. Contexto.",
+    "03": "Capítulo Tres. Qué es un Agente.",
+    "04": "Capítulo Cuatro. Claude Code en el Terminal.",
+    "05": "Capítulo Cinco. Barandillas.",
+    "06": "Capítulo Seis. Git.",
+    "07": "Capítulo Siete. Sandboxes.",
+    "08": "Capítulo Ocho. Testing como Bucle de Retroalimentación.",
+    "09": "Capítulo Nueve. Convención sobre Configuración.",
+    "09b": "Capítulo Nueve B. Integraciones de Herramientas.",
+    "10": "Capítulo Diez. LLMs Locales versus Comerciales.",
+    "11": "Capítulo Once. Prompting como Ingeniería.",
+    "12": "Capítulo Doce. Orquestación Multi-Agente.",
+    "12b": "Capítulo Doce B. CI CD y Agentes.",
+    "13": "Capítulo Trece. Historias de Guerra.",
+    "14": "Capítulo Catorce. Cuándo No Usar Agentes.",
+    "15": "Capítulo Quince. Equipos Agénticos.",
+    "16": "Capítulo Dieciséis. Palabras Finales.",
+}
+
+CHAPTER_TITLES_DA = {
+    "01": "Kapitel Et. Introduktion.",
+    "02": "Kapitel To. Kontekst.",
+    "03": "Kapitel Tre. Hvad er en Agent?",
+    "04": "Kapitel Fire. Claude Code i Terminalen.",
+    "05": "Kapitel Fem. Sikkerhedsværn.",
+    "06": "Kapitel Seks. Git.",
+    "07": "Kapitel Syv. Sandboxes.",
+    "08": "Kapitel Otte. Test som Feedback-Loop.",
+    "09": "Kapitel Ni. Konvention over Konfiguration.",
+    "09b": "Kapitel Ni B. Værktøjsintegrationer.",
+    "10": "Kapitel Ti. Lokale versus Kommercielle LLMs.",
+    "11": "Kapitel Elleve. Prompting som Ingeniørarbejde.",
+    "12": "Kapitel Tolv. Multi-Agent Orkestrering.",
+    "12b": "Kapitel Tolv B. CI CD og Agenter.",
+    "13": "Kapitel Tretten. Krigshistorier.",
+    "14": "Kapitel Fjorten. Hvornår Man Ikke Skal Bruge Agenter.",
+    "15": "Kapitel Femten. Agentiske Teams.",
+    "16": "Kapitel Seksten. Sidste Ord.",
 }
 
 MAX_CHUNK_CHARS = 500
@@ -439,50 +511,31 @@ def slow_down_audio(input_path: Path, output_path: Path, speed: float = 0.92):
     )
 
 
-def prepare_bgm_loop():
-    """Prepare the crossfaded BGM loop file from source if it doesn't exist."""
-    if BGM_LOOP.exists():
-        return
-    if not BGM_SOURCE.exists():
-        print(f"  [warn] BGM source not found at {BGM_SOURCE}, skipping BGM")
-        return
-
-    BGM_LOOP.parent.mkdir(parents=True, exist_ok=True)
-
-    # Cut 12s-30s with fade in/out
-    segment = BGM_LOOP.parent / "bgm-segment.mp3"
-    subprocess.run(
-        ["ffmpeg", "-y", "-ss", "12", "-t", "18", "-i", str(BGM_SOURCE),
-         "-af", "afade=t=in:st=0:d=3,afade=t=out:st=15:d=3",
-         "-codec:a", "libmp3lame", "-qscale:a", "2", str(segment)],
-        check=True, capture_output=True,
-    )
-
-    # Crossfade 3 copies for seamless looping
-    subprocess.run(
-        ["ffmpeg", "-y",
-         "-i", str(segment), "-i", str(segment), "-i", str(segment),
-         "-filter_complex",
-         "[0:a][1:a]acrossfade=d=4:c1=tri:c2=tri[ab];[ab][2:a]acrossfade=d=4:c1=tri:c2=tri[out]",
-         "-map", "[out]",
-         "-codec:a", "libmp3lame", "-qscale:a", "2", str(BGM_LOOP)],
-        check=True, capture_output=True,
-    )
-    segment.unlink(missing_ok=True)
-    print(f"  Prepared BGM loop: {BGM_LOOP}")
+def get_bgm_path(chapter_stem: str) -> Optional[Path]:
+    """Return the BGM source file for a given chapter, or None if not found."""
+    # Extract chapter number prefix (e.g. "01", "09b", "12b")
+    m = re.match(r"^(\d+[a-z]?)", chapter_stem)
+    chapter_num = m.group(1) if m else None
+    bgm_name = CHAPTER_BGM.get(chapter_num, DEFAULT_BGM) if chapter_num else DEFAULT_BGM
+    bgm_path = BASE_DIR / "assets" / bgm_name
+    if bgm_path.exists():
+        return bgm_path
+    print(f"  [warn] BGM not found at {bgm_path}")
+    return None
 
 
-def mix_with_bgm(narration_path: Path, output_path: Path):
+def mix_with_bgm(narration_path: Path, output_path: Path, chapter_stem: str = ""):
     """Mix narration with looping BGM at configured volumes."""
-    if not BGM_LOOP.exists():
-        # No BGM, just copy
+    bgm_path = get_bgm_path(chapter_stem)
+    if not bgm_path:
         shutil.copy2(narration_path, output_path)
         return
 
+    print(f"  Using BGM: {bgm_path.name}")
     subprocess.run(
         ["ffmpeg", "-y",
          "-i", str(narration_path),
-         "-stream_loop", "-1", "-i", str(BGM_LOOP),
+         "-stream_loop", "-1", "-i", str(bgm_path),
          "-filter_complex",
          f"[0:a]volume={BGM_VOICE_VOLUME}[voice];"
          f"[1:a]volume={BGM_MUSIC_VOLUME}[bgm];"
@@ -500,12 +553,13 @@ def get_chapter_files(chapters_dir: Path) -> List[Path]:
     return files
 
 
-def get_chapter_title(stem: str) -> Optional[str]:
+def get_chapter_title(stem: str, lang: str = "en") -> Optional[str]:
     """Get the spoken chapter title from the stem (e.g. '01-introduction' -> 'Chapter One...')."""
-    # Extract chapter number prefix (e.g. "01", "09b", "12b")
+    titles_map = {"ca": CHAPTER_TITLES_CA, "es": CHAPTER_TITLES_ES, "da": CHAPTER_TITLES_DA}
+    titles = titles_map.get(lang, CHAPTER_TITLES)
     m = re.match(r"^(\d+[a-z]?)", stem)
     if m:
-        return CHAPTER_TITLES.get(m.group(1))
+        return titles.get(m.group(1))
     return None
 
 
@@ -516,6 +570,7 @@ def process_chapter(
     skip_existing: bool = True,
     speed: float = 0.92,
     add_bgm: bool = True,
+    lang: str = "en",
 ) -> Optional[Path]:
     """Generate audio for a single chapter. Returns path to final MP3/WAV.
 
@@ -558,7 +613,7 @@ def process_chapter(
         generate_silence(2, silence_2s)
 
     # Generate chapter title audio
-    chapter_title = get_chapter_title(stem)
+    chapter_title = get_chapter_title(stem, lang)
     title_path = chunk_dir / "title.mp3"
     if chapter_title and not (skip_existing and title_path.exists() and title_path.stat().st_size > 0):
         print(f"    title: generating '{chapter_title}' ...")
@@ -646,7 +701,7 @@ def process_chapter(
     # Mix with background music
     if add_bgm and slowed_narration.exists():
         print(f"  Mixing with background music ...")
-        mix_with_bgm(slowed_narration, final_path)
+        mix_with_bgm(slowed_narration, final_path, stem)
     elif slowed_narration.exists():
         shutil.copy2(slowed_narration, final_path)
 
@@ -658,7 +713,7 @@ def process_chapter(
 
 
 def process_book(
-    book_type: str,  # "adult" or "kids"
+    book_type: str,  # "adult", "adult-ca", or "kids"
     voice_name: str,
     chapters_dir: Path,
     output_base: Path,
@@ -666,14 +721,13 @@ def process_book(
     skip_existing: bool = True,
     speed: float = 0.92,
     add_bgm: bool = True,
+    lang: str = "en",
 ):
     """Process all (or filtered) chapters for a book+voice combination."""
     out_dir = output_base / book_type / voice_name
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Prepare BGM loop if needed
-    if add_bgm:
-        prepare_bgm_loop()
+    # BGM is now resolved per-chapter via get_bgm_path()
 
     chapter_files = get_chapter_files(chapters_dir)
     if chapter_filter:
@@ -688,7 +742,7 @@ def process_book(
 
     for ch in chapter_files:
         print(f"\n--- {book_type}/{voice_name}: {ch.name} ---")
-        result = process_chapter(ch, voice_name, out_dir, skip_existing, speed, add_bgm)
+        result = process_chapter(ch, voice_name, out_dir, skip_existing, speed, add_bgm, lang)
         if result and result.exists():
             chapter_outputs.append(result)
 
@@ -708,7 +762,7 @@ def process_book(
 
 def main():
     parser = argparse.ArgumentParser(description="Generate audiobook for The Agentic Crew")
-    parser.add_argument("--book", choices=["adult", "kids", "all"], default="all",
+    parser.add_argument("--book", choices=["adult", "adult-ca", "adult-es", "adult-da", "kids", "all"], default="all",
                         help="Which book to process")
     parser.add_argument("--voice", choices=["male", "female", "both"], default="both",
                         help="Which voice(s) to use")
@@ -728,11 +782,17 @@ def main():
     skip_existing = not args.no_skip
 
     voices = ["male", "female"] if args.voice == "both" else [args.voice]
-    books = []
+    books = []  # list of (book_type, chapters_dir, lang)
     if args.book in ("adult", "all"):
-        books.append(("adult", ADULT_CHAPTERS_DIR))
+        books.append(("adult", ADULT_CHAPTERS_DIR, "en"))
+    if args.book in ("adult-ca", "all"):
+        books.append(("adult-ca", ADULT_CA_CHAPTERS_DIR, "ca"))
+    if args.book in ("adult-es", "all"):
+        books.append(("adult-es", ADULT_ES_CHAPTERS_DIR, "es"))
+    if args.book in ("adult-da", "all"):
+        books.append(("adult-da", ADULT_DA_CHAPTERS_DIR, "da"))
     if args.book in ("kids", "all"):
-        books.append(("kids", KIDS_CHAPTERS_DIR))
+        books.append(("kids", KIDS_CHAPTERS_DIR, "en"))
 
     print(f"Audiobook generation pipeline")
     print(f"  Books: {[b[0] for b in books]}")
@@ -742,7 +802,7 @@ def main():
     print(f"  ffmpeg: {'available' if HAS_FFMPEG else 'NOT available (will keep WAV)'}")
     print()
 
-    for book_type, chapters_dir in books:
+    for book_type, chapters_dir, lang in books:
         for voice_name in voices:
             print(f"\n{'='*60}")
             print(f"Processing: {book_type} / {voice_name}")
@@ -753,13 +813,14 @@ def main():
                 skip_existing=skip_existing,
                 speed=args.speed,
                 add_bgm=not args.no_bgm,
+                lang=lang,
             )
 
     # Summary
     print(f"\n{'='*60}")
     print("SUMMARY")
     print(f"{'='*60}")
-    for book_type, _ in books:
+    for book_type, _, _ in books:
         for voice_name in voices:
             out_dir = output_base / book_type / voice_name
             if not out_dir.exists():

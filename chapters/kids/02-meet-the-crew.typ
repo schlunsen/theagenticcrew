@@ -1,6 +1,6 @@
 = Meet the Crew
 
-#image("../../assets/kids/ch02-crew-lineup.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-crew-lineup.jpg", width: 80%)]
 
 Now it's time to meet the robot sailors on your ship. They each have different talents. They each have different problems. And once you know who's who, you'll be a _much_ better captain.
 
@@ -20,7 +20,7 @@ See the difference? The treasure hunter _plans_, _tries_, _checks_, and _tries a
 
 Some helpers are simple. You ask, they answer. Done. Some are fancier -- they can look at your stuff and suggest bigger answers. And some -- the agents -- can go _do things_ on their own. They read files. They run tests. They fix mistakes. They keep going until the job is done or they get hopelessly stuck. (And then they come find you with puppy-dog eyes.)
 
-#image("../../assets/kids/ch02-agent-spectrum.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-agent-spectrum.jpg", width: 80%)]
 
 == The Fish Counter
 
@@ -38,7 +38,7 @@ Now, let's meet your three crew members.
 
 == Rusty
 
-#image("../../assets/kids/ch02-rusty.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-rusty.jpg", width: 80%)]
 
 Rusty is the most enthusiastic member of your crew. He _loves_ to work. You have never met anyone this excited about helping. Give him a job and his eyes light up like it's his birthday.
 
@@ -58,7 +58,7 @@ Rusty's weakness: he goes _way_ beyond what you asked. Keep his jobs small, or h
 
 == Compass
 
-#image("../../assets/kids/ch02-compass.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-compass.jpg", width: 80%)]
 
 Compass is your navigator. She's great at making plans. Give her a destination, and she'll figure out the route, estimate how long it will take, and list every supply you'll need.
 
@@ -78,7 +78,7 @@ Compass's weakness: she invents facts with a completely straight face. Always, _
 
 == Echo
 
-#image("../../assets/kids/ch02-echo.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-echo.jpg", width: 80%)]
 
 Echo is the crew's messenger. He remembers instructions perfectly -- at first. Tell him "bring twelve barrels of water, four crates of oranges, and the red anchor rope," and he repeats it back word for word. Perfect.
 
@@ -98,7 +98,7 @@ Echo's weakness: he forgets things during long, complicated jobs. Keep it brief,
 
 == Your Crew, Your Responsibility
 
-#image("../../assets/kids/ch02-crew-ship.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-crew-ship.jpg", width: 80%)]
 
 So there they are. Rusty, Compass, and Echo. Eager, clever, and reliable -- in their own ways. And a little bit of a handful -- also in their own ways.
 

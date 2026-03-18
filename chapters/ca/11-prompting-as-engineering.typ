@@ -22,7 +22,13 @@ Aixo no diu quasi res a l'agent. Quin bug d'autenticacio? On es manifesta? Quin 
 
 Aixo es un animal completament diferent. L'agent sap el simptoma, la localitzacio sospitada, i com verificar l'arreglament. Pot anar directament al codi rellevant, entendre el problema, i validar la seva solucio -- tot sense endevinar.
 
-El patro es simple. _Que_ esta trencat o es necessita. _On_ mirar. _Com_ verificar. Cada minut que dediques a fer el teu prompt precis t'estalvia cinc minuts revisant la sortida equivocada.
+*Equipat amb eines:* "L'endpoint de login retorna 401 per a tokens valids quan la cache de sessions esta freda. El test que falla es `TestColdCacheLogin`. Investiga, arregla-ho, i assegura't que tots els tests d'autenticacio passin."
+
+Nota el que falta: cap cami de fitxer, cap nom de funcio. L'agent te `grep`, `find`, i l'execucio de tests. Pot _descobrir_ on viu `TestColdCacheLogin` i tracar el cami del codi ell mateix. El que li has donat es el _que_ i el _per que_ -- el coneixement del domini que les eines no poden proporcionar. El detall de la cache freda, el simptoma, el nom del test com a fil per tirar. L'agent fa la feina mecanica de localitzar el codi.
+
+Els tres nivells son utils. De vegades _si_ saps el fitxer i la funcio exactes, i donar-los estalvia a l'agent trenta segons de cerca. Pero el tercer nivell representa el model mental madur: proporciona nomes el que l'agent no pot trobar per si sol. La descripcio del problema, el context del domini, la intencio. Deixa que les eines gestionen el descobriment.
+
+El patro es simple. _Que_ esta trencat o es necessita. _On_ mirar (si ja ho saps -- no vagis a buscar nomes per omplir aquest punt). _Com_ verificar. Cada minut que dediques a fer el teu prompt precis t'estalvia cinc minuts revisant la sortida equivocada.
 
 == Especificacio de Restriccions
 
@@ -59,6 +65,37 @@ Cada pas es un prompt autocontingut. Cadascun te un resultat verificable. Cadasc
 
 Aixo no es nomes bon prompting -- es bona enginyeria. Estas aplicant les mateixes habilitats de descomposicio que faries servir quan planifiques un sprint o divideixes un pull request. La unitat de treball es prou petita per revisar, prou petita per testejar, i prou petita per llencar si esta malament.
 
+== Prompting per a Paral·lelisme
+
+Aqui hi ha alguna cosa que la majoria de gent no veu: pots dir a l'agent que paral·lelitzi.
+
+Les eines agentiques modernes -- Claude Code, Cursor, Cline -- poden llançar sub-agents. Cada sub-agent te el seu propi context, el seu propi espai de treball, el seu propi fil d'execucio. S'executen simultaneament. L'agent pare coordina, espera els resultats i assembla la sortida. Aixo no es cap funcio oculta que has de desbloquejar. Esta aqui. Pero gairebe ningu fa prompts per a aixo.
+
+Considera la diferencia. Tens una funcionalitat que toca tres moduls independents -- l'API, el worker i el servei de notificacions. L'enfocament seqüencial:
+
+_"Implementa el handler de webhook al modul d'API. Despres actualitza el worker per processar events de webhook. Despres afegeix notificacions per a webhooks fallats."_
+
+L'agent fa cada pas d'un en un. Vint minuts, potser trenta. Bé.
+
+Ara l'enfocament paral·lel:
+
+_"Aquesta funcionalitat toca tres moduls independents. Llança sub-agents per treballar-hi en paral·lel: un per al handler de webhook al modul d'API, un per al worker que processa events de webhook, i un per al servei de notificacions que alerta sobre fallades. Cada modul te el seu propi directori i els seus propis tests. Fusiona els resultats quan els tres hagin acabat."_
+
+La mateixa feina. Un terc del temps real. La paraula clau en aquell prompt es _independent_ -- li dius a l'agent que aquestes peces no depenen les unes de les altres, aixi que es segur paral·lelitzar. Li estàs donant permis per ser rapid.
+
+Aixo funciona perque _tu_ tens la visio general de l'arquitectura. Saps quins moduls estan acoblats i quins no. Saps quines peces es poden construir simultaneament i quines han de ser seqüencials. L'agent no sempre sap aixo -- per defecte fa les coses d'una en una, perque seqüencial es segur. La teva feina es veure el paral·lelisme i fer-lo explicit.
+
+Alguns patrons de prompting que fomenten el paral·lelisme:
+
+- *"Aquestes tasques son independents -- executa-les en paral·lel."* Direct i efectiu. L'agent sap que te permis.
+- *"Llança un sub-agent per a cadascuna d'aquestes."* Instruccio explicita per utilitzar la capacitat d'execucio paral·lela.
+- *"Treballa a l'API i al frontend simultaneament -- comparteixen la interficie definida a `types.ts` pero no depenen de la implementacio de l'altre."* Context sobre _per que_ el paral·lelisme es segur.
+- *"Comença tots tres i informa quan hagin acabat."* Ho enmarca com una tasca de coordinacio, que es exactament el que es.
+
+El canvi de model mental es subtil pero important. No li dius a l'agent nomes _que_ construir -- li dius _com organitzar la feina_. Estàs sent un tech lead, no nomes un escriptor de tiquets. Estàs dient "he mirat aquest problema, veig tres fluxos independents, i vull que treballis en tots tres simultaneament."
+
+Aixo es el palanquejament d'enginyeria que els desenvolupadors experimentats aporten al treball agentic. Un enginyer junior potser no sap quines peces son segures de paral·lelitzar. Tu si. I quan codifiques aquell coneixement al prompt, l'agent es dramaticament mes rapid -- no perque sigui mes intel·ligent, sino perque li has donat un millor pla.
+
 == El Prompt com a Especificacio
 
 Els millors prompts que he vist es llegeixen com a documents de disseny en miniatura. Descriuen el resultat desitjat, no els passos d'implementacio. Llisten les restriccions. Defineixen criteris d'acceptacio. Proporcionen just prou context perque l'agent prengui bones decisions sense ofegar-lo en informacio irrellevant.
@@ -68,6 +105,8 @@ Aqui tens com es veu un prompt-com-a-especificacio:
 _"Afegeix limitacio de velocitat a l'endpoint `/api/search`. Utilitza el middleware `RateLimiter` existent a `middleware/ratelimit.go`. Configura el limit a 100 peticions per minut per usuari autenticat, i 20 per minut per a peticions no autenticades. Retorna un estat 429 amb una capsalera `Retry-After` quan el limit es superi. Afegeix tests per als camins autenticat i no autenticat, incloent el cas limit on un usuari arriba exactament al limit. No modifiquis el propi middleware de limitacio de velocitat -- nomes configura'l i aplica'l."_
 
 Aixo es una especificacio. Un agent pot implementar-ho sense ambiguitat. Un revisor huma pot comprovar el resultat contra els requisits. El resultat desitjat es clar, les restriccions son explicites, i els criteris de verificacio estan definits.
+
+Una bona especificacio tambe considera a que ja te acces l'agent. No necessites escriure "llegeix el fitxer de tests i troba l'assercio que falla" si l'agent pot trobar-ho amb grep. _Si_ has d'especificar restriccions i intencio que no son descobribles -- regles de negoci, requisits de rendiment, la rao per la qual aquest comportament particular es incorrecte. Especifica les coses que les eines no poden dir a l'agent. Deixa fora les coses que les eines poden trobar.
 
 Escriure prompts d'aquesta manera requereix practica. Tambe requereix disciplina -- la disciplina de pensar en el que realment vols abans de comencar a teclejar. Pero aquella disciplina dona dividends. Un prompt ben especificat produeix un resultat que pots fusionar. Un prompt vague produeix un resultat que has de reescriure.
 
@@ -143,6 +182,8 @@ Alguns habits de prompting produeixen consistentment mals resultats. Apren a rec
 *Prompts de tot inclòs.* "Arregla el bug d'autenticacio, tambe refactoritza la capa de base de dades, i ja que hi ets actualitza el README i afegeix tipus TypeScript al client de l'API." Aquestes son quatre tasques separades ficades en un prompt. L'agent intentara totes, no fara cap be, i produira un diff tan gran que revisar-lo trigara mes que fer la feina tu mateix. Un prompt, una tasca.
 
 *Assumir context compartit.* "Fes-ho de la mateixa manera que vam fer el modul de pagaments." L'agent no recorda la teva ultima sessio. No sap que va decidir "nosaltres" a l'standup. Cada prompt comenca de zero. Proporciona el context explicitament, cada vegada.
+
+*Fer la feina de l'agent per ell.* Dediques cinc minuts fent grep a la base de codi per trobar el fitxer exacte, el numero de linia i el nom de la funcio, i despres ho enganxes tot al teu prompt. Aixo es feina que les eines de l'agent poden fer en segons. Proporciona el _problema_ -- el simptoma, el context, el nom del test que falla com a punt de partida. Deixa que l'agent investigui. Per a aixo son les seves eines. El teu temps s'aprofita millor a les parts que l'agent _no_ pot fer: entendre el domini, definir les restriccions, saber per que aquest comportament es incorrecte en primer lloc.
 
 == El Prompting Es una Habilitat
 

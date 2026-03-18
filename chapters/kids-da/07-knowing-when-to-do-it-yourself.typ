@@ -1,6 +1,6 @@
 = At Vide Hvornår Du Selv Skal Gøre Det
 
-#image("../../assets/kids/ch07-tying-shoes.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-tying-shoes.jpg", width: 80%)]
 
 Dit mandskab er fantastisk. De kan skrubbe hele dækket på få minutter. De kan lappe et sejl, mens du spiser frokost. De bliver aldrig trætte.
 
@@ -20,7 +20,7 @@ Dit mandskab er bedst til _store_ opgaver. De opgaver der ville tage dig lang ti
 
 == Nogle Opgaver Kræver et Menneskehjerte
 
-#image("../../assets/kids/ch07-heart.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-heart.jpg", width: 80%)]
 
 Her er noget, dit mandskab aldrig kan: _føle noget_.
 
@@ -39,7 +39,7 @@ Det er ikke opgaver for dit mandskab. Det er opgaver for _dig_. Folk kan mærke 
 
 == Nogle Opgaver Er Sådan Du Lærer
 
-#image("../../assets/kids/ch07-learning.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-learning.jpg", width: 80%)]
 
 Lad os sige, du er ved at lære at svømme. Du kunne bede Compass om at forklare, hvordan svømning virker. "Bevæg armene sådan, spark med benene sådan, træk vejret til siden."
 
@@ -64,7 +64,7 @@ Brug dit mandskab til at _hjælpe_ dig med at lære. Bed dem forklare ting. Spø
 
 == Øvelse Gør Din Hjerne Stærkere
 
-#image("../../assets/kids/ch07-brain-muscles.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-brain-muscles.jpg", width: 80%)]
 
 Tænk på din hjerne som en muskel. Hver gang du løser et svært problem, bliver den muskel lidt stærkere. Hver gang du kæmper og finder ud af noget, danner din hjerne nye forbindelser.
 
@@ -114,4 +114,4 @@ Hvilken måde lærte dig mest? Hvilken måde føltes bedst, da du endelig fik de
 
 Den stolte følelse, når du finder ud af noget på egen hånd? Det er hvad det vil sige at være kaptajn.
 
-#image("../../assets/kids/ch07-proud-captain.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-proud-captain.jpg", width: 80%)]

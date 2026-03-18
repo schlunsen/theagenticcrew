@@ -1,6 +1,6 @@
 = Coneix la Tripulacio
 
-#image("../../assets/kids/ch02-crew-lineup.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-crew-lineup.jpg", width: 80%)]
 
 Ara es el moment de coneixer els mariners robot del teu vaixell. Cadascun te talents diferents. Cadascun te problemes diferents. I aprendre qui es qui et fara un capita molt millor.
 
@@ -18,7 +18,7 @@ Veus la diferencia? El caçador de tresors _planifica_, _prova_, _comprova_ i _t
 
 Alguns ajudants son simples. Preguntes, responen. Alguns ajudants son mes sofisticats. Poden mirar les teves coses i suggerir respostes mes elaborades. I alguns ajudants -- els agents -- poden anar a _fer coses_ pel seu compte. Llegeixen fitxers. Executen proves. Arreglen errors. I segueixen fins que la feina esta feta o es queden encallats.
 
-#image("../../assets/kids/ch02-agent-spectrum.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-agent-spectrum.jpg", width: 80%)]
 
 == El Comptador de Peixos
 
@@ -36,7 +36,7 @@ Ara, coneguem els teus tres membres de la tripulacio.
 
 == Rusty
 
-#image("../../assets/kids/ch02-rusty.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-rusty.jpg", width: 80%)]
 
 Rusty es el membre mes entusiasta de la teva tripulacio. Li _encanta_ treballar. No has conegut mai ningu amb tantes ganes d'ajudar. En el moment que li dones una feina, se li il·luminen els ulls i es posa en marxa.
 
@@ -56,7 +56,7 @@ La debilitat de Rusty: va molt mes enlla del que li has demanat. L'has de vigila
 
 == Compass
 
-#image("../../assets/kids/ch02-compass.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-compass.jpg", width: 80%)]
 
 Compass es la teva navegant. Es genial fent plans. Dona-li una destinacio i calculara la ruta, estimara quant trigara i fara una llista de tot el que necessitaras.
 
@@ -76,7 +76,7 @@ La debilitat de Compass: de vegades s'inventa fets, i sona totalment segura quan
 
 == Echo
 
-#image("../../assets/kids/ch02-echo.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-echo.jpg", width: 80%)]
 
 Echo es el missatger de la tripulacio. Recorda les instruccions perfectament -- al principi. Li dius "porta dotze barrils d'aigua, quatre caixes de taronges i la corda vermella de l'ancora," i ho repeteix paraula per paraula.
 
@@ -98,7 +98,7 @@ La debilitat d'Echo: oblida les instruccions anteriors durant feines llargues i 
 
 == La Teva Tripulacio, La Teva Responsabilitat
 
-#image("../../assets/kids/ch02-crew-ship.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-crew-ship.jpg", width: 80%)]
 
 Aqui els tens. Rusty, Compass i Echo. Entusiastes, intel·ligents i fiables -- a la seva manera. I imperfectes -- tambe a la seva manera.
 

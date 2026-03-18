@@ -1,5 +1,9 @@
 = Los Tests Como Bucle de Retroalimentación
 
+#figure(
+  image("../../assets/illustrations/ch08-feedback-loop.jpg", width: 50%),
+)
+
 Dos códigos base. Mismo agente. Misma tarea: "Añade un limitador de tasa a la API que devuelva 429 después de 100 peticiones por minuto por usuario."
 
 En el primer código base, no hay tests. El agente lee los handlers de rutas, elige un punto de inserción de middleware, escribe la lógica de limitación de tasa y... se detiene. No tiene forma de saber si funcionó. No puede arrancar el servidor y enviar 101 peticiones para ver qué pasa. No puede comprobar si los endpoints existentes siguen respondiendo correctamente. Produce un diff, dice "He añadido limitación de tasa" y espera lo mejor. Tú revisas el código, lo miras con los ojos entrecerrados, piensas que parece razonable, lo fusionas y descubres en producción tres días después que el middleware se montó en el orden equivocado y nunca se ejecutó. Todas las peticiones pasaban. El limitador de tasa era decoración.
@@ -17,6 +21,8 @@ Hay algo inquietante en esto al principio. Tu suite de tests — lo que escribis
 Un agente no puede mirar una interfaz de usuario y saber si se ve bien. No puede sentir si una respuesta de API es "suficientemente rápida." No puede intuir si una refactorización preservó el comportamiento sutil del que dependen los usuarios. Lo que _sí puede_ hacer es ejecutar tu suite de tests y leer los resultados.
 
 Los tests se convierten en el mecanismo principal de retroalimentación del agente. Verde significa "sigue adelante." Rojo significa "intenta de nuevo." Sin tests significa que el agente vuela a ciegas — adivinando si sus cambios funcionan, sin forma de verificar.
+
+Pero los tests no son solo retroalimentación — son una _herramienta_ que el agente usa autónomamente. Cuando un agente puede ejecutar `npm test` o `pytest` por sí mismo, la suite de tests se convierte en un sistema de verificación de autoservicio. El agente no necesita que ejecutes los tests y pegues la salida. Los ejecuta, los lee e itera — todo a través de sus herramientas. Esa autonomía es lo que convierte una suite de tests de una red de seguridad en un motor.
 
 Por eso los códigos base sin tests son difíciles de trabajar agénticamente. No es solo un problema de calidad — es un problema de información. Sin tests, el agente no tiene señal. Es como pedir a alguien que cuelgue un cuadro con los ojos vendados. Podría acertar, pero no apostarías por ello.
 

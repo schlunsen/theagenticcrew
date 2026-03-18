@@ -22,6 +22,8 @@ En agent der navigerer i en ukendt codebase gør det samme som en nyansat: den l
 
 Hvis dit projekt følger stærke konventioner, opfanger agenten mønstrene hurtigt og producerer kode der passer ind. Hvis hver fil er en snefnug — forskellige navne, forskellig struktur, forskellige stile — famler agenten. Den ved ikke hvilket mønster den skal følge, så den opfinder sit eget, og resultatet føles fremmed.
 
+Der er en dybere grund til at konventioner er vigtige, og den hænger sammen med værktøjer. Konventioner virker fordi de gør agentens _værktøjer_ mere effektive. Når en agent kører `ls` eller `find` eller `grep`, betyder konsistent navngivning og struktur at de værktøjer returnerer nyttige resultater. Et projekt hvor tests altid bor i `__tests__/` betyder at `find . -name "*.test.ts"` altid virker. Konventioner er ikke bare implicit kontekst — de er det der gør agentens autonome udforskning produktiv.
+
 Konvention er _implicit kontekst_. Det er information agenten absorberer fra strukturen af din kode uden at du behøver at forklare det. Når dine testfiler altid bor ved siden af de kildefiler de tester, navngivet `foo.test.ts` ved siden af `foo.ts`, behøver agenten ikke at få at vide hvor den skal putte en ny test. Den læser mappen, ser mønstret og følger det. Når dine API-handlers alle eksporterer den samme form — en handler-funktion, et skema, et sæt middleware — producerer agenten en ny handler der eksporterer præcis den samme form.
 
 Det er derfor meningsfulde frameworks altid har været produktive, og hvorfor de er _endnu mere_ produktive i den agentiske æra. Rails, Next.js, Laravel — de påtvinger en struktur. Den struktur er ikke bare for mennesker. Det er et sprog agenten taler flydende.

@@ -1,6 +1,6 @@
 = Knowing When to Do It Yourself
 
-#image("../../assets/kids/ch07-tying-shoes.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-tying-shoes.jpg", width: 80%)]
 
 After six chapters of crew disasters, you might think this book is all about getting your crew to do things _right_. But here's a twist.
 
@@ -20,7 +20,7 @@ Here's the rule: if the explaining takes longer than the doing, just do it yours
 
 == Some Jobs Need a Human Heart
 
-#image("../../assets/kids/ch07-heart.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-heart.jpg", width: 80%)]
 
 Here's something your crew can never, ever do: _care_.
 
@@ -41,7 +41,7 @@ These aren't crew jobs. These are _you_ jobs. People can tell the difference bet
 
 == Some Jobs Are How You Learn
 
-#image("../../assets/kids/ch07-learning.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-learning.jpg", width: 80%)]
 
 Let's say you're learning to swim. You could ask Compass to explain how swimming works. "Move your arms like this, kick your legs like that, breathe to the side."
 
@@ -66,7 +66,7 @@ Use your crew to _help_ you learn. Ask them to explain things. Ask them "why doe
 
 == Practice Makes Your Brain Stronger
 
-#image("../../assets/kids/ch07-brain-muscles.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-brain-muscles.jpg", width: 80%)]
 
 Your brain is like a muscle. Solve a hard problem? It gets stronger. Figure something out after struggling? New connections grow.
 
@@ -118,4 +118,4 @@ Which way taught you more? Which way felt better when you finally got it right?
 
 That proud feeling when you figure something out on your own? That's what being a captain is all about.
 
-#image("../../assets/kids/ch07-proud-captain.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-proud-captain.jpg", width: 80%)]

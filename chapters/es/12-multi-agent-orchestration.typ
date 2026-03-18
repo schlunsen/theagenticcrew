@@ -1,5 +1,9 @@
 = Orquestación Multi-Agente
 
+#figure(
+  image("../../assets/illustrations/ch12-orchestration.jpg", width: 80%),
+)
+
 Un agente es poderoso. Múltiples agentes trabajando juntos es algo completamente diferente.
 
 Piénsalo así. Un solo carpintero puede construir un cobertizo. Pero ¿una casa? Necesitas un electricista, un fontanero, un techador — especialistas trabajando en paralelo, cada uno enfocado en lo que mejor sabe hacer, coordinándose lo justo para no estorbarse. La casa se levanta más rápido y el trabajo es mejor que el de una sola persona intentando hacerlo todo.
@@ -121,3 +125,5 @@ Tiempo total: quizá cuarenta minutos. El agente de API tardó treinta, el agent
 ¿Un solo agente haciendo todo secuencialmente? Probablemente noventa minutos.
 
 Las matemáticas funcionan cuando la tarea es lo suficientemente grande. Y a medida que mejoras en la descomposición, desarrollarás intuición para qué tareas vale la pena dividir y cuáles no. Como la mayoría de las cosas en ingeniería, es una cuestión de criterio. Pero ahora tienes las herramientas para tomarlo.
+
+Una cosa más que vale la pena señalar: no siempre tienes que orquestar manualmente. Como discutimos en el capítulo de prompting, puedes _decirle_ al agente que paralelice. "Estos tres módulos son independientes — lanza sub-agentes y trabaja en ellos simultáneamente." El agente se encarga de los worktrees, el branching y la coordinación. Tu trabajo es la parte que el agente no puede hacer: saber qué piezas es seguro ejecutar en paralelo. Ese criterio arquitectónico es el prompt de mayor apalancamiento que puedes escribir.

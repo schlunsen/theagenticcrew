@@ -1,6 +1,6 @@
 = La Lista del Capitán
 
-#image("../../assets/kids/ch04-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-checklist.jpg", width: 80%)]
 
 Déjame contarte la historia de dos barcos.
 
@@ -10,7 +10,7 @@ Veamos cómo fue.
 
 == Barco Número Uno: La Suerte
 
-#image("../../assets/kids/ch04-ship-one.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-ship-one.jpg", width: 80%)]
 
 El Capitán Finn le dijo a su tripulación "Id a buscar los mangos de la Isla de los Mangos."
 
@@ -28,7 +28,7 @@ Tenían razón. Nunca les dijo _qué_ comprobar.
 
 == Barco Número Dos: La Lista
 
-#image("../../assets/kids/ch04-ship-two.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-ship-two.jpg", width: 80%)]
 
 La Capitana Lily hizo algo diferente. Antes de que su tripulación se fuera, escribió una lista en un tablón grande:
 
@@ -48,7 +48,7 @@ La misma tripulación. La misma isla. Los mismos mangos. La diferencia fue la li
 
 == Por Qué las Listas Son Mágicas
 
-#image("../../assets/kids/ch04-magic-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-magic-checklist.jpg", width: 80%)]
 
 Una lista hace dos cosas increíbles:
 
@@ -72,7 +72,7 @@ No durante. No después. _Antes._
 
 Si no puedes escribir una lista para un trabajo, probablemente no entiendes el trabajo lo suficiente todavía. Y si _tú_ no lo entiendes, tu tripulación definitivamente tampoco.
 
-#image("../../assets/kids/ch04-writing-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-writing-checklist.jpg", width: 80%)]
 
 == ¿Qué Hace una Buena Lista?
 
@@ -100,7 +100,7 @@ Con una lista, la tripulación hace el trabajo bien a la primera. Un viaje. Un d
 
 Unos minutos escribiendo una lista pueden ahorrarte horas de repeticiones. Es un trato bastante bueno.
 
-#image("../../assets/kids/ch04-time-saved.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-time-saved.jpg", width: 80%)]
 
 == Listas para Tu Tripulación Robot
 

@@ -1,14 +1,12 @@
 = Introduktion
 
-Sidste år så jeg en junior-udvikler på mit hold — to års erfaring, stadig nervøs til code reviews — shippe et komplet API-endpoint på femogfyrre minutter. Datamodel, validering, fejlhåndtering, tests, dokumentation. Koden var ren. Testene var grundige. PR'en gik igennem review i første forsøg.
+For seks måneder siden besluttede jeg mig for at tage AI-agenter seriøst. Ikke bare lege med dem — virkelig finde ud af hvordan de kunne blive en del af mit daglige ingeniørarbejde. Jeg satte mig ned, ryddede kalenderen og begyndte at eksperimentere med de teknikker der til sidst blev til denne bog. Hvordan man styrer en agent. Hvordan man sætter grænser. Hvordan man tænker i intentioner i stedet for syntaks.
 
-Det ville have taget mig en time at lave det samme stykke arbejde. Og jeg har gjort det her i tyve år.
+Jeg lærte ved trial and error. Meget error. Jeg brændte tokens af på opgaver der burde have været simple. Jeg så agenter omskrive hele moduler jeg ikke havde bedt dem om at røre. Jeg mergede kode der bestod alle tests og gik i stykker i produktion, fordi jeg havde stolet på det grønne flueben i stedet for min egen dømmekraft. Hver fejl lærte mig noget, og langsomt — over uger, så måneder — begyndte principperne at krystallisere sig.
 
-Hun tastede ikke det meste af det selv. Hun beskrev hvad hun havde brug for, pegede en agent mod codebasen og styrede den i mål. Hendes færdighed lå ikke i at skrive koden — den lå i at vide hvad hun skulle bede om, genkende hvornår outputtet var godt, og fange den ene edge case agenten missede. Hun _engineerede_. Bare ikke på den måde jeg lærte det.
+Det der overraskede mig mest var hvor meget min egen produktivitet ændrede sig. Opgaver der plejede at tage en hel dag — bygge en datapipeline, wire en ny service op, refaktorere et legacy-modul — begyndte at tage under en time. Ikke fordi agenterne lavede al tænkningen, men fordi jeg havde lært at _dirigere_ tænkningen. Ren arkitektur. Grundige tests. PR'er der gik igennem review i første forsøg. Ikke magi — bare en anderledes måde at arbejde på som ingen havde lært mig, fordi ingen havde fundet ud af det endnu.
 
-Jeg tog hjem den aften og sad med et ubehageligt spørgsmål: hvis afstanden mellem tyve års erfaring og to års erfaring lige er blevet meget kortere, hvad er det så præcis jeg bidrager med?
-
-Svaret, indså jeg til sidst, er alt det der ikke er at taste. Men det tog måneder at nå dertil, en masse fejltagelser, og denne bog.
+Denne bog voksede ud af den proces. Den er bygget på principper jeg udviklede og testede i rigtige projekter — hvordan man strukturerer sin tænkning, hvordan man kommunikerer intention til en agent, hvordan man verificerer output, og hvordan man ved hvornår man skal tage rattet tilbage. Jeg er på ingen måde sikker på at det er de bedste tilgange — feltet bevæger sig for hurtigt til at nogen kan hævde sikkerhed. Men jeg har set ægte, målbar forbedring i mit eget arbejde, og jeg tror disse ideer kan gøre det samme for dig. Teknikkerne er ikke komplicerede. De er bare ikke indlysende — og ingen andre underviser i dem endnu.
 
 == Grunden Flytter Sig
 
@@ -38,7 +36,7 @@ Dette er den guide jeg ville ønske nogen havde givet mig.
 
 Du er softwareingeniør. Du har shippet rigtige ting. Du ved hvordan en produktionsincident føles klokken to om natten. Du er ikke bange for terminalen.
 
-Men på det seneste føles noget anderledes. Måske har du prøvet AI-kodningsværktøjer og fundet dem imponerende men kaotiske — som at parprogrammere med nogen der er utroligt hurtig men ikke har nogen forståelse af scope. Måske har du set en udvikler med to års erfaring shippe en hel feature på en eftermiddag med agentassistance, og det fik dig til at føle noget du ikke havde forventet. Måske er du begejstret men ved ikke hvor du skal starte. Måske er du skeptisk og vil have nogen der overbeviser dig med substans, ikke hype.
+Men på det seneste føles noget anderledes. Måske har du prøvet AI-kodningsværktøjer og fundet dem imponerende men kaotiske — som at parprogrammere med nogen der er utroligt hurtig men ikke har nogen forståelse af scope. Som at være Tom Cruise i _Rain Man_, bortset fra at din Dustin Hoffman kan refaktorere en hel codebase i stedet for at tælle kort. Måske har du set nogen med en brøkdel af din erfaring pludselig shippe som en tiårs-veteran, og det fik dig til at føle noget du ikke havde forventet. Måske er du begejstret men ved ikke hvor du skal starte. Måske er du skeptisk og vil have nogen der overbeviser dig med substans, ikke hype.
 
 Denne bog er til dig. Den forudsætter at du kan kode. Den forudsætter at du har været med et stykke tid. Den møder dig hvor du er.
 

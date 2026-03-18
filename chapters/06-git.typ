@@ -89,6 +89,8 @@ This means your commit history is documentation. Not the kind you write in a wik
 
 Good commit messages compound over time. Six months from now, when an agent is working on your codebase, it will read those messages to understand context. The difference between a history of "fix bug" and "fix race condition in session cleanup" is the difference between an agent that understands your codebase and one that's guessing.
 
+And if your agent has access to run `git log` and `git blame` — which it should — this documentation isn't something you need to copy-paste into prompts. The agent reads it directly from the repository. Your job is to make the history worth reading, not to read it for the agent.
+
 This also applies to PR descriptions, branch names, and merge commit messages. Every piece of text you attach to your Git history is context for future agents. Write accordingly.
 
 == The Git Workflow for Agentic Engineering

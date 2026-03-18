@@ -22,6 +22,8 @@ Un agent navegant per una base de codi desconeguda fa el mateix que un nou emple
 
 Si el teu projecte segueix convencions fortes, l'agent recull els patrons rapidament i produeix codi que encaixa. Si cada fitxer es un floc de neu -- nomenclatura diferent, estructura diferent, estils diferents -- l'agent trontolla. No sap quin patro seguir, aixi que inventa el seu propi, i el resultat es sent alie.
 
+Hi ha una rao mes profunda per la qual les convencions importen, i connecta amb les eines. Les convencions funcionen perque fan les _eines_ de l'agent mes efectives. Quan un agent executa `ls` o `find` o `grep`, una nomenclatura i estructura consistents volen dir que aquelles eines retornen resultats utils. Un projecte on els tests sempre viuen a `__tests__/` vol dir que `find . -name "*.test.ts"` sempre funciona. Les convencions no son nomes context implicit -- son el que fa que l'exploracio autonoma de l'agent sigui productiva.
+
 La convencio es _context implicit_. Es informacio que l'agent absorbeix de l'estructura del teu codi sense que l'hagis d'explicar. Quan els teus fitxers de test sempre viuen al costat dels fitxers font que testen, nomenats `foo.test.ts` al costat de `foo.ts`, l'agent no necessita que li diguin on posar un nou test. Llegeix el directori, veu el patro i el segueix. Quan els teus handlers d'API tots exporten la mateixa forma -- una funcio de handler, un esquema, un conjunt de middleware -- l'agent produeix un nou handler que exporta exactament la mateixa forma.
 
 Per aixo els frameworks amb opinions sempre han estat productius, i per que son _encara mes_ productius a l'era agentica. Rails, Next.js, Laravel -- imposen una estructura. Aquella estructura no es nomes per a humans. Es un llenguatge que l'agent parla fluixament.

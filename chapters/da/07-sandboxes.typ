@@ -1,5 +1,9 @@
 = Sandboxes
 
+#figure(
+  image("../../assets/illustrations/ch07-sandbox.jpg", width: 60%),
+)
+
 En sandbox er en gave du giver din agent: friheden til at tage fejl.
 
 Når en agent opererer i en sandbox, kan den prøve ting uden konsekvenser. Installer en mærkelig afhængighed. Omskriv et modul fra bunden. Kør et script der måske crasher. Hvis det virker, fedt — du trækker resultatet ud. Hvis ikke, smider du sandboxen væk. Ingen oprydning, ingen rollback, ingen skade.

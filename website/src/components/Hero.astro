@@ -17,9 +17,10 @@
       </h1>
       <p class="subtitle">How software engineers learn to build with agents</p>
       <p class="description">
-        AI agents don't just autocomplete your code. They read your codebase, reason about it,
-        make changes across files, run your tests, and iterate. This book is your practical guide
-        to the transition — from writing software to <em>engineering</em> it.
+        It started with porting the Claude Agent SDK from Python to Go — using Claude Code itself.
+        Over a hundred prompts, countless mistakes, and one realisation: most of the effort was wasted
+        because I didn't know how to <em>direct</em> the work. This book is everything I learned —
+        the practical guide to engineering with AI agents.
       </p>
       <div class="hero-actions">
         <a href="#download" class="btn-primary">
@@ -27,6 +28,12 @@
           <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
           </svg>
+        </a>
+        <a href="/presentation/" class="btn-presentation">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+            <polygon points="6,3 6,17 17,10" />
+          </svg>
+          <span>Watch the Presentation</span>
         </a>
         <a href="#chapters" class="btn-secondary">See what's inside</a>
       </div>
@@ -278,6 +285,27 @@
     background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(232, 150, 62, 0.4);
+    color: #fff;
+  }
+
+  .btn-presentation {
+    background: linear-gradient(135deg, var(--color-pirate-teal), #1d7a94);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(46, 155, 183, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .btn-presentation:hover {
+    background: linear-gradient(135deg, #35b0cc, var(--color-pirate-teal));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(46, 155, 183, 0.35);
     color: #fff;
   }
 

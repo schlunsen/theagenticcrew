@@ -26,6 +26,8 @@ Els enginyers que mai ajusten els controls acaben abandonant els fluxos de treba
 
 El principi es el mateix que en seguretat: minim privilegi. Un agent treballant al teu frontend no necessita acces SSH al teu servidor de base de dades. Un agent escrivint tests unitaris no necessita les teves credencials d'AWS.
 
+Pero val la pena fer una pausa per notar que les baranes no tracten nomes de _restringir_ el que els agents poden fer -- son l'altra cara de _equipar-los_. Cada eina que concedeixis es alhora una capacitat i una responsabilitat. El gradient de confianca de la seccio anterior tracta realment de calibrar quanta recopilacio autonoma de context i accio permets. Les baranes i les eines son la mateixa llista, vista des de dues direccions.
+
 A la practica aixo vol dir:
 - Claus d'API amb abast i temps d'expiracio
 - Credencials especifiques per entorn (mai comparteixis claus de produccio amb un agent de desenvolupament)

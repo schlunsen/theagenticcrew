@@ -1,6 +1,6 @@
 = Gå Ud og Byg Noget
 
-#image("../../assets/kids/ch09-sunset.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-sunset.jpg", width: 80%)]
 
 Du klarede det, Kaptajn. Du har lært en masse.
 
@@ -10,7 +10,7 @@ Det er ret imponerende for en i din alder.
 
 == Mandskabet Skifter. Skibet Bliver.
 
-#image("../../assets/kids/ch09-ship.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-ship.jpg", width: 80%)]
 
 Her er én sidste ting, jeg gerne vil have dig til at huske.
 
@@ -30,7 +30,7 @@ De bedste kaptajner i historien var ikke dem, der ventede på perfekt vejr. Det 
 
 == Én Sidste Ordre, Kaptajn
 
-#image("../../assets/kids/ch09-horizon.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-horizon.jpg", width: 80%)]
 
 I aften -- ikke i morgen, ikke i næste uge, _i aften_ -- prøv noget nyt. Stil en computer et spørgsmål, du har gået og undret dig over. Byg noget småt. Skriv en historie og bed en AI om at hjælpe dig med at gøre den bedre. Tegn et billede og se, hvad der sker, når du beskriver det for en hjælper.
 

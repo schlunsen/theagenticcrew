@@ -8,7 +8,9 @@ Una hora después, una segunda ingeniera tomó el mismo ticket después de que e
 
 El modelo era el mismo. El agente era el mismo. El bug era el mismo. Lo que difería era lo que cada ingeniero puso delante del agente antes de pedirle que trabajara. Uno le dio una descripción vaga y lo dejó adivinar. La otra le dio todo lo que necesitaba para _ver_ el problema.
 
-Esa diferencia — lo que el agente puede ver — es de lo que trata este capítulo.
+Pero aquí está la cuestión: la segunda ingeniera no solo dio mejor contexto. Le dio al agente los _materiales en bruto_ que necesitaba — la traza de error, los docs, los archivos relevantes. Eso es un paso significativo hacia arriba. ¿La versión aún mejor? Darle al agente _herramientas_ para encontrar esos materiales por sí mismo. Si esa traza de Sentry fuera accesible a través de una integración MCP, si el agente pudiera leer los docs de la pasarela desde una fuente configurada, si pudiera ejecutar `git log` sobre el pipeline de facturación — ella no habría necesitado ensamblar el contexto manualmente. El agente lo habría reunido, y ella podría haberse enfocado en lo que solo ella podía aportar: el criterio de que esto era un problema de codificación de caracteres, no de validación.
+
+Esa diferencia — lo que el agente puede ver y a lo que puede _llegar_ — es de lo que trata este capítulo.
 
 La habilidad más importante en la ingeniería agéntica no es el prompting. Es la gestión del contexto.
 
@@ -16,18 +18,42 @@ Un agente de IA es tan bueno como lo que puede ver. Dale una instrucción vaga y
 
 La ingeniería tradicional también tenía una versión de esto. Un ingeniero senior no solo escribía mejor código — mantenía más del sistema en su cabeza. Sabía qué archivos importaban, dónde vivían los dragones, qué abstracciones eran estructurales y cuáles eran decorativas. Ese modelo mental era el contexto, y vivía enteramente en el cerebro del ingeniero.
 
-Ahora tienes que _externalizarlo_. Tus agentes no pueden leer tu mente. Leen archivos, variables de entorno, logs de errores y lo que pongas delante de ellos. El oficio de la ingeniería agéntica es aprender qué sacar a la superficie, cuándo y cómo.
+Ahora tienes que _externalizarlo_. Tus agentes no pueden leer tu mente. Leen archivos, variables de entorno, logs de errores y lo que pongas delante de ellos — y cada vez más, pueden _encontrar_ esas cosas si les das las herramientas adecuadas. El oficio de la ingeniería agéntica es aprender qué sacar a la superficie, cuándo y cómo — y, más importante, construir la infraestructura que permite a los agentes encontrar las cosas por sí mismos.
 
 == La Ventana de Contexto Es Tu Banco de Trabajo
 
 Piensa en la ventana de contexto como un banco de trabajo físico. Tiene espacio limitado. No puedes volcar todo tu código base encima y esperar buenos resultados. En su lugar, colocas las piezas que importan para _esta_ tarea: los archivos de código relevantes, el test que falla, el esquema, quizá un fragmento de documentación.
 
-Un buen ingeniero agéntico cura el contexto como un buen cirujano dispone los instrumentos. Nada innecesario. Todo al alcance.
+Pero aquí está la evolución en el pensamiento: no eres el asistente del cirujano, entregando instrumentos nerviosamente uno a la vez. Eres la persona que _diseñó el quirófano_. Un buen ingeniero agéntico cura el contexto, sí — pero la habilidad real es construir un taller bien organizado donde el agente pueda encontrar lo que necesita. Estructura de archivos clara, herramientas accesibles, cajones bien etiquetados. Cuando el taller está bien montado, el agente saca el instrumento correcto de la pared por sí mismo. Tú intervenes solo cuando necesita algo que no está en ningún estante — tu criterio, tu intención, tu conocimiento de por qué las cosas son como son.
+
+#image("../../assets/illustrations/ch02-context-workbench.jpg", width: 80%)
 
 Esto significa desarrollar instintos para preguntas como:
 - ¿Qué necesita ver el agente para entender esta tarea?
 - ¿Qué lo confundirá si lo incluyo?
 - ¿El contexto que estoy proporcionando es _actual_, o le estoy dando información obsoleta?
+
+== Infraestructura de Contexto vs. Inyección de Contexto
+
+Antes de entrar en los detalles, vale la pena nombrar las dos capas de contexto que importan en el trabajo agéntico — porque la mayoría de los ingenieros solo piensan en una de ellas.
+
+*Capa 1: Infraestructura de Contexto.* Esta es la inversión duradera. Es todo lo que configuras _una vez_ que se paga en cada sesión: acceso al sistema de archivos, ejecución de comandos, integraciones MCP con tu rastreador de errores y herramientas de gestión de proyectos, estructura de repositorio bien organizada, archivos `CLAUDE.md` que describen tu arquitectura y convenciones. Cuando inviertes en infraestructura de contexto, estás construyendo un taller donde el agente puede encontrar sus propias herramientas. Esto es _ingeniería_ — se acumula.
+
+*Capa 2: Inyección de Contexto.* Este es el trabajo manual por sesión: pegar logs de error, escribir restricciones, explicar conocimiento de dominio, describir intención. Sigue siendo esencial — hay cosas que ninguna herramienta puede descubrir, como por qué se tomó una decisión de diseño particular, o que el equipo de marketing necesita esta funcionalidad para el jueves. Pero debería ser el _recurso de último momento_, no el predeterminado. Cada vez que te encuentras pegando repetidamente el mismo tipo de información, esa es una señal de promoverla de Capa 2 a Capa 1 configurando una herramienta o integración.
+
+Los mejores ingenieros agénticos dedican la mayor parte de su esfuerzo a la Capa 1 y necesitan la Capa 2 solo para cosas que son genuinamente efímeras o tácitas. Los demás pasan todo su tiempo en la Capa 2 y se preguntan por qué cada sesión se siente como empezar desde cero.
+
+=== Niveles de Entrega de Contexto
+
+Hay una forma útil de pensar sobre cómo llega el contexto a tu agente, de menos efectivo a más:
+
+*Nivel 0: Describe el problema con tus propias palabras.* "El build está roto, algo sobre tipos." Esta es la forma más ruidosa de contexto. Estás comprimiendo un error detallado a través del tubo estrecho de tu paráfrasis, y el agente tiene que descomprimirlo — mal — al otro lado. Es como describir una pintura a alguien por teléfono y pedirle que la reproduzca.
+
+*Nivel 1: Pega datos en bruto.* Copia la traza de pila, la salida del test que falla, el archivo de log, el código fuente relevante. Aquí es donde aterrizan la mayoría de los ingenieros competentes hoy, y es un paso significativo hacia arriba. El agente ve exactamente lo que tú viste. Sin compresión ruidosa. La limitación es que es manual, es efímero y no escala — en la próxima sesión, tendrás que pegarlo todo de nuevo.
+
+*Nivel 2: Dale al agente herramientas para encontrar los datos por sí mismo — y proporciona solo lo que las herramientas no pueden descubrir.* El agente ejecuta el test que falla, lee la traza de error, hace grep del código relevante, comprueba `git blame` para el historial. Tú proporcionas la _intención_ ("necesitamos arreglar esto sin cambiar el formato almacenado porque tres servicios downstream dependen de él") y las _restricciones_ ("la pasarela de pagos tiene una peculiaridad que no está documentada en ningún sitio"). Aquí es donde deberías apuntar. Es duradero, escala y te permite concentrarte en la parte del trabajo que es realmente difícil: el criterio.
+
+La mayoría de los equipos están en algún lugar entre el Nivel 0 y el Nivel 1. El objetivo de este capítulo es llevarte al Nivel 2 — o al menos mostrarte el camino.
 
 == El Impuesto de la Ventana de Contexto
 
@@ -79,23 +105,37 @@ Esta es una decisión de criterio — cuánto acceso dar, a qué sistemas, con q
 
 == Alimentando el Contexto Deliberadamente
 
-Los mejores ingenieros agénticos desarrollan hábitos alrededor del contexto:
+Hay dos niveles para proporcionar contexto, y los mejores ingenieros agénticos invierten mucho en el primero para que rara vez necesiten el segundo.
 
-*Empieza con el error.* No describas el bug — muestra al agente la traza de la pila, la salida del test que falla, la línea del log. El contexto en crudo supera al contexto parafraseado siempre.
+=== Nivel 1: Infraestructura de Contexto
 
-*Muestra, no cuentes.* En lugar de explicar tu esquema de base de datos en prosa, dale al agente los archivos de migración o los modelos del ORM. En lugar de describir el contrato de la API, dale la especificación OpenAPI o una respuesta de curl.
+Lo de mayor apalancamiento que puedes hacer es darle a tu agente _herramientas_ para reunir contexto por sí mismo. Esta es una inversión duradera — la configuras una vez y cada sesión futura se beneficia.
 
-*Poda agresivamente.* Si estás depurando un problema de renderizado, el agente no necesita ver tu middleware de autenticación. Cada archivo irrelevante en el contexto es ruido que degrada la señal.
+*Da a los agentes acceso a tus herramientas.* El acceso al sistema de archivos y la ejecución de comandos son la base. Un agente que puede ejecutar `git log`, `git blame`, `grep` y tu suite de tests puede responder la mayoría de sus propias preguntas. Pero no te detengas ahí. Los servidores MCP pueden conectar agentes a sistemas externos — tu rastreador de errores (Sentry, Datadog), tu herramienta de gestión de proyectos (Linear, Jira), tu base de datos, tu pipeline de CI. Cada integración es una cosa menos que necesitas copiar y pegar manualmente, para siempre.
 
-*Usa el sistema de archivos como contexto.* Un proyecto bien organizado _es_ contexto. Nombres de archivo significativos, estructura de directorios clara, un buen README — estos ya no son solo para humanos. Tus agentes también los leen.
+*Haz que la estructura de tu proyecto sea navegable.* Un proyecto bien organizado _es_ infraestructura de contexto. Nombres de archivo significativos, estructura de directorios clara, un buen README — estos ya no son solo para humanos. Tus agentes también los leen. Cuando el sistema de archivos es legible, un agente equipado con herramientas puede encontrar el archivo correcto sin que lo señales.
 
-*Da rutas de archivos, no búsquedas del tesoro.* Cuando sabes qué archivos son relevantes, dilo explícitamente. "El bug está en `src/payments/gateway.ts`, específicamente en la función `encodeAddress` en la línea 142" es infinitamente mejor que "hay un bug en algún lugar del código de pagos." Cada minuto que el agente pasa buscando el archivo correcto es un minuto que no está dedicando al problema real — y está quemando tokens todo el rato.
+*Mantén archivos CLAUDE.md (o su equivalente).* Un archivo de contexto a nivel de proyecto que describe la arquitectura, las convenciones y las prioridades actuales es una de las formas más baratas y poderosas de infraestructura de contexto. Vive en el sistema de archivos, persiste entre sesiones y se lee automáticamente. Piénsalo como un documento de briefing que cada nueva sesión de agente recoge por sí sola.
 
-*Usa git blame para explicar el _por qué_.* El código le dice al agente _qué_ existe. El historial de Git le dice _por qué_. Cuando le pides a un agente que modifique un fragmento de código con un diseño no obvio, apúntalo al mensaje de commit relevante o al pull request. "Esta función parece rara pero se escribió así por el issue #1247 — mira el mensaje de commit en `abc123`" le da al agente la justificación que necesita para hacer cambios sin romper la intención original.
+*Limita el alcance de tus herramientas, no las elimines.* El instinto de restringir el acceso del agente es comprensible, pero restringir demasiado es tan costoso como permitir demasiado. En lugar de impedir el acceso a archivos, limita el alcance a los directorios relevantes. En lugar de bloquear la ejecución de comandos, incluye en la lista de permitidos los comandos que importan. Un agente con alcance bien definido es tanto seguro como capaz.
 
-*Copia y pega en lugar de parafrasear.* Vale la pena repetir esto porque es el error más común que veo. Los ingenieros describen un error con sus propias palabras en lugar de pegar el error real. "El build está fallando con algún error de TypeScript sobre tipos" versus pegar la salida exacta del compilador con ruta de archivo, número de línea y código de error. Lo primero le da al agente una dirección vaga. Lo segundo le da un objetivo específico. Siempre pega la salida en crudo. Deja que el agente haga la interpretación.
+=== Nivel 2: Inyección Directa de Contexto
+
+Las herramientas no pueden proporcionar todo. Tu modelo mental de por qué algo fue diseñado de cierta manera, restricciones que nunca se escribieron, conocimiento tribal sobre cómo funciona el equipo, experiencia de dominio sobre el negocio — esto es lo que _tú_ aportas. Aquí es donde copiar y pegar e instrucciones directas siguen importando.
+
+*Empieza con el error — o deja que el agente lo encuentre.* Si tu agente tiene acceso a tu sistema de seguimiento de errores a través de MCP, deja que descargue él mismo la traza de Sentry o la alerta de Datadog. Si no, pega la traza de la pila, la salida del test que falla, la línea del log. El contexto en crudo supera al contexto parafraseado siempre — pero la mejor versión es que el agente acceda a la fuente en bruto directamente.
+
+*Da intención, no solo detalles de implementación.* Un agente equipado con herramientas es sorprendentemente bueno para encontrar los archivos correctos. Lo que _no puede_ encontrar es tu intención. "Necesitamos arreglar el bug de codificación en el pipeline de facturación, y la corrección no debe cambiar el formato almacenado porque tres servicios downstream dependen de él" es el tipo de contexto que ninguna herramienta puede descubrir. Enfoca tu entrada manual en el _por qué_ y las _restricciones_, no en el _dónde_.
+
+*Datos en bruto sobre paráfrasis — e idealmente, deja que el agente acceda a la fuente.* Este es el error más común que veo: ingenieros describiendo un error con sus propias palabras en lugar de proporcionar el error real. "El build está fallando con algún error de TypeScript sobre tipos" versus la salida exacta del compilador con ruta de archivo, número de línea y código de error. Lo primero le da al agente una dirección vaga. Lo segundo le da un objetivo específico. Pero la mejor versión es un agente que puede ejecutar el build por sí mismo y ver el error de primera mano.
+
+*Usa git blame para explicar el _por qué_ — o deja que el agente lo ejecute.* El código le dice al agente _qué_ existe. El historial de Git le dice _por qué_. Cuando le pides a un agente que modifique código con un diseño no obvio, el mensaje de commit o pull request relevante le da la justificación que necesita. Si tu agente puede ejecutar `git blame` y `git log` por sí mismo, puede encontrar este historial. Lo que todavía necesita de ti es la _interpretación_: "Esta función parece rara pero se escribió así por una peculiaridad de la pasarela de pagos que no está documentada en ningún sitio — mira `abc123`."
+
+*Poda agresivamente — limitando el alcance de las herramientas.* Si estás depurando un problema de renderizado, el agente no necesita ver tu middleware de autenticación. Con contexto manual, esto significa ser selectivo sobre lo que pegas. Con agentes equipados con herramientas, significa limitar el acceso a archivos o trabajar en un worktree enfocado. Cada archivo irrelevante en el contexto es ruido que degrada la señal, ya sea que llegó por pegar o por herramienta.
 
 *Organiza tu contexto por capas.* Para tareas complejas, no vuelques todo de golpe. Empieza con la visión general — qué hace el sistema, qué intentas cambiar, por qué. Luego proporciona los archivos específicos. Luego proporciona el error o el fallo del test. Esto refleja cómo informarías a un colega humano, y funciona por la misma razón: construye un modelo mental antes de entrar en los detalles.
+
+*Equipa, no alimentes con cuchara.* Cuando te pilles a punto de pegar un archivo en la ventana de contexto, pregúntate: ¿podría el agente haber encontrado esto por sí mismo si tuviera las herramientas adecuadas? Si la respuesta es sí, invierte el tiempo en configurar ese acceso en su lugar. Pegar es una solución puntual. Las herramientas son una mejora permanente. El objetivo es un agente que te necesite por tu criterio, no por tu portapapeles.
 
 == Contexto Entre Sesiones
 

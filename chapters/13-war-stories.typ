@@ -92,6 +92,8 @@ The eager refactorer was being helpful. The hallucinated library was being creat
 
 None of these are agent bugs. They're _workflow_ bugs. The fix is never "use a smarter agent." The fix is always the same: tighter scope, better feedback loops, more structure, shorter sessions, and a human who stays engaged.
 
+And increasingly, the fix includes _equipping the agent with better tools_. The Hallucinated Library would have been caught if the agent could run `npm install` and the test suite. The Infinite Loop would have been bounded by iteration limits in the tooling. War stories are often stories about agents that lacked the right tools or guardrails, not agents that lacked intelligence.
+
 Agents get things wrong. So do humans. The difference is that humans get things wrong slowly enough to notice. Agents get things wrong at the speed of autocomplete, and by the time you look up from your coffee, thirty-two files have changed.
 
 Stay in the loop. Check the diffs. Trust but verify. And when things go sideways — because they will — remember that the delete-branch-and-start-over button is the most underrated tool in your workflow.
