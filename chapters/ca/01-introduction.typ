@@ -1,14 +1,12 @@
-= Introduccio
+= Introducció
 
-L'any passat vaig veure una desenvolupadora junior del meu equip -- dos anys d'experiencia, encara nerviosa a les revisions de codi -- lliurar un endpoint d'API complet en quaranta-cinc minuts. Model de dades, validacio, gestio d'errors, tests, documentacio. El codi era net. Els tests eren exhaustius. El PR va passar revisio al primer intent.
+Fa sis mesos vaig decidir posar-me seriós amb els agents d'IA. No només provar -- realment descobrir com fer-los part del meu treball diari com a enginyer. Em vaig asseure, vaig buidar l'agenda i vaig començar a experimentar amb les tècniques que acabarien convertint-se en aquest llibre. Com guiar un agent. Com posar límits. Com pensar en termes d'intenció en lloc de sintaxi.
 
-A mi m'hauria costat una hora fer la mateixa feina. I porto fent aixo vint anys.
+Vaig aprendre a base de prova i error. Molt error. Vaig cremar tokens en tasques que haurien d'haver estat simples. Vaig veure com agents reescrivien mòduls sencers que no els havia demanat que toquessin. Vaig fusionar codi que passava tots els tests i es trencava en producció perquè havia confiat en la marca verda en lloc del meu propi judici. Cada error em va ensenyar alguna cosa, i a poc a poc -- en setmanes, després mesos -- els principis van començar a cristal·litzar.
 
-Ella no va teclejar la majoria. Va descriure el que necessitava, va apuntar un agent a la base de codi i el va guiar fins al final. La seva habilitat no era escriure el codi -- era saber que demanar, reconeixer quan la sortida era bona i detectar l'unic cas limit que l'agent va passar per alt. Estava fent _enginyeria_. Nomes que no de la manera com jo vaig aprendre a fer enginyeria.
+El que més em va sorprendre va ser com va canviar la meva pròpia productivitat. Tasques que abans em prenien un dia sencer -- construir un pipeline de dades, connectar un nou servei, refactoritzar un mòdul legacy -- van començar a portar-me menys d'una hora. No perquè els agents fessin tota la feina de pensar, sinó perquè havia après a _dirigir_ el pensament. Arquitectura neta. Tests exhaustius. PRs que passaven la revisió al primer intent. No era màgia -- només una manera diferent de treballar que ningú m'havia ensenyat, perquè ningú l'havia desxifrat encara.
 
-Aquell vespre vaig anar a casa i vaig seure amb una pregunta incomoda: si la distancia entre vint anys d'experiencia i dos anys d'experiencia s'acaba d'escurcar molt, que estic aportant exactament?
-
-La resposta, vaig acabar adonant-me, es tot allo que no es teclejar. Pero arribar a aquesta resposta em va costar mesos, molts errors, i aquest llibre.
+Aquest llibre va néixer d'aquest procés. Està construït sobre principis que vaig desenvolupar i provar en projectes reals -- com estructurar el pensament, com comunicar la intenció a un agent, com verificar la sortida i com saber quan cal reprendre el control. De cap manera estic segur que siguin els millors enfocaments -- el camp es mou massa ràpid perquè ningú pugui afirmar certeses. Però he vist una millora genuïna i mesurable en el meu propi treball, i crec que aquestes idees poden fer el mateix per a tu. Les tècniques no són complicades. Simplement no són evidents -- i ningú més les ensenya encara.
 
 == El Terra s'Esta Movent
 
@@ -38,7 +36,7 @@ Aquesta es la guia que m'hauria agradat que algu m'hagues donat.
 
 Ets enginyer de software. Has desplegat coses reals. Saps el que es sent un incident de produccio a les 2 de la matinada. No tens por del terminal.
 
-Pero ultimament, alguna cosa es diferent. Potser has provat eines de codi amb IA i les has trobat impressionants pero caotiques -- com fer parella amb algu que es increiblement rapid pero no te cap concepte d'abast. Potser has vist un desenvolupador amb dos anys d'experiencia lliurar una funcionalitat completa en una tarda amb assistencia d'agents, i t'ha fet sentir alguna cosa que no esperaves. Potser estas emocionat pero no saps per on comencar. Potser ets esceptic i vols que algu et convenci amb substancia, no amb hype.
+Pero ultimament, alguna cosa es diferent. Potser has provat eines de codi amb IA i les has trobat impressionants pero caotiques -- com fer parella amb algu que es increiblement rapid pero no te cap concepte d'abast. Com ser en Tom Cruise a _Rain Man_, excepte que el teu Dustin Hoffman pot refactoritzar tota una base de codi en lloc de comptar cartes. Potser has vist quelcom amb una fraccio de la teva experiencia lliurar de cop com un veterà de deu anys, i t'ha fet sentir alguna cosa que no esperaves. Potser estas emocionat pero no saps per on comencar. Potser ets esceptic i vols que algu et convenci amb substancia, no amb hype.
 
 Aquest llibre es per a tu. Assumeix que saps programar. Assumeix que portes temps en aixo. Et troba alla on ets.
 

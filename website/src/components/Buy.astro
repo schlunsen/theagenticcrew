@@ -91,6 +91,54 @@
       <p class="download-note">All formats free. Download as many times as you like.</p>
     </div>
 
+    <!-- Crew Member's Guide Card -->
+    <div class="download-card crew-card">
+      <div class="download-book-display">
+        <div class="mini-book-mock">
+          <div class="mini-book-cover crew-book-cover">
+            <div class="mini-book-spine crew-spine"></div>
+            <div class="mini-book-front">
+              <div class="mini-cover-placeholder crew-placeholder">
+                <span class="placeholder-eyebrow">CREW MEMBER'S</span>
+                <span class="placeholder-title">Guide</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="download-eyebrow">For the whole crew</p>
+      <h2>Crew Member's Guide</h2>
+      <p class="download-subtitle">Tech-savvy but don't code? This one's for you.</p>
+
+      <div class="lang-tabs crew-tabs">
+        <button class="lang-tab-crew active" data-lang-crew="en">English</button>
+        <button class="lang-tab-crew" data-lang-crew="ca">Català</button>
+      </div>
+
+      <div class="lang-panel-crew active" data-lang-crew="en">
+        <div class="format-grid single-format">
+          <a href="/the-agentic-crew-crew.pdf" class="format-card crew-format" download>
+            <div class="format-icon crew-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>No coding required. Understand agents, direct them, build real things.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="lang-panel-crew" data-lang-crew="ca">
+        <p class="lang-title">La Tripulació Agèntica — Guia del Tripulant</p>
+        <div class="format-grid single-format">
+          <a href="/the-agentic-crew-crew-ca.pdf" class="format-card crew-format" download>
+            <div class="format-icon crew-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Sense programació. Entén els agents, dirigeix-los, construeix coses reals.</p>
+          </a>
+        </div>
+      </div>
+
+      <p class="download-note">Same ideas as the engineering book, translated for non-programmers.</p>
+    </div>
+
     <!-- Kids' Edition Card -->
     <div class="download-card kids-card">
       <div class="download-book-display">
@@ -121,6 +169,11 @@
             <h3>PDF</h3>
             <p>Illustrated A5 book. Best for reading together or printing.</p>
           </a>
+          <a href="/the-agentic-crew-kids.epub" class="format-card kids-format" download>
+            <div class="format-icon kids-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Reflowable text for iPad, Kindle, Kobo & other e-readers.</p>
+          </a>
         </div>
       </div>
 
@@ -131,6 +184,11 @@
             <div class="format-icon kids-icon">PDF</div>
             <h3>PDF</h3>
             <p>Libro ilustrado A5. Ideal para leer juntos o imprimir.</p>
+          </a>
+          <a href="/the-agentic-crew-kids-es.epub" class="format-card kids-format" download>
+            <div class="format-icon kids-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Texto adaptable para iPad, Kindle, Kobo y otros lectores.</p>
           </a>
         </div>
       </div>
@@ -143,6 +201,11 @@
             <h3>PDF</h3>
             <p>Llibre il·lustrat A5. Ideal per llegir junts o imprimir.</p>
           </a>
+          <a href="/the-agentic-crew-kids-ca.epub" class="format-card kids-format" download>
+            <div class="format-icon kids-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Text adaptable per a iPad, Kindle, Kobo i altres lectors.</p>
+          </a>
         </div>
       </div>
 
@@ -153,6 +216,11 @@
             <div class="format-icon kids-icon">PDF</div>
             <h3>PDF</h3>
             <p>Illustreret A5-bog. Bedst til at læse sammen eller printe.</p>
+          </a>
+          <a href="/the-agentic-crew-kids-da.epub" class="format-card kids-format" download>
+            <div class="format-icon kids-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Flydende tekst til iPad, Kindle, Kobo og andre e-bogslæsere.</p>
           </a>
         </div>
       </div>
@@ -186,6 +254,20 @@
         panels.forEach(p => p.classList.remove('active'));
         tab.classList.add('active');
         document.querySelector(`.lang-panel[data-lang="${lang}"]`)?.classList.add('active');
+      });
+    });
+
+    // Crew book tabs
+    const crewTabs = document.querySelectorAll('.lang-tab-crew');
+    const crewPanels = document.querySelectorAll('.lang-panel-crew');
+
+    crewTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const lang = tab.getAttribute('data-lang-crew');
+        crewTabs.forEach(t => t.classList.remove('active'));
+        crewPanels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.lang-panel-crew[data-lang-crew="${lang}"]`)?.classList.add('active');
       });
     });
 
@@ -224,16 +306,20 @@
   }
 
   .download-inner {
-    max-width: 600px;
+    max-width: 1200px;
     margin: 0 auto;
     position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
   }
 
   .download-card {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: 20px;
-    padding: 3rem;
+    padding: 2rem 1.5rem;
     text-align: center;
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
@@ -271,17 +357,18 @@
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
   }
 
   .lang-tab {
-    padding: 0.5rem 1.25rem;
+    padding: 0.4rem 0.9rem;
     border-radius: 8px;
     border: 1px solid var(--color-border);
     background: transparent;
     color: var(--color-text-muted);
     font-family: inherit;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
@@ -318,19 +405,19 @@
   .format-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .format-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 14px;
-    padding: 2rem 1.5rem;
+    padding: 1.25rem 1rem;
     transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
     text-decoration: none;
     color: inherit;
@@ -502,9 +589,111 @@
     filter: drop-shadow(0 16px 32px rgba(46, 155, 183, 0.22));
   }
 
+  /* Crew Member's Guide styles */
+  .crew-card {
+    border-color: rgba(99, 102, 241, 0.3);
+    background: linear-gradient(135deg, #ffffff, rgba(99, 102, 241, 0.04));
+  }
+
+  .crew-card:hover {
+    border-color: rgb(99, 102, 241);
+    box-shadow: 0 8px 40px rgba(99, 102, 241, 0.12);
+  }
+
+  .crew-card .download-eyebrow {
+    color: rgb(99, 102, 241);
+  }
+
+  .crew-spine {
+    background: linear-gradient(to right, #4338ca, #6366f1) !important;
+  }
+
+  .crew-book-cover {
+    filter: drop-shadow(0 12px 24px rgba(99, 102, 241, 0.15));
+  }
+
+  .crew-book-cover:hover {
+    filter: drop-shadow(0 16px 32px rgba(99, 102, 241, 0.22));
+  }
+
+  .crew-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #1e1b4b, #312e81);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .placeholder-eyebrow {
+    font-size: 0.45rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(196, 181, 253, 0.8);
+    text-transform: uppercase;
+  }
+
+  .placeholder-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #e0e7ff;
+  }
+
+  .lang-tab-crew {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-tab-crew:hover {
+    border-color: rgb(99, 102, 241);
+    color: var(--color-text);
+  }
+
+  .lang-tab-crew.active {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgb(99, 102, 241);
+    color: rgb(79, 70, 229);
+    font-weight: 600;
+  }
+
+  .lang-panel-crew {
+    display: none;
+  }
+
+  .lang-panel-crew.active {
+    display: block;
+  }
+
+  .crew-icon {
+    color: rgb(79, 70, 229) !important;
+    background: rgba(99, 102, 241, 0.1) !important;
+  }
+
+  .crew-format:hover {
+    border-color: rgb(99, 102, 241) !important;
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.1) !important;
+  }
+
+  .single-format {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   /* Kids' Edition styles */
   .kids-card {
-    margin-top: 2rem;
     border-color: rgba(46, 155, 183, 0.3);
     background: linear-gradient(135deg, #ffffff, rgba(46, 155, 183, 0.04));
   }
@@ -561,10 +750,30 @@
   }
 
   .support-card {
-    margin-top: 2rem;
+    grid-column: 1 / -1;
     border: none;
     background: transparent;
     box-shadow: none;
+  }
+
+  @media (max-width: 900px) {
+    .download-inner {
+      grid-template-columns: 1fr;
+      max-width: 600px;
+    }
+
+    .download-card {
+      padding: 3rem;
+    }
+
+    .format-card {
+      padding: 2rem 1.5rem;
+      gap: 0.75rem;
+    }
+
+    .support-card {
+      grid-column: 1;
+    }
   }
 
   @media (max-width: 480px) {
@@ -574,10 +783,6 @@
 
     .download-card {
       padding: 2rem 1.5rem;
-    }
-
-    .lang-tabs {
-      flex-wrap: wrap;
     }
   }
 </style>

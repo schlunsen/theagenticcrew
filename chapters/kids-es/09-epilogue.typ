@@ -1,6 +1,6 @@
 = Ve a Construir Algo
 
-#image("../../assets/kids/ch09-sunset.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-sunset.jpg", width: 80%)]
 
 Lo lograste, Capitán. Has aprendido mucho.
 
@@ -10,7 +10,7 @@ Eso es bastante impresionante para alguien de tu edad.
 
 == La Tripulación Cambia. El Barco Se Queda.
 
-#image("../../assets/kids/ch09-ship.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-ship.jpg", width: 80%)]
 
 Hay una última cosa que quiero que recuerdes.
 
@@ -30,7 +30,7 @@ Los mejores capitanes de la historia no fueron los que esperaron el clima perfec
 
 == Una Última Orden, Capitán
 
-#image("../../assets/kids/ch09-horizon.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-horizon.jpg", width: 80%)]
 
 Esta noche -- no mañana, no la próxima semana, _esta noche_ -- prueba algo nuevo. Hazle una pregunta a una computadora sobre algo que te has estado preguntando. Construye algo pequeño. Escribe una historia y pídele a una IA que te ayude a mejorarla. Haz un dibujo y mira qué pasa cuando se lo describes a un ayudante.
 

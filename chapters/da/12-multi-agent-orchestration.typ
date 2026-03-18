@@ -1,5 +1,9 @@
 = Multi-Agent Orchestrering
 
+#figure(
+  image("../../assets/illustrations/ch12-orchestration.jpg", width: 80%),
+)
+
 Én agent er kraftfuld. Multiple agenter der arbejder sammen er noget helt andet.
 
 Tænk på det sådan. En enkelt tømrer kan bygge et skur. Men et hus? Du har brug for en elektriker, en blikkenslager, en tagdækker — specialister der arbejder parallelt, hver fokuseret på det de gør bedst, der koordinerer lige nok til at holde sig ude af hinandens vej. Huset rejser sig hurtigere og arbejdet er bedre end hvis én person forsøger at gøre alt.
@@ -121,3 +125,5 @@ Samlet tid: måske fyrre minutter. API-agenten tog tredive, frontendagenten tog 
 En enkelt agent der gør alt sekventielt? Sandsynligvis halvfems minutter.
 
 Matematikken virker når opgaven er stor nok. Og efterhånden som du bliver bedre til nedbrydning, vil du udvikle en intuition for hvilke opgaver der er værd at splitte og hvilke der ikke er. Som det meste i ingeniørarbejde er det et vurderingskald. Men nu har du værktøjerne til at tage det.
+
+Én ting mere der er værd at nævne: du behøver ikke altid at orchestrere manuelt. Som vi diskuterede i prompting-kapitlet, kan du _fortælle_ agenten at parallelisere. "Disse tre moduler er uafhængige — start underagenter og arbejd på dem simultant." Agenten håndterer worktrees, branching og koordinering. Dit job er den del agenten ikke kan gøre: at vide hvilke dele der er sikre at køre parallelt. Den arkitektoniske dømmekraft er den mest effektive prompt du kan skrive.

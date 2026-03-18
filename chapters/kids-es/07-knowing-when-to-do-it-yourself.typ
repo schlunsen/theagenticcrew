@@ -1,6 +1,6 @@
 = Saber Cuándo Hacerlo Tú Mismo
 
-#image("../../assets/kids/ch07-tying-shoes.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-tying-shoes.jpg", width: 80%)]
 
 Tu tripulación es increíble. Pueden fregar toda la cubierta en minutos. Pueden remendar una vela mientras tú almuerzas. Nunca se cansan.
 
@@ -20,7 +20,7 @@ Tu tripulación es mejor para los trabajos _grandes_. Los trabajos que a ti te t
 
 == Algunos Trabajos Necesitan un Corazón Humano
 
-#image("../../assets/kids/ch07-heart.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-heart.jpg", width: 80%)]
 
 Aquí hay algo que tu tripulación nunca podrá hacer: _sentir de verdad_.
 
@@ -39,7 +39,7 @@ Estos no son trabajos para tu tripulación. Son trabajos para _ti_. Las personas
 
 == Algunos Trabajos Son la Forma en que Aprendes
 
-#image("../../assets/kids/ch07-learning.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-learning.jpg", width: 80%)]
 
 Digamos que estás aprendiendo a nadar. Podrías pedirle a Compass que te explique cómo funciona la natación. "Mueve los brazos así, patea las piernas así, respira hacia el lado."
 
@@ -64,7 +64,7 @@ Usa tu tripulación para _ayudarte_ a aprender. Pídeles que te expliquen cosas.
 
 == Practicar Hace Tu Cerebro Más Fuerte
 
-#image("../../assets/kids/ch07-brain-muscles.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-brain-muscles.jpg", width: 80%)]
 
 Piensa en tu cerebro como un músculo. Cada vez que resuelves un problema difícil, ese músculo se hace un poquito más fuerte. Cada vez que luchas y descubres algo, tu cerebro crea nuevas conexiones.
 
@@ -114,4 +114,4 @@ Intenta hacerlo de dos maneras:
 
 ¿Ese sentimiento de orgullo cuando descubres algo por tu cuenta? De eso se trata ser capitán.
 
-#image("../../assets/kids/ch07-proud-captain.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-proud-captain.jpg", width: 80%)]

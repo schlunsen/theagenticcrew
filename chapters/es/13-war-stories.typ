@@ -1,5 +1,9 @@
 = Cuando los Agentes Se Equivocan
 
+#figure(
+  image("../../assets/illustrations/ch13-storm.jpg", width: 80%),
+)
+
 Todo ingeniero que trabaja con agentes el tiempo suficiente tiene una colección de estas historias. Los momentos en que te echas hacia atrás en la silla, miras la pantalla y murmuras algo impublicable. Son humillantes. Son educativas. Y son _inevitables_.
 
 Este capítulo es una colección de historias de guerra — cosas que realmente salen mal cuando entregas trabajo real a un agente. No hipotéticas. No demos fabricadas. El tipo de fallos que te cuestan una tarde, un despliegue o tu fe en la automatización. Cada una se conecta con principios de capítulos anteriores, porque los principios son baratos hasta que los aprendes por las malas.
@@ -87,6 +91,8 @@ Cada una de estas historias tiene la misma causa raíz: el agente estaba haciend
 El refactorizador entusiasta estaba siendo servicial. La biblioteca alucinada estaba siendo creativa. El bucle infinito estaba siendo persistente. La respuesta equivocada con confianza estaba siendo guiada por tests. La amnesia de contexto era una limitación, no una elección. La avalancha de dependencias estaba siendo exhaustiva.
 
 Ninguna de estas son bugs del agente. Son bugs de _flujo de trabajo_. La solución nunca es "usa un agente más inteligente." La solución es siempre la misma: alcance más estricto, mejores bucles de retroalimentación, más estructura, sesiones más cortas, y un humano que se mantiene involucrado.
+
+Y cada vez más, la solución incluye _equipar al agente con mejores herramientas_. La Biblioteca Alucinada se habría detectado si el agente pudiera ejecutar `npm install` y la suite de tests. El Bucle Infinito se habría acotado con límites de iteración en el tooling. Las historias de guerra son a menudo historias sobre agentes que carecían de las herramientas o barandillas correctas, no agentes que carecían de inteligencia.
 
 Los agentes se equivocan. Los humanos también. La diferencia es que los humanos se equivocan lo suficientemente despacio como para notarlo. Los agentes se equivocan a la velocidad del autocompletado, y para cuando levantas la vista de tu café, treinta y dos archivos han cambiado.
 

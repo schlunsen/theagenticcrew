@@ -1,5 +1,9 @@
 = Git Como Infraestructura de Agentes
 
+#figure(
+  image("../../assets/illustrations/ch06-git-branches.jpg", width: 80%),
+)
+
 Ya conoces Git. Llevas años haciendo commits, ramas y merges. Pero en la ingeniería agéntica, Git no es solo control de versiones — es la columna vertebral de todo tu flujo de trabajo. Es tu botón de deshacer, tu framework de ejecución paralela, tu interfaz de revisión y tu sistema de documentación, todo a la vez.
 
 La mayoría de los ingenieros usan quizá el 20% de lo que Git ofrece. La ingeniería agéntica exige el otro 80%.
@@ -84,6 +88,8 @@ He aquí la idea que la mayoría de los ingenieros pasan por alto: los agentes l
 Esto significa que tu historial de commits es documentación. No del tipo que escribes en una wiki — del tipo que está incrustada en el propio código, permanentemente, con procedencia perfecta.
 
 Los buenos mensajes de commit se acumulan con el tiempo. Seis meses a partir de ahora, cuando un agente esté trabajando en tu código base, leerá esos mensajes para entender el contexto. La diferencia entre un historial de "fix bug" y "fix race condition in session cleanup" es la diferencia entre un agente que entiende tu código base y uno que está adivinando.
+
+Y si tu agente tiene acceso para ejecutar `git log` y `git blame` — que debería tenerlo — esta documentación no es algo que necesites copiar y pegar en los prompts. El agente la lee directamente desde el repositorio. Tu trabajo es hacer que el historial valga la pena leerlo, no leerlo por el agente.
 
 Esto también se aplica a las descripciones de PR, nombres de ramas y mensajes de merge commit. Cada pieza de texto que adjuntas a tu historial de Git es contexto para futuros agentes. Escribe en consecuencia.
 

@@ -1,5 +1,9 @@
 = Els Tests com a Bucle de Retroalimentacio
 
+#figure(
+  image("../../assets/illustrations/ch08-feedback-loop.jpg", width: 50%),
+)
+
 Dues bases de codi. El mateix agent. La mateixa tasca: "Afegeix un limitador de velocitat a l'API que retorni 429 despres de 100 peticions per minut per usuari."
 
 A la primera base de codi, no hi ha tests. L'agent llegeix els handlers de rutes, tria un punt d'insercio del middleware, escriu la logica de limitacio de velocitat, i... s'atura. No te manera de saber si ha funcionat. No pot engegar el servidor i enviar 101 peticions per veure que passa. No pot comprovar si els endpoints existents segueixen responent correctament. Produeix un diff, diu "He afegit limitacio de velocitat," i espera que vagi be. Tu revises el codi, hi entreobres els ulls, penses que sembla raonable, el fusiones, i descobreixes en produccio tres dies despres que el middleware estava muntat en l'ordre incorrecte i mai es va executar. Totes les peticions passaven. El limitador de velocitat era decoracio.
@@ -17,6 +21,8 @@ Hi ha alguna cosa inquietant en aixo al principi. La teva suite de tests -- la c
 Un agent no pot mirar una interficie i dir si es veu be. No pot sentir si una resposta d'API es "prou rapida." No pot intuir si una refactoritzacio ha preservat el comportament subtil del qual depenen els usuaris. El que _pot_ fer es executar la teva suite de tests i llegir els resultats.
 
 Els tests es converteixen en el mecanisme principal de retroalimentacio de l'agent. Verd vol dir "continua." Vermell vol dir "torna-ho a provar." Sense tests vol dir que l'agent vola a cegues -- endevinant si els seus canvis funcionen, sense manera de verificar.
+
+Pero els tests no son nomes retroalimentacio -- son una _eina_ que l'agent utilitza autonomament. Quan un agent pot executar `npm test` o `pytest` per si sol, la suite de tests es converteix en un sistema de verificacio d'autoservei. L'agent no necessita que tu executis els tests i enganxis la sortida. Els executa, els llegeix, i itera -- tot a traves de les seves eines. Aquella autonomia es el que converteix una suite de tests d'una xarxa de seguretat en un motor.
 
 Per aixo les bases de codi sense tests son dificils de treballar de manera agentica. No es nomes un problema de qualitat -- es un problema d'informacio. Sense tests, l'agent no te senyal. Es com demanar a algu que pengi un quadre amb els ulls embenats. Potser ho fa be, pero no hi apostaries.
 

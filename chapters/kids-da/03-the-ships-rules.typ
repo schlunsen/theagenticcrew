@@ -1,6 +1,6 @@
 = Skibets Regler
 
-#image("../../assets/kids/ch03-rules-board.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-rules-board.jpg", width: 80%)]
 
 Forestil dig, at du hyrede et helt nyt mandskabsmedlem. Det er deres første dag. De er spændte. De vil gerne hjælpe. De spørger "Hvad skal jeg gøre?"
 
@@ -14,7 +14,7 @@ Et godt skib har brug for regler. Og dit robotmandskab? De har _virkelig_ brug f
 
 På dit skib falder hver opgave i en af tre kategorier. Lad os kalde dem Grøn, Gul og Rød.
 
-#image("../../assets/kids/ch03-traffic-light.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-traffic-light.jpg", width: 80%)]
 
 *Grønne opgaver: "Bare gør det!"* Det er sikre opgaver, mandskabet kan klare på egen hånd. Kigge på kortet. Tælle forsyningerne. Tjekke vejret. Læse skibets log. Der kan ikke ske noget slemt, hvis de gør det forkert. Lad dem køre!
 
@@ -30,7 +30,7 @@ Men du opdager også, at Compass bliver ved med at foreslå ruter gennem "Krysta
 
 == Mixerpulten
 
-#image("../../assets/kids/ch03-mixing-board.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-mixing-board.jpg", width: 80%)]
 
 Tænk på en mixerpult -- den slags med skydere, der går op og ned. DJ'er bruger dem til at styre musikken. Hver skyder styrer en forskellig lyd.
 
@@ -63,7 +63,7 @@ De bedste regler er strenge, hvor det betyder noget, og afslappede, hvor det ikk
 
 == Øvelses-Øen
 
-#image("../../assets/kids/ch03-practice-island.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-practice-island.jpg", width: 80%)]
 
 Nu kommer en af de bedste idéer, en kaptajn kan have: Øvelses-Øen.
 
@@ -75,7 +75,7 @@ Vil du have Compass til at teste en ny rute? Lad hende sejle rundt om Øvelses-�
 
 Det her kaldes en _sandkasse_. Ligesom en sandkasse på en legeplads er det et sikkert sted at prøve ting af. Du kan bygge et sandslot og smadre det. Du kan grave et hul og fylde det igen. Intet du gør i sandkassen skader noget uden for sandkassen.
 
-#image("../../assets/kids/ch03-sandbox-play.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-sandbox-play.jpg", width: 80%)]
 
 == Hvorfor Øvelses-Øen Er Vigtig
 

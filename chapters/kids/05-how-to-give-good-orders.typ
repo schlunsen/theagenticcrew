@@ -1,6 +1,6 @@
 = How to Give Good Orders
 
-#image("../../assets/kids/ch05-notepad.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-notepad.jpg", width: 80%)]
 
 Rules? Check. Checklists? Check. You're getting good at this. But there's one more captain skill that ties everything together: talking to your crew in a way they actually _understand_.
 
@@ -22,7 +22,7 @@ The trick: put _just the right stuff_ on the notepad.
 
 == Echo and the Vanishing Orders
 
-#image("../../assets/kids/ch05-clear-vs-vague.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-clear-vs-vague.jpg", width: 80%)]
 
 Let me show you what happens when the notepad overflows.
 
@@ -54,7 +54,7 @@ Small jobs are easier to check. And when something goes wrong -- _when_, not _if
 
 == The Ship's Rulebook
 
-#image("../../assets/kids/ch05-rulebook.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-rulebook.jpg", width: 80%)]
 
 Remember the Practice Island rules nailed to a board? Smart captains take that idea further. They write a whole *Ship's Rulebook* and nail it to the wall.
 
@@ -120,4 +120,4 @@ Hard, isn't it? You have to choose what _really_ matters and leave out everythin
 
 Now try giving your three sentences to someone. Could they do the task? What did you leave out? What would you change?
 
-#image("../../assets/kids/ch05-sandwich.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-sandwich.jpg", width: 80%)]

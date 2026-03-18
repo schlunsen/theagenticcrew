@@ -1,6 +1,6 @@
 = L'Ordinador S'Esta Arreglant Sol?
 
-#image("../../assets/kids/prologue-screen.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-screen.jpg", width: 80%)]
 
 Ets assegut a la taula de la cuina, menjant cereals. La teva mare esta al seu portatil. Escriu alguna cosa i despres s'inclina cap enrere. Tu mires.
 
@@ -20,7 +20,7 @@ Mires un minut mes. Les linies vermelles deixen d'apareixer. Tot es verd. La tev
 
 "Fet," diu.
 
-#image("../../assets/kids/prologue-ship-wheel.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-ship-wheel.jpg", width: 80%)]
 
 == Tu Ets el Capita
 
@@ -40,4 +40,4 @@ La teva feina es pilotar. Donar bones instruccions. Comprovar la feina. I saber 
 
 Preparat per coneixer la teva tripulacio? Passa la pagina.
 
-#image("../../assets/kids/prologue-ship-horizon.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-ship-horizon.jpg", width: 80%)]

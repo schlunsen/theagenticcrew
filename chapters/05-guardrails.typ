@@ -26,6 +26,8 @@ The engineers who never adjust the sliders end up abandoning agentic workflows e
 
 The principle is the same as in security: least privilege. An agent working on your frontend doesn't need SSH access to your database server. An agent writing unit tests doesn't need your AWS credentials.
 
+But it's worth pausing to notice that guardrails aren't just about _restricting_ what agents can do — they're the flip side of _equipping_ them. Every tool you grant is both a capability and a responsibility. The trust gradient from the previous section is really about calibrating how much autonomous context-gathering and action you allow. Guardrails and tools are the same list, viewed from two directions.
+
 In practice this means:
 - Scoped API keys with expiration times
 - Environment-specific credentials (never share prod keys with a dev agent)

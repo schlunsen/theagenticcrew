@@ -1,6 +1,6 @@
 = When Things Go Wrong
 
-#image("../../assets/kids/ch06-storm.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-storm.jpg", width: 80%)]
 
 Okay. So. You've got rules, checklists, and good orders. Everything should go perfectly from now on, right?
 
@@ -12,7 +12,7 @@ These are my favorite stories from the Captain's Log. Every one taught me someth
 
 == Story 1: The Eager Refactorer
 
-#image("../../assets/kids/ch06-eager-refactorer.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-eager-refactorer.jpg", width: 80%)]
 
 One Tuesday, I noticed a small problem. The flag on the main mast was hanging upside down. Easy fix, right? Just flip the flag.
 
@@ -32,7 +32,7 @@ Rusty looked hurt. "But I made everything _better_!"
 
 == Story 2: The Made-Up Map
 
-#image("../../assets/kids/ch06-made-up-map.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-made-up-map.jpg", width: 80%)]
 
 We needed to find Coconut Island. I asked Compass to chart a course.
 
@@ -50,7 +50,7 @@ We sailed for half a day before I realized we were heading toward open ocean wit
 
 == Story 3: The Loop
 
-#image("../../assets/kids/ch06-the-loop.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-the-loop.jpg", width: 80%)]
 
 The anchor was stuck. I asked Echo to pull it up.
 
@@ -88,7 +88,7 @@ The rule had faded. Too many other tasks had piled on top of it. The instruction
 
 == Story 5: The Helpful Overpack
 
-#image("../../assets/kids/ch06-overpack.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-overpack.jpg", width: 80%)]
 
 I asked Rusty to pack a picnic lunch for our day trip. "Just something simple," I said. "Sandwiches and water."
 
@@ -104,7 +104,7 @@ The picnic basket now weighed two hundred pounds. We couldn't even lift it off t
 
 == The Big Lesson
 
-#image("../../assets/kids/ch06-captain-thinking.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-captain-thinking.jpg", width: 80%)]
 
 Here's the thing about all these stories. The crew wasn't _trying_ to cause trouble. Rusty was being helpful. Compass was being confident. Echo was being persistent. Those are all _good_ qualities! They just need a captain to aim them in the right direction.
 

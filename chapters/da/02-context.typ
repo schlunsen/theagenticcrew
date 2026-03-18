@@ -8,7 +8,9 @@ En time senere tog en anden ingeniør den samme ticket efter det første forsøg
 
 Modellen var den samme. Agenten var den samme. Buggen var den samme. Det der var forskelligt var hvad hver ingeniør lagde foran agenten før de bad den om at arbejde. Den ene gav den en vag beskrivelse og lod den gætte. Den anden gav den alt hvad den havde brug for til at _se_ problemet.
 
-Den forskel — hvad agenten kan se — er hvad dette kapitel handler om.
+Men her er sagen: den anden ingeniør gav ikke bare bedre kontekst. Hun gav agenten de _råmaterialer_ den havde brug for — fejlsporet, dokumentationen, de relevante filer. Det er et betydeligt skridt op. Den endnu bedre version? At give agenten _værktøjer_ til at finde de materialer selv. Hvis det Sentry-trace var tilgængeligt via en MCP-integration, hvis agenten kunne læse gateway-dokumentationen fra en konfigureret kilde, hvis den kunne køre `git log` på faktureringspipen — ville hun ikke have behøvet at samle konteksten manuelt. Agenten ville have indsamlet den, og hun kunne have fokuseret på det kun hun kunne bidrage med: dømmekraften om at dette var et tegnkodningsproblem, ikke et valideringsproblem.
+
+Den forskel — hvad agenten kan se, og hvad den kan _nå_ — er hvad dette kapitel handler om.
 
 Den vigtigste færdighed i agentisk ingeniørarbejde er ikke prompting. Det er kontekststyring.
 
@@ -16,18 +18,42 @@ En AI-agent er kun så god som det den kan se. Giv den en vag instruktion og et 
 
 Traditionelt ingeniørarbejde havde en version af dette også. En senior-ingeniør skrev ikke bare bedre kode — de holdt mere af systemet i hovedet. De vidste hvilke filer der var vigtige, hvor dragerne boede, hvilke abstraktioner der var bærende og hvilke der var dekorative. Den mentale model var konteksten, og den levede udelukkende i ingeniørens hjerne.
 
-Nu skal du _eksternalisere_ den. Dine agenter kan ikke læse dine tanker. De læser filer, environment variables, error logs og hvad end du lægger foran dem. Håndværket i agentisk ingeniørarbejde er at lære hvad man skal fremhæve, hvornår, og hvordan.
+Nu skal du _eksternalisere_ den. Dine agenter kan ikke læse dine tanker. De læser filer, environment variables, error logs og hvad end du lægger foran dem — og i stigende grad kan de _finde_ de ting selv hvis du giver dem de rigtige værktøjer. Håndværket i agentisk ingeniørarbejde er at lære hvad man skal fremhæve, hvornår, og hvordan — og, vigtigere endnu, at bygge den infrastruktur der lader agenter fremhæve ting for sig selv.
 
 == Kontekstvinduet Er Din Arbejdsbænk
 
 Tænk på kontekstvinduet som en fysisk arbejdsbænk. Den har begrænset plads. Du kan ikke dumpe hele din codebase på den og forvente gode resultater. I stedet lægger du de dele ud der er vigtige for _denne_ opgave: de relevante kildefiler, den fejlende test, skemaet, måske et stykke dokumentation.
 
-En god agentisk ingeniør kuraterer kontekst ligesom en god kirurg lægger instrumenter frem. Intet unødvendigt. Alt inden for rækkevidde.
+Men her er udviklingen i tænkningen: du er ikke kirurgens assistent der nervøst afleverer instrumenter én ad gangen. Du er personen der _designede operationsstuen_. En god agentisk ingeniør kuraterer kontekst, ja — men den egentlige færdighed er at bygge et velorganiseret værksted hvor agenten kan finde hvad den har brug for. Klar filstruktur, tilgængelige værktøjer, velmærkede skuffer. Når værkstedet er sat rigtigt op, tager agenten selv det rigtige instrument ned fra væggen. Du træder til kun når den har brug for noget der ikke er på nogen hylde — din dømmekraft, din intention, din viden om hvorfor tingene er som de er.
+
+#image("../../assets/illustrations/ch02-context-workbench.jpg", width: 80%)
 
 Det betyder at man udvikler instinkter for spørgsmål som:
 - Hvad har agenten brug for at se for at forstå denne opgave?
 - Hvad vil forvirre den hvis jeg inkluderer det?
 - Er den kontekst jeg giver _aktuel_, eller fodrer jeg den med forældet information?
+
+== Kontekstinfrastruktur Versus Direkte Kontekst
+
+Før vi går ind i mekanikken, er det værd at navngive de to lag af kontekst der er vigtige i agentisk arbejde — fordi de fleste ingeniører kun tænker på det ene af dem.
+
+*Lag 1: Kontekstinfrastruktur.* Det er den varige investering. Det er alt hvad du sætter op _én gang_ der betaler sig i hver session: filsystemadgang, kommandoudførelse, MCP-integrationer med din fejlsporing og projektledelsesværktøjer, velorganiseret repo-struktur, `CLAUDE.md`-filer der beskriver din arkitektur og konventioner. Når du investerer i kontekstinfrastruktur, bygger du et værksted hvor agenten kan finde sine egne værktøjer. Det er _ingeniørarbejde_ — det akkumulerer.
+
+*Lag 2: Direkte kontekst.* Det er det manuelle, sessions-specifikke arbejde: at indsætte error logs, skrive begrænsninger op, forklare domæneviden, beskrive intention. Det er stadig essentielt — der er ting intet værktøj kan opdage, som hvorfor en bestemt designbeslutning blev truffet, eller at marketingholdet har brug for denne feature torsdag. Men det bør være _tilbagefaldet_, ikke standarden. Hver gang du finder dig selv i at indsætte den samme slags information igen og igen, er det et signal om at opgradere det fra Lag 2 til Lag 1 ved at sætte et værktøj eller en integration op.
+
+De bedste agentiske ingeniører bruger det meste af deres indsats på Lag 1 og har kun brug for Lag 2 til ting der er genuint flygtige eller tavse. Resten bruger al deres tid på Lag 2 og undrer sig over hvorfor hver session føles som at starte fra nul.
+
+=== Niveauer Af Kontekstlevering
+
+Der er en nyttig måde at tænke om hvordan kontekst når din agent, fra mindst effektiv til mest:
+
+*Niveau 0: Beskriv problemet med egne ord.* "Buildet er i stykker, noget med typer." Det er den mest tabsgivende form for kontekst. Du komprimerer en detaljeret fejl gennem det snævre rør af din omformulering, og agenten skal dekomprimere den — dårligt — i den anden ende. Det er som at beskrive et maleri til nogen over telefonen og bede dem reproducere det.
+
+*Niveau 1: Indsæt rådata.* Kopiér stack tracet, det fejlende testoutput, logfilen, den relevante kildekode. Det er her de fleste kompetente ingeniører lander i dag, og det er et meningsfuldt skridt op. Agenten ser præcis hvad du så. Ingen tabsgivende komprimering. Begrænsningen er at det er manuelt, det er flygtigt, og det skalerer ikke — næste session skal du indsætte det hele igen.
+
+*Niveau 2: Giv agenten værktøjer til at finde dataene selv — og giv kun det værktøjer ikke kan opdage.* Agenten kører den fejlende test, læser fejlsporet, grepper efter den relevante kode, tjekker `git blame` for historikken. Du giver _intentionen_ ("vi skal fikse dette uden at ændre det lagrede format fordi tre downstream-services er afhængige af det") og _begrænsningerne_ ("payment gatewayen har en særhed der ikke er dokumenteret noget sted"). Det er hvad du bør sigte efter. Det er varigt, det skalerer, og det lader dig fokusere på den del af jobbet der faktisk er svær: dømmekraft.
+
+De fleste teams er et sted mellem Niveau 0 og Niveau 1. Målet med dette kapitel er at bringe dig til Niveau 2 — eller i det mindste at vise dig vejen derhen.
 
 == Kontekstvinduets Skat
 
@@ -77,25 +103,39 @@ Agenten bliver din spejder. Du peger den mod et system og siger: "gå ud og kig 
 
 Det er en vurderingssag — hvor meget adgang man skal give, til hvilke systemer, med hvilke guardrails. For lidt og agenten er ubrugelig. For meget og du er én dårlig prompt fra en produktionsincident. Den agentiske ingeniør lærer at kalibrere dette over tid.
 
-== Fodring af Kontekst Med Omtanke
+== Fodring Af Kontekst Med Omtanke
 
-De bedste agentiske ingeniører udvikler vaner omkring kontekst:
+Der er to lag til at levere kontekst, og de bedste agentiske ingeniører investerer tungt i det første så de sjældent har brug for det andet.
 
-*Start med fejlen.* Beskriv ikke buggen — vis agenten stack tracet, den fejlende test-output, loglinjen. Rå kontekst slår omskrevet kontekst hver gang.
+=== Tier 1: Kontekstinfrastruktur
 
-*Vis, fortæl ikke.* I stedet for at forklare dit databaseskema i prosa, giv agenten migrationsfilerne eller ORM-modellerne. I stedet for at beskrive API-kontrakten, giv den OpenAPI-specifikationen eller et curl-svar.
+Det mest effektive du kan gøre er at give din agent _værktøjer_ til at indsamle kontekst på egen hånd. Det er en varig investering — du sætter det op én gang og hver fremtidig session drager fordel af det.
 
-*Beskær aggressivt.* Hvis du debugger et renderingsproblem, behøver agenten ikke at se din authentication-middleware. Hver irrelevant fil i konteksten er støj der forringer signalet.
+*Giv agenter adgang til dine værktøjer.* Filsystemadgang og kommandoudførelse er basislinjen. En agent der kan køre `git log`, `git blame`, `grep` og din testsuite kan besvare de fleste af sine egne spørgsmål. Men stop ikke der. MCP-servere kan forbinde agenter til eksterne systemer — din fejlsporing (Sentry, Datadog), dit projektledelsesværktøj (Linear, Jira), din database, din CI-pipeline. Hver integration er én ting mindre du skal kopiere og indsætte manuelt, for evigt.
 
-*Brug filsystemet som kontekst.* Et velorganiseret projekt _er_ kontekst. Meningsfulde filnavne, klar mappestruktur, en god README — disse er ikke kun til mennesker længere. Dine agenter læser dem også.
+*Gør din projektstruktur navigerbar.* Et velorganiseret projekt _er_ kontekstinfrastruktur. Meningsfulde filnavne, klar mappestruktur, en god README — disse er ikke kun til mennesker længere. Dine agenter læser dem også. Når filsystemet er læsbart, kan en udstyret agent finde den rigtige fil uden at du peger på den.
 
-*Giv filstier, ikke skattejagter.* Når du ved hvilke filer der er relevante, sig det eksplicit. "Buggen er i `src/payments/gateway.ts`, specifikt `encodeAddress`-funktionen på linje 142" er uendeligt bedre end "der er en bug et sted i betalingskoden." Hvert minut agenten bruger på at lede efter den rigtige fil er et minut den ikke bruger på det faktiske problem — og den brænder tokens hele tiden.
+*Vedligehold CLAUDE.md-filer (eller tilsvarende).* En kontekstfil på projektniveau der beskriver arkitektur, konventioner og aktuelle prioriteter er en af de billigste og mest kraftfulde former for kontekstinfrastruktur. Den lever i filsystemet, persisterer på tværs af sessioner og læses automatisk. Tænk på den som et briefing-dokument som hver ny agentsession automatisk samler op.
 
-*Brug git blame til at forklare _hvorfor_.* Kode fortæller agenten _hvad_ der eksisterer. Git-historik fortæller den _hvorfor_. Når du beder en agent om at modificere et stykke kode der har et ikke-oplagt design, peg den mod den relevante commit-besked eller pull request. "Denne funktion ser mærkelig ud men den blev skrevet sådan på grund af #1247 — se commit-beskeden ved `abc123`" giver agenten den begrundelse den har brug for til at lave ændringer uden at bryde den originale intention.
+*Scop dine værktøjer, fjern dem ikke.* Instinktet om at begrænse agentadgang er forståeligt, men at overbegrænse er lige så dyrt som at overbevæbne. I stedet for at forhindre filadgang, scop den til de relevante mapper. I stedet for at blokere kommandoudførelse, hvidlist de kommandoer der er vigtige. En velscopet agent er både sikker og kompetent.
 
-*Copy-paste over omskrivning.* Det er værd at gentage fordi det er den mest almindelige fejl jeg ser. Ingeniører beskriver en fejl med deres egne ord i stedet for at paste den faktiske fejl ind. "Buildet fejler med en TypeScript-fejl om typer" versus at paste det præcise compiler-output med filsti, linjenummer og fejlkode. Det første giver agenten en vag retning. Det andet giver den et specifikt mål. Paste altid det rå output. Lad agenten stå for fortolkningen.
+=== Tier 2: Direkte Konteksttilførsel
+
+Værktøjer kan ikke give alt. Din mentale model af hvorfor noget blev designet på en bestemt måde, begrænsninger der aldrig blev nedskrevet, stammeviden om hvordan holdet arbejder, domæneekspertise om forretningen — det er hvad _du_ bringer. Det er her kopier-indsæt og direkte instruktion stadig er vigtige.
+
+*Start med fejlen — eller lad agenten finde den.* Hvis din agent har adgang til dit fejlsporings-system via MCP, lad den selv hente Sentry-tracet eller Datadog-alarmen. Hvis den ikke har det, indsæt stack tracet, det fejlende testoutput, loglinjen. Rå kontekst slår omskrevet kontekst hver gang — men den bedste version er at agenten tilgår råkilden direkte.
+
+*Giv intention, ikke bare implementeringsdetaljer.* En udstyret agent er overraskende god til at finde de rigtige filer. Hvad den _ikke_ kan finde er din intention. "Vi skal fikse kodningsbuggen i faktureringspipen, og fixet må ikke ændre det lagrede format fordi tre downstream-services er afhængige af det" er den slags kontekst intet værktøj kan opdage. Fokusér din manuelle input på _hvorfor_ og _begrænsningerne_, ikke _hvor_.
+
+*Rådata frem for omformulering — og lad ideelt agenten tilgå kilden.* Det er den mest almindelige fejl jeg ser: ingeniører beskriver en fejl med egne ord i stedet for at give den faktiske fejl. "Buildet fejler med en TypeScript-fejl om typer" versus det præcise compiler-output med filsti, linjenummer og fejlkode. Det første giver agenten en vag retning. Det andet giver den et specifikt mål. Men den bedste version er en agent der selv kan køre buildet og se fejlen direkte.
+
+*Brug git blame til at forklare _hvorfor_ — eller lad agenten køre det.* Kode fortæller agenten _hvad_ der eksisterer. Git-historik fortæller den _hvorfor_. Når du beder en agent om at modificere kode der har et ikke-oplagt design, giver den relevante commit-besked eller pull request den begrundelsen den har brug for. Hvis din agent kan køre `git blame` og `git log` selv, kan den finde denne historik. Hvad den stadig har brug for fra dig er _fortolkningen_: "Denne funktion ser mærkelig ud men den blev skrevet sådan på grund af en payment gateway-særhed der ikke er dokumenteret noget sted — se `abc123`."
+
+*Beskær aggressivt — ved at scope værktøjer.* Hvis du debugger et renderingsproblem, behøver agenten ikke at se din authentication-middleware. Med manuel kontekst betyder det at være selektiv med hvad du indsætter. Med udstyrede agenter betyder det at scope filadgang eller arbejde i et fokuseret worktree. Hver irrelevant fil i konteksten er støj der forringer signalet, uanset om den kom der via indsæt eller via værktøj.
 
 *Lag din kontekst.* Til komplekse opgaver, dump ikke alt på én gang. Start med det overordnede billede — hvad systemet gør, hvad du forsøger at ændre, hvorfor. Giv derefter de specifikke filer. Giv derefter fejlen eller testfejlen. Det spejler hvordan du ville briefe en menneskelig kollega, og det virker af samme grund: det opbygger en mental model før man dykker ned i detaljer.
+
+*Udstyr, spisfod ikke.* Når du er ved at indsætte en fil i kontekstvinduet, spørg: kunne agenten have fundet dette selv hvis den havde de rigtige værktøjer? Hvis ja, invester tiden i at sætte den adgang op i stedet. Indsætning er en engangsløsning. Værktøjer er en permanent opgradering. Målet er en agent der har brug for dig for din dømmekraft, ikke dit udklipsholder.
 
 == Kontekst På Tværs Af Sessioner
 

@@ -1,6 +1,6 @@
 = Conoce a la Tripulación
 
-#image("../../assets/kids/ch02-crew-lineup.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-crew-lineup.jpg", width: 80%)]
 
 Ahora es el momento de conocer a los marineros robots de tu barco. Cada uno tiene talentos diferentes. Cada uno tiene problemas diferentes. Y aprender quién es quién te hará un capitán mucho mejor.
 
@@ -18,7 +18,7 @@ Un agente es más como un cazador de tesoros. Le dices "encuentra el tesoro ente
 
 Algunos ayudantes son simples. Les preguntas, te responden. Otros ayudantes son más sofisticados. Pueden mirar tus cosas y sugerir respuestas más grandes. Y algunos ayudantes -- los agentes -- pueden ir a _hacer cosas_ por su cuenta. Leen archivos. Ejecutan pruebas. Arreglan errores. Y siguen hasta que el trabajo está hecho o se quedan atascados.
 
-#image("../../assets/kids/ch02-agent-spectrum.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-agent-spectrum.jpg", width: 80%)]
 
 == El Contador de Peces
 
@@ -36,7 +36,7 @@ Ahora, vamos a conocer a tus tres miembros de la tripulación.
 
 == Rusty
 
-#image("../../assets/kids/ch02-rusty.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-rusty.jpg", width: 80%)]
 
 Rusty es el miembro más entusiasta de tu tripulación. Le _encanta_ trabajar. Nunca has conocido a nadie con tantas ganas de ayudar. En cuanto le das un trabajo, se le iluminan los ojos y empieza a hacerlo.
 
@@ -56,7 +56,7 @@ La debilidad de Rusty: va mucho más allá de lo que le pediste. Tienes que vigi
 
 == Compass
 
-#image("../../assets/kids/ch02-compass.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-compass.jpg", width: 80%)]
 
 Compass es tu navegante. Es genial haciendo planes. Dale un destino y averiguará la ruta, calculará cuánto tardará y hará una lista de todos los suministros que necesitarás.
 
@@ -76,7 +76,7 @@ La debilidad de Compass: a veces se inventa datos, y suena totalmente segura cua
 
 == Echo
 
-#image("../../assets/kids/ch02-echo.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-echo.jpg", width: 80%)]
 
 Echo es el mensajero de la tripulación. Recuerda las instrucciones perfectamente -- al principio. Le dices "trae doce barriles de agua, cuatro cajas de naranjas y la cuerda del ancla roja", y te lo repite palabra por palabra.
 
@@ -98,7 +98,7 @@ La debilidad de Echo: olvida instrucciones anteriores durante trabajos largos y 
 
 == Tu Tripulación, Tu Responsabilidad
 
-#image("../../assets/kids/ch02-crew-ship.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch02-crew-ship.jpg", width: 80%)]
 
 Ahí los tienes. Rusty, Compass y Echo. Entusiastas, listos y fiables -- a su manera. Y con defectos -- a su manera.
 

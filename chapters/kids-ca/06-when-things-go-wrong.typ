@@ -1,6 +1,6 @@
 = Quan les Coses Van Malament
 
-#image("../../assets/kids/ch06-storm.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-storm.jpg", width: 80%)]
 
 Tots els capitans tenen dies dolents. Dies en que la tripulacio fa alguna cosa tan ximple, tan inesperada, tan completament boig que l'unic que pots fer es seure, respirar fondo i tornar a comencar.
 
@@ -8,7 +8,7 @@ Aquestes son les meves histories preferides del Diari del Capita. Totes van pass
 
 == Historia 1: El Reformador Entusiasta
 
-#image("../../assets/kids/ch06-eager-refactorer.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-eager-refactorer.jpg", width: 80%)]
 
 Un dimarts, vaig notar un petit problema. La bandera del pal major estava cap per avall. Facil d'arreglar, no? Nomes calia girar la bandera.
 
@@ -28,7 +28,7 @@ Rusty va posar cara de pena. "Pero ho he fet tot _millor_!"
 
 == Historia 2: El Mapa Inventat
 
-#image("../../assets/kids/ch06-made-up-map.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-made-up-map.jpg", width: 80%)]
 
 Necessitavem trobar l'Illa dels Cocos. Vaig demanar a Compass que traces un rumb.
 
@@ -46,7 +46,7 @@ Vam navegar mig dia abans que em dones compte que anavem cap a mar obert sense c
 
 == Historia 3: El Bucle
 
-#image("../../assets/kids/ch06-the-loop.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-the-loop.jpg", width: 80%)]
 
 L'ancora estava encallada. Vaig demanar a Echo que la puges.
 
@@ -84,7 +84,7 @@ La regla s'havia esvaít. Massa altres feines s'hi havien anat amuntegant. La in
 
 == Historia 5: L'Excés d'Equipatge
 
-#image("../../assets/kids/ch06-overpack.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-overpack.jpg", width: 80%)]
 
 Vaig demanar a Rusty que prepares un dinar de picnic per a la nostra excursio. "Alguna cosa senzilla," vaig dir. "Entrepans i aigua."
 
@@ -100,7 +100,7 @@ La cistella del picnic ara pesava cent quilos. No la podiem ni aixecar del vaixe
 
 == La Gran Llico
 
-#image("../../assets/kids/ch06-captain-thinking.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-captain-thinking.jpg", width: 80%)]
 
 Aqui tens el que passa amb totes aquestes histories. La tripulacio no _intentava_ causar problemes. Rusty estava sent util. Compass estava sent segura. Echo estava sent persistent. Totes son qualitats _bones_! Nomes necessiten un capita que les apunti en la direccio correcta.
 

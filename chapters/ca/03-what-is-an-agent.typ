@@ -14,7 +14,7 @@ Tres capacitats separen un agent d'un chatbot sofisticat:
 
 *Planificacio.* Un agent descompon un objectiu en passos. "Afegeix autenticacio a aquesta app" es converteix en una serie d'accions -- llegir la base de codi, triar el framework, crear middleware, actualitzar rutes, afegir tests, verificar. Un chatbot et dona un bloc de codi. Un agent et dona un proces.
 
-*Us d'eines.* Un agent interactua amb el mon -- llegeix els teus fitxers, executa els teus tests, examina la sortida d'errors. Cada crida a una eina proporciona nova informacio que dona forma a la seguent decisio. Aquest bucle de retroalimentacio es el que fa els agents potents: no estan generant codi al buit, estan generant codi i _verificant-lo_.
+*Us d'eines.* Un agent interactua amb el mon -- llegeix els teus fitxers, executa els teus tests, examina la sortida d'errors. Cada crida a una eina proporciona nova informacio que dona forma a la seguent decisio. Aquest bucle de retroalimentacio es el que fa els agents potents: no estan generant codi al buit, estan generant codi i _verificant-lo_. I aqui hi ha la cosa que molta gent no veu: les eines que dones a un agent defineixen quin tipus d'agent _es_. Un LLM amb nomes text d'entrada i sortida de text es un chatbot. Dona-li acces a fitxers, execucio de comandes, i integracions amb sistemes externs, i es converteix en un enginyer. Les eines son l'ascens.
 
 *Iteracio.* Un agent pot provar, fallar i tornar a provar. Escriure una funcio, executar els tests, veure un error, llegir l'error, ajustar, tornar a executar. Actuar, observar, ajustar. Un chatbot et dona un sol intent. Un agent et dona un cicle.
 
@@ -48,6 +48,14 @@ No pensis en els agents com a eines. No pensis en ells com a substituts. Pensa e
 
 Son rapids on tu ets lent. Son pacients on tu ets impacient. Poden mantenir mes text a la memoria de treball que tu. Mai es cansen, mai es frustren, mai tenen un mal dia.
 
-Pero no saben que importa. No saben que necessita realment l'usuari. No saben quin deute tecnic es acceptable i quin es una bomba de rellotgeria. No saben quan cal qüestionar un requisit. No saben quan l'especificacio esta malament.
+Pero no saben que importa. No saben que necessita realment l'usuari. No saben quin deute tecnic es acceptable i quin es una bomba de rellotgeria. No saben quan cal questionar un requisit. No saben quan l'especificacio esta malament.
 
-Aixo es feina teva. I sempre ho sera.
+La millor analogia que he trobat es _Rain Man_. Tu ets Tom Cruise. L'agent es Dustin Hoffman.
+
+Raymond pot comptar cartes com cap huma viu -- veu patrons en muntanyes de dades, els processa instantaniament, mai es cansa, mai perd el focus. Pero no pot navegar per un casino. No sap _per que_ estan comptant cartes. No sap quan abandonar la taula, quan el cap de seguretat esta posant-se sospitos, o que fer amb els diners. Deixat al seu aire, comptaria cartes per sempre en una sala buida.
+
+Charlie es el que te el pla. Sap a quin casino anar, quan apostar fort, quan cobrar, quan canviar d'estrategia completament. No pot comptar cartes ell sol -- no a la velocitat de Raymond, no a l'escala de Raymond. Pero no necessita fer-ho. La seva feina es la direccio, el judici, i saber per a que serveix tota l'operacio.
+
+Aixo es l'enginyeria agentica. El teu agent processara tota la teva base de codi, generara solucions a una velocitat que no pots igualar, i iterara incansablement. Pero no sap quin problema val la pena resoldre. No sap quan la solucio elegant es l'incorrecta. No sap quan parar.
+
+Aixo es la teva feina. I sempre ho sera.

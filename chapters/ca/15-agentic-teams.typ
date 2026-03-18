@@ -1,5 +1,9 @@
 = Equips Agentics
 
+#figure(
+  image("../../assets/illustrations/ch15-crew.jpg", width: 80%),
+)
+
 El software sempre ha estat un esport d'equip. Els agents no canvien aixo. Pero canvien la forma de l'equip, el ritme de la feina, i les habilitats que importen. Si lideres un equip -- o hi treballes -- necessites pensar-hi ara, no despres.
 
 == El Multiplicador de 10x Es Real, Pero Es Distribueix Diferent

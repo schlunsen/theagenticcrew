@@ -14,7 +14,7 @@ Three capabilities separate an agent from a fancy chatbot:
 
 *Planning.* An agent breaks a goal into steps. "Add authentication to this app" becomes a series of actions — read the codebase, pick the framework, create middleware, update routes, add tests, verify. A chatbot gives you a code block. An agent gives you a process.
 
-*Tool use.* An agent interacts with the world — reads your files, runs your tests, examines error output. Each tool call provides new information that shapes the next decision. This feedback loop is what makes agents powerful: they're not generating code in a vacuum, they're generating code and _verifying_ it.
+*Tool use.* An agent interacts with the world — reads your files, runs your tests, examines error output. Each tool call provides new information that shapes the next decision. This feedback loop is what makes agents powerful: they're not generating code in a vacuum, they're generating code and _verifying_ it. And here's the thing people miss: the tools you give an agent define what kind of agent it _is_. An LLM with only text-in, text-out is a chatbot. Give it file access, command execution, and integrations with external systems, and it becomes an engineer. The tools are the promotion.
 
 *Iteration.* An agent can try, fail, and try again. Write a function, run the tests, see a failure, read the error, adjust, rerun. Act, observe, adjust. A chatbot gives you one shot. An agent gives you a cycle.
 

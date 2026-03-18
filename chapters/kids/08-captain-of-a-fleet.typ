@@ -1,6 +1,6 @@
 = Captain of a Fleet
 
-#image("../../assets/kids/ch08-fleet.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-fleet.jpg", width: 80%)]
 
 You've been captaining one ship with Rusty, Compass, and Echo. You've survived painted cats, imaginary straits, and a two-hundred-pound picnic basket. You're doing great.
 
@@ -20,7 +20,7 @@ If one crew member does all three jobs, one after another, it takes all day. But
 
 That's the magic of working in parallel. Instead of one ship doing everything, you have a little fleet. Each ship handles one piece of the mission. They all work at the same time. When they're done, you put the pieces together.
 
-#image("../../assets/kids/ch08-three-ships.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-three-ships.jpg", width: 80%)]
 
 == But Here's the Tricky Part
 
@@ -50,7 +50,7 @@ Before you send your fleet out, you need to think carefully about how to divide 
 
 Splitting work well is one of the hardest parts of being a fleet captain. But it's also one of the most powerful things you can learn.
 
-#image("../../assets/kids/ch08-planning-table.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-planning-table.jpg", width: 80%)]
 
 == Putting the Pieces Together
 
@@ -72,7 +72,7 @@ You become more like a coach than a player. A coach doesn't run on the field. A 
 
 == Teams of Captains
 
-#image("../../assets/kids/ch08-team-captains.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-team-captains.jpg", width: 80%)]
 
 Here's one more level to think about. What if you're not the only captain?
 
@@ -128,4 +128,4 @@ Now try again. This time, spend two minutes _planning_ together first. Agree on 
 
 Did the second try work better? That's the power of coordination!
 
-#image("../../assets/kids/ch08-harbor.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-harbor.jpg", width: 80%)]

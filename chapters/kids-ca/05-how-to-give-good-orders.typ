@@ -1,6 +1,6 @@
 = Com Donar Bones Ordres
 
-#image("../../assets/kids/ch05-notepad.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-notepad.jpg", width: 80%)]
 
 == El Bloc de Notes del Capita
 
@@ -16,7 +16,7 @@ Aixi es com funciona la teva tripulacio robot. Tenen un bloc de notes al cap que
 
 El truc es posar _nomes les coses justes_ al bloc de notes.
 
-#image("../../assets/kids/ch05-clear-vs-vague.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-clear-vs-vague.jpg", width: 80%)]
 
 == Ordres Clares vs. Ordres Confuses
 
@@ -48,7 +48,7 @@ Es molt millor donar una feina cada vegada. Deixa que Rusty acabi la vela. Compr
 
 Les feines petites son mes facils de comprovar. I si alguna cosa va malament, nomes has de refer una mica -- no tot.
 
-#image("../../assets/kids/ch05-rulebook.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-rulebook.jpg", width: 80%)]
 
 == El Manual del Vaixell
 
@@ -101,4 +101,4 @@ Ara dona aquestes cinc frases a algu de la teva familia. Pot fer l'entrepan nome
 
 Aixo es el que se sent quan dones ordres a la teva tripulacio. Com mes clar escriguis, millor l'entrepan -- vull dir, millor els resultats!
 
-#image("../../assets/kids/ch05-sandwich.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-sandwich.jpg", width: 80%)]

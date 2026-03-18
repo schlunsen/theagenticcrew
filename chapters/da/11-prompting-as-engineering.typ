@@ -22,7 +22,13 @@ Det fortæller agenten næsten ingenting. Hvilken auth-bug? Hvor manifesterer de
 
 Det er et helt andet dyr. Agenten kender symptomet, den mistænkte lokation, og hvordan den verificerer fixet. Den kan gå direkte til den relevante kode, forstå problemet og validere sin løsning — alt uden at gætte.
 
-Mønstret er simpelt. _Hvad_ der er i stykker eller nødvendigt. _Hvor_ man skal kigge. _Hvordan_ man verificerer. Hvert minut du bruger på at gøre din prompt præcis sparer dig fem minutter på at reviewe det forkerte output.
+*Med værktøjer udstyret:* "Login-endpointet returnerer 401 for gyldige tokens når sessioncachen er kold. Den fejlende test er `TestColdCacheLogin`. Undersøg, fix det og sørg for at alle auth-tests passerer."
+
+Læg mærke til hvad der mangler: ingen filsti, intet funktionsnavn. Agenten har `grep`, `find` og testløberen. Den kan _opdage_ hvor `TestColdCacheLogin` bor og selv spore kodesporet. Hvad du gav den er _hvad_ og _hvorfor_ — den domæneviden som værktøjer ikke kan give. Den kolde cache-detalje, symptomet, testnavnet som en startende tråd at trække i. Agenten gør det mekaniske arbejde med at finde koden.
+
+Alle tre niveauer er nyttige. Nogle gange _kender_ du præcis filen og funktionen, og at overlevere det sparer agenten tredive sekunders søgning. Men det tredje niveau repræsenterer den modne mentale model: giv kun det agenten ikke selv kan finde. Problembeskrivelsen, domænekonteksten, intentionen. Lad værktøjerne håndtere opdagelse.
+
+Mønstret er simpelt. _Hvad_ der er i stykker eller nødvendigt. _Hvor_ man skal kigge (hvis du allerede ved det — gå ikke på jagt bare for at udfylde dette). _Hvordan_ man verificerer. Hvert minut du bruger på at gøre din prompt præcis sparer dig fem minutter på at reviewe det forkerte output.
 
 == Begrænsningsspecifikation
 
@@ -59,6 +65,37 @@ Hvert trin er en selvstændig prompt. Hvert har et verificerbart resultat. Hvert
 
 Det er ikke bare god prompting — det er godt ingeniørarbejde. Du anvender de samme nedbrydningsfærdigheder du ville bruge til at planlægge en sprint eller bryde en pull request ned. Arbejdsenheden er lille nok til at reviewe, lille nok til at teste, og lille nok til at smide væk hvis den er forkert.
 
+== Prompting For Parallelisme
+
+Her er noget de fleste overser: du kan bede agenten om at parallelisere.
+
+Moderne agentværktøjer — Claude Code, Cursor, Cline — kan starte underagenter. Hver underagent får sin egen kontekst, sit eget arbejdsrum, sin egen eksekverings-tråd. De kører simultant. Moderagenten koordinerer, venter på resultater og samler outputtet. Det er ikke en skjult funktion du skal låse op. Det er der. Men næsten ingen prompter for det.
+
+Overvej forskellen. Du har en feature der rører tre uafhængige moduler — API'et, workeren og notifikationsservicen. Den sekventielle tilgang:
+
+_"Implementér webhook-handleren i API-modulet. Opdater så workeren til at processere webhook-events. Tilføj så notifikationer for fejlede webhooks."_
+
+Agenten gør hvert trin én ad gangen. Tyve minutter, måske tredive. Fint.
+
+Nu den parallelle tilgang:
+
+_"Denne feature rører tre uafhængige moduler. Start underagenter til at arbejde på dem parallelt: én til webhook-handleren i API-modulet, én til workeren der processerer webhook-events, og én til notifikationsservicen der advarer om fejl. Hvert modul har sin egen mappe og sine egne tests. Flet resultaterne når alle tre er færdige."_
+
+Samme arbejde. En tredjedel af vægur-tiden. Nøgleordet i den prompt er _uafhængige_ — du fortæller agenten at disse dele ikke afhænger af hinanden, så det er sikkert at parallelisere. Du giver den tilladelse til at være hurtig.
+
+Det virker fordi _du_ har det arkitektoniske overblik. Du ved hvilke moduler der er koblede og hvilke der ikke er. Du ved hvilke dele der kan bygges simultant og hvilke der skal være sekventielle. Agenten ved ikke altid dette — den gør ting én ad gangen som standard, fordi sekventielt er sikkert. Dit job er at se parallelismen og gøre den eksplicit.
+
+Nogle promptingmønstre der opmuntrer til parallelisme:
+
+- *"Disse opgaver er uafhængige — kør dem parallelt."* Direkte og effektivt. Agenten ved at den har tilladelse.
+- *"Start en underagent til hver af disse."* Eksplicit instruktion om at bruge den parallelle eksekverings-kapabilitet.
+- *"Arbejd på API'et og frontenden simultant — de deler grænsefladen defineret i `types.ts` men afhænger ikke af hinandens implementering."* Kontekst om _hvorfor_ parallelisme er sikkert.
+- *"Start alle tre og rapportér tilbage når de er færdige."* Framer det som en koordineringsopgave, hvilket er præcis hvad det er.
+
+Den mentale modelskift er subtil men vigtig. Du fortæller ikke bare agenten _hvad_ der skal bygges — du fortæller den _hvordan den skal organisere arbejdet_. Du er tech lead, ikke bare en ticket-skriver. Du siger "jeg har kigget på dette problem, jeg ser tre uafhængige strømme, og jeg vil have dig til at bemande alle tre simultant."
+
+Det er den ingeniørmæssige løftestang som erfarne udviklere bringer til agentisk arbejde. En junior-ingeniør ved måske ikke hvilke dele der er sikre at parallelisere. Det ved du. Og når du koder den viden ind i prompten, bliver agenten dramatisk hurtigere — ikke fordi den er klogere, men fordi du gav den en bedre plan.
+
 == Prompten Som Spec
 
 De bedste prompts jeg har set ligner miniature designdokumenter. De beskriver det ønskede resultat, ikke implementeringstrinene. De lister begrænsningerne. De definerer acceptkriterier. De giver lige nok kontekst til at agenten kan træffe gode beslutninger uden at drukne den i irrelevant information.
@@ -68,6 +105,8 @@ Her er hvad en prompt-som-spec ser ud:
 _"Tilføj rate limiting til `/api/search`-endpointet. Brug den eksisterende `RateLimiter`-middleware i `middleware/ratelimit.go`. Sæt grænsen til 100 requests per minut per autentificeret bruger, og 20 per minut for uautentificerede requests. Returnér en 429-status med en `Retry-After`-header når grænsen overskrides. Tilføj tests for både den autentificerede og uautentificerede sti, inklusive edge casen hvor en bruger rammer præcis grænsen. Modificer ikke rate limiter-middlewaren selv — konfigurér og anvend den bare."_
 
 Det er en spec. En agent kan implementere dette uden tvetydighed. En menneskelig reviewer kan tjekke resultatet mod kravene. Det ønskede resultat er klart, begrænsningerne er eksplicitte, og verifikationskriterierne er definerede.
+
+En god spec tager også hensyn til hvad agenten allerede har adgang til. Du behøver ikke at skrive "læs testfilen og find den fejlende assertion" hvis agenten kan finde den med grep. Du _skal_ specificere begrænsninger og intention der ikke kan opdages — forretningsregler, ydeevnekrav, grunden til at denne bestemte adfærd er forkert. Spec de ting værktøjerne ikke kan fortælle agenten. Udelad de ting værktøjerne kan.
 
 At skrive prompts på denne måde kræver øvelse. Det kræver også disciplin — disciplinen til at gennemtænke hvad du faktisk vil have før du begynder at taste. Men den disciplin betaler udbytte. En velspecificeret prompt producerer et resultat du kan merge. En vag prompt producerer et resultat du er nødt til at omskrive.
 
@@ -143,6 +182,8 @@ Nogle promptingvaner producerer konsekvent dårlige resultater. Lær at genkende
 *Køkkenvask-prompts.* "Fix auth-buggen, refaktorér også databaselaget, og mens du er i gang opdater README'en og tilføj TypeScript-typer til API-klienten." Det er fire separate opgaver proppet ind i én prompt. Agenten vil forsøge dem alle, gøre ingen af dem godt, og producere en diff så stor at det tager længere at reviewe den end at gøre arbejdet selv. Én prompt, én opgave.
 
 *At antage delt kontekst.* "Gør det på samme måde som vi gjorde betalingsmodulet." Agenten husker ikke din sidste session. Den ved ikke hvad "vi" besluttede til standup. Hver prompt starter fra nul. Giv konteksten eksplicit, hver gang.
+
+*At gøre agentens job for den.* Du bruger fem minutter på at grepe igennem codebasen for at finde præcis filen, linjenummeret og funktionsnavnet, og paster alt det ind i din prompt. Det er arbejde agentens værktøjer kan gøre på sekunder. Giv _problemet_ — symptomet, konteksten, det fejlende testnavn. Lad agenten undersøge. Det er hvad dens værktøjer er til. Din tid er bedre brugt på de dele agenten _ikke_ kan gøre: forstå domænet, definere begrænsningerne, vide hvorfor denne adfærd er forkert.
 
 == Prompting Er En Færdighed
 

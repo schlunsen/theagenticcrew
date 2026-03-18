@@ -1,5 +1,9 @@
 = Orquestracio Multi-Agent
 
+#figure(
+  image("../../assets/illustrations/ch12-orchestration.jpg", width: 80%),
+)
+
 Un agent es potent. Multiples agents treballant junts es una altra cosa completament diferent.
 
 Pensa-ho aixi. Un sol fuster pot construir una caseta. Pero una casa? Necessites un electricista, un lampista, un coberturer -- especialistes treballant en paral·lel, cadascun enfocat en el que fa millor, coordinant-se just el necessari per no estorbar-se. La casa s'aixeca mes rapid i la feina es millor que una sola persona intentant fer-ho tot.
@@ -121,3 +125,5 @@ Temps total: potser quaranta minuts. L'agent d'API va trigar trenta, l'agent de 
 Un sol agent fent-ho tot seqüencialment? Probablement noranta minuts.
 
 Les matematiques funcionen quan la tasca es prou gran. I a mesura que millores en descomposicio, desenvoluparas una intuicio per quines tasques val la pena dividir i quines no. Com la majoria de coses en enginyeria, es una decisio de judici. Pero ara tens les eines per prendre-la.
+
+Una cosa mes que val la pena destacar: no sempre has d'orquestrar manualment. Com hem discutit al capitol de prompting, pots _dir_ a l'agent que paral·lelitzi. "Aquests tres moduls son independents -- llança sub-agents i treballa en ells simultaneament." L'agent gestiona els worktrees, el branching i la coordinacio. La teva feina es la part que l'agent no pot fer: saber quines peces son segures d'executar en paral·lel. Aquell judici arquitectonic es el prompt de mes alt palanquejament que pots escriure.

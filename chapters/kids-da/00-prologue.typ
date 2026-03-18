@@ -1,6 +1,6 @@
 = Reparerer Computeren Sig Selv?
 
-#image("../../assets/kids/prologue-screen.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-screen.jpg", width: 80%)]
 
 Du sidder ved køkkenbordet og spiser morgenmad. Din mor sidder ved sin bærbare. Hun taster noget, og så læner hun sig tilbage. Du kigger på.
 
@@ -20,7 +20,7 @@ Du kigger med et minut mere. De røde linjer holder op med at dukke op. Alt er g
 
 "Færdig," siger hun.
 
-#image("../../assets/kids/prologue-ship-wheel.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-ship-wheel.jpg", width: 80%)]
 
 == Du Er Kaptajnen
 
@@ -40,4 +40,4 @@ Dit job er at styre. At give gode instruktioner. At tjekke arbejdet. Og at vide,
 
 Klar til at møde dit mandskab? Vend siden.
 
-#image("../../assets/kids/prologue-ship-horizon.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/prologue-ship-horizon.jpg", width: 80%)]

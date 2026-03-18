@@ -10,3 +10,4 @@ test-results/
 website/public/*.pdf
 website/public/*.epub
 website/public/revisions/
+website/public/audiobook/adult/male/full-book.mp3

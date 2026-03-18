@@ -1,6 +1,6 @@
 = Kaptajn over en Flåde
 
-#image("../../assets/kids/ch08-fleet.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-fleet.jpg", width: 80%)]
 
 Indtil nu har du været kaptajn på ét skib med et lille mandskab. Men hvad nu, hvis opgaven er virkelig, _virkelig_ stor?
 
@@ -20,7 +20,7 @@ Hvis ét mandskabsmedlem udfører alle tre opgaver, én efter én, tager det hel
 
 Det er magien ved at arbejde parallelt. I stedet for at ét skib klarer alting, har du en lille flåde. Hvert skib håndterer én del af missionen. De arbejder alle på samme tid. Når de er færdige, sætter du brikkerne sammen.
 
-#image("../../assets/kids/ch08-three-ships.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-three-ships.jpg", width: 80%)]
 
 == Men Her Kommer det Svære
 
@@ -50,7 +50,7 @@ Før du sender din flåde af sted, skal du tænke grundigt over, hvordan du dele
 
 At dele arbejdet godt op er en af de sværeste dele af at være flådekaptajn. Men det er også en af de mest kraftfulde ting, du kan lære.
 
-#image("../../assets/kids/ch08-planning-table.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-planning-table.jpg", width: 80%)]
 
 == At Sætte Brikkerne Sammen
 
@@ -74,7 +74,7 @@ Du bliver mere som en træner end en spiller. En træner løber ikke rundt på b
 
 == Hold af Kaptajner
 
-#image("../../assets/kids/ch08-team-captains.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-team-captains.jpg", width: 80%)]
 
 Her er ét niveau mere at tænke over. Hvad nu, hvis du ikke er den eneste kaptajn?
 
@@ -116,4 +116,4 @@ Prøv nu igen. Denne gang bruger I to minutter på at _planlægge_ sammen først
 
 Gik det bedre anden gang? Det er kraften i koordinering!
 
-#image("../../assets/kids/ch08-harbor.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-harbor.jpg", width: 80%)]

@@ -1,6 +1,6 @@
 = Las Reglas del Barco
 
-#image("../../assets/kids/ch03-rules-board.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-rules-board.jpg", width: 80%)]
 
 Imagina que contrataste a un nuevo miembro de la tripulación. Es su primer día. Está emocionado. Quiere ayudar. Pregunta "¿Qué debo hacer?"
 
@@ -14,7 +14,7 @@ Un buen barco necesita reglas. Y tu tripulación robot las necesita _de verdad_.
 
 En tu barco, cada trabajo cae en una de tres categorías. Llamémoslas Verde, Amarillo y Rojo.
 
-#image("../../assets/kids/ch03-traffic-light.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-traffic-light.jpg", width: 80%)]
 
 *Trabajos verdes: "¡Adelante!"* Estos son trabajos seguros que la tripulación puede hacer por su cuenta. Mirar el mapa. Contar los suministros. Consultar el tiempo. Leer el diario del barco. No puede pasar nada malo si se equivocan. ¡Déjalos ir!
 
@@ -30,7 +30,7 @@ Pero también notas que Compass sigue sugiriendo rutas por "Los Túneles de Cris
 
 == La Mesa de Mezclas
 
-#image("../../assets/kids/ch03-mixing-board.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-mixing-board.jpg", width: 80%)]
 
 Piensa en una mesa de mezclas -- de esas con controles deslizantes que suben y bajan. Los DJs las usan para controlar la música. Cada control regula un sonido diferente.
 
@@ -63,7 +63,7 @@ Las mejores reglas son estrictas donde importa y relajadas donde no. Tu tripulac
 
 == La Isla de Prácticas
 
-#image("../../assets/kids/ch03-practice-island.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-practice-island.jpg", width: 80%)]
 
 Ahora aquí va una de las mejores ideas que puede tener un capitán: la Isla de Prácticas.
 
@@ -75,7 +75,7 @@ Cuando quieres que tu tripulación pruebe algo nuevo, los mandas primero a la Is
 
 Esto se llama un _sandbox_. Igual que un cajón de arena en un parque, es un lugar seguro para probar cosas. Puedes construir un castillo de arena y aplastarlo. Puedes cavar un hoyo y volver a llenarlo. Nada de lo que hagas en el sandbox afecta a nada fuera del sandbox.
 
-#image("../../assets/kids/ch03-sandbox-play.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch03-sandbox-play.jpg", width: 80%)]
 
 == Por Qué Importa la Isla de Prácticas
 

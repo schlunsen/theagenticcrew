@@ -26,6 +26,8 @@ De ingeniører der aldrig justerer skyderne ender med at opgive agentiske workfl
 
 Princippet er det samme som i sikkerhed: mindste privilegium. En agent der arbejder på din frontend har ikke brug for SSH-adgang til din databaseserver. En agent der skriver unit tests har ikke brug for dine AWS-credentials.
 
+Men det er værd at stoppe op og bemærke at guardrails ikke bare handler om at _begrænse_ hvad agenter kan gøre — de er bagsiden af at _udruste_ dem. Hvert værktøj du tildeler er både en kapabilitet og et ansvar. Tillidsgradienten fra forrige afsnit handler i virkeligheden om at kalibrere hvor meget autonom kontekstindsamling og handling du tillader. Guardrails og værktøjer er den samme liste, set fra to retninger.
+
 I praksis betyder det:
 - Scopede API-nøgler med udløbstider
 - Miljøspecifikke credentials (del aldrig prod-nøgler med en dev-agent)

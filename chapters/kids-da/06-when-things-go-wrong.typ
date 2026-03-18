@@ -1,6 +1,6 @@
 = Når Tingene Går Galt
 
-#image("../../assets/kids/ch06-storm.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-storm.jpg", width: 80%)]
 
 Enhver kaptajn har dårlige dage. Dage hvor mandskabet gør noget så fjollet, så uventet, så helt hen i vejret, at det eneste, du kan gøre, er at sætte dig ned, trække vejret dybt og starte forfra.
 
@@ -8,7 +8,7 @@ Det er mine yndlingshistorier fra Kaptajnens Log. Hver enkelt er virkelig sket (
 
 == Historie 1: Den Ivrige Ombygger
 
-#image("../../assets/kids/ch06-eager-refactorer.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-eager-refactorer.jpg", width: 80%)]
 
 En tirsdag bemærkede jeg et lille problem. Flaget på stormasten hang på hovedet. Nemt at fikse, ikke? Bare vend flaget.
 
@@ -28,7 +28,7 @@ Rusty så såret ud. "Men jeg gjorde alting _bedre_!"
 
 == Historie 2: Det Opdigtede Kort
 
-#image("../../assets/kids/ch06-made-up-map.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-made-up-map.jpg", width: 80%)]
 
 Vi skulle finde Kokosøen. Jeg bad Compass om at lægge en kurs.
 
@@ -46,7 +46,7 @@ Vi sejlede en halv dag, før jeg indså, at vi var på vej mod åbent hav uden n
 
 == Historie 3: Løkken
 
-#image("../../assets/kids/ch06-the-loop.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-the-loop.jpg", width: 80%)]
 
 Ankeret sad fast. Jeg bad Echo om at hive det op.
 
@@ -84,7 +84,7 @@ Reglen var falmet. For mange andre opgaver var hobet ovenpå den. Den instruktio
 
 == Historie 5: Den Hjælpsomme Overpakker
 
-#image("../../assets/kids/ch06-overpack.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-overpack.jpg", width: 80%)]
 
 Jeg bad Rusty om at pakke en madpakke til vores dagstur. "Bare noget simpelt," sagde jeg. "Sandwiches og vand."
 
@@ -100,7 +100,7 @@ Picnickurven vejede nu hundrede kilo. Vi kunne ikke engang løfte den fra skibet
 
 == Den Store Lektie
 
-#image("../../assets/kids/ch06-captain-thinking.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch06-captain-thinking.jpg", width: 80%)]
 
 Her er sagen med alle disse historier. Mandskabet _prøvede_ ikke at skabe problemer. Rusty var hjælpsom. Compass var selvsikker. Echo var vedholdende. Det er alle _gode_ egenskaber! De har bare brug for en kaptajn til at pege dem i den rigtige retning.
 

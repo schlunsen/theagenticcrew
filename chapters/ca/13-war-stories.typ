@@ -1,5 +1,9 @@
 = Quan els Agents s'Equivoquen
 
+#figure(
+  image("../../assets/illustrations/ch13-storm.jpg", width: 80%),
+)
+
 Tots els enginyers que treballen amb agents prou temps tenen una col·leccio d'aquestes histories. Els moments on et recolzes a la cadira, mires la pantalla, i murmures alguna cosa impublicable. Son humiliants. Son educatius. I son _inevitables_.
 
 Aquest capitol es una col·leccio d'histories de guerra -- coses que realment van malament quan dones feina real a un agent. No hipotetics. No demos artificials. El tipus de fallades que et costen una tarda, un desplegament, o la teva fe en l'automatitzacio. Cadascuna es mapeja a principis de capitols anteriors, perque els principis son barats fins que els aprens per les males.
@@ -87,6 +91,8 @@ Cadascuna d'aquestes histories te la mateixa causa arrel: l'agent estava fent _e
 El refactoritzador entusiasta estava sent servicial. La biblioteca al·lucinada estava sent creativa. El bucle infinit estava sent persistent. La resposta incorrecta amb confianca estava sent guiada per tests. L'amnesia de context era una limitacio, no una eleccio. L'allau de dependencies estava sent exhaustiva.
 
 Cap d'aquestes son bugs d'agents. Son bugs de _flux de treball_. L'arreglament mai es "utilitza un agent mes intel·ligent." L'arreglament sempre es el mateix: abast mes estret, millors bucles de retroalimentacio, mes estructura, sessions mes curtes, i un huma que segueix involucrat.
+
+I cada vegada mes, l'arreglament inclou _equipar l'agent amb millors eines_. La Biblioteca Al·lucinada hauria estat detectada si l'agent pogues executar `npm install` i la suite de tests. El Bucle Infinit hauria estat delimitat per limits d'iteracio a les eines. Les histories de guerra sovint son histories sobre agents als quals els mancaven les eines o les baranes correctes, no agents als quals els mancava intel·ligencia.
 
 Els agents s'equivoquen. Els humans tambe. La diferencia es que els humans s'equivoquen prou lentament com per adonar-se'n. Els agents s'equivoquen a la velocitat de l'autocompletat, i quan aixeques la vista del cafe, trenta-dos fitxers han canviat.
 

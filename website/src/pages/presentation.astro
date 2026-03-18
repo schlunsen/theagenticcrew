@@ -2,12 +2,18 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="The Agentic Crew — Presentation">
+<BaseLayout title="The Agentic Crew — Interactive Presentation" description="An interactive slide presentation with voice narration about agentic software engineering. 11 slides covering what agents are, how they fail, and how to work with them.">
   <canvas id="bg-canvas"></canvas>
 
   <div class="presentation" id="presentation">
     <!-- Slide Counter -->
     <div class="slide-counter" id="slide-counter">1 / 11</div>
+
+    <!-- Language Selector -->
+    <div class="lang-selector" id="lang-selector">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="es">ES</button>
+    </div>
 
     <!-- Progress Dots -->
     <div class="progress-dots" id="progress-dots">
@@ -48,6 +54,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
 
+    <!-- Play Overlay -->
+    <div class="play-overlay" id="play-overlay">
+      <button class="play-overlay-btn" id="play-overlay-btn" aria-label="Start presentation">
+        <svg viewBox="0 0 80 80" width="80" height="80" fill="none">
+          <circle cx="40" cy="40" r="38" stroke="var(--color-accent)" stroke-width="2" opacity="0.6" />
+          <polygon points="32,22 32,58 60,40" fill="var(--color-accent)" opacity="0.9" />
+        </svg>
+        <span data-i18n="play-overlay-text">Start Presentation</span>
+      </button>
+    </div>
+
     <!-- Presenter Notes Overlay -->
     <div class="presenter-notes" id="presenter-notes">
       <div class="notes-inner" id="notes-content"></div>
@@ -80,18 +97,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </svg>
         </div>
         <div id="lottie-title-glow" class="lottie-title-glow"></div>
-        <p class="slide-eyebrow">A Book by Rasmus Bornhoft Schlunsen</p>
-        <h1 class="slide-main-title">The Agentic<br/>Crew</h1>
-        <p class="slide-subtitle-big">Engineering in the Age of AI Agents</p>
-        <p class="slide-date">March 2026</p>
+        <p class="slide-eyebrow" data-i18n="slide1-eyebrow">A Book by Rasmus Bornhoft Schlunsen</p>
+        <h1 class="slide-main-title" data-i18n="slide1-title">The Agentic<br/>Crew</h1>
+        <p class="slide-subtitle-big" data-i18n="slide1-subtitle">Engineering in the Age of AI Agents</p>
+        <p class="slide-date" data-i18n="slide1-date">March 2026</p>
       </div>
     </section>
 
     <!-- ============ SLIDE 2: The Ground Is Shifting ============ -->
     <section class="slide" data-index="1" data-notes="For two decades, the feedback loop was simple: write code, run it, ship it. AI agents are fundamentally changing that loop.">
       <div class="slide-content slide-quote-layout">
-        <h2 class="slide-heading">The Ground Is Shifting</h2>
-        <blockquote class="slide-blockquote reveal-text" id="quote-slide2">
+        <h2 class="slide-heading" data-i18n="slide2-heading">The Ground Is Shifting</h2>
+        <blockquote class="slide-blockquote reveal-text" id="quote-slide2" data-i18n="slide2-quote" data-i18n-html="true">
           "For twenty years, being a software engineer meant one thing: you open an editor, you write code, you ship it. <em>That loop is breaking.</em>"
         </blockquote>
         <div class="agent-loop-svg" aria-hidden="true">
@@ -134,8 +151,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="slide" data-index="2" data-notes="The craft is evolving. The mechanical parts are being automated, but the judgment, taste, and architectural thinking are more important than ever.">
       <div class="slide-content slide-image-quote-layout">
         <div class="slide-text-side">
-          <h2 class="slide-heading">The Craft Is Molting</h2>
-          <blockquote class="slide-blockquote">
+          <h2 class="slide-heading" data-i18n="slide3-heading">The Craft Is Molting</h2>
+          <blockquote class="slide-blockquote" data-i18n="slide3-quote" data-i18n-html="true">
             "The craft isn't dying. It's molting. The outer shell -- the keystrokes, the syntax, the boilerplate -- is falling away. But the animal underneath? The part that knows <em>what to build</em> and <em>why</em>? That part is more alive than ever."
           </blockquote>
         </div>
@@ -148,32 +165,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- ============ SLIDE 4: What Is an Agent? ============ -->
     <section class="slide" data-index="3" data-notes="Agents exist on a spectrum. Most practical work today happens at the tool-using agent level, where the agent can call tools, read files, and iterate.">
       <div class="slide-content slide-center-layout">
-        <h2 class="slide-heading">What Is an Agent?</h2>
-        <p class="slide-body">The spectrum of AI assistance in software engineering:</p>
+        <h2 class="slide-heading" data-i18n="slide4-heading">What Is an Agent?</h2>
+        <p class="slide-body" data-i18n="slide4-body">The spectrum of AI assistance in software engineering:</p>
         <div class="spectrum-container" id="spectrum">
           <div class="spectrum-bar">
             <div class="spectrum-fill" id="spectrum-fill"></div>
           </div>
           <div class="spectrum-levels">
-            <button class="spectrum-level" data-level="0" data-desc="Tab-completion suggestions. Predicts the next few tokens.">
+            <button class="spectrum-level" data-level="0" data-desc="Tab-completion suggestions. Predicts the next few tokens." data-desc-es="Sugerencias de autocompletado con Tab. Predice los próximos tokens.">
               <div class="spectrum-icon">
                 <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
                   <rect x="5" y="10" width="30" height="20" rx="3" />
                   <path d="M12 20h6m-3-3v6" opacity="0.5" />
                 </svg>
               </div>
-              <span>Autocomplete</span>
+              <span data-i18n="slide4-level0">Autocomplete</span>
             </button>
-            <button class="spectrum-level" data-level="1" data-desc="Inline code suggestions. Understands context within a file.">
+            <button class="spectrum-level" data-level="1" data-desc="Inline code suggestions. Understands context within a file." data-desc-es="Sugerencias de código en línea. Entiende el contexto dentro de un archivo.">
               <div class="spectrum-icon">
                 <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
                   <rect x="5" y="5" width="30" height="30" rx="3" />
                   <path d="M12 15l4 5-4 5m8 0h6" opacity="0.6" />
                 </svg>
               </div>
-              <span>Copilot</span>
+              <span data-i18n="slide4-level1">Copilot</span>
             </button>
-            <button class="spectrum-level active-level" data-level="2" data-desc="Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today.">
+            <button class="spectrum-level active-level" data-level="2" data-desc="Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today." data-desc-es="Puede leer archivos, ejecutar comandos, llamar APIs e iterar sobre resultados. Aquí es donde ocurre la mayor parte del trabajo práctico hoy.">
               <div class="spectrum-icon">
                 <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
                   <circle cx="20" cy="15" r="8" />
@@ -181,10 +198,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                   <path d="M30 12l6-2m-6 6l6 2" stroke="var(--color-pirate-teal)" />
                 </svg>
               </div>
-              <span>Tool-Using Agent</span>
-              <div class="spectrum-pointer">Most practical work happens here</div>
+              <span data-i18n="slide4-level2">Tool-Using Agent</span>
+              <div class="spectrum-pointer" data-i18n="slide4-pointer">Most practical work happens here</div>
             </button>
-            <button class="spectrum-level" data-level="3" data-desc="Fully autonomous operation. Plans, executes, and self-corrects across entire projects with minimal human input.">
+            <button class="spectrum-level" data-level="3" data-desc="Fully autonomous operation. Plans, executes, and self-corrects across entire projects with minimal human input." data-desc-es="Operación completamente autónoma. Planifica, ejecuta y se autocorrige en proyectos completos con mínima intervención humana.">
               <div class="spectrum-icon">
                 <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
                   <circle cx="20" cy="20" r="14" stroke-dasharray="4 3" />
@@ -192,46 +209,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                   <path d="M20 6v4m0 20v4M6 20h4m20 0h4" opacity="0.5" />
                 </svg>
               </div>
-              <span>Autonomous Agent</span>
+              <span data-i18n="slide4-level3">Autonomous Agent</span>
             </button>
           </div>
-          <div class="spectrum-desc" id="spectrum-desc">Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today.</div>
+          <div class="spectrum-desc" id="spectrum-desc" data-i18n="slide4-desc-default">Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today.</div>
         </div>
       </div>
     </section>
 
     <!-- ============ SLIDE 5: The Rain Man Analogy ============ -->
     <section class="slide" data-index="4" data-notes="Think of it like Rain Man. Tom Cruise provides the direction and judgment. Dustin Hoffman provides extraordinary capability but needs guidance.">
-      <div class="slide-content slide-two-panel-layout">
-        <h2 class="slide-heading slide-heading-full">The Rain Man Analogy</h2>
-        <p class="slide-tagline">"You're Tom Cruise. The agent is Dustin Hoffman."</p>
-        <div class="two-panels">
-          <div class="panel panel-captain">
-            <h3>The Captain (You)</h3>
-            <ul>
-              <li>Direction &amp; vision</li>
-              <li>Judgment &amp; taste</li>
-              <li>Domain expertise</li>
-              <li>Architectural decisions</li>
-            </ul>
-          </div>
-          <div class="panel-divider">
-            <svg viewBox="0 0 4 100" width="4" height="100" fill="none">
-              <line x1="2" y1="0" x2="2" y2="100" stroke="var(--color-border)" stroke-width="1" stroke-dasharray="4 4" />
-            </svg>
-          </div>
-          <div class="panel panel-agent">
-            <h3>The Agent (Crew)</h3>
-            <ul>
-              <li>Speed &amp; throughput</li>
-              <li>Breadth of knowledge</li>
-              <li>Tireless execution</li>
-              <li>Pattern recognition</li>
-            </ul>
-          </div>
+      <div class="slide-content slide-image-quote-layout">
+        <div class="slide-image-side slide-image-side-large">
+          <img src="/illustrations/ch03-rain-man.jpg" alt="Rain Man — captain and savant illustration" class="oval-vignette slide-illustration" loading="lazy" />
         </div>
-        <div class="slide-image-below">
-          <img src="/illustrations/ch03-rain-man.jpg" alt="Captain and crew illustration" class="oval-vignette slide-illustration-small" loading="lazy" />
+        <div class="slide-text-side">
+          <h2 class="slide-heading" data-i18n="slide5-heading">The Rain Man Analogy</h2>
+          <blockquote class="slide-blockquote" data-i18n="slide5-quote">"You're Tom Cruise. The agent is Dustin Hoffman."</blockquote>
+          <div class="two-panels two-panels-stacked">
+            <div class="panel panel-captain">
+              <h3 data-i18n="slide5-captain-title">You — The Captain</h3>
+              <ul>
+                <li data-i18n="slide5-captain-1">Direction &amp; vision</li>
+                <li data-i18n="slide5-captain-2">Judgment &amp; taste</li>
+                <li data-i18n="slide5-captain-3">Knows when to walk away</li>
+              </ul>
+            </div>
+            <div class="panel panel-agent">
+              <h3 data-i18n="slide5-agent-title">Agent — The Savant</h3>
+              <ul>
+                <li data-i18n="slide5-agent-1">Speed &amp; throughput</li>
+                <li data-i18n="slide5-agent-2">Tireless execution</li>
+                <li data-i18n="slide5-agent-3">Infinite pattern recognition</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -239,7 +251,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- ============ SLIDE 6: Three Capabilities ============ -->
     <section class="slide" data-index="5" data-notes="These are the three core capabilities that make an agent an agent: planning, tool use, and iteration. Without any one of these, you just have a chatbot.">
       <div class="slide-content slide-center-layout">
-        <h2 class="slide-heading">Three Core Capabilities</h2>
+        <h2 class="slide-heading" data-i18n="slide6-heading">Three Core Capabilities</h2>
         <div class="capability-cards" id="capability-cards">
           <div class="cap-card" data-cap="planning">
             <div class="cap-card-front">
@@ -249,11 +261,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <path d="M30 6v6m0 36v6M6 30h6m36 0h6" opacity="0.5" />
                 <path d="M30 10l2 18h-4z" fill="var(--color-pirate-teal)" opacity="0.3" />
               </svg>
-              <h3>Planning</h3>
-              <p class="cap-hint">Click to reveal</p>
+              <h3 data-i18n="slide6-cap1-title">Planning</h3>
+              <p class="cap-hint" data-i18n="slide6-cap-hint">Click to reveal</p>
             </div>
             <div class="cap-card-back">
-              <p>Breaking down complex tasks into steps. Understanding dependencies, ordering work, and deciding what to do first.</p>
+              <p data-i18n="slide6-cap1-desc">Breaking down complex tasks into steps. Understanding dependencies, ordering work, and deciding what to do first.</p>
             </div>
           </div>
           <div class="cap-card" data-cap="tools">
@@ -264,11 +276,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <circle cx="42" cy="18" r="10" stroke-dasharray="3 3" opacity="0.4" />
                 <path d="M38 14l4 4m0-4l-4 4" opacity="0.6" />
               </svg>
-              <h3>Tool Use</h3>
-              <p class="cap-hint">Click to reveal</p>
+              <h3 data-i18n="slide6-cap2-title">Tool Use</h3>
+              <p class="cap-hint" data-i18n="slide6-cap-hint2">Click to reveal</p>
             </div>
             <div class="cap-card-back">
-              <p>Reading files, running commands, calling APIs, writing code. The agent's hands in the real world.</p>
+              <p data-i18n="slide6-cap2-desc">Reading files, running commands, calling APIs, writing code. The agent's hands in the real world.</p>
             </div>
           </div>
           <div class="cap-card" data-cap="iteration">
@@ -279,11 +291,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <path d="M18 38A15 15 0 1142 30" />
                 <polygon points="42,36 42,24 48,30" fill="var(--color-accent-deep)" opacity="0.4" />
               </svg>
-              <h3>Iteration</h3>
-              <p class="cap-hint">Click to reveal</p>
+              <h3 data-i18n="slide6-cap3-title">Iteration</h3>
+              <p class="cap-hint" data-i18n="slide6-cap-hint3">Click to reveal</p>
             </div>
             <div class="cap-card-back">
-              <p>Running code, seeing errors, fixing them, and trying again. The observe-adjust loop that makes agents powerful.</p>
+              <p data-i18n="slide6-cap3-desc">Running code, seeing errors, fixing them, and trying again. The observe-adjust loop that makes agents powerful.</p>
             </div>
           </div>
         </div>
@@ -294,7 +306,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- ============ SLIDE 7: When Agents Fail ============ -->
     <section class="slide" data-index="6" data-notes="Understanding failure modes is critical. These are the four most common ways agents go wrong, and how to mitigate each one.">
       <div class="slide-content slide-failures-layout">
-        <h2 class="slide-heading">When Agents Fail</h2>
+        <h2 class="slide-heading" data-i18n="slide7-heading">When Agents Fail</h2>
         <div class="failure-cards" id="failure-cards">
           <div class="failure-card" data-delay="0">
             <div class="failure-icon">
@@ -303,9 +315,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <path d="M12 12l16 16M28 12l-16 16" opacity="0.5" />
               </svg>
             </div>
-            <h3>Scope Creep</h3>
-            <p class="failure-desc">Agent expands beyond the task, refactoring code you didn't ask it to touch.</p>
-            <p class="failure-fix">Fix: Small, focused prompts. One task at a time.</p>
+            <h3 data-i18n="slide7-fail1-title">Scope Creep</h3>
+            <p class="failure-desc" data-i18n="slide7-fail1-desc">Agent expands beyond the task, refactoring code you didn't ask it to touch.</p>
+            <p class="failure-fix" data-i18n="slide7-fail1-fix">Fix: Small, focused prompts. One task at a time.</p>
           </div>
           <div class="failure-card" data-delay="1">
             <div class="failure-icon">
@@ -315,9 +327,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <circle cx="20" cy="27" r="1" fill="#d94f4f" />
               </svg>
             </div>
-            <h3>Hallucinated APIs</h3>
-            <p class="failure-desc">Agent invents function signatures or library methods that don't exist.</p>
-            <p class="failure-fix">Fix: Always run tests. Pin dependency docs in context.</p>
+            <h3 data-i18n="slide7-fail2-title">Hallucinated APIs</h3>
+            <p class="failure-desc" data-i18n="slide7-fail2-desc">Agent invents function signatures or library methods that don't exist.</p>
+            <p class="failure-fix" data-i18n="slide7-fail2-fix">Fix: Always run tests. Pin dependency docs in context.</p>
           </div>
           <div class="failure-card" data-delay="2">
             <div class="failure-icon">
@@ -329,9 +341,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <path d="M14 28c2 2 4 3 6 3s4-1 6-3" />
               </svg>
             </div>
-            <h3>Overconfidence</h3>
-            <p class="failure-desc">Agent presents wrong answers with certainty. No hedging, no doubt.</p>
-            <p class="failure-fix">Fix: Verify everything. Trust but verify.</p>
+            <h3 data-i18n="slide7-fail3-title">Overconfidence</h3>
+            <p class="failure-desc" data-i18n="slide7-fail3-desc">Agent presents wrong answers with certainty. No hedging, no doubt.</p>
+            <p class="failure-fix" data-i18n="slide7-fail3-fix">Fix: Verify everything. Trust but verify.</p>
           </div>
           <div class="failure-card" data-delay="3">
             <div class="failure-icon">
@@ -341,9 +353,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <path d="M30 10l-20 20" stroke-width="2" opacity="0.6" />
               </svg>
             </div>
-            <h3>Context Loss</h3>
-            <p class="failure-desc">Agent forgets earlier instructions as the conversation grows long.</p>
-            <p class="failure-fix">Fix: Fresh sessions. Project rules files. Keep context lean.</p>
+            <h3 data-i18n="slide7-fail4-title">Context Loss</h3>
+            <p class="failure-desc" data-i18n="slide7-fail4-desc">Agent forgets earlier instructions as the conversation grows long.</p>
+            <p class="failure-fix" data-i18n="slide7-fail4-fix">Fix: Fresh sessions. Project rules files. Keep context lean.</p>
           </div>
         </div>
         <div class="slide-image-accent">
@@ -355,9 +367,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- ============ SLIDE 8: The Engineering Toolkit ============ -->
     <section class="slide" data-index="7" data-notes="These five practices form the engineering toolkit for working with agents effectively. Each one reinforces the others.">
       <div class="slide-content slide-center-layout">
-        <h2 class="slide-heading">The Engineering Toolkit</h2>
+        <h2 class="slide-heading" data-i18n="slide8-heading">The Engineering Toolkit</h2>
         <div class="pipeline" id="pipeline">
-          <div class="pipeline-node" data-node="guardrails" data-info="Constraints that keep agents on track: linters, type checkers, pre-commit hooks, and approval gates.">
+          <div class="pipeline-node" data-node="guardrails" data-info="Constraints that keep agents on track: linters, type checkers, pre-commit hooks, and approval gates." data-info-es="Restricciones que mantienen a los agentes en el camino: linters, verificadores de tipos, hooks de pre-commit y puertas de aprobación.">
             <div class="pipeline-icon">
               <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
                 <rect x="6" y="10" width="32" height="24" rx="4" />
@@ -365,10 +377,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <path d="M16 26h12" opacity="0.5" />
               </svg>
             </div>
-            <span>Guardrails</span>
+            <span data-i18n="slide8-node1">Guardrails</span>
           </div>
           <div class="pipeline-connector"><div class="connector-line"></div></div>
-          <div class="pipeline-node" data-node="git" data-info="Version control as a safety net: branches for isolation, diffs for review, revert as your undo button.">
+          <div class="pipeline-node" data-node="git" data-info="Version control as a safety net: branches for isolation, diffs for review, revert as your undo button." data-info-es="Control de versiones como red de seguridad: ramas para aislamiento, diffs para revisión, revert como botón de deshacer.">
             <div class="pipeline-icon">
               <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-pirate-teal)" stroke-width="1.5">
                 <circle cx="22" cy="12" r="4" />
@@ -380,45 +392,45 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span>Git</span>
           </div>
           <div class="pipeline-connector"><div class="connector-line"></div></div>
-          <div class="pipeline-node" data-node="sandboxes" data-info="Isolated environments where agents can safely experiment without affecting production.">
+          <div class="pipeline-node" data-node="sandboxes" data-info="Isolated environments where agents can safely experiment without affecting production." data-info-es="Entornos aislados donde los agentes pueden experimentar de forma segura sin afectar la producción.">
             <div class="pipeline-icon">
               <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent-deep)" stroke-width="1.5">
                 <rect x="8" y="8" width="28" height="28" rx="4" stroke-dasharray="4 3" />
                 <rect x="14" y="14" width="16" height="16" rx="2" />
               </svg>
             </div>
-            <span>Sandboxes</span>
+            <span data-i18n="slide8-node3">Sandboxes</span>
           </div>
           <div class="pipeline-connector"><div class="connector-line"></div></div>
-          <div class="pipeline-node" data-node="testing" data-info="Tests as the feedback loop: the agent runs tests, sees failures, and iterates. Tests replace human eyes.">
+          <div class="pipeline-node" data-node="testing" data-info="Tests as the feedback loop: the agent runs tests, sees failures, and iterates. Tests replace human eyes." data-info-es="Tests como bucle de retroalimentación: el agente ejecuta tests, ve fallos e itera. Los tests reemplazan los ojos humanos.">
             <div class="pipeline-icon">
               <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-pirate-teal)" stroke-width="1.5">
                 <path d="M12 22l6 6 14-14" stroke-width="2" />
                 <circle cx="22" cy="22" r="16" stroke-dasharray="4 3" opacity="0.4" />
               </svg>
             </div>
-            <span>Testing</span>
+            <span data-i18n="slide8-node4">Testing</span>
           </div>
           <div class="pipeline-connector"><div class="connector-line"></div></div>
-          <div class="pipeline-node" data-node="conventions" data-info="Convention over configuration: project rules, naming patterns, and structure that agents can follow without being told.">
+          <div class="pipeline-node" data-node="conventions" data-info="Convention over configuration: project rules, naming patterns, and structure that agents can follow without being told." data-info-es="Convención sobre configuración: reglas del proyecto, patrones de nomenclatura y estructura que los agentes pueden seguir sin que se les diga.">
             <div class="pipeline-icon">
               <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
                 <path d="M10 10h24v24H10z" opacity="0.3" />
                 <path d="M16 16h12M16 22h8M16 28h10" />
               </svg>
             </div>
-            <span>Conventions</span>
+            <span data-i18n="slide8-node5">Conventions</span>
           </div>
         </div>
-        <div class="pipeline-info" id="pipeline-info">Click any node to learn more</div>
+        <div class="pipeline-info" id="pipeline-info" data-i18n="slide8-info-default">Click any node to learn more</div>
       </div>
     </section>
 
     <!-- ============ SLIDE 9: CCT — Building My Own Control Plane ============ -->
     <section class="slide" data-index="8" data-notes="I built CCT (Clovr Code Terminal) as a way to practice agentic engineering myself. It's a browser-based control plane for running multiple Claude agent sessions. Built in Go and Vue, single binary, no dependencies.">
       <div class="slide-content slide-cct-layout">
-        <h2 class="slide-heading">I Built the Control Plane</h2>
-        <p class="slide-subtitle-cct">Clovr Code Terminal (CCT) — practicing what I preach</p>
+        <h2 class="slide-heading" data-i18n="slide9-heading">I Built the Control Plane</h2>
+        <p class="slide-subtitle-cct" data-i18n="slide9-subtitle">Clovr Code Terminal (CCT) — practicing what I preach</p>
         <div class="cct-showcase">
           <div class="cct-diagram">
             <!-- Architecture SVG -->
@@ -484,7 +496,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </svg>
           </div>
           <div class="cct-quote">
-            <blockquote class="slide-blockquote slide-blockquote-small">
+            <blockquote class="slide-blockquote slide-blockquote-small" data-i18n="slide9-quote">
               "The best way to learn agentic engineering is to build agentic tooling."
             </blockquote>
             <a href="https://github.com/clovrlabs/clovr-code-terminal" target="_blank" rel="noopener" class="cct-github-link">
@@ -503,16 +515,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <img src="/illustrations/ch15-crew.jpg" alt="A ship with its crew" class="oval-vignette slide-illustration" loading="lazy" />
         </div>
         <div class="slide-text-side">
-          <h2 class="slide-heading">The Crew Metaphor</h2>
-          <blockquote class="slide-blockquote">
+          <h2 class="slide-heading" data-i18n="slide10-heading">The Crew Metaphor</h2>
+          <blockquote class="slide-blockquote" data-i18n="slide10-quote">
             "You're the captain. The crew is disposable. The ship is not."
           </blockquote>
           <div class="crew-labels" id="crew-labels">
-            <div class="crew-label" data-delay="0"><span class="label-icon">&#9875;</span> Hull = Your Codebase</div>
-            <div class="crew-label" data-delay="1"><span class="label-icon">&#9878;</span> Rigging = Conventions</div>
-            <div class="crew-label" data-delay="2"><span class="label-icon">&#128214;</span> Logbook = Tests</div>
-            <div class="crew-label" data-delay="3"><span class="label-icon">&#9813;</span> Captain = You</div>
-            <div class="crew-label" data-delay="4"><span class="label-icon">&#9823;</span> Crew = Agents</div>
+            <div class="crew-label" data-delay="0"><span class="label-icon">&#9875;</span> <span data-i18n="slide10-label1">Hull = Your Codebase</span></div>
+            <div class="crew-label" data-delay="1"><span class="label-icon">&#9878;</span> <span data-i18n="slide10-label2">Rigging = Conventions</span></div>
+            <div class="crew-label" data-delay="2"><span class="label-icon">&#128214;</span> <span data-i18n="slide10-label3">Logbook = Tests</span></div>
+            <div class="crew-label" data-delay="3"><span class="label-icon">&#9813;</span> <span data-i18n="slide10-label4">Captain = You</span></div>
+            <div class="crew-label" data-delay="4"><span class="label-icon">&#9823;</span> <span data-i18n="slide10-label5">Crew = Agents</span></div>
           </div>
         </div>
       </div>
@@ -533,11 +545,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <polygon points="100,10 105,40 100,35 95,40" fill="var(--color-accent)" opacity="0.2" />
           </svg>
         </div>
-        <h2 class="slide-heading slide-heading-big">Go Build Something</h2>
+        <h2 class="slide-heading slide-heading-big" data-i18n="slide11-heading">Go Build Something</h2>
         <div class="typing-effect" id="typing-effect"></div>
         <div class="final-actions">
           <a href="/" class="btn-primary-slide">
-            <span>Get the Book -- Free</span>
+            <span data-i18n="slide11-cta">Get the Book -- Free</span>
             <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
             </svg>
@@ -708,6 +720,104 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   /* ========================================
+     LANGUAGE SELECTOR
+     ======================================== */
+
+  .lang-selector {
+    position: fixed;
+    top: 1.5rem;
+    right: 7rem;
+    z-index: 100;
+    display: flex;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .lang-btn {
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0.65rem;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    transition: all 0.25s ease;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .lang-btn:hover {
+    color: var(--color-text);
+    background: rgba(232, 150, 62, 0.08);
+  }
+
+  .lang-btn.active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 1px 6px rgba(232, 150, 62, 0.35);
+  }
+
+  /* ========================================
+     PLAY OVERLAY
+     ======================================== */
+
+  .play-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 253, 247, 0.85);
+    backdrop-filter: blur(12px);
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  .play-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .play-overlay-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-accent);
+    transition: transform 0.3s ease;
+  }
+
+  .play-overlay-btn:hover {
+    transform: scale(1.08);
+  }
+
+  .play-overlay-btn:hover circle {
+    opacity: 0.9;
+  }
+
+  .play-overlay-btn span {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  /* ========================================
      AUDIO CONTROLS
      ======================================== */
 
@@ -804,6 +914,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .audio-controls {
       top: auto;
       bottom: 4rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .lang-selector {
+      top: auto;
+      bottom: 6.5rem;
+      right: auto;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -1289,6 +1407,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     display: flex;
     align-items: center;
     flex-shrink: 0;
+  }
+
+  .two-panels-stacked {
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 100%;
+  }
+
+  .two-panels-stacked .panel {
+    padding: 1rem 1.25rem;
+  }
+
+  .two-panels-stacked .panel h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .two-panels-stacked .panel li {
+    font-size: 0.85rem;
+    padding: 0.2rem 0 0.2rem 1rem;
+  }
+
+  .slide-image-side-large {
+    flex: 1.2;
+  }
+
+  .slide-image-side-large .slide-illustration {
+    max-height: 70vh;
+    object-fit: contain;
   }
 
   /* ========================================
@@ -1978,6 +2125,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   });
 
   // ========================================
+  // LANGUAGE STATE (initialized early, full i18n system below)
+  // ========================================
+
+  type Lang = 'en' | 'es';
+  let currentLang: Lang = (localStorage.getItem('presentation-lang') as Lang) || 'en';
+
+  // ========================================
   // SLIDE NAVIGATION
   // ========================================
 
@@ -1992,6 +2146,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const totalSlides = slides.length;
   let isTransitioning = false;
   let notesVisible = false;
+
+  // Clicker sound using Web Audio API — crisp presentation remote click
+  let audioCtx: AudioContext | null = null;
+  function playClickSound() {
+    try {
+      if (!audioCtx) audioCtx = new AudioContext();
+      const ctx = audioCtx;
+
+      // Short noise burst filtered to a crisp click
+      const duration = 0.04;
+      const buffer = ctx.createBuffer(1, ctx.sampleRate * duration, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < data.length; i++) {
+        // Decaying white noise
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 8);
+      }
+
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+
+      // Bandpass filter for that clicker feel
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 3000;
+      filter.Q.value = 2;
+
+      const gain = ctx.createGain();
+      gain.gain.value = 0.3; // Subtle, not loud
+
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+      source.start();
+    } catch (e) {
+      // Silently ignore if audio context isn't available
+    }
+  }
 
   function goToSlide(index: number, direction: 'next' | 'prev' = 'next') {
     if (index < 0 || index >= totalSlides || index === currentSlide || isTransitioning) return;
@@ -2041,6 +2232,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     // Trigger slide-specific animations
     triggerSlideAnimations(index);
+
+    // Play clicker sound on transition
+    playClickSound();
 
     // Play narration audio for this slide
     if (typeof (window as any).__playSlideAudio === 'function') {
@@ -2139,7 +2333,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const lvl = parseInt(level.dataset.level || '0');
       const fillWidths = ['18%', '40%', '62%', '90%'];
       if (spectrumFill) spectrumFill.style.width = fillWidths[lvl];
-      if (spectrumDesc) spectrumDesc.textContent = level.dataset.desc || '';
+      if (spectrumDesc) {
+        const lang = currentLang;
+        spectrumDesc.textContent = (lang === 'es' && level.dataset.descEs)
+          ? level.dataset.descEs
+          : level.dataset.desc || '';
+      }
       // Show/hide pointer
       spectrumLevels.forEach(l => {
         const ptr = l.querySelector('.spectrum-pointer') as HTMLElement;
@@ -2163,7 +2362,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     node.addEventListener('click', () => {
       pipelineNodes.forEach(n => n.classList.remove('active-node'));
       node.classList.add('active-node');
-      if (pipelineInfo) pipelineInfo.textContent = node.dataset.info || '';
+      if (pipelineInfo) {
+        const lang = currentLang;
+        pipelineInfo.textContent = (lang === 'es' && node.dataset.infoEs)
+          ? node.dataset.infoEs
+          : node.dataset.info || '';
+      }
     });
   });
 
@@ -2184,7 +2388,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   function startTypingEffect() {
     const el = document.getElementById('typing-effect');
     if (!el) return;
-    const text = "Tonight -- not tomorrow, not next week, tonight -- open your terminal.";
+    const lang = currentLang;
+    const text = translations[lang]['slide11-typing'] || "Tonight -- not tomorrow, not next week, tonight -- open your terminal.";
     el.textContent = '';
     let i = 0;
 
@@ -2382,7 +2587,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   function preloadSlideAudio(slideIndex: number) {
     const slideNum = slideIndex + 1;
     const paddedNum = slideNum.toString().padStart(2, '0');
-    const audioUrl = `/presentation-audio/slide-${paddedNum}.mp3`;
+    const langSuffix = currentLang === 'es' ? '-es' : '';
+    const audioUrl = `/presentation-audio/slide-${paddedNum}${langSuffix}.mp3`;
     if (slideAudioCache[slideIndex]) return;
 
     const audio = new Audio();
@@ -2471,7 +2677,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     audioProgressBar.style.width = '0%';
   }
 
+  let pendingAudioTimer: number | null = null;
+
   function playSlideAudio(slideIndex: number) {
+    // Cancel any pending audio start from a previous slide change
+    if (pendingAudioTimer) {
+      clearTimeout(pendingAudioTimer);
+      pendingAudioTimer = null;
+    }
+
     if (!audioEnabled) {
       stopCurrentAudio();
       return;
@@ -2494,14 +2708,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       fadeOutAudio(prevAudio).then(() => {
         prevAudio.currentTime = 0;
-        startNewAudio(nextAudio, slideIndex);
+        // Longer pause after fade-out before starting next narration
+        pendingAudioTimer = window.setTimeout(() => {
+          pendingAudioTimer = null;
+          // Double-check no other audio started in the meantime
+          if (!currentAudio || currentAudio.paused) {
+            startNewAudio(nextAudio, slideIndex);
+          }
+        }, 1000);
       });
     } else {
+      // Force-stop anything that might be playing
+      Object.values(slideAudioCache).forEach(a => {
+        if (a !== nextAudio && !a.paused) {
+          a.pause();
+          a.currentTime = 0;
+        }
+      });
       stopCurrentAudio();
-      // Small delay so the slide transition finishes first
-      setTimeout(() => {
+      // Wait for slide transition to settle, then pause before narration
+      pendingAudioTimer = window.setTimeout(() => {
+        pendingAudioTimer = null;
         startNewAudio(nextAudio, slideIndex);
-      }, 300);
+      }, 1200);
     }
   }
 
@@ -2577,16 +2806,342 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     notesContent.textContent = firstSlide.dataset.notes;
   }
 
-  // Play audio for the first slide after user interaction
-  document.addEventListener('click', () => {
-    if (audioEnabled && !currentAudio) {
-      playSlideAudio(0);
-    }
-  }, { once: true });
+  // ========================================
+  // PLAY OVERLAY — start presentation on click
+  // ========================================
 
-  document.addEventListener('keydown', () => {
-    if (audioEnabled && !currentAudio) {
+  const playOverlay = document.getElementById('play-overlay')!;
+  const playOverlayBtn = document.getElementById('play-overlay-btn')!;
+
+  playOverlayBtn.addEventListener('click', () => {
+    playOverlay.classList.add('hidden');
+    playSlideAudio(0);
+  });
+
+  // Also allow Enter/Space to start
+  document.addEventListener('keydown', function startOnKey(e) {
+    if (!playOverlay.classList.contains('hidden') && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      playOverlay.classList.add('hidden');
       playSlideAudio(0);
+      document.removeEventListener('keydown', startOnKey);
     }
-  }, { once: true });
+  });
+
+  // ========================================
+  // AUTO-ADVANCE — go to next slide when audio ends
+  // ========================================
+
+  let autoAdvanceEnabled = true;
+
+  // Patch startNewAudio to add auto-advance on audio end
+  const _origStartNewAudio = startNewAudio;
+  startNewAudio = function(audio: HTMLAudioElement, slideIndex: number) {
+    _origStartNewAudio(audio, slideIndex);
+
+    // When narration ends, auto-advance to next slide after a short pause
+    audio.addEventListener('ended', () => {
+      if (autoAdvanceEnabled && audioEnabled && slideIndex < totalSlides - 1) {
+        setTimeout(() => {
+          goToSlide(slideIndex + 1, 'next');
+        }, 1200); // 1.2s pause before advancing
+      }
+    }, { once: true });
+  };
+
+  // ========================================
+  // INTERNATIONALIZATION (i18n)
+  // ========================================
+
+  const translations: Record<Lang, Record<string, string>> = {
+    en: {
+      'play-overlay-text': 'Start Presentation',
+      // Slide 1
+      'slide1-eyebrow': 'A Book by Rasmus Bornhoft Schlunsen',
+      'slide1-title': 'The Agentic<br/>Crew',
+      'slide1-subtitle': 'Engineering in the Age of AI Agents',
+      'slide1-date': 'March 2026',
+      // Slide 2
+      'slide2-heading': 'The Ground Is Shifting',
+      'slide2-quote': '\u201CFor twenty years, being a software engineer meant one thing: you open an editor, you write code, you ship it. <em>That loop is breaking.</em>\u201D',
+      // Slide 3
+      'slide3-heading': 'The Craft Is Molting',
+      'slide3-quote': '\u201CThe craft isn\u2019t dying. It\u2019s molting. The outer shell \u2014 the keystrokes, the syntax, the boilerplate \u2014 is falling away. But the animal underneath? The part that knows <em>what to build</em> and <em>why</em>? That part is more alive than ever.\u201D',
+      // Slide 4
+      'slide4-heading': 'What Is an Agent?',
+      'slide4-body': 'The spectrum of AI assistance in software engineering:',
+      'slide4-level0': 'Autocomplete',
+      'slide4-level1': 'Copilot',
+      'slide4-level2': 'Tool-Using Agent',
+      'slide4-level3': 'Autonomous Agent',
+      'slide4-pointer': 'Most practical work happens here',
+      'slide4-desc-default': 'Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today.',
+      // Slide 5
+      'slide5-heading': 'The Rain Man Analogy',
+      'slide5-quote': '\u201CYou\u2019re Tom Cruise. The agent is Dustin Hoffman.\u201D',
+      'slide5-captain-title': 'You \u2014 The Captain',
+      'slide5-captain-1': 'Direction & vision',
+      'slide5-captain-2': 'Judgment & taste',
+      'slide5-captain-3': 'Knows when to walk away',
+      'slide5-agent-title': 'Agent \u2014 The Savant',
+      'slide5-agent-1': 'Speed & throughput',
+      'slide5-agent-2': 'Tireless execution',
+      'slide5-agent-3': 'Infinite pattern recognition',
+      // Slide 6
+      'slide6-heading': 'Three Core Capabilities',
+      'slide6-cap1-title': 'Planning',
+      'slide6-cap-hint': 'Click to reveal',
+      'slide6-cap1-desc': 'Breaking down complex tasks into steps. Understanding dependencies, ordering work, and deciding what to do first.',
+      'slide6-cap2-title': 'Tool Use',
+      'slide6-cap-hint2': 'Click to reveal',
+      'slide6-cap2-desc': 'Reading files, running commands, calling APIs, writing code. The agent\u2019s hands in the real world.',
+      'slide6-cap3-title': 'Iteration',
+      'slide6-cap-hint3': 'Click to reveal',
+      'slide6-cap3-desc': 'Running code, seeing errors, fixing them, and trying again. The observe-adjust loop that makes agents powerful.',
+      // Slide 7
+      'slide7-heading': 'When Agents Fail',
+      'slide7-fail1-title': 'Scope Creep',
+      'slide7-fail1-desc': 'Agent expands beyond the task, refactoring code you didn\u2019t ask it to touch.',
+      'slide7-fail1-fix': 'Fix: Small, focused prompts. One task at a time.',
+      'slide7-fail2-title': 'Hallucinated APIs',
+      'slide7-fail2-desc': 'Agent invents function signatures or library methods that don\u2019t exist.',
+      'slide7-fail2-fix': 'Fix: Always run tests. Pin dependency docs in context.',
+      'slide7-fail3-title': 'Overconfidence',
+      'slide7-fail3-desc': 'Agent presents wrong answers with certainty. No hedging, no doubt.',
+      'slide7-fail3-fix': 'Fix: Verify everything. Trust but verify.',
+      'slide7-fail4-title': 'Context Loss',
+      'slide7-fail4-desc': 'Agent forgets earlier instructions as the conversation grows long.',
+      'slide7-fail4-fix': 'Fix: Fresh sessions. Project rules files. Keep context lean.',
+      // Slide 8
+      'slide8-heading': 'The Engineering Toolkit',
+      'slide8-node1': 'Guardrails',
+      'slide8-node3': 'Sandboxes',
+      'slide8-node4': 'Testing',
+      'slide8-node5': 'Conventions',
+      'slide8-info-default': 'Click any node to learn more',
+      // Slide 9
+      'slide9-heading': 'I Built the Control Plane',
+      'slide9-subtitle': 'Clovr Code Terminal (CCT) \u2014 practicing what I preach',
+      'slide9-quote': '\u201CThe best way to learn agentic engineering is to build agentic tooling.\u201D',
+      // Slide 10
+      'slide10-heading': 'The Crew Metaphor',
+      'slide10-quote': '\u201CYou\u2019re the captain. The crew is disposable. The ship is not.\u201D',
+      'slide10-label1': 'Hull = Your Codebase',
+      'slide10-label2': 'Rigging = Conventions',
+      'slide10-label3': 'Logbook = Tests',
+      'slide10-label4': 'Captain = You',
+      'slide10-label5': 'Crew = Agents',
+      // Slide 11
+      'slide11-heading': 'Go Build Something',
+      'slide11-cta': 'Get the Book \u2014 Free',
+      'slide11-typing': 'Tonight \u2014 not tomorrow, not next week, tonight \u2014 open your terminal.',
+    },
+    es: {
+      'play-overlay-text': 'Iniciar Presentaci\u00F3n',
+      // Slide 1
+      'slide1-eyebrow': 'Un libro de Rasmus Bornhoft Schlunsen',
+      'slide1-title': 'The Agentic<br/>Crew',
+      'slide1-subtitle': 'Ingenier\u00EDa en la Era de los Agentes de IA',
+      'slide1-date': 'Marzo 2026',
+      // Slide 2
+      'slide2-heading': 'El Terreno Est\u00E1 Cambiando',
+      'slide2-quote': '\u201CDurante veinte a\u00F1os, ser ingeniero de software significaba una cosa: abres un editor, escribes c\u00F3digo, lo despliegas. <em>Ese ciclo se est\u00E1 rompiendo.</em>\u201D',
+      // Slide 3
+      'slide3-heading': 'El Oficio Est\u00E1 Mudando',
+      'slide3-quote': '\u201CEl oficio no est\u00E1 muriendo. Est\u00E1 mudando. La c\u00E1scara exterior \u2014 las pulsaciones, la sintaxis, el c\u00F3digo repetitivo \u2014 est\u00E1 cayendo. Pero el animal interior? La parte que sabe <em>qu\u00E9 construir</em> y <em>por qu\u00E9</em>? Esa parte est\u00E1 m\u00E1s viva que nunca.\u201D',
+      // Slide 4
+      'slide4-heading': '\u00BFQu\u00E9 Es un Agente?',
+      'slide4-body': 'El espectro de la asistencia de IA en ingenier\u00EDa de software:',
+      'slide4-level0': 'Autocompletado',
+      'slide4-level1': 'Copiloto',
+      'slide4-level2': 'Agente con Herramientas',
+      'slide4-level3': 'Agente Aut\u00F3nomo',
+      'slide4-pointer': 'La mayor\u00EDa del trabajo pr\u00E1ctico ocurre aqu\u00ED',
+      'slide4-desc-default': 'Puede leer archivos, ejecutar comandos, llamar APIs e iterar sobre resultados. Aqu\u00ED es donde ocurre la mayor parte del trabajo pr\u00E1ctico hoy.',
+      // Slide 5
+      'slide5-heading': 'La Analog\u00EDa de Rain Man',
+      'slide5-quote': '\u201CT\u00FA eres Tom Cruise. El agente es Dustin Hoffman.\u201D',
+      'slide5-captain-title': 'T\u00FA \u2014 El Capit\u00E1n',
+      'slide5-captain-1': 'Direcci\u00F3n y visi\u00F3n',
+      'slide5-captain-2': 'Juicio y gusto',
+      'slide5-captain-3': 'Sabe cu\u00E1ndo retirarse',
+      'slide5-agent-title': 'Agente \u2014 El Savant',
+      'slide5-agent-1': 'Velocidad y rendimiento',
+      'slide5-agent-2': 'Ejecuci\u00F3n incansable',
+      'slide5-agent-3': 'Reconocimiento infinito de patrones',
+      // Slide 6
+      'slide6-heading': 'Tres Capacidades Fundamentales',
+      'slide6-cap1-title': 'Planificaci\u00F3n',
+      'slide6-cap-hint': 'Clic para revelar',
+      'slide6-cap1-desc': 'Descomponer tareas complejas en pasos. Entender dependencias, ordenar el trabajo y decidir qu\u00E9 hacer primero.',
+      'slide6-cap2-title': 'Uso de Herramientas',
+      'slide6-cap-hint2': 'Clic para revelar',
+      'slide6-cap2-desc': 'Leer archivos, ejecutar comandos, llamar APIs, escribir c\u00F3digo. Las manos del agente en el mundo real.',
+      'slide6-cap3-title': 'Iteraci\u00F3n',
+      'slide6-cap-hint3': 'Clic para revelar',
+      'slide6-cap3-desc': 'Ejecutar c\u00F3digo, ver errores, corregirlos e intentar de nuevo. El bucle observar-ajustar que hace poderosos a los agentes.',
+      // Slide 7
+      'slide7-heading': 'Cuando los Agentes Fallan',
+      'slide7-fail1-title': 'Expansi\u00F3n del Alcance',
+      'slide7-fail1-desc': 'El agente se expande m\u00E1s all\u00E1 de la tarea, refactorizando c\u00F3digo que no le pediste tocar.',
+      'slide7-fail1-fix': 'Soluci\u00F3n: Prompts peque\u00F1os y enfocados. Una tarea a la vez.',
+      'slide7-fail2-title': 'APIs Alucinadas',
+      'slide7-fail2-desc': 'El agente inventa firmas de funciones o m\u00E9todos de librer\u00EDa que no existen.',
+      'slide7-fail2-fix': 'Soluci\u00F3n: Siempre ejecutar tests. Fijar docs de dependencias en el contexto.',
+      'slide7-fail3-title': 'Exceso de Confianza',
+      'slide7-fail3-desc': 'El agente presenta respuestas incorrectas con certeza. Sin matices, sin dudas.',
+      'slide7-fail3-fix': 'Soluci\u00F3n: Verificar todo. Confiar pero verificar.',
+      'slide7-fail4-title': 'P\u00E9rdida de Contexto',
+      'slide7-fail4-desc': 'El agente olvida instrucciones anteriores a medida que la conversaci\u00F3n crece.',
+      'slide7-fail4-fix': 'Soluci\u00F3n: Sesiones nuevas. Archivos de reglas del proyecto. Mantener el contexto ligero.',
+      // Slide 8
+      'slide8-heading': 'El Kit de Herramientas de Ingenier\u00EDa',
+      'slide8-node1': 'Barandillas',
+      'slide8-node3': 'Sandboxes',
+      'slide8-node4': 'Testing',
+      'slide8-node5': 'Convenciones',
+      'slide8-info-default': 'Haz clic en cualquier nodo para saber m\u00E1s',
+      // Slide 9
+      'slide9-heading': 'Constru\u00ED el Plano de Control',
+      'slide9-subtitle': 'Clovr Code Terminal (CCT) \u2014 practicando lo que predico',
+      'slide9-quote': '\u201CLa mejor manera de aprender ingenier\u00EDa ag\u00E9ntica es construir herramientas ag\u00E9nticas.\u201D',
+      // Slide 10
+      'slide10-heading': 'La Met\u00E1fora de la Tripulaci\u00F3n',
+      'slide10-quote': '\u201CT\u00FA eres el capit\u00E1n. La tripulaci\u00F3n es desechable. El barco no lo es.\u201D',
+      'slide10-label1': 'Casco = Tu Base de C\u00F3digo',
+      'slide10-label2': 'Aparejo = Convenciones',
+      'slide10-label3': 'Cuaderno de Bit\u00E1cora = Tests',
+      'slide10-label4': 'Capit\u00E1n = T\u00FA',
+      'slide10-label5': 'Tripulaci\u00F3n = Agentes',
+      // Slide 11
+      'slide11-heading': 'Ve a Construir Algo',
+      'slide11-cta': 'Obtener el Libro \u2014 Gratis',
+      'slide11-typing': 'Esta noche \u2014 no ma\u00F1ana, no la pr\u00F3xima semana \u2014 esta noche \u2014 abre tu terminal.',
+    }
+  };
+
+  const langBtns = document.querySelectorAll<HTMLButtonElement>('.lang-btn');
+
+  function applyLanguage(lang: Lang) {
+    currentLang = lang;
+    localStorage.setItem('presentation-lang', lang);
+
+    // Update language selector buttons
+    langBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    // Update all data-i18n elements
+    const elements = document.querySelectorAll<HTMLElement>('[data-i18n]');
+    elements.forEach(el => {
+      const key = el.dataset.i18n!;
+      const text = translations[lang][key];
+      if (text !== undefined) {
+        if (el.dataset.i18nHtml === 'true') {
+          el.innerHTML = text;
+        } else {
+          el.innerHTML = text;
+        }
+      }
+    });
+
+    // Update spectrum descriptions with language-specific data attributes
+    const spectrumDescEl = document.getElementById('spectrum-desc');
+    if (spectrumDescEl) {
+      const activeLevel = document.querySelector('.spectrum-level.active-level') as HTMLElement | null;
+      if (activeLevel) {
+        const descKey = lang === 'es' ? 'descEs' : 'desc';
+        spectrumDescEl.textContent = (lang === 'es' && activeLevel.dataset.descEs)
+          ? activeLevel.dataset.descEs
+          : activeLevel.dataset.desc || '';
+      }
+    }
+
+    // Update pipeline info if showing a node description
+    const pipelineInfoEl = document.getElementById('pipeline-info');
+    const activeNode = document.querySelector('.pipeline-node.active-node') as HTMLElement | null;
+    if (pipelineInfoEl && activeNode) {
+      pipelineInfoEl.textContent = (lang === 'es' && activeNode.dataset.infoEs)
+        ? activeNode.dataset.infoEs
+        : activeNode.dataset.info || '';
+    }
+
+    // If typing effect is or was running on the final slide, restart it with new language
+    if (currentSlide === 10) {
+      startTypingEffect();
+    }
+
+    // Reload audio for current slide in correct language
+    reloadAudioForLanguage();
+  }
+
+  function reloadAudioForLanguage() {
+    const wasPlaying = audioEnabled && currentAudio && !currentAudio.paused;
+
+    // Fade out current audio smoothly before switching
+    const fadePromise = (currentAudio && !currentAudio.paused)
+      ? fadeOutAudio(currentAudio)
+      : Promise.resolve();
+
+    fadePromise.then(() => {
+      // Cancel any pending audio timer
+      if (pendingAudioTimer) {
+        clearTimeout(pendingAudioTimer);
+        pendingAudioTimer = null;
+      }
+
+      // Stop and clear all cached audio
+      Object.keys(slideAudioCache).forEach(k => {
+        const idx = parseInt(k);
+        const audio = slideAudioCache[idx];
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          audio.src = '';
+        }
+        delete slideAudioCache[idx];
+      });
+      currentAudio = null;
+
+      // Rebuild audio cache with language-specific paths
+      for (let i = 0; i < totalSlides; i++) {
+        const slideNum = i + 1;
+        const paddedNum = slideNum.toString().padStart(2, '0');
+        const langSuffix = currentLang === 'es' ? '-es' : '';
+        const audioUrl = `/presentation-audio/slide-${paddedNum}${langSuffix}.mp3`;
+
+        const audio = new Audio();
+        audio.preload = 'auto';
+        audio.src = audioUrl;
+        audio.volume = audioVolume;
+        audio.addEventListener('error', () => {
+          delete slideAudioCache[i];
+        });
+        audio.addEventListener('canplaythrough', () => {
+          slideAudioCache[i] = audio;
+        }, { once: true });
+        slideAudioCache[i] = audio;
+      }
+
+      // If audio was playing, restart with new language after a smooth pause
+      if (wasPlaying) {
+        setTimeout(() => playSlideAudio(currentSlide), 400);
+      }
+    });
+  }
+
+  // Language button click handlers
+  langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang as Lang;
+      if (lang !== currentLang) {
+        applyLanguage(lang);
+      }
+    });
+  });
+
+  // Apply saved language on load
+  if (currentLang !== 'en') {
+    applyLanguage(currentLang);
+  }
 </script>

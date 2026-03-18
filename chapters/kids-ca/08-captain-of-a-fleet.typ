@@ -1,6 +1,6 @@
 = Capita d'una Flota
 
-#image("../../assets/kids/ch08-fleet.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-fleet.jpg", width: 80%)]
 
 Fins ara, has estat el capita d'un sol vaixell amb una petita tripulacio. Pero que passa si la feina es realment, _realment_ gran?
 
@@ -20,7 +20,7 @@ Si un sol membre de la tripulacio fa les tres feines, una rere l'altra, porta to
 
 Aquesta es la magia de treballar en paral·lel. En lloc d'un sol vaixell fent-ho tot, tens una petita flota. Cada vaixell s'encarrega d'una part de la missio. Tots treballen al mateix temps. Quan acaben, ajuntes les peces.
 
-#image("../../assets/kids/ch08-three-ships.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-three-ships.jpg", width: 80%)]
 
 == Pero Aqui Ve la Part Complicada
 
@@ -50,7 +50,7 @@ Abans d'enviar la teva flota, has de pensar be com dividir la feina. Pregunta't:
 
 Dividir la feina be es una de les parts mes dificils de ser capita d'una flota. Pero tambe es una de les coses mes potents que pots aprendre.
 
-#image("../../assets/kids/ch08-planning-table.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-planning-table.jpg", width: 80%)]
 
 == Ajuntar les Peces
 
@@ -74,7 +74,7 @@ Et converteixes mes en un entrenador que en un jugador. Un entrenador no corre p
 
 == Equips de Capitans
 
-#image("../../assets/kids/ch08-team-captains.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-team-captains.jpg", width: 80%)]
 
 Aqui tens un nivell mes per pensar-hi. Que passa si no ets l'unic capita?
 
@@ -116,4 +116,4 @@ Ara torneu-ho a provar. Aquesta vegada, passeu dos minuts _planificant_ junts pr
 
 El segon intent ha anat millor? Aixo es el poder de la coordinacio!
 
-#image("../../assets/kids/ch08-harbor.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch08-harbor.jpg", width: 80%)]

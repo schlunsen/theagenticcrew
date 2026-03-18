@@ -1,5 +1,9 @@
 = Git com a Infraestructura d'Agents
 
+#figure(
+  image("../../assets/illustrations/ch06-git-branches.jpg", width: 80%),
+)
+
 Ja coneixes Git. Portes anys commitejant, creant branques i fusionant. Pero en enginyeria agentica, Git no es nomes control de versions -- es la columna vertebral de tot el teu flux de treball. Es el teu boto de desfer, el teu marc d'execucio paral·lela, la teva interficie de revisio, i el teu sistema de documentacio tot alhora.
 
 La majoria d'enginyers utilitzen potser el 20% del que Git ofereix. L'enginyeria agentica demana l'altre 80%.
@@ -84,6 +88,8 @@ Aqui tens la perspectiva que la majoria d'enginyers es perden: els agents llegei
 Aixo vol dir que el teu historial de commits es documentacio. No del tipus que escrius a una wiki -- del tipus que esta incrustat al propi codi, permanentment, amb proveniencia perfecta.
 
 Els bons missatges de commit es composen amb el temps. Sis mesos a partir d'ara, quan un agent estigui treballant a la teva base de codi, llegira aquells missatges per entendre el context. La diferencia entre un historial de "fix bug" i "fix race condition in session cleanup" es la diferencia entre un agent que enten la teva base de codi i un que esta endevinant.
+
+I si el teu agent te acces per executar `git log` i `git blame` -- que hauria de tenir -- aquesta documentacio no es alguna cosa que has de copiar i enganxar als prompts. L'agent la llegeix directament del repositori. La teva feina es fer que l'historial valgui la pena llegir, no llegir-lo per a l'agent.
 
 Aixo tambe s'aplica a les descripcions de PR, els noms de branques i els missatges de commits de fusio. Cada tros de text que adjuntes al teu historial de Git es context per a futurs agents. Escriu en consequencia.
 

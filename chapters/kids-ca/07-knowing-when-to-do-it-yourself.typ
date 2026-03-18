@@ -1,6 +1,6 @@
 = Saber Quan Fer-ho Tu Mateix
 
-#image("../../assets/kids/ch07-tying-shoes.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-tying-shoes.jpg", width: 80%)]
 
 La teva tripulacio es increible. Poden fregar tota la coberta en minuts. Poden arreglar una vela mentre tu dines. No es cansen mai.
 
@@ -20,7 +20,7 @@ La teva tripulacio es millor en feines _grans_. Les feines que et portarien molt
 
 == Algunes Feines Necessiten un Cor Huma
 
-#image("../../assets/kids/ch07-heart.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-heart.jpg", width: 80%)]
 
 Aqui tens una cosa que la teva tripulacio mai no podra fer: _importar-li_.
 
@@ -39,7 +39,7 @@ Aquestes no son feines per a la teva tripulacio. Son feines per a _tu_. La gent 
 
 == Algunes Feines Son Com Aprens
 
-#image("../../assets/kids/ch07-learning.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-learning.jpg", width: 80%)]
 
 Posem que estas aprenent a nedar. Podries demanar a Compass que t'expliques com funciona la natacio. "Mou els bracos aixi, dona puntades de peu aixi, respira cap al costat."
 
@@ -64,7 +64,7 @@ Fes servir la teva tripulacio per _ajudar-te_ a aprendre. Demana'ls que t'expliq
 
 == Practicar Fa el Teu Cervell Mes Fort
 
-#image("../../assets/kids/ch07-brain-muscles.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-brain-muscles.jpg", width: 80%)]
 
 Pensa en el teu cervell com un muscle. Cada cop que resols un problema dificil, aquest muscle es fa una mica mes fort. Cada cop que t'esforces i ho desxifres, el teu cervell crea noves connexions.
 
@@ -114,4 +114,4 @@ Quina manera t'ha ensenyat mes? Quina manera t'ha fet sentir millor quan finalme
 
 Aquella sensacio d'orgull quan desxifres alguna cosa pel teu compte? D'aixo va ser capita.
 
-#image("../../assets/kids/ch07-proud-captain.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch07-proud-captain.jpg", width: 80%)]

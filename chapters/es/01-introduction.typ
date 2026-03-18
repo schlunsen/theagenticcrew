@@ -1,14 +1,12 @@
 = Introducción
 
-El año pasado vi a una desarrolladora junior de mi equipo — dos años de experiencia, todavía nerviosa en las revisiones de código — entregar un endpoint de API completo en cuarenta y cinco minutos. Modelo de datos, validación, manejo de errores, tests, documentación. El código era limpio. Los tests eran exhaustivos. El PR pasó la revisión al primer intento.
+Hace seis meses, decidí ponerme serio con los agentes de IA. No solo probar — realmente descubrir cómo hacerlos parte de mi trabajo diario como ingeniero. Me senté, despejé mi agenda y empecé a experimentar con las técnicas que acabarían convirtiéndose en este libro. Cómo dirigir un agente. Cómo establecer límites. Cómo pensar en intención en lugar de sintaxis.
 
-A mí me habría llevado una hora hacer el mismo trabajo. Y llevo veinte años en esto.
+Aprendí a base de prueba y error. Mucho error. Quemé tokens en tareas que deberían haber sido simples. Vi cómo agentes reescribían módulos enteros que no les había pedido que tocaran. Fusioné código que pasaba todos los tests y se rompía en producción porque había confiado en la marca verde en lugar de en mi propio juicio. Cada error me enseñó algo, y poco a poco — en semanas, luego meses — los principios empezaron a cristalizar.
 
-Ella no tecleó la mayor parte. Describió lo que necesitaba, apuntó un agente al código base y lo guió hasta la línea de meta. Su habilidad no estaba en escribir el código — estaba en saber qué pedir, reconocer cuándo el resultado era bueno y detectar el único caso límite que el agente pasó por alto. Estaba haciendo _ingeniería_. Solo que no de la forma en que yo aprendí a hacerla.
+Lo que más me sorprendió fue cuánto cambió mi propia productividad. Tareas que antes me llevaban un día entero — construir un pipeline de datos, conectar un nuevo servicio, refactorizar un módulo legacy — empezaron a llevarme menos de una hora. No porque los agentes hicieran todo el trabajo de pensar, sino porque había aprendido a _dirigir_ el pensamiento. Arquitectura limpia. Tests exhaustivos. PRs que pasaban la revisión al primer intento. No era magia — solo una forma diferente de trabajar que nadie me había enseñado, porque nadie la había descifrado todavía.
 
-Esa noche volví a casa y me senté con una pregunta incómoda: si la brecha entre veinte años de experiencia y dos años de experiencia acaba de estrecharse considerablemente, ¿qué aporto yo exactamente?
-
-La respuesta, al final me di cuenta, es todo lo que no es teclear. Pero llegar a esa respuesta me llevó meses, muchos errores y este libro.
+Este libro creció a partir de ese proceso. Está construido sobre principios que desarrollé y probé en proyectos reales — cómo estructurar tu pensamiento, cómo comunicar la intención a un agente, cómo verificar el resultado y cómo saber cuándo tomar las riendas de nuevo. De ninguna manera estoy seguro de que sean los mejores enfoques — el campo se mueve demasiado rápido para que nadie pueda afirmar certezas. Pero he visto una mejora genuina y medible en mi propio trabajo, y creo que estas ideas pueden hacer lo mismo por ti. Las técnicas no son complicadas. Solo que no son obvias — y nadie más las está enseñando todavía.
 
 == El Suelo Se Mueve
 
@@ -38,7 +36,7 @@ Esta es la guía que me habría gustado que alguien me diera.
 
 Eres ingeniero de software. Has entregado cosas reales. Sabes lo que se siente un incidente en producción a las 2 de la madrugada. No le tienes miedo al terminal.
 
-Pero últimamente algo se siente diferente. Quizá has probado herramientas de codificación con IA y las has encontrado impresionantes pero caóticas — como hacer pair programming con alguien que es increíblemente rápido pero no tiene concepto de alcance. Quizá has visto a un desarrollador con dos años de experiencia entregar una funcionalidad completa en una tarde usando asistencia de agentes, y te hizo sentir algo que no esperabas. Quizá estás entusiasmado pero no sabes por dónde empezar. Quizá eres escéptico y quieres que alguien te convenza con sustancia, no con bombo publicitario.
+Pero últimamente algo se siente diferente. Quizá has probado herramientas de codificación con IA y las has encontrado impresionantes pero caóticas — como hacer pair programming con alguien que es increíblemente rápido pero no tiene concepto de alcance. Como ser Tom Cruise en _Rain Man_, excepto que tu Dustin Hoffman puede refactorizar un código base entero en lugar de contar cartas. Quizá has visto a alguien con una fracción de tu experiencia de repente entregar como un veterano de diez años, y te hizo sentir algo que no esperabas. Quizá estás entusiasmado pero no sabes por dónde empezar. Quizá eres escéptico y quieres que alguien te convenza con sustancia, no con bombo publicitario.
 
 Este libro es para ti. Asume que sabes programar. Asume que llevas tiempo en esto. Te encuentra donde estás.
 

@@ -1,6 +1,6 @@
 = Ves i Construeix Alguna Cosa
 
-#image("../../assets/kids/ch09-sunset.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-sunset.jpg", width: 80%)]
 
 Ho has aconseguit, Capita. Has apres molt.
 
@@ -10,7 +10,7 @@ Es bastant impressionant per a algu de la teva edat.
 
 == La Tripulacio Canvia. El Vaixell Es Queda.
 
-#image("../../assets/kids/ch09-ship.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-ship.jpg", width: 80%)]
 
 Aqui tens una ultima cosa que vull que recordis.
 
@@ -30,7 +30,7 @@ Els millors capitans de la historia no van ser els que esperaven bon temps. Van 
 
 == Una Ultima Ordre, Capita
 
-#image("../../assets/kids/ch09-horizon.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch09-horizon.jpg", width: 80%)]
 
 Aquesta nit -- no dema, no la setmana que ve, _aquesta nit_ -- prova alguna cosa nova. Fes a un ordinador una pregunta que tenies al cap. Construeix alguna cosa petita. Escriu una historia i demana a una IA que t'ajudi a millorar-la. Fes un dibuix i mira que passa quan el descrius a un ajudant.
 

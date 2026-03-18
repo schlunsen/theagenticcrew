@@ -1,0 +1,669 @@
+---
+const chapters = [
+  { id: "01-introduction", number: "01", title: "Introduction", titleCa: "Introducció", titleEs: "Introducción", titleDa: "Introduktion" },
+  { id: "02-context", number: "02", title: "Context", titleCa: "Context", titleEs: "Contexto", titleDa: "Kontekst" },
+  { id: "03-what-is-an-agent", number: "03", title: "What Is an Agent?", titleCa: "Què és un Agent?", titleEs: "¿Qué es un Agente?", titleDa: "Hvad er en Agent?" },
+  { id: "04-clovr-code-terminal", number: "04", title: "Principles from Building My Own Agentic Tooling", titleCa: "Claude Code al Terminal", titleEs: "Claude Code en el Terminal", titleDa: "Claude Code i Terminalen" },
+  { id: "05-guardrails", number: "05", title: "Guardrails", titleCa: "Baranes de Seguretat", titleEs: "Barandillas", titleDa: "Sikkerhedsværn" },
+  { id: "06-git", number: "06", title: "Git as Agent Infrastructure", titleCa: "Git", titleEs: "Git", titleDa: "Git" },
+  { id: "07-sandboxes", number: "07", title: "Sandboxes", titleCa: "Sandboxes", titleEs: "Sandboxes", titleDa: "Sandboxes" },
+  { id: "08-testing-as-the-feedback-loop", number: "08", title: "Testing as the Feedback Loop", titleCa: "Els Tests com a Bucle de Retroalimentació", titleEs: "Testing como Bucle de Retroalimentación", titleDa: "Test som Feedback-Loop" },
+  { id: "09-convention-over-configuration", number: "09", title: "Convention Over Configuration", titleCa: "Convenció sobre Configuració", titleEs: "Convención sobre Configuración", titleDa: "Konvention over Konfiguration" },
+  { id: "09b-tool-integrations", number: "09b", title: "Extending the Agent's Reach", titleCa: "Integracions d'Eines", titleEs: "Integraciones de Herramientas", titleDa: "Værktøjsintegrationer" },
+  { id: "10-local-vs-commercial-llms", number: "10", title: "Local LLMs vs. Commercial LLMs", titleCa: "LLMs Locals vs. Comercials", titleEs: "LLMs Locales vs. Comerciales", titleDa: "Lokale vs. Kommercielle LLMs" },
+  { id: "11-prompting-as-engineering", number: "11", title: "Prompting as Engineering", titleCa: "El Prompting com a Enginyeria", titleEs: "Prompting como Ingeniería", titleDa: "Prompting som Ingeniørarbejde" },
+  { id: "12-multi-agent-orchestration", number: "12", title: "Multi-Agent Orchestration", titleCa: "Orquestració Multi-Agent", titleEs: "Orquestación Multi-Agente", titleDa: "Multi-Agent Orkestrering" },
+  { id: "12b-cicd-and-agents", number: "12b", title: "Agents in the Pipeline", titleCa: "CI/CD i Agents", titleEs: "CI/CD y Agentes", titleDa: "CI/CD og Agenter" },
+  { id: "13-war-stories", number: "13", title: "When Agents Get It Wrong", titleCa: "Històries de Guerra", titleEs: "Historias de Guerra", titleDa: "Krigshistorier" },
+  { id: "14-when-not-to-use-agents", number: "14", title: "When Not to Use Agents", titleCa: "Quan No Utilitzar Agents", titleEs: "Cuándo No Usar Agentes", titleDa: "Hvornår Man Ikke Skal Bruge Agenter" },
+  { id: "15-agentic-teams", number: "15", title: "Agentic Teams", titleCa: "Equips Agèntics", titleEs: "Equipos Agénticos", titleDa: "Agentiske Teams" },
+  { id: "16-final-words", number: "16", title: "Final Words", titleCa: "Paraules Finals", titleEs: "Palabras Finales", titleDa: "Sidste Ord" },
+];
+---
+
+<section class="audiobook" id="audiobook">
+  <div class="audiobook-inner">
+    <div class="audiobook-header">
+      <p class="audiobook-eyebrow">
+        <span class="eyebrow-icon">&#9835;</span>
+        Listen Free
+      </p>
+      <h2>Audiobook</h2>
+      <p class="audiobook-subtitle">Listen to the full book, chapter by chapter. AI-narrated with natural voices.</p>
+    </div>
+
+    <div class="audiobook-card">
+      <!-- Language Toggle -->
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en" data-book="adult">
+          🇬🇧 English
+        </button>
+        <button class="lang-btn" data-lang="ca" data-book="adult-ca">
+          Català
+        </button>
+        <button class="lang-btn" data-lang="es" data-book="adult-es">
+          Español
+        </button>
+        <button class="lang-btn" data-lang="da" data-book="adult-da">
+          Dansk
+        </button>
+      </div>
+
+      <!-- Voice Toggle -->
+      <div class="voice-toggle">
+        <button class="voice-btn active" data-voice="male">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+          Rasmus
+        </button>
+        <button class="voice-btn" data-voice="female">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+          Amy
+        </button>
+      </div>
+
+      <!-- Audio Player -->
+      <div class="player-container">
+        <div class="now-playing">
+          <span class="now-playing-label">Now playing</span>
+          <span class="now-playing-title" id="now-playing-title">Select a chapter</span>
+        </div>
+        <audio id="audiobook-player" controls preload="none">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <!-- Chapter List -->
+      <div class="chapter-list-audio">
+        {chapters.map((chapter) => (
+          <button
+            class="chapter-row"
+            data-chapter-id={chapter.id}
+            data-chapter-title={chapter.title}
+            data-chapter-title-ca={chapter.titleCa}
+            data-chapter-title-es={chapter.titleEs}
+            data-chapter-title-da={chapter.titleDa}
+            data-chapter-num={chapter.number}
+          >
+            <span class="chapter-row-num">{chapter.number}</span>
+            <span class="chapter-row-title">{chapter.title}</span>
+            <span class="chapter-row-play">
+              <svg class="play-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <polygon points="5,3 19,12 5,21" />
+              </svg>
+              <svg class="pause-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="display:none;">
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <!-- Download Full Book -->
+      <div class="download-full">
+        <div class="download-full-divider"></div>
+        <p class="download-full-label">Download the full audiobook</p>
+        <div class="download-full-buttons">
+          <a href="/audiobook/the-agentic-crew-full_male.mp3" class="download-btn" download id="download-male">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
+            </svg>
+            Male Voice (MP3)
+          </a>
+          <a href="/audiobook/the-agentic-crew-full_female.mp3" class="download-btn" download id="download-female">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
+            </svg>
+            Female Voice (MP3)
+          </a>
+        </div>
+        <p class="download-full-note">Full audiobook files will be available soon. Individual chapters are being added as they are generated.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const player = document.getElementById('audiobook-player') as HTMLAudioElement;
+    const nowPlayingTitle = document.getElementById('now-playing-title');
+    const voiceBtns = document.querySelectorAll('.voice-btn');
+    const langBtns = document.querySelectorAll('.lang-btn');
+    const chapterRows = document.querySelectorAll('.chapter-row');
+
+    let currentVoice = 'male';
+    let currentLang = 'en';
+    let currentBook = 'adult';
+    let currentChapterId: string | null = null;
+
+    function getAudioPath(chapterId: string) {
+      return `/audiobook/${currentBook}/${currentVoice}/${chapterId}.mp3`;
+    }
+
+    function getChapterTitle(row: Element) {
+      if (currentLang !== 'en') {
+        return row.getAttribute(`data-chapter-title-${currentLang}`) || row.getAttribute('data-chapter-title');
+      }
+      return row.getAttribute('data-chapter-title');
+    }
+
+    function updateChapterTitles() {
+      chapterRows.forEach(row => {
+        const titleEl = row.querySelector('.chapter-row-title');
+        if (titleEl) {
+          titleEl.textContent = getChapterTitle(row) || '';
+        }
+      });
+    }
+
+    // Language toggle
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        const book = btn.getAttribute('data-book');
+        if (!lang || lang === currentLang) return;
+
+        currentLang = lang;
+        currentBook = book || 'adult';
+        langBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        updateChapterTitles();
+
+        if (currentChapterId) {
+          const wasPlaying = !player.paused;
+          const currentTime = player.currentTime;
+          player.src = getAudioPath(currentChapterId);
+          player.currentTime = 0; // Reset on language change
+          if (wasPlaying) {
+            player.play().catch(() => {});
+          }
+          // Update now playing title
+          const activeRow = document.querySelector(`.chapter-row[data-chapter-id="${currentChapterId}"]`);
+          if (nowPlayingTitle && activeRow) {
+            const num = activeRow.getAttribute('data-chapter-num');
+            nowPlayingTitle.textContent = `${num}. ${getChapterTitle(activeRow)}`;
+          }
+        }
+      });
+    });
+
+    // Voice toggle
+    voiceBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const voice = btn.getAttribute('data-voice');
+        if (!voice || voice === currentVoice) return;
+
+        currentVoice = voice;
+        voiceBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (currentChapterId) {
+          const wasPlaying = !player.paused;
+          const currentTime = player.currentTime;
+          player.src = getAudioPath(currentChapterId);
+          player.currentTime = currentTime;
+          if (wasPlaying) {
+            player.play().catch(() => {});
+          }
+        }
+      });
+    });
+
+    // Chapter selection
+    chapterRows.forEach(row => {
+      row.addEventListener('click', () => {
+        const chapterId = row.getAttribute('data-chapter-id');
+        const chapterTitle = getChapterTitle(row);
+        const chapterNum = row.getAttribute('data-chapter-num');
+
+        if (!chapterId) return;
+
+        if (currentChapterId === chapterId && player.src) {
+          if (player.paused) {
+            player.play().catch(() => {});
+          } else {
+            player.pause();
+          }
+          return;
+        }
+
+        currentChapterId = chapterId;
+
+        if (nowPlayingTitle) {
+          nowPlayingTitle.textContent = `${chapterNum}. ${chapterTitle}`;
+        }
+
+        chapterRows.forEach(r => r.classList.remove('active'));
+        row.classList.add('active');
+
+        player.src = getAudioPath(chapterId);
+        player.play().catch(() => {});
+      });
+    });
+
+    // Update play/pause icons based on audio state
+    const updateIcons = () => {
+      chapterRows.forEach(row => {
+        const playIcon = row.querySelector('.play-icon') as HTMLElement;
+        const pauseIcon = row.querySelector('.pause-icon') as HTMLElement;
+        const isActive = row.getAttribute('data-chapter-id') === currentChapterId;
+
+        if (isActive && !player.paused) {
+          playIcon.style.display = 'none';
+          pauseIcon.style.display = 'block';
+        } else {
+          playIcon.style.display = 'block';
+          pauseIcon.style.display = 'none';
+        }
+      });
+    };
+
+    player.addEventListener('play', updateIcons);
+    player.addEventListener('pause', updateIcons);
+    player.addEventListener('ended', () => {
+      updateIcons();
+      // Auto-play next chapter
+      if (currentChapterId) {
+        const rows = Array.from(chapterRows);
+        const currentIndex = rows.findIndex(r => r.getAttribute('data-chapter-id') === currentChapterId);
+        if (currentIndex >= 0 && currentIndex < rows.length - 1) {
+          const nextRow = rows[currentIndex + 1] as HTMLElement;
+          nextRow.click();
+        }
+      }
+    });
+
+    // Handle audio errors gracefully (file might not exist yet)
+    player.addEventListener('error', () => {
+      if (nowPlayingTitle && currentChapterId) {
+        nowPlayingTitle.textContent += ' (not yet available)';
+      }
+    });
+  });
+</script>
+
+<style>
+  .audiobook {
+    padding: 6rem 2rem;
+    position: relative;
+  }
+
+  .audiobook::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(46, 155, 183, 0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .audiobook-inner {
+    max-width: 650px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .audiobook-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .audiobook-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-pirate-teal);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .eyebrow-icon {
+    font-size: 1rem;
+  }
+
+  .audiobook-header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .audiobook-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .audiobook-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .audiobook-card:hover {
+    border-color: var(--color-pirate-teal);
+    box-shadow: 0 8px 40px rgba(46, 155, 183, 0.1);
+  }
+
+  /* Language Toggle */
+  .lang-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+  }
+
+  .lang-btn.active {
+    background: rgba(232, 150, 62, 0.1);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  /* Voice Toggle */
+  .voice-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .voice-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .voice-btn:hover {
+    border-color: var(--color-pirate-teal);
+    color: var(--color-text);
+  }
+
+  .voice-btn.active {
+    background: rgba(46, 155, 183, 0.1);
+    border-color: var(--color-pirate-teal);
+    color: var(--color-pirate-teal);
+    font-weight: 600;
+  }
+
+  /* Player */
+  .player-container {
+    margin-bottom: 2rem;
+    background: var(--color-bg-elevated);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--color-border-light);
+  }
+
+  .now-playing {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .now-playing-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-pirate-teal);
+    white-space: nowrap;
+  }
+
+  .now-playing-title {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  audio {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+  }
+
+  audio::-webkit-media-controls-panel {
+    background: var(--color-bg-elevated);
+  }
+
+  /* Chapter List */
+  .chapter-list-audio {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+  }
+
+  .chapter-list-audio::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chapter-list-audio::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .chapter-list-audio::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+
+  .chapter-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    border: none;
+    border-bottom: 1px solid var(--color-border-light);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+    text-align: left;
+    width: 100%;
+    color: inherit;
+  }
+
+  .chapter-row:last-child {
+    border-bottom: none;
+  }
+
+  .chapter-row:hover {
+    background: rgba(46, 155, 183, 0.04);
+  }
+
+  .chapter-row.active {
+    background: rgba(46, 155, 183, 0.08);
+  }
+
+  .chapter-row-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    min-width: 1.75rem;
+    opacity: 0.5;
+  }
+
+  .chapter-row.active .chapter-row-num {
+    opacity: 1;
+    color: var(--color-pirate-teal);
+  }
+
+  .chapter-row-title {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .chapter-row.active .chapter-row-title {
+    color: var(--color-pirate-teal);
+    font-weight: 600;
+  }
+
+  .chapter-row-play {
+    color: var(--color-text-muted);
+    opacity: 0.4;
+    transition: opacity 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .chapter-row:hover .chapter-row-play {
+    opacity: 0.8;
+    color: var(--color-pirate-teal);
+  }
+
+  .chapter-row.active .chapter-row-play {
+    opacity: 1;
+    color: var(--color-pirate-teal);
+  }
+
+  /* Download Full */
+  .download-full {
+    text-align: center;
+  }
+
+  .download-full-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--color-border);
+    margin: 0 auto 1.25rem;
+  }
+
+  .download-full-label {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .download-full-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .download-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent-deep);
+    background: rgba(232, 150, 62, 0.06);
+    transform: translateY(-1px);
+  }
+
+  .download-full-note {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    .audiobook {
+      padding: 4rem 1.5rem;
+    }
+
+    .audiobook-card {
+      padding: 1.75rem 1.25rem;
+    }
+
+    .voice-toggle {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .voice-btn {
+      width: 100%;
+      max-width: 220px;
+      justify-content: center;
+    }
+
+    .chapter-list-audio {
+      max-height: 300px;
+    }
+
+    .download-full-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .download-btn {
+      width: 100%;
+      max-width: 220px;
+      justify-content: center;
+    }
+  }
+</style>

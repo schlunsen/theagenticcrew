@@ -1,6 +1,6 @@
 = Kaptajnens Tjekliste
 
-#image("../../assets/kids/ch04-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-checklist.jpg", width: 80%)]
 
 Lad mig fortælle dig om to skibe.
 
@@ -10,7 +10,7 @@ Lad os se, hvordan det gik.
 
 == Skib Nummer Et: Det Heldige Gæt
 
-#image("../../assets/kids/ch04-ship-one.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-ship-one.jpg", width: 80%)]
 
 Kaptajn Finn sagde til sit mandskab "Hent mangoerne fra Mangoøen."
 
@@ -28,7 +28,7 @@ De havde ret. Han havde aldrig fortalt dem, _hvad_ de skulle tjekke.
 
 == Skib Nummer To: Tjeklisten
 
-#image("../../assets/kids/ch04-ship-two.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-ship-two.jpg", width: 80%)]
 
 Kaptajn Lily gjorde noget anderledes. Før hendes mandskab sejlede, skrev hun en tjekliste på en stor tavle:
 
@@ -48,7 +48,7 @@ Samme mandskab. Samme ø. Samme mangoer. Forskellen var tjeklisten.
 
 == Hvorfor Tjeklister Er Magiske
 
-#image("../../assets/kids/ch04-magic-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-magic-checklist.jpg", width: 80%)]
 
 En tjekliste gør to utrolige ting:
 
@@ -72,7 +72,7 @@ Hvorfor? Fordi det at skrive en tjekliste tvinger _dig_ til at tænke klart. Nå
 
 Hvis du ikke kan skrive en tjekliste til en opgave, forstår du nok ikke opgaven godt nok endnu. Og hvis _du_ ikke forstår den, gør dit mandskab det bestemt heller ikke.
 
-#image("../../assets/kids/ch04-writing-checklist.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-writing-checklist.jpg", width: 80%)]
 
 == Hvad Gør en God Tjekliste?
 
@@ -100,7 +100,7 @@ Med en tjekliste laver mandskabet opgaven rigtigt i første forsøg. Én tur. É
 
 Et par minutter med at skrive en tjekliste kan spare dig for timer med omgørelser. Det er en ret god handel.
 
-#image("../../assets/kids/ch04-time-saved.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch04-time-saved.jpg", width: 80%)]
 
 == Tjeklister til Dit Robotmandskab
 

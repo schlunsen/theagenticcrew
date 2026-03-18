@@ -14,7 +14,7 @@ Tre evner adskiller en agent fra en fancy chatbot:
 
 *Planlægning.* En agent bryder et mål ned i trin. "Tilføj autentificering til denne app" bliver til en række handlinger — læs codebasen, vælg frameworket, opret middleware, opdater routes, tilføj tests, verificer. En chatbot giver dig en kodeblok. En agent giver dig en proces.
 
-*Værktøjsbrug.* En agent interagerer med verden — læser dine filer, kører dine tests, undersøger fejloutput. Hvert tool call giver ny information der former den næste beslutning. Dette feedback loop er det der gør agenter kraftfulde: de genererer ikke kode i et vakuum, de genererer kode og _verificerer_ den.
+*Værktøjsbrug.* En agent interagerer med verden — læser dine filer, kører dine tests, undersøger fejloutput. Hvert tool call giver ny information der former den næste beslutning. Dette feedback loop er det der gør agenter kraftfulde: de genererer ikke kode i et vakuum, de genererer kode og _verificerer_ den. Og her er det folk overser: de værktøjer du giver en agent definerer hvilken slags agent den _er_. En LLM med kun tekst-ind, tekst-ud er en chatbot. Giv den filadgang, kommandoudførelse og integrationer med eksterne systemer, og den bliver en ingeniør. Værktøjerne er forfremmelsen.
 
 *Iteration.* En agent kan prøve, fejle og prøve igen. Skriv en funktion, kør testene, se en fejl, læs fejlen, justér, kør igen. Handl, observer, justér. En chatbot giver dig ét skud. En agent giver dig en cyklus.
 
@@ -49,5 +49,13 @@ Tænk ikke på agenter som værktøjer. Tænk ikke på dem som erstatninger. Tæ
 De er hurtige hvor du er langsom. De er tålmodige hvor du er utålmodig. De kan holde mere tekst i arbejdshukommelsen end du kan. De bliver aldrig trætte, aldrig frustrerede, har aldrig en dårlig dag.
 
 Men de ved ikke hvad der er vigtigt. De ved ikke hvad brugeren faktisk har brug for. De ved ikke hvilken teknisk gæld der er acceptabel og hvilken der er en tikkende bombe. De ved ikke hvornår man skal skubbe tilbage på et krav. De ved ikke hvornår specifikationen er forkert.
+
+Den bedste analogi jeg har fundet er _Rain Man_. Du er Tom Cruise. Agenten er Dustin Hoffman.
+
+Raymond kan tælle kort som ingen anden levende — han ser mønstre i bjerge af data, processerer dem øjeblikkeligt, bliver aldrig træt, mister aldrig fokus. Men han kan ikke navigere et kasinogulv. Han ved ikke _hvorfor_ de tæller kort. Han ved ikke hvornår man skal rejse sig fra bordet, hvornår pitbossen begynder at blive mistænksom, eller hvad man skal gøre med pengene. Overladt til sig selv ville han tælle kort for evigt i et tomt rum.
+
+Charlie er den med planen. Han ved hvilket kasino de skal ramme, hvornår man satser stort, hvornår man indkasserer, hvornår man ændrer strategi fuldstændigt. Han kan ikke selv tælle kort — ikke i Raymonds tempo, ikke i Raymonds skala. Men det behøver han ikke. Hans job er retning, dømmekraft og at vide hvad hele operationen er _til_.
+
+Det er agentisk ingeniørarbejde. Din agent vil processere hele din codebase, generere løsninger i et tempo du ikke kan matche, og iterere utrætteligt. Men den ved ikke hvilket problem der er værd at løse. Den ved ikke hvornår den elegante løsning er den forkerte. Den ved ikke hvornår den skal stoppe.
 
 Det er dit job. Og det vil det altid være.

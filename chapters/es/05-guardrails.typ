@@ -26,6 +26,8 @@ Los ingenieros que nunca ajustan los controles terminan abandonando los flujos d
 
 El principio es el mismo que en seguridad: mínimo privilegio. Un agente trabajando en tu frontend no necesita acceso SSH a tu servidor de base de datos. Un agente escribiendo tests unitarios no necesita tus credenciales de AWS.
 
+Pero vale la pena detenerse a notar que las barandillas no son solo sobre _restringir_ lo que los agentes pueden hacer — son la otra cara de _equiparlos_. Cada herramienta que concedes es tanto una capacidad como una responsabilidad. El gradiente de confianza de la sección anterior trata realmente sobre calibrar cuánta recopilación autónoma de contexto y acción permites. Las barandillas y las herramientas son la misma lista, vista desde dos direcciones.
+
 En la práctica esto significa:
 - API keys con alcance limitado y tiempos de expiración
 - Credenciales específicas por entorno (nunca compartas claves de producción con un agente de desarrollo)

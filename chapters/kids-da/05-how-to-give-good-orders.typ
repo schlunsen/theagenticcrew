@@ -1,6 +1,6 @@
 = Sådan Giver Du Gode Ordrer
 
-#image("../../assets/kids/ch05-notepad.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-notepad.jpg", width: 80%)]
 
 == Kaptajnens Notesblok
 
@@ -16,7 +16,7 @@ Sådan fungerer dit robotmandskab. De har en notesblok inde i hovedet, der hedde
 
 Tricket er at skrive _lige præcis det rigtige_ på notesblokken.
 
-#image("../../assets/kids/ch05-clear-vs-vague.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-clear-vs-vague.jpg", width: 80%)]
 
 == Klare Ordrer vs. Uklare Ordrer
 
@@ -48,7 +48,7 @@ Det er meget bedre at give én opgave ad gangen. Lad Rusty gøre sejlet færdigt
 
 Små opgaver er nemmere at tjekke. Og hvis noget går galt, skal du kun lave lidt om -- ikke det hele.
 
-#image("../../assets/kids/ch05-rulebook.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-rulebook.jpg", width: 80%)]
 
 == Skibets Regelbog
 
@@ -101,4 +101,4 @@ Giv nu de fem sætninger til nogen i din familie. Kan de lave sandwichen kun ud 
 
 Sådan føles det at give ordrer til dit mandskab. Jo klarere du skriver, jo bedre bliver sandwichen -- øh, jo bedre bliver resultaterne!
 
-#image("../../assets/kids/ch05-sandwich.jpg", width: 80%)
+#align(center)[#image("../../assets/kids/ch05-sandwich.jpg", width: 80%)]

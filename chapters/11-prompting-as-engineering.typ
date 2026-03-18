@@ -22,7 +22,13 @@ This tells the agent almost nothing. Which auth bug? Where does it manifest? Wha
 
 This is a different animal entirely. The agent knows the symptom, the suspected location, and how to verify the fix. It can go straight to the relevant code, understand the problem, and validate its solution — all without guessing.
 
-The pattern is simple. _What_ is broken or needed. _Where_ to look. _How_ to verify. Every minute you spend making your prompt precise saves you five minutes reviewing the wrong output.
+*Tool-equipped:* "The login endpoint returns 401 for valid tokens when the session cache is cold. The failing test is `TestColdCacheLogin`. Investigate, fix it, and make sure all auth tests pass."
+
+Notice what's missing: no file path, no function name. The agent has `grep`, `find`, and the test runner. It can _discover_ where `TestColdCacheLogin` lives and trace the code path itself. What you gave it is the _what_ and the _why_ — the domain knowledge that tools can't provide. The cold cache detail, the symptom, the test name as a starting thread to pull. The agent does the mechanical work of locating the code.
+
+All three levels are useful. Sometimes you _do_ know the exact file and function, and handing that over saves the agent thirty seconds of searching. But the third level represents the mature mental model: provide only what the agent can't find on its own. The problem description, the domain context, the intent. Let the tools handle discovery.
+
+The pattern is simple. _What_ is broken or needed. _Where_ to look (if you already know — don't go hunting just to fill this in). _How_ to verify. Every minute you spend making your prompt precise saves you five minutes reviewing the wrong output.
 
 == Constraint Specification
 
@@ -100,6 +106,8 @@ _"Add rate limiting to the `/api/search` endpoint. Use the existing `RateLimiter
 
 That's a spec. An agent can implement this without ambiguity. A human reviewer can check the result against the requirements. The desired outcome is clear, the constraints are explicit, and the verification criteria are defined.
 
+A good spec also considers what the agent already has access to. You don't need to write "read the test file and find the failing assertion" if the agent can find it with grep. You _do_ need to specify constraints and intent that aren't discoverable — business rules, performance requirements, the reason this particular behaviour is wrong. Spec the things the tools can't tell the agent. Leave out the things the tools can.
+
 Writing prompts this way takes practice. It also takes discipline — the discipline to think through what you actually want before you start typing. But that discipline pays dividends. A well-specified prompt produces a result you can merge. A vague prompt produces a result you have to rewrite.
 
 == Iteration Over Perfection
@@ -174,6 +182,8 @@ Some prompting habits consistently produce poor results. Learn to recognise them
 *Kitchen-sink prompts.* "Fix the auth bug, also refactor the database layer, and while you're at it update the README and add TypeScript types to the API client." These are four separate tasks jammed into one prompt. The agent will attempt all of them, do none of them well, and produce a diff so large that reviewing it takes longer than doing the work yourself. One prompt, one task.
 
 *Assuming shared context.* "Do it the same way we did the payments module." The agent doesn't remember your last session. It doesn't know what "we" decided in standup. Every prompt starts from scratch. Provide the context explicitly, every time.
+
+*Doing the agent's job for it.* You spend five minutes grepping through the codebase to find the exact file, line number, and function name, then paste all of that into your prompt. That's work the agent's tools can do in seconds. Provide the _problem_ — the symptom, the context, the failing test name. Let the agent investigate. That's what its tools are for. Your time is better spent on the parts the agent _can't_ do: understanding the domain, defining the constraints, knowing why this behaviour is wrong in the first place.
 
 == Prompting Is a Skill
 
