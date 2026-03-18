@@ -1,0 +1,2592 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="The Agentic Crew — Presentation">
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="presentation" id="presentation">
+    <!-- Slide Counter -->
+    <div class="slide-counter" id="slide-counter">1 / 11</div>
+
+    <!-- Progress Dots -->
+    <div class="progress-dots" id="progress-dots">
+      {Array.from({ length: 11 }).map((_, i) => (
+        <button class={`dot ${i === 0 ? 'active' : ''}`} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>
+      ))}
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button class="nav-arrow nav-prev" id="nav-prev" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+    <button class="nav-arrow nav-next" id="nav-next" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls" id="audio-controls">
+      <button class="audio-toggle" id="audio-toggle" aria-label="Toggle narration audio" title="Toggle narration (A)">
+        <svg class="audio-icon audio-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+        </svg>
+        <svg class="audio-icon audio-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <line x1="23" y1="9" x2="17" y2="15" />
+          <line x1="17" y1="9" x2="23" y2="15" />
+        </svg>
+      </button>
+      <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="80" aria-label="Narration volume" title="Volume" />
+      <div class="audio-progress" id="audio-progress">
+        <div class="audio-progress-bar" id="audio-progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Presenter Notes Overlay -->
+    <div class="presenter-notes" id="presenter-notes">
+      <div class="notes-inner" id="notes-content"></div>
+    </div>
+
+    <!-- ============ SLIDE 1: Title ============ -->
+    <section class="slide slide-active" data-index="0" data-notes="Welcome everyone. This is a talk about how software engineering is changing in the age of AI agents.">
+      <div class="slide-content slide-title-layout">
+        <div class="title-wheel" aria-hidden="true">
+          <svg viewBox="0 0 200 200" width="280" height="280" fill="none" stroke="currentColor" class="ships-wheel">
+            <circle cx="100" cy="100" r="70" stroke-width="4" opacity="0.3" />
+            <circle cx="100" cy="100" r="50" stroke-width="3" opacity="0.2" />
+            <circle cx="100" cy="100" r="12" stroke-width="3" opacity="0.4" />
+            <!-- Spokes -->
+            {Array.from({ length: 8 }).map((_, i) => {
+              const angle = (i * 45) * Math.PI / 180;
+              const x1 = 100 + Math.cos(angle) * 12;
+              const y1 = 100 + Math.sin(angle) * 12;
+              const x2 = 100 + Math.cos(angle) * 70;
+              const y2 = 100 + Math.sin(angle) * 70;
+              return <line x1={x1.toString()} y1={y1.toString()} x2={x2.toString()} y2={y2.toString()} stroke-width="3" opacity="0.3" />;
+            })}
+            <!-- Handles -->
+            {Array.from({ length: 8 }).map((_, i) => {
+              const angle = (i * 45) * Math.PI / 180;
+              const cx = 100 + Math.cos(angle) * 82;
+              const cy = 100 + Math.sin(angle) * 82;
+              return <circle cx={cx.toString()} cy={cy.toString()} r="6" stroke-width="2.5" opacity="0.3" />;
+            })}
+          </svg>
+        </div>
+        <div id="lottie-title-glow" class="lottie-title-glow"></div>
+        <p class="slide-eyebrow">A Book by Rasmus Bornhoft Schlunsen</p>
+        <h1 class="slide-main-title">The Agentic<br/>Crew</h1>
+        <p class="slide-subtitle-big">Engineering in the Age of AI Agents</p>
+        <p class="slide-date">March 2026</p>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 2: The Ground Is Shifting ============ -->
+    <section class="slide" data-index="1" data-notes="For two decades, the feedback loop was simple: write code, run it, ship it. AI agents are fundamentally changing that loop.">
+      <div class="slide-content slide-quote-layout">
+        <h2 class="slide-heading">The Ground Is Shifting</h2>
+        <blockquote class="slide-blockquote reveal-text" id="quote-slide2">
+          "For twenty years, being a software engineer meant one thing: you open an editor, you write code, you ship it. <em>That loop is breaking.</em>"
+        </blockquote>
+        <div class="agent-loop-svg" aria-hidden="true">
+          <svg viewBox="0 0 500 200" width="500" height="200" fill="none">
+            <!-- Keyboard to agent loop -->
+            <g class="loop-group">
+              <!-- Keyboard icon -->
+              <rect x="20" y="70" width="80" height="50" rx="6" stroke="var(--color-accent)" stroke-width="2" opacity="0.6" />
+              <line x1="35" y1="85" x2="55" y2="85" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4" />
+              <line x1="35" y1="95" x2="85" y2="95" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4" />
+              <line x1="45" y1="105" x2="75" y2="105" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4" />
+              <!-- Arrow from keyboard -->
+              <path d="M110 95 L150 95" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-dasharray="4 4" class="flow-arrow" />
+              <polygon points="150,90 160,95 150,100" fill="var(--color-text-muted)" opacity="0.5" />
+              <!-- Agent loop circle -->
+              <circle cx="300" cy="95" r="75" stroke="var(--color-pirate-teal)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.3" class="loop-circle" />
+              <!-- Think -->
+              <text x="300" y="45" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="13" font-family="var(--font-mono)" opacity="0.8">Think</text>
+              <!-- Act -->
+              <text x="395" y="100" text-anchor="middle" fill="var(--color-accent)" font-size="13" font-family="var(--font-mono)" opacity="0.8">Act</text>
+              <!-- Observe -->
+              <text x="300" y="155" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="13" font-family="var(--font-mono)" opacity="0.8">Observe</text>
+              <!-- Adjust -->
+              <text x="205" y="100" text-anchor="middle" fill="var(--color-accent)" font-size="13" font-family="var(--font-mono)" opacity="0.8">Adjust</text>
+              <!-- Circular arrows -->
+              <path d="M300 22 A73 73 0 0 1 373 95" stroke="var(--color-pirate-teal)" stroke-width="1.5" fill="none" class="loop-path loop-path-1" />
+              <path d="M373 95 A73 73 0 0 1 300 168" stroke="var(--color-accent)" stroke-width="1.5" fill="none" class="loop-path loop-path-2" />
+              <path d="M300 168 A73 73 0 0 1 227 95" stroke="var(--color-pirate-teal)" stroke-width="1.5" fill="none" class="loop-path loop-path-3" />
+              <path d="M227 95 A73 73 0 0 1 300 22" stroke="var(--color-accent)" stroke-width="1.5" fill="none" class="loop-path loop-path-4" />
+              <!-- Arrow tips on the arcs -->
+              <polygon points="368,80 378,95 368,95" fill="var(--color-pirate-teal)" opacity="0.6" />
+              <polygon points="315,165 300,168 305,155" fill="var(--color-accent)" opacity="0.6" />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 3: The Craft Is Molting ============ -->
+    <section class="slide" data-index="2" data-notes="The craft is evolving. The mechanical parts are being automated, but the judgment, taste, and architectural thinking are more important than ever.">
+      <div class="slide-content slide-image-quote-layout">
+        <div class="slide-text-side">
+          <h2 class="slide-heading">The Craft Is Molting</h2>
+          <blockquote class="slide-blockquote">
+            "The craft isn't dying. It's molting. The outer shell -- the keystrokes, the syntax, the boilerplate -- is falling away. But the animal underneath? The part that knows <em>what to build</em> and <em>why</em>? That part is more alive than ever."
+          </blockquote>
+        </div>
+        <div class="slide-image-side">
+          <img src="/illustrations/foreword-molting.jpg" alt="A cocoon cracking open with light emerging" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 4: What Is an Agent? ============ -->
+    <section class="slide" data-index="3" data-notes="Agents exist on a spectrum. Most practical work today happens at the tool-using agent level, where the agent can call tools, read files, and iterate.">
+      <div class="slide-content slide-center-layout">
+        <h2 class="slide-heading">What Is an Agent?</h2>
+        <p class="slide-body">The spectrum of AI assistance in software engineering:</p>
+        <div class="spectrum-container" id="spectrum">
+          <div class="spectrum-bar">
+            <div class="spectrum-fill" id="spectrum-fill"></div>
+          </div>
+          <div class="spectrum-levels">
+            <button class="spectrum-level" data-level="0" data-desc="Tab-completion suggestions. Predicts the next few tokens.">
+              <div class="spectrum-icon">
+                <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
+                  <rect x="5" y="10" width="30" height="20" rx="3" />
+                  <path d="M12 20h6m-3-3v6" opacity="0.5" />
+                </svg>
+              </div>
+              <span>Autocomplete</span>
+            </button>
+            <button class="spectrum-level" data-level="1" data-desc="Inline code suggestions. Understands context within a file.">
+              <div class="spectrum-icon">
+                <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
+                  <rect x="5" y="5" width="30" height="30" rx="3" />
+                  <path d="M12 15l4 5-4 5m8 0h6" opacity="0.6" />
+                </svg>
+              </div>
+              <span>Copilot</span>
+            </button>
+            <button class="spectrum-level active-level" data-level="2" data-desc="Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today.">
+              <div class="spectrum-icon">
+                <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
+                  <circle cx="20" cy="15" r="8" />
+                  <path d="M8 35c0-6 5-10 12-10s12 4 12 10" />
+                  <path d="M30 12l6-2m-6 6l6 2" stroke="var(--color-pirate-teal)" />
+                </svg>
+              </div>
+              <span>Tool-Using Agent</span>
+              <div class="spectrum-pointer">Most practical work happens here</div>
+            </button>
+            <button class="spectrum-level" data-level="3" data-desc="Fully autonomous operation. Plans, executes, and self-corrects across entire projects with minimal human input.">
+              <div class="spectrum-icon">
+                <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
+                  <circle cx="20" cy="20" r="14" stroke-dasharray="4 3" />
+                  <circle cx="20" cy="20" r="6" />
+                  <path d="M20 6v4m0 20v4M6 20h4m20 0h4" opacity="0.5" />
+                </svg>
+              </div>
+              <span>Autonomous Agent</span>
+            </button>
+          </div>
+          <div class="spectrum-desc" id="spectrum-desc">Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 5: The Rain Man Analogy ============ -->
+    <section class="slide" data-index="4" data-notes="Think of it like Rain Man. Tom Cruise provides the direction and judgment. Dustin Hoffman provides extraordinary capability but needs guidance.">
+      <div class="slide-content slide-two-panel-layout">
+        <h2 class="slide-heading slide-heading-full">The Rain Man Analogy</h2>
+        <p class="slide-tagline">"You're Tom Cruise. The agent is Dustin Hoffman."</p>
+        <div class="two-panels">
+          <div class="panel panel-captain">
+            <h3>The Captain (You)</h3>
+            <ul>
+              <li>Direction &amp; vision</li>
+              <li>Judgment &amp; taste</li>
+              <li>Domain expertise</li>
+              <li>Architectural decisions</li>
+            </ul>
+          </div>
+          <div class="panel-divider">
+            <svg viewBox="0 0 4 100" width="4" height="100" fill="none">
+              <line x1="2" y1="0" x2="2" y2="100" stroke="var(--color-border)" stroke-width="1" stroke-dasharray="4 4" />
+            </svg>
+          </div>
+          <div class="panel panel-agent">
+            <h3>The Agent (Crew)</h3>
+            <ul>
+              <li>Speed &amp; throughput</li>
+              <li>Breadth of knowledge</li>
+              <li>Tireless execution</li>
+              <li>Pattern recognition</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slide-image-below">
+          <img src="/illustrations/ch03-rain-man.jpg" alt="Captain and crew illustration" class="oval-vignette slide-illustration-small" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 6: Three Capabilities ============ -->
+    <section class="slide" data-index="5" data-notes="These are the three core capabilities that make an agent an agent: planning, tool use, and iteration. Without any one of these, you just have a chatbot.">
+      <div class="slide-content slide-center-layout">
+        <h2 class="slide-heading">Three Core Capabilities</h2>
+        <div class="capability-cards" id="capability-cards">
+          <div class="cap-card" data-cap="planning">
+            <div class="cap-card-front">
+              <svg viewBox="0 0 60 60" width="60" height="60" fill="none" stroke="var(--color-pirate-teal)" stroke-width="1.5">
+                <circle cx="30" cy="30" r="24" stroke-dasharray="4 3" opacity="0.4" />
+                <circle cx="30" cy="30" r="3" fill="var(--color-pirate-teal)" opacity="0.6" />
+                <path d="M30 6v6m0 36v6M6 30h6m36 0h6" opacity="0.5" />
+                <path d="M30 10l2 18h-4z" fill="var(--color-pirate-teal)" opacity="0.3" />
+              </svg>
+              <h3>Planning</h3>
+              <p class="cap-hint">Click to reveal</p>
+            </div>
+            <div class="cap-card-back">
+              <p>Breaking down complex tasks into steps. Understanding dependencies, ordering work, and deciding what to do first.</p>
+            </div>
+          </div>
+          <div class="cap-card" data-cap="tools">
+            <div class="cap-card-front">
+              <svg viewBox="0 0 60 60" width="60" height="60" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
+                <path d="M20 40l-8 8a3 3 0 004 4l8-8" />
+                <path d="M24 36l12-12" stroke-width="2" />
+                <circle cx="42" cy="18" r="10" stroke-dasharray="3 3" opacity="0.4" />
+                <path d="M38 14l4 4m0-4l-4 4" opacity="0.6" />
+              </svg>
+              <h3>Tool Use</h3>
+              <p class="cap-hint">Click to reveal</p>
+            </div>
+            <div class="cap-card-back">
+              <p>Reading files, running commands, calling APIs, writing code. The agent's hands in the real world.</p>
+            </div>
+          </div>
+          <div class="cap-card" data-cap="iteration">
+            <div class="cap-card-front">
+              <svg viewBox="0 0 60 60" width="60" height="60" fill="none" stroke="var(--color-accent-deep)" stroke-width="1.5">
+                <path d="M42 22A15 15 0 1118 30" />
+                <polygon points="18,24 18,36 12,30" fill="var(--color-accent-deep)" opacity="0.4" />
+                <path d="M18 38A15 15 0 1142 30" />
+                <polygon points="42,36 42,24 48,30" fill="var(--color-accent-deep)" opacity="0.4" />
+              </svg>
+              <h3>Iteration</h3>
+              <p class="cap-hint">Click to reveal</p>
+            </div>
+            <div class="cap-card-back">
+              <p>Running code, seeing errors, fixing them, and trying again. The observe-adjust loop that makes agents powerful.</p>
+            </div>
+          </div>
+        </div>
+        <div id="lottie-capabilities" class="lottie-capabilities"></div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 7: When Agents Fail ============ -->
+    <section class="slide" data-index="6" data-notes="Understanding failure modes is critical. These are the four most common ways agents go wrong, and how to mitigate each one.">
+      <div class="slide-content slide-failures-layout">
+        <h2 class="slide-heading">When Agents Fail</h2>
+        <div class="failure-cards" id="failure-cards">
+          <div class="failure-card" data-delay="0">
+            <div class="failure-icon">
+              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
+                <circle cx="20" cy="20" r="15" />
+                <path d="M12 12l16 16M28 12l-16 16" opacity="0.5" />
+              </svg>
+            </div>
+            <h3>Scope Creep</h3>
+            <p class="failure-desc">Agent expands beyond the task, refactoring code you didn't ask it to touch.</p>
+            <p class="failure-fix">Fix: Small, focused prompts. One task at a time.</p>
+          </div>
+          <div class="failure-card" data-delay="1">
+            <div class="failure-icon">
+              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
+                <path d="M10 30l10-20 10 20z" />
+                <line x1="20" y1="18" x2="20" y2="24" />
+                <circle cx="20" cy="27" r="1" fill="#d94f4f" />
+              </svg>
+            </div>
+            <h3>Hallucinated APIs</h3>
+            <p class="failure-desc">Agent invents function signatures or library methods that don't exist.</p>
+            <p class="failure-fix">Fix: Always run tests. Pin dependency docs in context.</p>
+          </div>
+          <div class="failure-card" data-delay="2">
+            <div class="failure-icon">
+              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
+                <circle cx="20" cy="20" r="15" />
+                <path d="M14 16c0-2 3-4 6-4s6 2 6 4" />
+                <circle cx="15" cy="22" r="1.5" fill="#d94f4f" />
+                <circle cx="25" cy="22" r="1.5" fill="#d94f4f" />
+                <path d="M14 28c2 2 4 3 6 3s4-1 6-3" />
+              </svg>
+            </div>
+            <h3>Overconfidence</h3>
+            <p class="failure-desc">Agent presents wrong answers with certainty. No hedging, no doubt.</p>
+            <p class="failure-fix">Fix: Verify everything. Trust but verify.</p>
+          </div>
+          <div class="failure-card" data-delay="3">
+            <div class="failure-icon">
+              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
+                <rect x="8" y="8" width="24" height="24" rx="3" stroke-dasharray="4 3" />
+                <path d="M14 20h12M14 15h8M14 25h10" opacity="0.4" />
+                <path d="M30 10l-20 20" stroke-width="2" opacity="0.6" />
+              </svg>
+            </div>
+            <h3>Context Loss</h3>
+            <p class="failure-desc">Agent forgets earlier instructions as the conversation grows long.</p>
+            <p class="failure-fix">Fix: Fresh sessions. Project rules files. Keep context lean.</p>
+          </div>
+        </div>
+        <div class="slide-image-accent">
+          <img src="/illustrations/ch13-storm.jpg" alt="Storm clouds illustration" class="oval-vignette slide-illustration-tiny" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 8: The Engineering Toolkit ============ -->
+    <section class="slide" data-index="7" data-notes="These five practices form the engineering toolkit for working with agents effectively. Each one reinforces the others.">
+      <div class="slide-content slide-center-layout">
+        <h2 class="slide-heading">The Engineering Toolkit</h2>
+        <div class="pipeline" id="pipeline">
+          <div class="pipeline-node" data-node="guardrails" data-info="Constraints that keep agents on track: linters, type checkers, pre-commit hooks, and approval gates.">
+            <div class="pipeline-icon">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
+                <rect x="6" y="10" width="32" height="24" rx="4" />
+                <path d="M6 18h32" />
+                <path d="M16 26h12" opacity="0.5" />
+              </svg>
+            </div>
+            <span>Guardrails</span>
+          </div>
+          <div class="pipeline-connector"><div class="connector-line"></div></div>
+          <div class="pipeline-node" data-node="git" data-info="Version control as a safety net: branches for isolation, diffs for review, revert as your undo button.">
+            <div class="pipeline-icon">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-pirate-teal)" stroke-width="1.5">
+                <circle cx="22" cy="12" r="4" />
+                <circle cx="14" cy="32" r="4" />
+                <circle cx="30" cy="32" r="4" />
+                <path d="M22 16v6l-8 6m8-6l8 6" />
+              </svg>
+            </div>
+            <span>Git</span>
+          </div>
+          <div class="pipeline-connector"><div class="connector-line"></div></div>
+          <div class="pipeline-node" data-node="sandboxes" data-info="Isolated environments where agents can safely experiment without affecting production.">
+            <div class="pipeline-icon">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent-deep)" stroke-width="1.5">
+                <rect x="8" y="8" width="28" height="28" rx="4" stroke-dasharray="4 3" />
+                <rect x="14" y="14" width="16" height="16" rx="2" />
+              </svg>
+            </div>
+            <span>Sandboxes</span>
+          </div>
+          <div class="pipeline-connector"><div class="connector-line"></div></div>
+          <div class="pipeline-node" data-node="testing" data-info="Tests as the feedback loop: the agent runs tests, sees failures, and iterates. Tests replace human eyes.">
+            <div class="pipeline-icon">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-pirate-teal)" stroke-width="1.5">
+                <path d="M12 22l6 6 14-14" stroke-width="2" />
+                <circle cx="22" cy="22" r="16" stroke-dasharray="4 3" opacity="0.4" />
+              </svg>
+            </div>
+            <span>Testing</span>
+          </div>
+          <div class="pipeline-connector"><div class="connector-line"></div></div>
+          <div class="pipeline-node" data-node="conventions" data-info="Convention over configuration: project rules, naming patterns, and structure that agents can follow without being told.">
+            <div class="pipeline-icon">
+              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
+                <path d="M10 10h24v24H10z" opacity="0.3" />
+                <path d="M16 16h12M16 22h8M16 28h10" />
+              </svg>
+            </div>
+            <span>Conventions</span>
+          </div>
+        </div>
+        <div class="pipeline-info" id="pipeline-info">Click any node to learn more</div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 9: CCT — Building My Own Control Plane ============ -->
+    <section class="slide" data-index="8" data-notes="I built CCT (Clovr Code Terminal) as a way to practice agentic engineering myself. It's a browser-based control plane for running multiple Claude agent sessions. Built in Go and Vue, single binary, no dependencies.">
+      <div class="slide-content slide-cct-layout">
+        <h2 class="slide-heading">I Built the Control Plane</h2>
+        <p class="slide-subtitle-cct">Clovr Code Terminal (CCT) — practicing what I preach</p>
+        <div class="cct-showcase">
+          <div class="cct-diagram">
+            <!-- Architecture SVG -->
+            <svg viewBox="0 0 480 220" width="480" height="220" fill="none" class="cct-arch-svg">
+              <!-- Browser -->
+              <rect x="10" y="20" width="120" height="70" rx="8" stroke="var(--color-pirate-teal)" stroke-width="1.5" />
+              <text x="70" y="48" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="11" font-family="var(--font-mono)">Browser</text>
+              <text x="70" y="65" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">Nuxt 4 + Vue</text>
+              <!-- WSS Arrow -->
+              <line x1="130" y1="55" x2="180" y2="55" stroke="var(--color-accent)" stroke-width="1.5" stroke-dasharray="4 3" />
+              <polygon points="178,50 188,55 178,60" fill="var(--color-accent)" opacity="0.7" />
+              <text x="155" y="48" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-mono)">WSS</text>
+              <!-- Go Server -->
+              <rect x="188" y="10" width="130" height="90" rx="8" stroke="var(--color-accent)" stroke-width="2" />
+              <text x="253" y="38" text-anchor="middle" fill="var(--color-accent)" font-size="12" font-weight="bold" font-family="var(--font-mono)">Go Server</text>
+              <text x="253" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">15MB binary</text>
+              <text x="253" y="70" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">REST + WebSocket</text>
+              <text x="253" y="85" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">SQLite embedded</text>
+              <!-- SDK Arrow -->
+              <line x1="318" y1="55" x2="358" y2="55" stroke="var(--color-pirate-teal)" stroke-width="1.5" stroke-dasharray="4 3" />
+              <polygon points="356,50 366,55 356,60" fill="var(--color-pirate-teal)" opacity="0.7" />
+              <text x="338" y="48" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-mono)">SDK</text>
+              <!-- Claude API -->
+              <rect x="366" y="25" width="100" height="60" rx="8" stroke="var(--color-accent-deep)" stroke-width="1.5" />
+              <text x="416" y="52" text-anchor="middle" fill="var(--color-accent-deep)" font-size="11" font-family="var(--font-mono)">Claude API</text>
+              <text x="416" y="68" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">+ DeepSeek, GLM...</text>
+              <!-- Features row -->
+              <g transform="translate(10, 120)">
+                <rect x="0" y="0" width="90" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
+                <text x="45" y="22" text-anchor="middle" fill="var(--color-accent)" font-size="18">&#127908;</text>
+                <text x="45" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Voice Input</text>
+                <text x="45" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Parakeet v3</text>
+                <text x="45" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Local STT</text>
+              </g>
+              <g transform="translate(100, 120)">
+                <rect x="0" y="0" width="90" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
+                <text x="45" y="22" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="18">&#128202;</text>
+                <text x="45" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Live Metrics</text>
+                <text x="45" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Tokens, cost,</text>
+                <text x="45" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">tools, git status</text>
+              </g>
+              <g transform="translate(200, 120)">
+                <rect x="0" y="0" width="90" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
+                <text x="45" y="22" text-anchor="middle" fill="var(--color-accent)" font-size="18">&#128260;</text>
+                <text x="45" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Multi-Session</text>
+                <text x="45" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Run agents</text>
+                <text x="45" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">side by side</text>
+              </g>
+              <g transform="translate(300, 120)">
+                <rect x="0" y="0" width="90" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
+                <text x="45" y="22" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="18">&#128274;</text>
+                <text x="45" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Permissions</text>
+                <text x="45" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Granular control</text>
+                <text x="45" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">+ YOLO mode</text>
+              </g>
+              <g transform="translate(400, 120)">
+                <rect x="0" y="0" width="70" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
+                <text x="35" y="22" text-anchor="middle" fill="var(--color-accent-deep)" font-size="18">&#128279;</text>
+                <text x="35" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Handoff</text>
+                <text x="35" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">AI context</text>
+                <text x="35" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">summaries</text>
+              </g>
+            </svg>
+          </div>
+          <div class="cct-quote">
+            <blockquote class="slide-blockquote slide-blockquote-small">
+              "The best way to learn agentic engineering is to build agentic tooling."
+            </blockquote>
+            <a href="https://github.com/clovrlabs/clovr-code-terminal" target="_blank" rel="noopener" class="cct-github-link">
+              <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              <span>clovrlabs/clovr-code-terminal</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 10: The Crew Metaphor ============ -->
+    <section class="slide" data-index="9" data-notes="This is the central metaphor of the book. You are the captain. The agents are your crew. The codebase is the ship. The crew is replaceable. The ship is not.">
+      <div class="slide-content slide-image-quote-layout slide-image-quote-reverse">
+        <div class="slide-image-side">
+          <img src="/illustrations/ch15-crew.jpg" alt="A ship with its crew" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+        <div class="slide-text-side">
+          <h2 class="slide-heading">The Crew Metaphor</h2>
+          <blockquote class="slide-blockquote">
+            "You're the captain. The crew is disposable. The ship is not."
+          </blockquote>
+          <div class="crew-labels" id="crew-labels">
+            <div class="crew-label" data-delay="0"><span class="label-icon">&#9875;</span> Hull = Your Codebase</div>
+            <div class="crew-label" data-delay="1"><span class="label-icon">&#9878;</span> Rigging = Conventions</div>
+            <div class="crew-label" data-delay="2"><span class="label-icon">&#128214;</span> Logbook = Tests</div>
+            <div class="crew-label" data-delay="3"><span class="label-icon">&#9813;</span> Captain = You</div>
+            <div class="crew-label" data-delay="4"><span class="label-icon">&#9823;</span> Crew = Agents</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 11: Go Build Something ============ -->
+    <section class="slide" data-index="10" data-notes="The call to action. Don't wait. Open your terminal tonight. Pick a real task. Let the agent try. You'll learn more in one hour than in a week of reading.">
+      <div class="slide-content slide-title-layout slide-final">
+        <div class="compass-rose-final" aria-hidden="true">
+          <svg viewBox="0 0 200 200" width="200" height="200" fill="none" stroke="var(--color-accent)" class="compass-spin">
+            <circle cx="100" cy="100" r="90" stroke-width="0.5" opacity="0.15" />
+            <circle cx="100" cy="100" r="70" stroke-width="0.3" stroke-dasharray="4 8" opacity="0.1" />
+            <circle cx="100" cy="100" r="50" stroke-width="0.3" opacity="0.15" />
+            <line x1="100" y1="5" x2="100" y2="195" stroke-width="0.5" opacity="0.15" />
+            <line x1="5" y1="100" x2="195" y2="100" stroke-width="0.5" opacity="0.15" />
+            <line x1="30" y1="30" x2="170" y2="170" stroke-width="0.3" opacity="0.1" />
+            <line x1="170" y1="30" x2="30" y2="170" stroke-width="0.3" opacity="0.1" />
+            <polygon points="100,10 105,40 100,35 95,40" fill="var(--color-accent)" opacity="0.2" />
+          </svg>
+        </div>
+        <h2 class="slide-heading slide-heading-big">Go Build Something</h2>
+        <div class="typing-effect" id="typing-effect"></div>
+        <div class="final-actions">
+          <a href="/" class="btn-primary-slide">
+            <span>Get the Book -- Free</span>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
+            </svg>
+          </a>
+        </div>
+        <div id="lottie-sparkle" class="lottie-sparkle"></div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ========================================
+     PRESENTATION GLOBAL STYLES
+     ======================================== */
+
+  body {
+    overflow: hidden;
+    background: var(--color-bg);
+  }
+
+  #bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .presentation {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ========================================
+     SLIDES
+     ======================================== */
+
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .slide-active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+
+  .slide-exit-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    pointer-events: none;
+  }
+
+  .slide-content {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ========================================
+     NAVIGATION
+     ======================================== */
+
+  .nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    background: rgba(255, 253, 247, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .nav-arrow:hover {
+    background: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 20px rgba(232, 150, 62, 0.3);
+  }
+
+  .nav-prev { left: 1.5rem; }
+  .nav-next { right: 1.5rem; }
+
+  /* ========================================
+     PROGRESS DOTS
+     ======================================== */
+
+  .progress-dots {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 253, 247, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    border: 1px solid var(--color-border-light);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-accent);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .dot:hover {
+    background: rgba(232, 150, 62, 0.3);
+  }
+
+  .dot.active {
+    background: var(--color-accent);
+    box-shadow: 0 0 8px rgba(232, 150, 62, 0.4);
+  }
+
+  /* ========================================
+     SLIDE COUNTER
+     ======================================== */
+
+  .slide-counter {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+    z-index: 100;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  /* ========================================
+     AUDIO CONTROLS
+     ======================================== */
+
+  .audio-controls {
+    position: fixed;
+    top: 1.5rem;
+    left: 2rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 0.35rem 0.75rem;
+    transition: opacity 0.3s;
+  }
+
+  .audio-controls:hover {
+    opacity: 1 !important;
+  }
+
+  .audio-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+
+  .audio-toggle:hover {
+    background: rgba(232, 150, 62, 0.1);
+  }
+
+  .audio-toggle.muted .audio-on { display: none; }
+  .audio-toggle.muted .audio-off { display: block !important; }
+  .audio-toggle:not(.muted) .audio-on { display: block; }
+  .audio-toggle:not(.muted) .audio-off { display: none !important; }
+
+  .volume-slider {
+    width: 60px;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--color-border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .audio-progress {
+    width: 40px;
+    height: 4px;
+    background: var(--color-border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .audio-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--color-accent);
+    border-radius: 2px;
+    transition: width 0.3s linear;
+  }
+
+  @media (max-width: 768px) {
+    .audio-controls {
+      top: auto;
+      bottom: 4rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ========================================
+     PRESENTER NOTES
+     ======================================== */
+
+  .presenter-notes {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: rgba(26, 32, 64, 0.95);
+    backdrop-filter: blur(12px);
+    color: #f0ead6;
+    padding: 1.5rem 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 30vh;
+    overflow-y: auto;
+  }
+
+  .presenter-notes.visible {
+    transform: translateY(0);
+  }
+
+  .notes-inner::before {
+    content: 'PRESENTER NOTES';
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  /* ========================================
+     TYPOGRAPHY
+     ======================================== */
+
+  .slide-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-pirate-teal);
+    margin-bottom: 1rem;
+  }
+
+  .slide-main-title {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-deep) 35%, var(--color-pirate-teal) 75%, var(--color-accent) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .slide-subtitle-big {
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+
+  .slide-date {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  .slide-heading {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .slide-heading-big {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-pirate-teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .slide-heading-full {
+    width: 100%;
+    text-align: center;
+  }
+
+  .slide-tagline {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-text-muted);
+    font-size: 1.15rem;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  .slide-body {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .slide-blockquote {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    line-height: 1.7;
+    color: var(--color-text);
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+  }
+
+  .slide-blockquote em {
+    color: var(--color-accent-deep);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* ========================================
+     SLIDE LAYOUTS
+     ======================================== */
+
+  .slide-title-layout {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .slide-center-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .slide-quote-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .slide-quote-layout .slide-blockquote {
+    max-width: 700px;
+    border-left: none;
+    padding-left: 0;
+    text-align: center;
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  }
+
+  .slide-image-quote-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .slide-image-quote-reverse {
+    direction: rtl;
+  }
+
+  .slide-image-quote-reverse > * {
+    direction: ltr;
+  }
+
+  .slide-two-panel-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .slide-failures-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* ========================================
+     OVAL VIGNETTE
+     ======================================== */
+
+  .oval-vignette {
+    mask-image: radial-gradient(ellipse 70% 65% at center, black 40%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 65% at center, black 40%, transparent 75%);
+  }
+
+  .slide-illustration {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .slide-illustration-small {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .slide-illustration-tiny {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+    opacity: 0.7;
+  }
+
+  .slide-image-below {
+    margin-top: 1rem;
+  }
+
+  .slide-image-accent {
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    opacity: 0.5;
+  }
+
+  /* ========================================
+     SHIP'S WHEEL (Slide 1)
+     ======================================== */
+
+  .title-wheel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-accent);
+    opacity: 0.12;
+    z-index: 0;
+  }
+
+  .ships-wheel {
+    animation: spin-slow 90s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .lottie-title-glow {
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .slide-main-title,
+  .slide-eyebrow,
+  .slide-subtitle-big,
+  .slide-date {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========================================
+     AGENT LOOP SVG (Slide 2)
+     ======================================== */
+
+  .agent-loop-svg {
+    margin-top: 1rem;
+  }
+
+  .loop-circle {
+    animation: spin-slow 60s linear infinite;
+    transform-origin: 300px 95px;
+  }
+
+  .loop-path {
+    stroke-dasharray: 120;
+    stroke-dashoffset: 120;
+  }
+
+  .slide-active .loop-path-1 { animation: draw-loop 0.8s 0.5s ease forwards; }
+  .slide-active .loop-path-2 { animation: draw-loop 0.8s 0.9s ease forwards; }
+  .slide-active .loop-path-3 { animation: draw-loop 0.8s 1.3s ease forwards; }
+  .slide-active .loop-path-4 { animation: draw-loop 0.8s 1.7s ease forwards; }
+
+  @keyframes draw-loop {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .flow-arrow {
+    animation: dash-flow 2s linear infinite;
+  }
+
+  @keyframes dash-flow {
+    to { stroke-dashoffset: -16; }
+  }
+
+  /* ========================================
+     SPECTRUM (Slide 4)
+     ======================================== */
+
+  .spectrum-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .spectrum-bar {
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 3px;
+    position: relative;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  .spectrum-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-pirate-teal));
+    border-radius: 3px;
+    width: 62%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .spectrum-levels {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .spectrum-level {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    background: transparent;
+    border: 1.5px solid transparent;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: all 0.3s ease;
+  }
+
+  .spectrum-level:hover,
+  .spectrum-level.active-level {
+    border-color: var(--color-accent);
+    background: rgba(232, 150, 62, 0.05);
+    color: var(--color-text);
+  }
+
+  .spectrum-level.active-level .spectrum-icon svg {
+    stroke: var(--color-accent);
+  }
+
+  .spectrum-pointer {
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .spectrum-level.active-level .spectrum-pointer {
+    opacity: 1;
+  }
+
+  .spectrum-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    min-height: 2.5em;
+    transition: opacity 0.3s;
+    font-style: italic;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ========================================
+     TWO PANELS (Slide 5)
+     ======================================== */
+
+  .two-panels {
+    display: flex;
+    gap: 2rem;
+    align-items: stretch;
+    width: 100%;
+    max-width: 750px;
+  }
+
+  .panel {
+    flex: 1;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+  }
+
+  .panel h3 {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+
+  .panel-captain h3 { color: var(--color-pirate-teal); }
+  .panel-agent h3 { color: var(--color-accent); }
+
+  .panel ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .panel li {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    padding: 0.35rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .panel li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .panel-captain li::before { background: var(--color-pirate-teal); opacity: 0.5; }
+  .panel-agent li::before { background: var(--color-accent); opacity: 0.5; }
+
+  .panel-divider {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  /* ========================================
+     CAPABILITY CARDS (Slide 6)
+     ======================================== */
+
+  .capability-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 750px;
+    width: 100%;
+    margin: 1rem auto;
+  }
+
+  .cap-card {
+    perspective: 600px;
+    cursor: pointer;
+    height: 220px;
+  }
+
+  .cap-card-front,
+  .cap-card-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    backface-visibility: hidden;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1.5px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+  }
+
+  .cap-card {
+    position: relative;
+  }
+
+  .cap-card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, rgba(255, 253, 247, 0.95), rgba(255, 248, 237, 0.95));
+    border-color: var(--color-accent);
+  }
+
+  .cap-card.flipped .cap-card-front {
+    transform: rotateY(-180deg);
+  }
+
+  .cap-card.flipped .cap-card-back {
+    transform: rotateY(0);
+  }
+
+  .cap-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    margin-top: 0.75rem;
+    color: var(--color-text);
+  }
+
+  .cap-hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    margin-top: 0.5rem;
+  }
+
+  .cap-card-back p {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .lottie-capabilities {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ========================================
+     FAILURE CARDS (Slide 7)
+     ======================================== */
+
+  .failure-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .failure-card {
+    padding: 1.25rem;
+    border-radius: 12px;
+    border: 1px solid rgba(217, 79, 79, 0.15);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .slide-active .failure-card {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-active .failure-card[data-delay="0"] { transition-delay: 0.2s; }
+  .slide-active .failure-card[data-delay="1"] { transition-delay: 0.4s; }
+  .slide-active .failure-card[data-delay="2"] { transition-delay: 0.6s; }
+  .slide-active .failure-card[data-delay="3"] { transition-delay: 0.8s; }
+
+  .failure-icon {
+    margin-bottom: 0.5rem;
+  }
+
+  .failure-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: #d94f4f;
+    margin-bottom: 0.4rem;
+  }
+
+  .failure-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .failure-fix {
+    font-size: 0.8rem;
+    color: var(--color-pirate-teal);
+    font-weight: 500;
+    font-family: var(--font-mono);
+  }
+
+  /* ========================================
+     PIPELINE (Slide 8)
+     ======================================== */
+
+  .pipeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    max-width: 900px;
+    width: 100%;
+    margin: 1.5rem auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pipeline-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1.5px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+  }
+
+  .pipeline-node:hover,
+  .pipeline-node.active-node {
+    border-color: var(--color-accent);
+    background: rgba(232, 150, 62, 0.05);
+    box-shadow: 0 4px 20px rgba(232, 150, 62, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .pipeline-node span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .pipeline-connector {
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .connector-line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-pirate-teal));
+    opacity: 0.3;
+    position: relative;
+  }
+
+  .connector-line::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: -3px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid var(--color-pirate-teal);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    opacity: 0.4;
+  }
+
+  .pipeline-info {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-top: 1.5rem;
+    min-height: 3em;
+    max-width: 500px;
+    text-align: center;
+    transition: opacity 0.3s;
+  }
+
+  /* ========================================
+     CCT SLIDE (Slide 9)
+     ======================================== */
+
+  .slide-cct-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .slide-subtitle-cct {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .cct-showcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .cct-diagram {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .cct-arch-svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .cct-quote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .slide-blockquote-small {
+    font-size: 1rem !important;
+    padding: 0.5rem 1rem !important;
+  }
+
+  .cct-github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+  }
+
+  .cct-github-link:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .cct-diagram {
+      padding: 0.75rem;
+    }
+    .cct-arch-svg {
+      width: 100%;
+    }
+  }
+
+  /* ========================================
+     CREW LABELS (Slide 10)
+     ======================================== */
+
+  .crew-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .crew-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text);
+    opacity: 0;
+    transform: translateX(-15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .slide-active .crew-label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .slide-active .crew-label[data-delay="0"] { transition-delay: 0.3s; }
+  .slide-active .crew-label[data-delay="1"] { transition-delay: 0.6s; }
+  .slide-active .crew-label[data-delay="2"] { transition-delay: 0.9s; }
+  .slide-active .crew-label[data-delay="3"] { transition-delay: 1.2s; }
+  .slide-active .crew-label[data-delay="4"] { transition-delay: 1.5s; }
+
+  .label-icon {
+    font-size: 1.1rem;
+    width: 1.5rem;
+    text-align: center;
+  }
+
+  /* ========================================
+     FINAL SLIDE (Slide 11)
+     ======================================== */
+
+  .slide-final {
+    position: relative;
+  }
+
+  .compass-rose-final {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .compass-spin {
+    animation: spin-slow 120s linear infinite;
+  }
+
+  .typing-effect {
+    font-family: var(--font-mono);
+    font-size: clamp(0.9rem, 1.5vw, 1.15rem);
+    color: var(--color-text-muted);
+    min-height: 2em;
+    margin: 1.5rem 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .typing-effect::after {
+    content: '|';
+    animation: blink-cursor 0.8s step-end infinite;
+    color: var(--color-accent);
+  }
+
+  @keyframes blink-cursor {
+    50% { opacity: 0; }
+  }
+
+  .final-actions {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-primary-slide {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
+    color: #fff;
+    padding: 0.85rem 2.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(232, 150, 62, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+
+  .btn-primary-slide:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(232, 150, 62, 0.4);
+    color: #fff;
+  }
+
+  .lottie-sparkle {
+    position: absolute;
+    inset: -50px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+
+  @media (max-width: 768px) {
+    .slide {
+      padding: 1.5rem;
+      padding-bottom: 5rem;
+    }
+
+    .slide-image-quote-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .slide-image-quote-reverse {
+      direction: ltr;
+    }
+
+    .two-panels {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .panel-divider { display: none; }
+
+    .spectrum-levels {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .capability-cards {
+      grid-template-columns: 1fr;
+      max-width: 300px;
+    }
+
+    .cap-card {
+      height: 180px;
+    }
+
+    .failure-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .pipeline {
+      flex-direction: column;
+    }
+
+    .pipeline-connector {
+      width: 2px;
+      height: 30px;
+    }
+
+    .connector-line {
+      width: 2px;
+      height: 100%;
+    }
+
+    .connector-line::after {
+      right: -3px;
+      top: auto;
+      bottom: -3px;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 6px solid var(--color-pirate-teal);
+      border-bottom: none;
+    }
+
+    .nav-arrow {
+      width: 40px;
+      height: 40px;
+    }
+
+    .nav-prev { left: 0.5rem; }
+    .nav-next { right: 0.5rem; }
+
+    .title-wheel svg {
+      width: 180px;
+      height: 180px;
+    }
+
+    .slide-image-accent { display: none; }
+
+    .agent-loop-svg svg {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .slide-main-title {
+      font-size: 2.5rem;
+    }
+
+    .spectrum-levels {
+      grid-template-columns: 1fr;
+    }
+
+    .progress-dots {
+      gap: 0.4rem;
+      padding: 0.4rem 0.8rem;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+    }
+  }
+</style>
+
+<script>
+  import * as THREE from 'three';
+  import lottie from 'lottie-web';
+
+  // ========================================
+  // THREE.JS PARTICLE BACKGROUND
+  // ========================================
+
+  const canvas = document.getElementById('bg-canvas') as HTMLCanvasElement;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.z = 30;
+
+  const PARTICLE_COUNT = 80;
+  const SPREAD = 50;
+  const CONNECTION_DISTANCE = 7;
+
+  const positions = new Float32Array(PARTICLE_COUNT * 3);
+  const velocities: THREE.Vector3[] = [];
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * SPREAD;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * SPREAD;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 15 - 5;
+    velocities.push(new THREE.Vector3(
+      (Math.random() - 0.5) * 0.005,
+      (Math.random() - 0.5) * 0.005 + 0.0008,
+      (Math.random() - 0.5) * 0.002
+    ));
+  }
+
+  const pointsGeometry = new THREE.BufferGeometry();
+  pointsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+  const pointsMaterial = new THREE.PointsMaterial({
+    color: 0xf5a623,
+    size: 0.12,
+    transparent: true,
+    opacity: 0.25,
+    sizeAttenuation: true,
+  });
+
+  const points = new THREE.Points(pointsGeometry, pointsMaterial);
+  scene.add(points);
+
+  const MAX_LINES = PARTICLE_COUNT * 4;
+  const linePositions = new Float32Array(MAX_LINES * 6);
+  const lineColors = new Float32Array(MAX_LINES * 6);
+  const lineGeometry = new THREE.BufferGeometry();
+  lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+  lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+  const lineMaterial = new THREE.LineBasicMaterial({
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.1,
+  });
+
+  const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+  scene.add(lines);
+
+  const mouse = new THREE.Vector2(0, 0);
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  let bgTime = 0;
+
+  function animateBg() {
+    requestAnimationFrame(animateBg);
+    bgTime += 0.004;
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const wave = Math.sin(bgTime + positions[i * 3] * 0.1) * 0.002;
+      positions[i * 3] += velocities[i].x;
+      positions[i * 3 + 1] += velocities[i].y + wave;
+      positions[i * 3 + 2] += velocities[i].z;
+
+      const half = SPREAD / 2;
+      if (positions[i * 3] > half) positions[i * 3] = -half;
+      if (positions[i * 3] < -half) positions[i * 3] = half;
+      if (positions[i * 3 + 1] > half) positions[i * 3 + 1] = -half;
+      if (positions[i * 3 + 1] < -half) positions[i * 3 + 1] = half;
+    }
+
+    pointsGeometry.attributes.position.needsUpdate = true;
+
+    let lineIndex = 0;
+    const r1 = 0.96, g1 = 0.65, b1 = 0.14;
+    const r2 = 0.18, g2 = 0.61, b2 = 0.72;
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+        if (lineIndex >= MAX_LINES) break;
+        const dx = positions[i * 3] - positions[j * 3];
+        const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+        const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (dist < CONNECTION_DISTANCE) {
+          const alpha = 1 - dist / CONNECTION_DISTANCE;
+          const blend = (Math.sin(bgTime * 0.5 + i * 0.1) + 1) * 0.5;
+          const r = r1 * (1 - blend * 0.4) + r2 * blend * 0.4;
+          const g = g1 * (1 - blend * 0.4) + g2 * blend * 0.4;
+          const b = b1 * (1 - blend * 0.4) + b2 * blend * 0.4;
+
+          linePositions[lineIndex * 6] = positions[i * 3];
+          linePositions[lineIndex * 6 + 1] = positions[i * 3 + 1];
+          linePositions[lineIndex * 6 + 2] = positions[i * 3 + 2];
+          linePositions[lineIndex * 6 + 3] = positions[j * 3];
+          linePositions[lineIndex * 6 + 4] = positions[j * 3 + 1];
+          linePositions[lineIndex * 6 + 5] = positions[j * 3 + 2];
+
+          lineColors[lineIndex * 6] = r * alpha;
+          lineColors[lineIndex * 6 + 1] = g * alpha;
+          lineColors[lineIndex * 6 + 2] = b * alpha;
+          lineColors[lineIndex * 6 + 3] = r * alpha;
+          lineColors[lineIndex * 6 + 4] = g * alpha;
+          lineColors[lineIndex * 6 + 5] = b * alpha;
+
+          lineIndex++;
+        }
+      }
+    }
+
+    for (let i = lineIndex; i < MAX_LINES; i++) {
+      for (let k = 0; k < 6; k++) {
+        linePositions[i * 6 + k] = 0;
+      }
+    }
+
+    lineGeometry.attributes.position.needsUpdate = true;
+    lineGeometry.attributes.color.needsUpdate = true;
+
+    camera.position.x += (mouse.x * 1.5 - camera.position.x) * 0.015;
+    camera.position.y += (mouse.y * 1 - camera.position.y) * 0.015;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+
+  animateBg();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // ========================================
+  // SLIDE NAVIGATION
+  // ========================================
+
+  const slides = document.querySelectorAll<HTMLElement>('.slide');
+  const dots = document.querySelectorAll<HTMLElement>('.dot');
+  const counter = document.getElementById('slide-counter')!;
+  const prevBtn = document.getElementById('nav-prev')!;
+  const nextBtn = document.getElementById('nav-next')!;
+  const notesPanel = document.getElementById('presenter-notes')!;
+  const notesContent = document.getElementById('notes-content')!;
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+  let isTransitioning = false;
+  let notesVisible = false;
+
+  function goToSlide(index: number, direction: 'next' | 'prev' = 'next') {
+    if (index < 0 || index >= totalSlides || index === currentSlide || isTransitioning) return;
+    isTransitioning = true;
+
+    const current = slides[currentSlide];
+    const next = slides[index];
+
+    // Remove all transition classes first
+    current.classList.remove('slide-active', 'slide-exit-left');
+    next.classList.remove('slide-active', 'slide-exit-left');
+
+    if (direction === 'next') {
+      next.style.transform = 'translateX(60px)';
+      next.style.opacity = '0';
+      current.classList.add('slide-exit-left');
+    } else {
+      next.style.transform = 'translateX(-60px)';
+      next.style.opacity = '0';
+      // Exit to the right
+      current.style.transform = 'translateX(60px)';
+      current.style.opacity = '0';
+    }
+
+    current.classList.remove('slide-active');
+
+    // Force reflow
+    void next.offsetWidth;
+
+    // Activate next
+    next.style.transform = '';
+    next.style.opacity = '';
+    next.classList.add('slide-active');
+
+    // Update dots
+    dots[currentSlide].classList.remove('active');
+    dots[index].classList.add('active');
+
+    // Update counter
+    counter.textContent = `${index + 1} / ${totalSlides}`;
+
+    // Update notes
+    const noteText = next.dataset.notes || '';
+    notesContent.textContent = noteText;
+
+    currentSlide = index;
+
+    // Trigger slide-specific animations
+    triggerSlideAnimations(index);
+
+    // Play narration audio for this slide
+    if (typeof (window as any).__playSlideAudio === 'function') {
+      (window as any).__playSlideAudio(index);
+    }
+
+    setTimeout(() => {
+      isTransitioning = false;
+      current.classList.remove('slide-exit-left');
+      current.style.transform = '';
+      current.style.opacity = '';
+    }, 650);
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1, 'next');
+  }
+
+  function prevSlide() {
+    if (currentSlide > 0) goToSlide(currentSlide - 1, 'prev');
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case ' ':
+        e.preventDefault();
+        nextSlide();
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        e.preventDefault();
+        prevSlide();
+        break;
+      case 'n':
+      case 'N':
+        notesVisible = !notesVisible;
+        notesPanel.classList.toggle('visible', notesVisible);
+        break;
+      case 'f':
+      case 'F':
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.();
+        } else {
+          document.exitFullscreen?.();
+        }
+        break;
+    }
+  });
+
+  // Button navigation
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+
+  // Dot navigation
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const dir = i > currentSlide ? 'next' : 'prev';
+      goToSlide(i, dir);
+    });
+  });
+
+  // Touch/swipe navigation
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) nextSlide();
+      else prevSlide();
+    }
+  }, { passive: true });
+
+  // ========================================
+  // SLIDE-SPECIFIC INTERACTIONS
+  // ========================================
+
+  // Spectrum (Slide 4)
+  const spectrumLevels = document.querySelectorAll<HTMLElement>('.spectrum-level');
+  const spectrumFill = document.getElementById('spectrum-fill');
+  const spectrumDesc = document.getElementById('spectrum-desc');
+
+  spectrumLevels.forEach((level) => {
+    level.addEventListener('click', () => {
+      spectrumLevels.forEach(l => l.classList.remove('active-level'));
+      level.classList.add('active-level');
+      const lvl = parseInt(level.dataset.level || '0');
+      const fillWidths = ['18%', '40%', '62%', '90%'];
+      if (spectrumFill) spectrumFill.style.width = fillWidths[lvl];
+      if (spectrumDesc) spectrumDesc.textContent = level.dataset.desc || '';
+      // Show/hide pointer
+      spectrumLevels.forEach(l => {
+        const ptr = l.querySelector('.spectrum-pointer') as HTMLElement;
+        if (ptr) ptr.style.opacity = l === level ? '1' : '0';
+      });
+    });
+  });
+
+  // Capability cards (Slide 6)
+  document.querySelectorAll('.cap-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+    });
+  });
+
+  // Pipeline nodes (Slide 8)
+  const pipelineNodes = document.querySelectorAll<HTMLElement>('.pipeline-node');
+  const pipelineInfo = document.getElementById('pipeline-info');
+
+  pipelineNodes.forEach(node => {
+    node.addEventListener('click', () => {
+      pipelineNodes.forEach(n => n.classList.remove('active-node'));
+      node.classList.add('active-node');
+      if (pipelineInfo) pipelineInfo.textContent = node.dataset.info || '';
+    });
+  });
+
+  // ========================================
+  // SLIDE ANIMATIONS
+  // ========================================
+
+  function triggerSlideAnimations(index: number) {
+    // Slide 10: typing effect
+    if (index === 9) {
+      startTypingEffect();
+    }
+  }
+
+  // Typing effect for final slide
+  let typingInterval: ReturnType<typeof setInterval> | null = null;
+
+  function startTypingEffect() {
+    const el = document.getElementById('typing-effect');
+    if (!el) return;
+    const text = "Tonight -- not tomorrow, not next week, tonight -- open your terminal.";
+    el.textContent = '';
+    let i = 0;
+
+    if (typingInterval) clearInterval(typingInterval);
+
+    typingInterval = setInterval(() => {
+      if (i < text.length) {
+        el.textContent += text[i];
+        i++;
+      } else {
+        if (typingInterval) clearInterval(typingInterval);
+      }
+    }, 45);
+  }
+
+  // ========================================
+  // LOTTIE ANIMATIONS
+  // ========================================
+
+  const orange = [0.96, 0.65, 0.14, 1];
+  const gold = [0.91, 0.76, 0.24, 1];
+  const teal = [0.18, 0.61, 0.72, 1];
+  const warm = [0.95, 0.85, 0.55, 1];
+
+  // Title glow animation (Slide 1)
+  const titleGlowData = {
+    v: "5.7.4", fr: 30, ip: 0, op: 180, w: 500, h: 400, nm: "TitleGlow", ddd: 0, assets: [],
+    layers: [
+      {
+        ddd: 0, ind: 0, ty: 4, nm: "orb1", sr: 1,
+        ks: {
+          o: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 30, s: [45], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 150, s: [45], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [0] }] },
+          r: { a: 0, k: 0 },
+          p: { a: 1, k: [{ t: 0, s: [60, 100, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [20, -15, 0], ti: [0, 0, 0] }, { t: 60, s: [400, 50, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [0, 0, 0], ti: [0, 0, 0] }, { t: 120, s: [450, 350, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [0, 0, 0], ti: [-20, 15, 0] }, { t: 180, s: [60, 100, 0] }] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 1, k: [{ t: 0, s: [100, 100, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 90, s: [140, 140, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [100, 100, 100] }] }
+        },
+        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [6, 6] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: orange }, o: { a: 0, k: 55 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
+      },
+      {
+        ddd: 0, ind: 1, ty: 4, nm: "orb2", sr: 1,
+        ks: {
+          o: { a: 1, k: [{ t: 0, s: [35], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 90, s: [55], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [35] }] },
+          r: { a: 0, k: 0 },
+          p: { a: 1, k: [{ t: 0, s: [440, 320, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [-15, -20, 0], ti: [0, 0, 0] }, { t: 60, s: [100, 350, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [0, 0, 0], ti: [0, 0, 0] }, { t: 120, s: [50, 80, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [0, 0, 0], ti: [15, 20, 0] }, { t: 180, s: [440, 320, 0] }] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 0, k: [100, 100, 100] }
+        },
+        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [5, 5] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: teal }, o: { a: 0, k: 50 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
+      },
+      {
+        ddd: 0, ind: 2, ty: 4, nm: "orb3", sr: 1,
+        ks: {
+          o: { a: 1, k: [{ t: 0, s: [25], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 60, s: [50], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 120, s: [25], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [25] }] },
+          r: { a: 0, k: 0 },
+          p: { a: 1, k: [{ t: 0, s: [250, 30, 0], i: { x: 0.3, y: 1 }, o: { x: 0.7, y: 0 }, to: [10, 15, 0], ti: [0, 0, 0] }, { t: 90, s: [480, 200, 0], i: { x: 0.3, y: 1 }, o: { x: 0.7, y: 0 }, to: [0, 0, 0], ti: [-10, -15, 0] }, { t: 180, s: [250, 30, 0] }] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 0, k: [100, 100, 100] }
+        },
+        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [4, 4] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: warm }, o: { a: 0, k: 45 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
+      },
+      // Pulsing ring
+      {
+        ddd: 0, ind: 3, ty: 4, nm: "ring", sr: 1,
+        ks: {
+          o: { a: 1, k: [{ t: 0, s: [8], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 90, s: [16], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [8] }] },
+          r: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [360] }] },
+          p: { a: 0, k: [250, 200, 0] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 1, k: [{ t: 0, s: [95, 95, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 90, s: [105, 105, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [95, 95, 100] }] }
+        },
+        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [400, 320] }, p: { a: 0, k: [0, 0] }, nm: "r" }, { ty: "st", c: { a: 0, k: orange }, o: { a: 0, k: 15 }, w: { a: 0, k: 1 }, lc: 2, lj: 2, bm: 0, nm: "s", d: [{ n: "d", nm: "dash", v: { a: 0, k: 6 } }, { n: "g", nm: "gap", v: { a: 0, k: 14 } }, { n: "o", nm: "offset", v: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [40] }] } }] }], ip: 0, op: 180, st: 0, bm: 0
+      }
+    ],
+    markers: []
+  };
+
+  const titleGlowContainer = document.getElementById('lottie-title-glow');
+  if (titleGlowContainer) {
+    lottie.loadAnimation({
+      container: titleGlowContainer,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: titleGlowData,
+    });
+  }
+
+  // Capabilities connecting dots (Slide 6)
+  const capLottieData = {
+    v: "5.7.4", fr: 30, ip: 0, op: 180, w: 800, h: 300, nm: "CapDots", ddd: 0, assets: [],
+    layers: [
+      {
+        ddd: 0, ind: 0, ty: 4, nm: "conn1", sr: 1,
+        ks: {
+          o: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 30, s: [30], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 150, s: [30], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [0] }] },
+          r: { a: 0, k: 0 },
+          p: { a: 1, k: [{ t: 0, s: [180, 150, 0], i: { x: 0.5, y: 1 }, o: { x: 0.5, y: 0 }, to: [10, -5, 0], ti: [0, 0, 0] }, { t: 90, s: [400, 120, 0], i: { x: 0.5, y: 1 }, o: { x: 0.5, y: 0 }, to: [0, 0, 0], ti: [-10, 5, 0] }, { t: 180, s: [620, 150, 0] }] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 0, k: [100, 100, 100] }
+        },
+        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [5, 5] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: teal }, o: { a: 0, k: 50 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
+      },
+      {
+        ddd: 0, ind: 1, ty: 4, nm: "conn2", sr: 1,
+        ks: {
+          o: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 20, s: [25], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 160, s: [25], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [0] }] },
+          r: { a: 0, k: 0 },
+          p: { a: 1, k: [{ t: 0, s: [620, 140, 0], i: { x: 0.5, y: 1 }, o: { x: 0.5, y: 0 }, to: [-10, 5, 0], ti: [0, 0, 0] }, { t: 90, s: [400, 170, 0], i: { x: 0.5, y: 1 }, o: { x: 0.5, y: 0 }, to: [0, 0, 0], ti: [10, -5, 0] }, { t: 180, s: [180, 140, 0] }] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 0, k: [100, 100, 100] }
+        },
+        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [4, 4] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: orange }, o: { a: 0, k: 40 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
+      }
+    ],
+    markers: []
+  };
+
+  const capContainer = document.getElementById('lottie-capabilities');
+  if (capContainer) {
+    lottie.loadAnimation({
+      container: capContainer,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: capLottieData,
+    });
+  }
+
+  // Sparkle animation (Slide 10)
+  const sparkleLottieData = {
+    v: "5.7.4", fr: 30, ip: 0, op: 180, w: 600, h: 600, nm: "Sparkle", ddd: 0, assets: [],
+    layers: Array.from({ length: 12 }).map((_, i) => ({
+      ddd: 0, ind: i, ty: 4, nm: `sp${i}`, sr: 1,
+      ks: {
+        o: { a: 1, k: [
+          { t: (i * 15) % 180, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+          { t: ((i * 15) + 15) % 180, s: [70], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+          { t: ((i * 15) + 30) % 180, s: [0] }
+        ]},
+        r: { a: 0, k: 0 },
+        p: { a: 0, k: [
+          80 + Math.random() * 440,
+          80 + Math.random() * 440,
+          0
+        ] },
+        a: { a: 0, k: [0, 0, 0] },
+        s: { a: 1, k: [
+          { t: (i * 15) % 180, s: [0, 0, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+          { t: ((i * 15) + 15) % 180, s: [180, 180, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
+          { t: ((i * 15) + 30) % 180, s: [0, 0, 100] }
+        ]}
+      },
+      ao: 0,
+      shapes: [
+        { ty: "el", d: 1, s: { a: 0, k: [3, 3] }, p: { a: 0, k: [0, 0] }, nm: "d" },
+        { ty: "fl", c: { a: 0, k: i % 3 === 0 ? orange : i % 3 === 1 ? teal : gold }, o: { a: 0, k: 70 }, r: 1, bm: 0, nm: "f" }
+      ],
+      ip: 0, op: 180, st: 0, bm: 0
+    })),
+    markers: []
+  };
+
+  const sparkleContainer = document.getElementById('lottie-sparkle');
+  if (sparkleContainer) {
+    lottie.loadAnimation({
+      container: sparkleContainer,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: sparkleLottieData,
+    });
+  }
+
+  // ========================================
+  // INITIALIZE
+  // ========================================
+
+  // ========================================
+  // AUDIO NARRATION SYSTEM
+  // ========================================
+
+  const audioToggle = document.getElementById('audio-toggle')!;
+  const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
+  const audioProgressBar = document.getElementById('audio-progress-bar')!;
+
+  let audioEnabled = true;
+  let audioVolume = 0.8;
+  let currentAudio: HTMLAudioElement | null = null;
+  let audioProgressInterval: number | null = null;
+
+  // Preload audio for all slides
+  const slideAudioCache: Record<number, HTMLAudioElement> = {};
+
+  function preloadSlideAudio(slideIndex: number) {
+    const slideNum = slideIndex + 1;
+    const paddedNum = slideNum.toString().padStart(2, '0');
+    const audioUrl = `/presentation-audio/slide-${paddedNum}.mp3`;
+    if (slideAudioCache[slideIndex]) return;
+
+    const audio = new Audio();
+    audio.preload = 'auto';
+    audio.src = audioUrl;
+    audio.volume = audioVolume;
+    // Don't fail silently if file doesn't exist yet
+    audio.addEventListener('error', () => {
+      delete slideAudioCache[slideIndex];
+    });
+    audio.addEventListener('canplaythrough', () => {
+      slideAudioCache[slideIndex] = audio;
+    }, { once: true });
+    slideAudioCache[slideIndex] = audio;
+  }
+
+  // Preload all slides
+  for (let i = 0; i < totalSlides; i++) {
+    preloadSlideAudio(i);
+  }
+
+  const FADE_DURATION = 600; // ms for fade out/in
+  const FADE_STEPS = 30;
+
+  function fadeOutAudio(audio: HTMLAudioElement): Promise<void> {
+    return new Promise((resolve) => {
+      const startVol = audio.volume;
+      if (startVol === 0 || audio.paused) {
+        resolve();
+        return;
+      }
+      const step = startVol / FADE_STEPS;
+      const interval = FADE_DURATION / FADE_STEPS;
+      const timer = setInterval(() => {
+        const newVol = Math.max(0, audio.volume - step);
+        audio.volume = newVol;
+        if (newVol <= 0.01) {
+          clearInterval(timer);
+          audio.pause();
+          audio.volume = startVol; // restore for next play
+          resolve();
+        }
+      }, interval);
+    });
+  }
+
+  function fadeInAudio(audio: HTMLAudioElement, targetVol: number) {
+    audio.volume = 0;
+    audio.play().catch(() => {
+      console.log('Audio autoplay blocked. Click the speaker icon to enable.');
+    });
+    const step = targetVol / FADE_STEPS;
+    const interval = FADE_DURATION / FADE_STEPS;
+    const timer = setInterval(() => {
+      const newVol = Math.min(targetVol, audio.volume + step);
+      audio.volume = newVol;
+      if (newVol >= targetVol - 0.01) {
+        audio.volume = targetVol;
+        clearInterval(timer);
+      }
+    }, interval);
+  }
+
+  function stopCurrentAudio() {
+    if (currentAudio) {
+      // Quick fade out if still playing
+      const audio = currentAudio;
+      const startVol = audio.volume;
+      const step = startVol / 15; // faster fade for stop (300ms)
+      const timer = setInterval(() => {
+        const newVol = Math.max(0, audio.volume - step);
+        audio.volume = newVol;
+        if (newVol <= 0.01) {
+          clearInterval(timer);
+          audio.pause();
+          audio.currentTime = 0;
+          audio.volume = startVol;
+        }
+      }, 20);
+      currentAudio = null;
+    }
+    if (audioProgressInterval) {
+      clearInterval(audioProgressInterval);
+      audioProgressInterval = null;
+    }
+    audioProgressBar.style.width = '0%';
+  }
+
+  function playSlideAudio(slideIndex: number) {
+    if (!audioEnabled) {
+      stopCurrentAudio();
+      return;
+    }
+
+    const nextAudio = slideAudioCache[slideIndex];
+    if (!nextAudio) {
+      stopCurrentAudio();
+      return;
+    }
+
+    // If something is currently playing, fade it out first then fade in the new one
+    if (currentAudio && !currentAudio.paused) {
+      const prevAudio = currentAudio;
+      currentAudio = null;
+      if (audioProgressInterval) {
+        clearInterval(audioProgressInterval);
+        audioProgressInterval = null;
+      }
+
+      fadeOutAudio(prevAudio).then(() => {
+        prevAudio.currentTime = 0;
+        startNewAudio(nextAudio, slideIndex);
+      });
+    } else {
+      stopCurrentAudio();
+      // Small delay so the slide transition finishes first
+      setTimeout(() => {
+        startNewAudio(nextAudio, slideIndex);
+      }, 300);
+    }
+  }
+
+  function startNewAudio(audio: HTMLAudioElement, slideIndex: number) {
+    if (!audioEnabled) return;
+
+    audio.currentTime = 0;
+    currentAudio = audio;
+
+    // Fade in
+    fadeInAudio(audio, audioVolume);
+
+    // Update progress bar
+    audioProgressInterval = window.setInterval(() => {
+      if (audio.duration && !audio.paused) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        audioProgressBar.style.width = `${pct}%`;
+      }
+    }, 200);
+
+    audio.addEventListener('ended', () => {
+      audioProgressBar.style.width = '100%';
+      setTimeout(() => { audioProgressBar.style.width = '0%'; }, 500);
+      if (audioProgressInterval) clearInterval(audioProgressInterval);
+    }, { once: true });
+  }
+
+  // Toggle mute
+  audioToggle.addEventListener('click', () => {
+    audioEnabled = !audioEnabled;
+    audioToggle.classList.toggle('muted', !audioEnabled);
+
+    if (!audioEnabled) {
+      stopCurrentAudio();
+    } else {
+      // Resume playing current slide's audio
+      playSlideAudio(currentSlide);
+    }
+  });
+
+  // Volume control
+  volumeSlider.addEventListener('input', () => {
+    audioVolume = parseInt(volumeSlider.value) / 100;
+    if (currentAudio) {
+      currentAudio.volume = audioVolume;
+    }
+    if (audioVolume === 0) {
+      audioToggle.classList.add('muted');
+      audioEnabled = false;
+    } else if (!audioEnabled) {
+      audioEnabled = true;
+      audioToggle.classList.remove('muted');
+    }
+  });
+
+  // 'A' key to toggle audio
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'a' || e.key === 'A') {
+      audioToggle.click();
+    }
+  });
+
+  // Export audio function so goToSlide can call it
+  (window as any).__playSlideAudio = playSlideAudio;
+
+  // ========================================
+  // INITIALIZE
+  // ========================================
+
+  // Set initial notes
+  const firstSlide = slides[0] as HTMLElement;
+  if (firstSlide && firstSlide.dataset.notes) {
+    notesContent.textContent = firstSlide.dataset.notes;
+  }
+
+  // Play audio for the first slide after user interaction
+  document.addEventListener('click', () => {
+    if (audioEnabled && !currentAudio) {
+      playSlideAudio(0);
+    }
+  }, { once: true });
+
+  document.addEventListener('keydown', () => {
+    if (audioEnabled && !currentAudio) {
+      playSlideAudio(0);
+    }
+  }, { once: true });
+</script>
