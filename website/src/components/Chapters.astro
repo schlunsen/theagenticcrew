@@ -1,5 +1,5 @@
 ---
-const chapters = [
+const engineeringChapters = [
   {
     number: "01",
     title: "Introduction",
@@ -91,33 +91,173 @@ const chapters = [
     description: "The craft isn't dying — it's shedding its skin. What endures, what changes, and why the captain still matters."
   },
 ];
+
+const crewChapters = [
+  {
+    number: "01",
+    title: "Welcome to the Crew",
+    description: "The horizon is wider than you think. Why this book exists — and why it's for you."
+  },
+  {
+    number: "02",
+    title: "The Ground Is Shifting",
+    description: "The line between technical and non-technical is dissolving. What's changing, and why it matters for your role."
+  },
+  {
+    number: "03",
+    title: "What's Under the Hood",
+    description: "Every app is a restaurant — front of house, kitchen, and pantry. A plain-language tour of how software actually works."
+  },
+  {
+    number: "04",
+    title: "What Is an Agent, Really?",
+    description: "Observe, plan, act, check — repeat. The mental model that makes everything else click."
+  },
+  {
+    number: "05",
+    title: "How to Give Good Instructions",
+    description: "The difference between a good instruction and a bad one. The two-captains story that changes how you think about prompts."
+  },
+  {
+    number: "06",
+    title: "Context In, Verification Out",
+    description: "An agent can only work with what's on the bench. How to set up the right inputs and check the outputs."
+  },
+  {
+    number: "07",
+    title: "The Trust Gradient",
+    description: "Start tight. Loosen with evidence. How much autonomy to give, and when to pull the reins."
+  },
+  {
+    number: "08",
+    title: "Extending the Crew's Reach",
+    description: "Connecting the agent to the world beyond its window — tools, databases, and integrations."
+  },
+  {
+    number: "09",
+    title: "Building Something Real",
+    description: "From idea to working prototype in a weekend. Your first hands-on walkthrough."
+  },
+  {
+    number: "10",
+    title: "The Padlock",
+    description: "The sealed envelope — how the internet keeps secrets. Security explained without jargon."
+  },
+  {
+    number: "11",
+    title: "Building Something Without Code",
+    description: "The principles transfer to everything. A second walkthrough that proves you don't need to be a programmer."
+  },
+  {
+    number: "12",
+    title: "When Things Go Wrong",
+    description: "The mistakes are inevitable. The recovery is a skill. Real war stories and how to handle them."
+  },
+  {
+    number: "13",
+    title: "When to Do It Yourself",
+    description: "Sometimes the right tool is your own hands. Knowing when agents aren't the answer."
+  },
+  {
+    number: "14",
+    title: "Being the Human in the Loop",
+    description: "You are the quality control. What it means to review, verify, and direct — not just delegate."
+  },
+  {
+    number: "15",
+    title: "Talking to Your Tech Team",
+    description: "You speak two languages now. How to bridge the gap between technical and non-technical colleagues."
+  },
+  {
+    number: "16",
+    title: "Keeping Your Finger on the Pulse",
+    description: "Ten minutes, three times a week. How to stay current without drowning in the firehose."
+  },
+  {
+    number: "17",
+    title: "Getting Started: Your First Agent",
+    description: "Which tool do you actually open on Monday morning? A practical guide to your first steps."
+  },
+  {
+    number: "18",
+    title: "Final Words",
+    description: "Now go build something. You were always technical enough."
+  },
+];
 ---
 
 <section class="chapters" id="chapters">
   <div class="chapters-inner">
     <div class="chapters-header">
       <h2>What's inside</h2>
+      <div class="book-tabs">
+        <button class="book-tab active" data-book="engineering">
+          <span class="tab-icon">&#9781;</span>
+          The Agentic Crew
+        </button>
+        <button class="book-tab" data-book="crew">
+          <span class="tab-icon">&#9783;</span>
+          Crew Member's Guide
+        </button>
+      </div>
+    </div>
+
+    <div class="book-panel active" data-book="engineering">
       <p class="chapters-subtitle">18 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
-    </div>
-
-    <div class="chapters-illustration">
-      <img src="/generated/chapters-illustration.png" alt="Nautical treasure map with circuit traces" loading="lazy" />
-      <div class="chapters-illustration-overlay"></div>
-    </div>
-
-    <div class="chapter-list">
-      {chapters.map((chapter) => (
-        <div class="chapter-item">
-          <span class="chapter-num">{chapter.number}</span>
-          <div class="chapter-info">
-            <h3>{chapter.title}</h3>
-            <p>{chapter.description}</p>
+      <div class="chapters-illustration">
+        <img src="/generated/chapters-illustration.png" alt="Nautical treasure map with circuit traces" loading="lazy" />
+        <div class="chapters-illustration-overlay"></div>
+      </div>
+      <div class="chapter-list">
+        {engineeringChapters.map((chapter) => (
+          <div class="chapter-item">
+            <span class="chapter-num">{chapter.number}</span>
+            <div class="chapter-info">
+              <h3>{chapter.title}</h3>
+              <p>{chapter.description}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+    </div>
+
+    <div class="book-panel" data-book="crew">
+      <p class="chapters-subtitle">18 chapters for tech-savvy people who don't write code — understand agents, direct them, and build real things.</p>
+      <div class="chapters-illustration crew-illustration">
+        <img src="/book-cover-crew.png" alt="Crew Member's Guide cover" loading="lazy" />
+        <div class="chapters-illustration-overlay"></div>
+      </div>
+      <div class="chapter-list">
+        {crewChapters.map((chapter) => (
+          <div class="chapter-item crew-item">
+            <span class="chapter-num crew-num">{chapter.number}</span>
+            <div class="chapter-info">
+              <h3>{chapter.title}</h3>
+              <p>{chapter.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.book-tab');
+    const panels = document.querySelectorAll('.book-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const book = tab.getAttribute('data-book');
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.book-panel[data-book="${book}"]`)?.classList.add('active');
+      });
+    });
+  });
+</script>
 
 <style>
   .chapters {
@@ -160,14 +300,87 @@ const chapters = [
     font-family: var(--font-serif);
     font-size: clamp(1.8rem, 3vw, 2.5rem);
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
     letter-spacing: -0.02em;
     color: var(--color-text);
+  }
+
+  .book-tabs {
+    display: inline-flex;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 0.3rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+  }
+
+  .book-tab {
+    padding: 0.6rem 1.5rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tab-icon {
+    font-size: 1.1rem;
+    opacity: 0.6;
+    transition: opacity 0.25s;
+  }
+
+  .book-tab:hover {
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .book-tab.active {
+    background: #fff;
+    color: var(--color-text);
+    font-weight: 600;
+    border-color: var(--color-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .book-tab.active .tab-icon {
+    opacity: 1;
+  }
+
+  /* Use attribute selectors for active state coloring */
+  .book-tab.active[data-book="engineering"] {
+    color: var(--color-accent-deep);
+  }
+
+  .book-tab.active[data-book="crew"] {
+    color: rgb(160, 120, 30);
+  }
+
+  .book-panel {
+    display: none;
+  }
+
+  .book-panel.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .chapters-subtitle {
     color: var(--color-text-muted);
     font-size: 1.05rem;
+    text-align: center;
+    margin-bottom: 2rem;
   }
 
   .chapters-illustration {
@@ -192,11 +405,31 @@ const chapters = [
     opacity: 0.9;
   }
 
+  .crew-illustration {
+    aspect-ratio: auto;
+    max-width: 300px;
+    box-shadow: 0 12px 40px rgba(201, 168, 76, 0.15);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .crew-illustration img {
+    opacity: 1;
+    object-fit: contain;
+  }
+
+  .crew-illustration:hover img {
+    opacity: 1;
+  }
+
   .chapters-illustration-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, transparent 30%, var(--color-bg-elevated) 100%);
     pointer-events: none;
+  }
+
+  .crew-illustration .chapters-illustration-overlay {
+    background: none;
   }
 
   .chapter-list {
@@ -222,6 +455,10 @@ const chapters = [
     background: rgba(232, 150, 62, 0.04);
   }
 
+  .crew-item:hover {
+    background: rgba(201, 168, 76, 0.04);
+  }
+
   .chapter-num {
     font-family: var(--font-mono);
     font-size: 0.85rem;
@@ -230,6 +467,10 @@ const chapters = [
     padding-top: 0.2rem;
     opacity: 0.6;
     transition: opacity 0.3s;
+  }
+
+  .crew-num {
+    color: rgb(180, 140, 50);
   }
 
   .chapter-item:hover .chapter-num {
@@ -248,9 +489,24 @@ const chapters = [
     color: var(--color-accent-deep);
   }
 
+  .crew-item:hover .chapter-info h3 {
+    color: rgb(160, 120, 30);
+  }
+
   .chapter-info p {
     font-size: 0.92rem;
     color: var(--color-text-muted);
     line-height: 1.7;
+  }
+
+  @media (max-width: 640px) {
+    .book-tabs {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .book-tab {
+      justify-content: center;
+    }
   }
 </style>

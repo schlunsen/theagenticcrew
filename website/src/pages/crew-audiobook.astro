@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CrewAudiobook from '../components/CrewAudiobook.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Crew Member's Guide — Audiobook | The Agentic Crew" description="Listen to the Crew Member's Guide audiobook for free. AI-narrated in English and Catalan.">
+  <Nav />
+  <main class="crew-audiobook-page">
+    <CrewAudiobook />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .crew-audiobook-page {
+    padding-top: 4rem;
+    min-height: 80vh;
+  }
+</style>

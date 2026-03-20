@@ -19,18 +19,35 @@ VOICES = [
 
 
 def strip_typst(text):
-    """Strip Typst markup from text, leaving readable prose."""
-    # Remove figure blocks (multiline)
-    text = re.sub(r'#figure\([^)]*\)[^)]*\)', '', text, flags=re.DOTALL)
-    text = re.sub(r'#figure\(', '', text)
+    """Strip Typst markup from text, leaving readable prose.
+
+    Code blocks and figure captions are preserved so the audiobook
+    matches the PDF book content.
+    """
+    # Extract figure captions before removing figure commands
+    def _extract_figure_caption(m):
+        figure_text = m.group(0)
+        cap_match = re.search(r'caption:\s*\[([^\]]*)\]', figure_text)
+        if cap_match:
+            return '\n\n' + cap_match.group(1).strip() + '\n\n'
+        return ''
+    text = re.sub(r'#figure\([\s\S]*?\n\)', _extract_figure_caption, text)
     # Remove image references
     text = re.sub(r'image\(".*?"[^)]*\)', '', text, flags=re.DOTALL)
     # Remove #import, #show, #set, #let, #pagebreak and similar directives
     text = re.sub(r'^#(import|show|set|let|pagebreak|v|align|table|grid|columns|colbreak|place|box|rect|block|circle|stack|counter|context|include).*$', '', text, flags=re.MULTILINE)
     # Remove #emoji references
     text = re.sub(r'#emoji\.\w+', '', text)
-    # Remove code blocks ```...```
-    text = re.sub(r'```[\s\S]*?```', 'Code example omitted.', text)
+    # Convert code blocks to narrated content instead of removing them
+    def _narrate_code_block(m):
+        code = m.group(0)
+        code = re.sub(r'^```\w*\n?', '', code)
+        code = re.sub(r'\n?```$', '', code)
+        code = code.strip()
+        if not code:
+            return ''
+        return '\n\n' + code + '\n\n'
+    text = re.sub(r'```[\s\S]*?```', _narrate_code_block, text)
     # Remove bold/italic markers
     text = re.sub(r'\*([^*]+)\*', r'\1', text)
     text = re.sub(r'_([^_]+)_', r'\1', text)

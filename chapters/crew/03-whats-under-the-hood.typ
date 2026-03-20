@@ -244,22 +244,6 @@ The whole thing takes minutes, runs without any human touching it, and catches p
 
 Common tools you'll hear about: *GitHub Actions*, *GitLab CI*, *Jenkins*. They all do roughly the same thing — run the checklist, report the result.
 
-== Keeping Your Finger on the Pulse
-
-You don't need to write code to stay current with what's happening in the software world. The best non-technical people I've worked with have one thing in common: they know what's out there. They read about a new tool on Hacker News three weeks before the engineering team brings it up. They spot a trending open-source project on GitHub that solves exactly the problem the team has been complaining about. They're not experts in these tools — but they know they exist, and that's half the battle.
-
-Three places worth visiting a few times a week:
-
-*Hacker News* (news.ycombinator.com) — A link aggregator run by Y Combinator, the startup incubator behind Airbnb, Dropbox, and Stripe. Engineers post and discuss articles about technology, tools, and industry shifts. The comment sections are gold — you'll see real engineers arguing about whether a new tool is actually good or just hype. Skim the top five stories a few times a week and you'll be ahead of most people in any meeting.
-
-*GitHub Trending* (github.com/trending) — A daily and weekly list of open-source projects gaining traction. You won't understand all the code — you don't need to. Read the project descriptions. "A faster alternative to Elasticsearch." "Self-hosted Notion clone." "AI agent framework for Python." You start seeing patterns: what problems people are solving, what's gaining momentum, what your team might adopt next quarter.
-
-*Reddit* (r/programming, r/webdev, r/selfhosted, r/artificial) — Community discussions, more casual than Hacker News, often more practical. People share what they're building, what broke, what they learned. Great for the "how do real people actually feel about this?" perspective. When a new AI tool drops, Reddit will tell you within 24 hours whether it's genuinely useful or just marketing.
-
-The habit is simple. Ten minutes with your morning coffee, three times a week. Skim the front page. Read one article that catches your eye. Within a month, you'll start recognising names — frameworks, libraries, companies. Within three months, you'll overhear your developer friend talking about something and think, "Oh, I read about that last week."
-
-That moment — when you stop being the person who nods along in meetings and start being the person who asks the question that changes the direction of the conversation — that's when this chapter has done its job.
-
 == Now You Know
 
 That's it. Four building blocks. A dining room (React), a kitchen (Django), a pantry (Postgres), and a prep station (Redis). Plus the infrastructure that holds it all together: Git for version control, DNS for finding the app, a VPS for running it, and CI for making sure nothing breaks when changes roll out.

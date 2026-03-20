@@ -144,8 +144,17 @@ ILLUSTRATIONS = {
             "clean minimalist composition"
         ),
     },
-    "ch09-reading-output": {
-        "file": "ch09-reading-output.jpg",
+    "ch09-the-padlock": {
+        "file": "ch09-the-padlock.jpg",
+        "prompt": (
+            "A giant ornate padlock floating above an ocean of flowing data streams, "
+            "one side showing a postcard being read by shadowy figures, "
+            "the other side showing a sealed glowing envelope safe from prying eyes, "
+            "a keyhole emitting warm golden light, nautical chain links connecting to a ship's anchor"
+        ),
+    },
+    "ch10-reading-output": {
+        "file": "ch10-reading-output.jpg",
         "prompt": (
             "A person holding a document up to a light source, examining it closely, "
             "some lines on the document glow green (verified) while others glow amber (suspect), "
@@ -153,8 +162,8 @@ ILLUSTRATIONS = {
             "detective-like atmosphere with warm directional lighting"
         ),
     },
-    "ch10-building-real": {
-        "file": "ch10-building-real.jpg",
+    "ch11-building-real": {
+        "file": "ch11-building-real.jpg",
         "prompt": (
             "A window installer on a job site holding a tablet showing a 3D wireframe "
             "of a window in a wall, the real wall visible behind the tablet, "
@@ -162,8 +171,8 @@ ILLUSTRATIONS = {
             "morning sunlight streaming through the unfinished window opening"
         ),
     },
-    "ch11-when-wrong": {
-        "file": "ch11-when-wrong.jpg",
+    "ch12-when-wrong": {
+        "file": "ch12-when-wrong.jpg",
         "prompt": (
             "A ship in a mild storm, the crew scrambling but organised, "
             "one person at the helm making a course correction, "
@@ -171,8 +180,8 @@ ILLUSTRATIONS = {
             "waves splashing against the bow"
         ),
     },
-    "ch12-do-it-yourself": {
-        "file": "ch12-do-it-yourself.jpg",
+    "ch13-do-it-yourself": {
+        "file": "ch13-do-it-yourself.jpg",
         "prompt": (
             "A person putting down a power tool and picking up a fine hand tool instead, "
             "a delicate bonsai tree on the workbench in front of them, "
@@ -180,8 +189,8 @@ ILLUSTRATIONS = {
             "a moment of deliberate choice"
         ),
     },
-    "ch13-human-in-loop": {
-        "file": "ch13-human-in-loop.jpg",
+    "ch14-human-in-loop": {
+        "file": "ch14-human-in-loop.jpg",
         "prompt": (
             "A person sitting at the centre of a circular workflow, "
             "robotic arms passing documents and screens around them in a loop, "
@@ -189,8 +198,8 @@ ILLUSTRATIONS = {
             "calm, in-control posture, warm lighting"
         ),
     },
-    "ch14-talking-tech-team": {
-        "file": "ch14-talking-tech-team.jpg",
+    "ch15-talking-tech-team": {
+        "file": "ch15-talking-tech-team.jpg",
         "prompt": (
             "Two people standing on opposite sides of a bridge, one wearing work boots "
             "and a hard hat, the other in a hoodie with a laptop, "
@@ -198,8 +207,8 @@ ILLUSTRATIONS = {
             "the bridge is made of words and code symbols"
         ),
     },
-    "ch15-pulse": {
-        "file": "ch15-pulse.jpg",
+    "ch16-pulse": {
+        "file": "ch16-pulse.jpg",
         "prompt": (
             "A person at a cozy desk with a coffee mug, morning light coming through a window, "
             "three glowing screens showing different feeds: news headlines, trending charts, "
@@ -207,8 +216,8 @@ ILLUSTRATIONS = {
             "only ten minutes of reading"
         ),
     },
-    "ch16-final-words": {
-        "file": "ch16-final-words.jpg",
+    "ch17-final-words": {
+        "file": "ch17-final-words.jpg",
         "prompt": (
             "A ship sailing toward a bright horizon, the crew on deck in various roles, "
             "one person at the bow pointing forward, others working the sails and reading maps, "
