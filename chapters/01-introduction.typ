@@ -44,7 +44,7 @@ This is the guide I wish someone had given me.
 
 You're a software engineer. You've shipped real things. You know what a production incident feels like at 2am. You're not afraid of the terminal.
 
-But lately, something feels different. Maybe you've tried AI coding tools and found them impressive but chaotic — like pairing with someone who's incredibly fast but has no concept of scope. Like being Tom Cruise in _Rain Man_, except your Dustin Hoffman can refactor an entire codebase instead of counting cards. Maybe you've watched someone with a fraction of your experience suddenly ship like a ten-year veteran, and it made you feel something you didn't expect. Maybe you're excited but don't know where to start. Maybe you're skeptical and want someone to convince you with substance, not hype.
+But lately, something feels different. Maybe you've tried AI coding tools and found them impressive but chaotic — like pairing with someone who's incredibly fast but has no concept of scope. Maybe you've watched someone with a fraction of your experience suddenly ship like a ten-year veteran, and it made you feel something you didn't expect. Maybe you're excited but don't know where to start. Maybe you're skeptical and want someone to convince you with substance, not hype.
 
 This book is for you. It assumes you can code. It assumes you've been around. It meets you where you are.
 
@@ -54,9 +54,9 @@ This isn't a reference manual. It's a journey, and it's structured like one.
 
 We start by understanding what's actually changing and why — the shift in how software gets built, not just the tools but the _thinking_. Then we get into what agents actually are, stripped of the marketing language, so you have a mental model that holds up when the tools change next quarter.
 
-From there, we get our hands dirty. You'll learn how agents work in the terminal, how to set up guardrails so they don't wreck your codebase, how Git workflows change when agents are committing code, and why sandboxing isn't optional. We'll dig into testing as the feedback loop that makes agents _reliable_ instead of just fast, and conventions as the secret weapon that most people overlook.
+From there, we get our hands dirty. You'll learn how to set up guardrails so agents don't wreck your codebase, how Git workflows change when agents are committing code, and why sandboxing isn't optional. We'll dig into testing as the feedback loop that makes agents _reliable_ instead of just fast, conventions as the secret weapon that most people overlook, and how tool integrations extend your agents' reach beyond the filesystem.
 
-Then we go deeper — local versus commercial models, prompt engineering as a real discipline, and multi-agent orchestration. We'll look at war stories: real failures, real lessons, real scar tissue. We'll talk about when _not_ to use agents, because knowing when to put down the tool is as important as knowing how to use it. And we'll close with how teams adopt this stuff without imploding.
+Then we go deeper — local versus commercial models, prompt engineering as a real discipline, multi-agent orchestration, and agents in your CI/CD pipeline. We'll look at war stories: real failures, real lessons, real scar tissue. We'll talk about when _not_ to use agents, because knowing when to put down the tool is as important as knowing how to use it. And we'll close with how teams adopt this stuff without imploding.
 
 By the end, you won't just know how to use AI agents. You'll know how to _think_ about them — which is the skill that survives when the current generation of tools is obsolete.
 

@@ -1,7 +1,7 @@
 = When Agents Get It Wrong
 
 #figure(
-  image("../assets/illustrations/ch13-storm.jpg", width: 80%),
+  image("../assets/illustrations/ch14-storm.jpg", width: 80%),
 )
 
 Every engineer who works with agents long enough has a collection of these stories. The moments where you lean back in your chair, stare at the screen, and mutter something unprintable. They're humbling. They're educational. And they're _inevitable_.

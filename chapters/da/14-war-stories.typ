@@ -1,7 +1,7 @@
 = Når Agenter Tager Fejl
 
 #figure(
-  image("../../assets/illustrations/ch13-storm.jpg", width: 80%),
+  image("../../assets/illustrations/ch14-storm.jpg", width: 80%),
 )
 
 Enhver ingeniør der arbejder med agenter længe nok har en samling af disse historier. De øjeblikke hvor du læner dig tilbage i stolen, stirrer på skærmen og mumler noget der ikke kan trykkes. De er ydmygende. De er lærerige. Og de er _uundgåelige_.

@@ -1,7 +1,7 @@
 = Ampliant l'Abast de l'Agent
 
 #figure(
-  image("../../assets/illustrations/ch09b-mcp-connections.jpg", width: 70%),
+  image("../../assets/illustrations/ch09-mcp-connections.jpg", width: 70%),
 )
 
 El mes passat estava depurant un problema de produccio -- 502s intermitents en un endpoint de checkout. Els logs estaven a Datadog. La configuracio rellevant era al nostre cluster de Kubernetes. L'historial del tiquet era a Linear. L'esquema de la base de dades era a PostgreSQL. El codi estava al meu editor.

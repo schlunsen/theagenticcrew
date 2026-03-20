@@ -1,7 +1,7 @@
 = Git com a Infraestructura d'Agents
 
 #figure(
-  image("../../assets/illustrations/ch06-git-branches.jpg", width: 80%),
+  image("../../assets/illustrations/ch05-git-branches.jpg", width: 80%),
 )
 
 Ja coneixes Git. Portes anys commitejant, creant branques i fusionant. Pero en enginyeria agentica, Git no es nomes control de versions -- es la columna vertebral de tot el teu flux de treball. Es el teu boto de desfer, el teu marc d'execucio paral·lela, la teva interficie de revisio, i el teu sistema de documentacio tot alhora.

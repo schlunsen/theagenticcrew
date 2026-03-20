@@ -1,7 +1,7 @@
 = Extending the Agent's Reach
 
 #figure(
-  image("../assets/illustrations/ch09b-mcp-connections.jpg", width: 70%),
+  image("../assets/illustrations/ch09-mcp-connections.jpg", width: 70%),
 )
 
 Last month I was debugging a production issue — intermittent 502s on a checkout endpoint. The logs were in Datadog. The relevant config was in our Kubernetes cluster. The ticket history was in Linear. The database schema was in PostgreSQL. The code was in my editor.

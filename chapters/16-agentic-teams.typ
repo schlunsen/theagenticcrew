@@ -1,7 +1,7 @@
 = Agentic Teams
 
 #figure(
-  image("../assets/illustrations/ch15-crew.jpg", width: 80%),
+  image("../assets/illustrations/ch16-crew.jpg", width: 80%),
 )
 
 Software has always been a team sport. Agents don't change that. But they change the shape of the team, the rhythm of the work, and the skills that matter. If you're leading a team — or working on one — you need to think about this now, not later.

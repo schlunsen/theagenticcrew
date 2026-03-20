@@ -82,6 +82,22 @@ There are three strategies for dealing with this.
 
 In practice, you'll use all three. Prevent what you can. Automate the rest. Review everything.
 
+== The Visibility Problem
+
+There is a practical challenge that hits the moment you move from one agent to three: you lose track of what's happening. Four terminal windows open, agents working on different tasks, one crashed silently twenty minutes ago and you haven't noticed. The agents are fine. _You_ are the bottleneck.
+
+This is a tooling problem, not an intelligence problem. If your workflow does not give you visibility into parallel work, you will either serialise everything — wasting the agents' potential — or run things in parallel and lose track, wasting your own time cleaning up the mess. Whatever tool you use — tmux panes, multiple editor windows, a browser-based control plane like wee (#link("https://wee.cat")), or even a sticky note tracking what is running where — solve the visibility problem first. The agents will not manage themselves.
+
+#figure(
+  image("../assets/wee-dashboard.png", width: 100%),
+  caption: [A multi-session dashboard — multiple agent sessions running in parallel, with real-time status and cost tracking.],
+)
+
+#figure(
+  image("../assets/wee-new-session.png", width: 80%),
+  caption: [Creating a new session with worktree isolation, permission mode, and model selection — every principle from this book baked into a single dialog.],
+)
+
 == Orchestration Overhead
 
 More agents is not always better.

@@ -1,7 +1,7 @@
 = Los Tests Como Bucle de Retroalimentación
 
 #figure(
-  image("../../assets/illustrations/ch08-feedback-loop.jpg", width: 50%),
+  image("../../assets/illustrations/ch07-feedback-loop.jpg", width: 50%),
 )
 
 Dos códigos base. Mismo agente. Misma tarea: "Añade un limitador de tasa a la API que devuelva 429 después de 100 peticiones por minuto por usuario."

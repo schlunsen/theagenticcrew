@@ -8,7 +8,7 @@ This chapter is not a summary. You don't need me to recap fifteen chapters you j
 
 == What I Believe
 
-I believe the craft is not dying. It is being _compressed_. A decade of boilerplate and plumbing and ceremony is collapsing into intent and judgement. What remains when you strip away the typing is the thing that was always the actual job: knowing what to build and knowing when it's right.
+I believe the craft is not dying. It is _molting_ — the word I used in the foreword, and the one I keep coming back to. The outer shell is falling away: the keystrokes, the syntax, the boilerplate. A decade of plumbing and ceremony is collapsing into intent and judgement. But the animal underneath — the part that knows what to build and knows when it's right — that part is more alive than ever.
 
 I believe agents are amplifiers, not replacements. Give an agent to a mediocre engineer and you get mediocre software at terrifying speed. Give one to a great engineer and you get something that, frankly, makes the last twenty years of software development look like we were building highways with shovels.
 

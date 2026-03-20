@@ -1,7 +1,7 @@
 = Equipos Agénticos
 
 #figure(
-  image("../../assets/illustrations/ch15-crew.jpg", width: 80%),
+  image("../../assets/illustrations/ch16-crew.jpg", width: 80%),
 )
 
 El software siempre ha sido un deporte de equipo. Los agentes no cambian eso. Pero cambian la forma del equipo, el ritmo del trabajo y las habilidades que importan. Si lideras un equipo — o trabajas en uno — necesitas pensar en esto ahora, no después.

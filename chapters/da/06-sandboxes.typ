@@ -1,7 +1,7 @@
 = Sandboxes
 
 #figure(
-  image("../../assets/illustrations/ch07-sandbox.jpg", width: 60%),
+  image("../../assets/illustrations/ch06-sandbox.jpg", width: 60%),
 )
 
 En sandbox er en gave du giver din agent: friheden til at tage fejl.
