@@ -161,14 +161,15 @@ Quan acabis, entendras que son realment els agents, com funciona el programari m
 #include "chapters/crew-ca/06-what-the-agent-can-see.typ"
 #include "chapters/crew-ca/07-the-trust-gradient.typ"
 #include "chapters/crew-ca/08-extending-the-crews-reach.typ"
-#include "chapters/crew-ca/09-reading-the-output-like-a-pro.typ"
-#include "chapters/crew-ca/10-building-something-real.typ"
-#include "chapters/crew-ca/11-when-things-go-wrong.typ"
-#include "chapters/crew-ca/12-when-to-do-it-yourself.typ"
-#include "chapters/crew-ca/13-being-the-human-in-the-loop.typ"
-#include "chapters/crew-ca/14-talking-to-your-tech-team.typ"
-#include "chapters/crew-ca/15-keeping-your-finger-on-the-pulse.typ"
-#include "chapters/crew-ca/16-final-words.typ"
+#include "chapters/crew-ca/09-the-padlock.typ"
+#include "chapters/crew-ca/10-reading-the-output-like-a-pro.typ"
+#include "chapters/crew-ca/11-building-something-real.typ"
+#include "chapters/crew-ca/12-when-things-go-wrong.typ"
+#include "chapters/crew-ca/13-when-to-do-it-yourself.typ"
+#include "chapters/crew-ca/14-being-the-human-in-the-loop.typ"
+#include "chapters/crew-ca/15-talking-to-your-tech-team.typ"
+#include "chapters/crew-ca/16-keeping-your-finger-on-the-pulse.typ"
+#include "chapters/crew-ca/17-final-words.typ"
 
 // ─── Dedication ───
 

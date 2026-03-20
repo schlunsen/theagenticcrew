@@ -1,0 +1,2069 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="The Agentic Crew — Crew Member's Guide" description="An interactive slide presentation about working with AI agents — for people who don't write code. 9 slides covering the crew book's themes.">
+
+  <div class="presentation" id="presentation">
+    <!-- Slide Counter -->
+    <div class="slide-counter" id="slide-counter">1 / 9</div>
+
+    <!-- Language Selector -->
+    <div class="lang-selector" id="lang-selector">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="ca">CA</button>
+    </div>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls" id="audio-controls">
+      <button class="audio-toggle" id="audio-toggle" aria-label="Toggle narration audio" title="Toggle narration (A)">
+        <svg class="audio-icon audio-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+        </svg>
+        <svg class="audio-icon audio-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <line x1="23" y1="9" x2="17" y2="15" />
+          <line x1="17" y1="9" x2="23" y2="15" />
+        </svg>
+      </button>
+      <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="80" aria-label="Narration volume" title="Volume" />
+      <div class="audio-progress" id="audio-progress">
+        <div class="audio-progress-bar" id="audio-progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Play Overlay -->
+    <div class="play-overlay" id="play-overlay">
+      <button class="play-overlay-btn" id="play-overlay-btn" aria-label="Start presentation">
+        <svg viewBox="0 0 80 80" width="80" height="80" fill="none">
+          <circle cx="40" cy="40" r="38" stroke="var(--color-accent)" stroke-width="2" opacity="0.6" />
+          <polygon points="32,22 32,58 60,40" fill="var(--color-accent)" opacity="0.9" />
+        </svg>
+        <span data-i18n="play-overlay-text">Start Presentation</span>
+      </button>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="progress-dots" id="progress-dots">
+      {Array.from({ length: 9 }).map((_, i) => (
+        <button class={`dot ${i === 0 ? 'active' : ''}`} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>
+      ))}
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button class="nav-arrow nav-prev" id="nav-prev" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+    <button class="nav-arrow nav-next" id="nav-next" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+
+    <!-- ============ SLIDE 1: Title ============ -->
+    <section class="slide slide-active" data-index="0">
+      <div class="slide-content slide-title-layout">
+        <div class="title-icon" aria-hidden="true">
+          <svg viewBox="0 0 120 120" width="120" height="120" fill="none" stroke="var(--crew-accent)" stroke-width="1.5">
+            <circle cx="60" cy="60" r="50" stroke-dasharray="6 4" opacity="0.25" />
+            <circle cx="60" cy="60" r="35" stroke-width="1" opacity="0.15" />
+            <!-- People silhouettes -->
+            <circle cx="40" cy="45" r="6" opacity="0.4" />
+            <path d="M30 65c0-5 4-9 10-9s10 4 10 9" opacity="0.3" />
+            <circle cx="60" cy="40" r="7" opacity="0.5" />
+            <path d="M49 62c0-6 5-10 11-10s11 4 11 10" opacity="0.4" />
+            <circle cx="80" cy="45" r="6" opacity="0.4" />
+            <path d="M70 65c0-5 4-9 10-9s10 4 10 9" opacity="0.3" />
+            <!-- Connecting dots -->
+            <circle cx="60" cy="85" r="3" fill="var(--crew-teal)" opacity="0.4" />
+            <line x1="40" y1="65" x2="60" y2="85" stroke="var(--crew-teal)" stroke-width="0.8" opacity="0.2" />
+            <line x1="80" y1="65" x2="60" y2="85" stroke="var(--crew-teal)" stroke-width="0.8" opacity="0.2" />
+          </svg>
+        </div>
+        <p class="slide-eyebrow" data-i18n="slide1-eyebrow">A Book by Rasmus Bornhoft Schlunsen</p>
+        <h1 class="slide-main-title" data-i18n="slide1-title">The Agentic<br/>Crew</h1>
+        <p class="slide-subtitle-big" data-i18n="slide1-subtitle">Crew Member's Guide</p>
+        <p class="slide-tagline" data-i18n="slide1-tagline">For people who are great with computers — but don't write code.</p>
+        <p class="slide-date" data-i18n="slide1-date">March 2026</p>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 2: The Ground Is Shifting ============ -->
+    <section class="slide" data-index="1">
+      <div class="slide-content slide-image-quote-layout">
+        <div class="slide-text-side">
+          <h2 class="slide-heading" data-i18n="slide2-heading">The Ground Is Shifting</h2>
+          <blockquote class="slide-blockquote" data-i18n="slide2-quote">
+            "The line between 'technical' and 'non-technical' is dissolving. Not because everyone is learning to code — but because the tools are learning to listen."
+          </blockquote>
+        </div>
+        <div class="slide-image-side">
+          <img src="/illustrations/crew/ch01-welcome.jpg" alt="The ground shifting — a landscape in transformation" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 3: What's Under the Hood ============ -->
+    <section class="slide" data-index="2">
+      <div class="slide-content slide-center-layout">
+        <h2 class="slide-heading" data-i18n="slide3-heading">What's Under the Hood</h2>
+        <p class="slide-body slide-body-subtitle" data-i18n="slide3-subtitle">Every app is a restaurant.</p>
+        <div class="restaurant-grid">
+          <div class="restaurant-card" data-delay="0">
+            <div class="restaurant-icon">
+              <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="var(--crew-accent)" stroke-width="1.5">
+                <rect x="6" y="8" width="36" height="32" rx="4" />
+                <line x1="6" y1="16" x2="42" y2="16" />
+                <circle cx="12" cy="12" r="1.5" fill="var(--crew-accent)" opacity="0.5" />
+                <circle cx="17" cy="12" r="1.5" fill="var(--crew-teal)" opacity="0.5" />
+                <circle cx="22" cy="12" r="1.5" fill="var(--crew-accent-light)" opacity="0.5" />
+                <rect x="10" y="20" width="14" height="3" rx="1" opacity="0.4" />
+                <rect x="10" y="26" width="20" height="3" rx="1" opacity="0.3" />
+                <rect x="10" y="32" width="10" height="3" rx="1" opacity="0.2" />
+              </svg>
+            </div>
+            <h3 data-i18n="slide3-frontend">Frontend</h3>
+            <p class="restaurant-label" data-i18n="slide3-frontend-meta">The Dining Room</p>
+            <p class="restaurant-desc" data-i18n="slide3-frontend-desc">What customers see and touch</p>
+          </div>
+          <div class="restaurant-card" data-delay="1">
+            <div class="restaurant-icon">
+              <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="var(--crew-teal)" stroke-width="1.5">
+                <rect x="8" y="6" width="32" height="36" rx="3" />
+                <path d="M14 18h20M14 24h12M14 30h16" opacity="0.4" />
+                <circle cx="36" cy="14" r="5" stroke="var(--crew-accent)" stroke-dasharray="2 2" opacity="0.5" />
+                <path d="M34 14l2 2 3-4" stroke="var(--crew-accent)" stroke-width="1.5" opacity="0.5" />
+              </svg>
+            </div>
+            <h3 data-i18n="slide3-backend">Backend</h3>
+            <p class="restaurant-label" data-i18n="slide3-backend-meta">The Kitchen</p>
+            <p class="restaurant-desc" data-i18n="slide3-backend-desc">Where the real work happens</p>
+          </div>
+          <div class="restaurant-card" data-delay="2">
+            <div class="restaurant-icon">
+              <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="var(--crew-accent-deep)" stroke-width="1.5">
+                <rect x="8" y="10" width="32" height="28" rx="2" />
+                <line x1="8" y1="18" x2="40" y2="18" />
+                <line x1="8" y1="26" x2="40" y2="26" />
+                <line x1="8" y1="34" x2="40" y2="34" />
+                <line x1="22" y1="10" x2="22" y2="38" />
+              </svg>
+            </div>
+            <h3 data-i18n="slide3-database">Database</h3>
+            <p class="restaurant-label" data-i18n="slide3-database-meta">The Filing Cabinet</p>
+            <p class="restaurant-desc" data-i18n="slide3-database-desc">Where everything is remembered</p>
+          </div>
+          <div class="restaurant-card" data-delay="3">
+            <div class="restaurant-icon">
+              <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="var(--crew-accent-light)" stroke-width="1.5">
+                <rect x="6" y="8" width="36" height="28" rx="3" />
+                <line x1="6" y1="36" x2="42" y2="36" />
+                <rect x="14" y="40" width="20" height="3" rx="1" />
+                <path d="M14 18l6 4-6 4" opacity="0.5" />
+                <line x1="24" y1="26" x2="34" y2="26" opacity="0.3" />
+              </svg>
+            </div>
+            <h3 data-i18n="slide3-cache">Cache</h3>
+            <p class="restaurant-label" data-i18n="slide3-cache-meta">The Whiteboard</p>
+            <p class="restaurant-desc" data-i18n="slide3-cache-desc">Quick notes for the rush</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 4: What Is an Agent? ============ -->
+    <section class="slide" data-index="3">
+      <div class="slide-content slide-image-quote-layout">
+        <div class="slide-image-side">
+          <img src="/illustrations/crew/ch04-agent-loop.jpg" alt="The agent loop — observe, plan, act, check" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+        <div class="slide-text-side">
+          <h2 class="slide-heading" data-i18n="slide4-heading">What Is an Agent?</h2>
+          <div class="agent-loop-nodes">
+            <div class="loop-node" data-delay="0">
+              <span class="loop-node-num">1</span>
+              <span class="loop-node-label" data-i18n="slide4-observe">Observe</span>
+            </div>
+            <div class="loop-connector"></div>
+            <div class="loop-node" data-delay="1">
+              <span class="loop-node-num">2</span>
+              <span class="loop-node-label" data-i18n="slide4-plan">Plan</span>
+            </div>
+            <div class="loop-connector"></div>
+            <div class="loop-node" data-delay="2">
+              <span class="loop-node-num">3</span>
+              <span class="loop-node-label" data-i18n="slide4-act">Act</span>
+            </div>
+            <div class="loop-connector"></div>
+            <div class="loop-node" data-delay="3">
+              <span class="loop-node-num">4</span>
+              <span class="loop-node-label" data-i18n="slide4-check">Check</span>
+            </div>
+            <div class="loop-connector loop-connector-return"></div>
+            <div class="loop-repeat" data-i18n="slide4-repeat">Repeat</div>
+          </div>
+          <blockquote class="slide-blockquote slide-blockquote-compact" data-i18n="slide4-quote">
+            "Not magic. Not sentient. A loop."
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 5: Good vs Bad Instructions ============ -->
+    <section class="slide" data-index="4">
+      <div class="slide-content slide-image-quote-layout slide-image-quote-reverse">
+        <div class="slide-image-side">
+          <img src="/illustrations/crew/ch05-two-captains.jpg" alt="Two captains — good and bad instructions" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+        <div class="slide-text-side">
+          <h2 class="slide-heading" data-i18n="slide5-heading">Good vs Bad Instructions</h2>
+          <div class="instruction-split">
+            <div class="instruction-card instruction-bad">
+              <div class="instruction-label bad-label" data-i18n="slide5-bad-label">BAD</div>
+              <p class="instruction-text" data-i18n="slide5-bad-text">"Fix the website"</p>
+              <div class="instruction-result">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#ef4444" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 8l8 8M16 8l-8 8" />
+                </svg>
+                <span data-i18n="slide5-bad-result">Confused, sprawling changes</span>
+              </div>
+            </div>
+            <div class="instruction-card instruction-good">
+              <div class="instruction-label good-label" data-i18n="slide5-good-label">GOOD</div>
+              <p class="instruction-text instruction-text-good" data-i18n="slide5-good-text">"Change the homepage button from blue (#3b82f6) to green (#22c55e). Don't change anything else."</p>
+              <div class="instruction-result">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#22c55e" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 12l3 3 5-6" />
+                </svg>
+                <span data-i18n="slide5-good-result">Precise, verifiable result</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 6: The Trust Gradient ============ -->
+    <section class="slide" data-index="5">
+      <div class="slide-content slide-image-quote-layout">
+        <div class="slide-text-side">
+          <h2 class="slide-heading" data-i18n="slide6-heading">The Trust Gradient</h2>
+          <div class="trust-gradient-viz">
+            <div class="trust-bar">
+              <div class="trust-fill" id="trust-fill"></div>
+            </div>
+            <div class="trust-labels-row">
+              <span class="trust-end-label" data-i18n="slide6-tight">Tight control</span>
+              <span class="trust-end-label" data-i18n="slide6-full">Full autonomy</span>
+            </div>
+            <div class="trust-items">
+              <div class="trust-item" data-level="1">
+                <div class="trust-dot" style="left: 10%"></div>
+                <span data-i18n="slide6-item1">Draft internal notes</span>
+              </div>
+              <div class="trust-item" data-level="2">
+                <div class="trust-dot" style="left: 35%"></div>
+                <span data-i18n="slide6-item2">Send emails</span>
+              </div>
+              <div class="trust-item" data-level="3">
+                <div class="trust-dot" style="left: 65%"></div>
+                <span data-i18n="slide6-item3">Modify database</span>
+              </div>
+              <div class="trust-item" data-level="4">
+                <div class="trust-dot" style="left: 90%"></div>
+                <span data-i18n="slide6-item4">Deploy to production</span>
+              </div>
+            </div>
+          </div>
+          <blockquote class="slide-blockquote slide-blockquote-compact" data-i18n="slide6-quote">
+            "Start tight. Loosen with evidence."
+          </blockquote>
+        </div>
+        <div class="slide-image-side">
+          <img src="/illustrations/crew/ch07-trust-gradient.jpg" alt="The trust gradient — from tight control to full autonomy" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 7: Building Something Real ============ -->
+    <section class="slide" data-index="6">
+      <div class="slide-content slide-image-quote-layout slide-image-quote-reverse">
+        <div class="slide-image-side">
+          <img src="/illustrations/crew/ch10-building-real.jpg" alt="Building something real — the GlassView story" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+        <div class="slide-text-side">
+          <h2 class="slide-heading" data-i18n="slide7-heading">Building Something Real</h2>
+          <p class="slide-body" data-i18n="slide7-body">The GlassView story — a window installer's quoting app.</p>
+          <div class="capability-list">
+            <div class="cap-item" data-delay="0">
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="var(--crew-teal)" stroke-width="1.5"><path d="M3 10l5 5L17 5" /></svg>
+              <span data-i18n="slide7-cap1">3D window preview</span>
+            </div>
+            <div class="cap-item" data-delay="1">
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="var(--crew-teal)" stroke-width="1.5"><path d="M3 10l5 5L17 5" /></svg>
+              <span data-i18n="slide7-cap2">PDF quotes with pricing</span>
+            </div>
+            <div class="cap-item" data-delay="2">
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="var(--crew-teal)" stroke-width="1.5"><path d="M3 10l5 5L17 5" /></svg>
+              <span data-i18n="slide7-cap3">Customer database</span>
+            </div>
+          </div>
+          <p class="slide-highlight" data-i18n="slide7-highlight">Built in a weekend. Without writing code.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 8: When Things Go Wrong ============ -->
+    <section class="slide" data-index="7">
+      <div class="slide-content slide-image-quote-layout">
+        <div class="slide-text-side">
+          <h2 class="slide-heading" data-i18n="slide8-heading">When Things Go Wrong</h2>
+          <div class="war-story-cards">
+            <div class="war-story-card" data-delay="0">
+              <div class="war-story-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ef4444" stroke-width="1.5">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M2 8l10 6 10-6" />
+                </svg>
+              </div>
+              <h3 data-i18n="slide8-story1">The Email That Wasn't Ready</h3>
+            </div>
+            <div class="war-story-card" data-delay="1">
+              <div class="war-story-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#f59e0b" stroke-width="1.5">
+                  <path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16l-6.5 4.5 2-7L2 9h7z" />
+                </svg>
+              </div>
+              <h3 data-i18n="slide8-story2">The Confident Statistic</h3>
+            </div>
+            <div class="war-story-card" data-delay="2">
+              <div class="war-story-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8b5cf6" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M8 12h8M12 8v8" />
+                </svg>
+              </div>
+              <h3 data-i18n="slide8-story3">The Overzealous Redesign</h3>
+            </div>
+          </div>
+          <div class="recovery-pattern">
+            <span class="recovery-label" data-i18n="slide8-recovery-label">Recovery pattern:</span>
+            <div class="recovery-steps">
+              <span class="recovery-step" data-i18n="slide8-step1">Stop</span>
+              <span class="recovery-arrow">&#8594;</span>
+              <span class="recovery-step" data-i18n="slide8-step2">Assess</span>
+              <span class="recovery-arrow">&#8594;</span>
+              <span class="recovery-step" data-i18n="slide8-step3">Restore</span>
+              <span class="recovery-arrow">&#8594;</span>
+              <span class="recovery-step" data-i18n="slide8-step4">Learn</span>
+              <span class="recovery-arrow">&#8594;</span>
+              <span class="recovery-step" data-i18n="slide8-step5">Try again</span>
+            </div>
+          </div>
+        </div>
+        <div class="slide-image-side">
+          <img src="/illustrations/crew/ch11-when-wrong.jpg" alt="When things go wrong" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 9: Go Build Something ============ -->
+    <section class="slide" data-index="8">
+      <div class="slide-content slide-title-layout slide-final">
+        <h2 class="slide-heading slide-heading-big" data-i18n="slide9-heading">Now go build something.</h2>
+        <div class="final-illustration">
+          <img src="/illustrations/crew/ch16-final-words.jpg" alt="Go build something" class="oval-vignette slide-illustration slide-illustration-final" loading="lazy" />
+        </div>
+        <div class="final-actions">
+          <a href="/" class="btn-primary-slide">
+            <span data-i18n="slide9-cta">Get the Book — Free</span>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ========================================
+     CREW PRESENTATION — SCOPED CSS VARIABLES
+     ======================================== */
+
+  body {
+    overflow: hidden;
+    background: var(--color-bg);
+    --crew-accent: #6366f1;
+    --crew-accent-light: #818cf8;
+    --crew-accent-deep: #4f46e5;
+    --crew-teal: #2dd4bf;
+  }
+
+  .presentation {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ========================================
+     SLIDES
+     ======================================== */
+
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .slide-active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+
+  .slide-exit-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    pointer-events: none;
+  }
+
+  .slide-content {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ========================================
+     NAVIGATION
+     ======================================== */
+
+  .nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    background: rgba(255, 253, 247, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .nav-arrow:hover {
+    background: var(--crew-accent);
+    color: white;
+    border-color: var(--crew-accent);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+  }
+
+  .nav-prev { left: 1.5rem; }
+  .nav-next { right: 1.5rem; }
+
+  /* ========================================
+     PROGRESS DOTS
+     ======================================== */
+
+  .progress-dots {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 253, 247, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    border: 1px solid var(--color-border-light);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--crew-accent);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .dot:hover {
+    background: rgba(99, 102, 241, 0.3);
+  }
+
+  .dot.active {
+    background: var(--crew-accent);
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+  }
+
+  /* ========================================
+     SLIDE COUNTER
+     ======================================== */
+
+  .slide-counter {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+    z-index: 100;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  /* ========================================
+     LANGUAGE SELECTOR
+     ======================================== */
+
+  /* ========================================
+     PLAY OVERLAY
+     ======================================== */
+
+  .play-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 253, 247, 0.85);
+    backdrop-filter: blur(12px);
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  .play-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .play-overlay-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-accent);
+    transition: transform 0.3s ease;
+  }
+
+  .play-overlay-btn:hover {
+    transform: scale(1.08);
+  }
+
+  .play-overlay-btn:hover circle {
+    opacity: 0.9;
+  }
+
+  .play-overlay-btn span {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  /* Audio Controls */
+  .audio-controls {
+    position: fixed;
+    top: 1.5rem;
+    right: 12rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .audio-controls:hover {
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .audio-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--crew-accent);
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+  }
+
+  .audio-toggle:hover {
+    color: var(--crew-accent-deep);
+  }
+
+  .audio-toggle.muted .audio-on { display: none; }
+  .audio-toggle.muted .audio-off { display: block !important; }
+  .audio-toggle:not(.muted) .audio-on { display: block; }
+  .audio-toggle:not(.muted) .audio-off { display: none !important; }
+
+  .volume-slider {
+    width: 50px;
+    height: 3px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--crew-accent);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--crew-accent);
+    border: none;
+    cursor: pointer;
+  }
+
+  .audio-progress {
+    width: 40px;
+    height: 3px;
+    background: rgba(99, 102, 241, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .audio-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--crew-accent);
+    border-radius: 2px;
+    transition: width 0.2s linear;
+  }
+
+  @media (max-width: 768px) {
+    .audio-controls {
+      right: auto;
+      left: 1rem;
+      top: auto;
+      bottom: 5rem;
+    }
+  }
+
+  .lang-selector {
+    position: fixed;
+    top: 1.5rem;
+    right: 7rem;
+    z-index: 100;
+    display: flex;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .lang-btn {
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0.65rem;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    transition: all 0.25s ease;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .lang-btn:hover {
+    color: var(--color-text);
+    background: rgba(99, 102, 241, 0.08);
+  }
+
+  .lang-btn.active {
+    background: var(--crew-accent);
+    color: white;
+    box-shadow: 0 1px 6px rgba(99, 102, 241, 0.35);
+  }
+
+  /* ========================================
+     SLIDE LAYOUTS
+     ======================================== */
+
+  .slide-title-layout {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .title-icon {
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    animation: gentlePulse 4s ease-in-out infinite;
+  }
+
+  @keyframes gentlePulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 0.85; }
+  }
+
+  .slide-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--crew-accent);
+    opacity: 0.8;
+  }
+
+  .slide-main-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+
+  .slide-subtitle-big {
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--crew-accent-deep);
+    opacity: 0.85;
+  }
+
+  .slide-tagline {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    max-width: 500px;
+    line-height: 1.5;
+  }
+
+  .slide-date {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    margin-top: 0.5rem;
+  }
+
+  /* Image + Quote Layout */
+  .slide-image-quote-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .slide-image-quote-reverse {
+    direction: rtl;
+  }
+
+  .slide-image-quote-reverse > * {
+    direction: ltr;
+  }
+
+  .slide-text-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .slide-image-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide-heading {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .slide-heading-big {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    text-align: center;
+  }
+
+  .slide-blockquote {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--color-text);
+    border-left: 3px solid var(--crew-accent);
+    padding-left: 1.25rem;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  .slide-blockquote-compact {
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+  }
+
+  .slide-body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .slide-body-subtitle {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--crew-accent-deep);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Oval Vignette for illustrations */
+  .oval-vignette {
+    mask-image: radial-gradient(ellipse 70% 65% at center, black 40%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 65% at center, black 40%, transparent 75%);
+  }
+
+  .slide-illustration {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .slide-illustration-final {
+    max-width: 320px;
+  }
+
+  /* Center Layout */
+  .slide-center-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  /* ========================================
+     SLIDE 3: Restaurant Grid
+     ======================================== */
+
+  .restaurant-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-top: 1rem;
+    max-width: 900px;
+  }
+
+  .restaurant-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .restaurant-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .restaurant-card:hover {
+    border-color: var(--crew-accent);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+    transform: translateY(-4px);
+  }
+
+  .restaurant-icon {
+    margin-bottom: 0.75rem;
+  }
+
+  .restaurant-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.25rem;
+  }
+
+  .restaurant-label {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--crew-accent-deep);
+    margin: 0 0 0.4rem;
+  }
+
+  .restaurant-desc {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* ========================================
+     SLIDE 4: Agent Loop Nodes
+     ======================================== */
+
+  .agent-loop-nodes {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  .loop-node {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1.5px solid var(--crew-accent);
+    border-radius: 24px;
+    padding: 0.5rem 1rem;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.4s ease;
+  }
+
+  .loop-node.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .loop-node-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--crew-accent);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .loop-node-label {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .loop-connector {
+    width: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--crew-accent), var(--crew-teal));
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+
+  .loop-connector-return {
+    width: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--crew-teal), var(--crew-accent));
+    border-radius: 1px;
+  }
+
+  .loop-repeat {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--crew-teal);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.75rem;
+    border: 1.5px dashed var(--crew-teal);
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.8s;
+  }
+
+  .loop-repeat.visible {
+    opacity: 1;
+  }
+
+  /* ========================================
+     SLIDE 5: Instructions Split
+     ======================================== */
+
+  .instruction-split {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .instruction-card {
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-border-light);
+    background: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+  }
+
+  .instruction-bad {
+    border-left: 3px solid #ef4444;
+  }
+
+  .instruction-good {
+    border-left: 3px solid #22c55e;
+  }
+
+  .instruction-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.4rem;
+  }
+
+  .bad-label { color: #ef4444; }
+  .good-label { color: #22c55e; }
+
+  .instruction-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin: 0 0 0.6rem;
+    line-height: 1.5;
+  }
+
+  .instruction-text-good {
+    font-size: 0.88rem;
+  }
+
+  .instruction-result {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ========================================
+     SLIDE 6: Trust Gradient
+     ======================================== */
+
+  .trust-gradient-viz {
+    margin: 1rem 0;
+  }
+
+  .trust-bar {
+    height: 8px;
+    background: var(--color-border-light);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .trust-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--crew-teal), var(--crew-accent), var(--crew-accent-deep), #ef4444);
+    border-radius: 4px;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .trust-fill.animated {
+    width: 100%;
+  }
+
+  .trust-labels-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    opacity: 0.7;
+  }
+
+  .trust-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s ease;
+  }
+
+  .trust-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .trust-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .trust-item[data-level="1"] .trust-dot { background: var(--crew-teal); }
+  .trust-item[data-level="2"] .trust-dot { background: var(--crew-accent-light); }
+  .trust-item[data-level="3"] .trust-dot { background: var(--crew-accent-deep); }
+  .trust-item[data-level="4"] .trust-dot { background: #ef4444; }
+
+  /* ========================================
+     SLIDE 7: Capability List
+     ======================================== */
+
+  .capability-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.5rem 0;
+  }
+
+  .cap-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s ease;
+  }
+
+  .cap-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .slide-highlight {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--crew-accent-deep);
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+
+  /* ========================================
+     SLIDE 8: War Stories
+     ======================================== */
+
+  .war-story-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0.5rem 0;
+  }
+
+  .war-story-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--color-border-light);
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+  }
+
+  .war-story-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .war-story-card:hover {
+    border-color: var(--crew-accent);
+    box-shadow: 0 2px 12px rgba(99, 102, 241, 0.08);
+  }
+
+  .war-story-card h3 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .recovery-pattern {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(99, 102, 241, 0.04);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 10px;
+  }
+
+  .recovery-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--crew-accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .recovery-steps {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .recovery-step {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--color-border-light);
+  }
+
+  .recovery-arrow {
+    color: var(--crew-accent);
+    font-size: 0.85rem;
+    opacity: 0.5;
+  }
+
+  /* ========================================
+     SLIDE 9: Final
+     ======================================== */
+
+  .slide-final {
+    gap: 1.5rem;
+  }
+
+  .final-illustration {
+    margin: 0.5rem 0;
+  }
+
+  .final-actions {
+    margin-top: 0.5rem;
+  }
+
+  .btn-primary-slide {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: var(--crew-accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  }
+
+  .btn-primary-slide:hover {
+    background: var(--crew-accent-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.4);
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+
+  @media (max-width: 768px) {
+    .slide {
+      padding: 1.5rem;
+    }
+
+    .slide-image-quote-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .slide-image-quote-reverse {
+      direction: ltr;
+    }
+
+    .slide-image-side {
+      order: -1;
+    }
+
+    .slide-illustration {
+      max-width: 280px;
+    }
+
+    .restaurant-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .agent-loop-nodes {
+      gap: 0.25rem;
+    }
+
+    .loop-connector {
+      width: 16px;
+    }
+
+    .nav-arrow {
+      width: 40px;
+      height: 40px;
+    }
+
+    .nav-prev { left: 0.75rem; }
+    .nav-next { right: 0.75rem; }
+
+    .war-story-cards {
+      gap: 0.5rem;
+    }
+
+    .recovery-steps {
+      gap: 0.25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .slide {
+      padding: 1rem;
+    }
+
+    .restaurant-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .agent-loop-nodes {
+      flex-direction: column;
+    }
+
+    .loop-connector {
+      width: 2px;
+      height: 16px;
+      background: linear-gradient(180deg, var(--crew-accent), var(--crew-teal));
+    }
+
+    .loop-connector-return {
+      width: 2px;
+      height: 16px;
+      background: linear-gradient(180deg, var(--crew-teal), var(--crew-accent));
+    }
+  }
+</style>
+
+<script>
+  // ========================================
+  // NAVIGATION
+  // ========================================
+
+  const slides = document.querySelectorAll<HTMLElement>('.slide');
+  const dots = document.querySelectorAll<HTMLElement>('.dot');
+  const counter = document.getElementById('slide-counter')!;
+  const prevBtn = document.getElementById('nav-prev')!;
+  const nextBtn = document.getElementById('nav-next')!;
+
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+  let isTransitioning = false;
+
+  function goToSlide(index: number, direction: 'next' | 'prev' = 'next') {
+    if (index < 0 || index >= totalSlides || index === currentSlide || isTransitioning) return;
+    isTransitioning = true;
+
+    const current = slides[currentSlide];
+    const next = slides[index];
+
+    current.classList.remove('slide-active', 'slide-exit-left');
+    next.classList.remove('slide-active', 'slide-exit-left');
+
+    if (direction === 'next') {
+      next.style.transform = 'translateX(60px)';
+      next.style.opacity = '0';
+      current.classList.add('slide-exit-left');
+    } else {
+      next.style.transform = 'translateX(-60px)';
+      next.style.opacity = '0';
+      current.style.transform = 'translateX(60px)';
+      current.style.opacity = '0';
+    }
+
+    current.classList.remove('slide-active');
+
+    // Force reflow
+    void next.offsetWidth;
+
+    next.style.transform = '';
+    next.style.opacity = '';
+    next.classList.add('slide-active');
+
+    // Update dots
+    dots[currentSlide].classList.remove('active');
+    dots[index].classList.add('active');
+
+    // Update counter
+    counter.textContent = `${index + 1} / ${totalSlides}`;
+
+    currentSlide = index;
+
+    // Trigger slide-specific animations
+    triggerSlideAnimations(index);
+
+    // Play narration audio for this slide
+    if (typeof (window as any).__playSlideAudio === 'function') {
+      (window as any).__playSlideAudio(index);
+    }
+
+    setTimeout(() => {
+      isTransitioning = false;
+      current.classList.remove('slide-exit-left');
+      current.style.transform = '';
+      current.style.opacity = '';
+    }, 650);
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1, 'next');
+  }
+
+  function prevSlide() {
+    if (currentSlide > 0) goToSlide(currentSlide - 1, 'prev');
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case ' ':
+        e.preventDefault();
+        nextSlide();
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        e.preventDefault();
+        prevSlide();
+        break;
+    }
+  });
+
+  // Button navigation
+  nextBtn.addEventListener('click', nextSlide);
+  prevBtn.addEventListener('click', prevSlide);
+
+  // Dot navigation
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const dir = i > currentSlide ? 'next' : 'prev';
+      goToSlide(i, dir);
+    });
+  });
+
+  // Touch / swipe support
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+      if (deltaX < 0) nextSlide();
+      else prevSlide();
+    }
+  }, { passive: true });
+
+  // ========================================
+  // SLIDE ANIMATIONS
+  // ========================================
+
+  function triggerSlideAnimations(index: number) {
+    const slide = slides[index];
+
+    // Restaurant cards (slide 3, index 2)
+    if (index === 2) {
+      const cards = slide.querySelectorAll('.restaurant-card');
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('visible'), 200 + i * 150);
+      });
+    }
+
+    // Agent loop nodes (slide 4, index 3)
+    if (index === 3) {
+      const nodes = slide.querySelectorAll('.loop-node');
+      nodes.forEach((node, i) => {
+        setTimeout(() => node.classList.add('visible'), 200 + i * 200);
+      });
+      const repeat = slide.querySelector('.loop-repeat');
+      if (repeat) {
+        setTimeout(() => repeat.classList.add('visible'), 200 + nodes.length * 200 + 200);
+      }
+    }
+
+    // Trust gradient (slide 6, index 5)
+    if (index === 5) {
+      const fill = document.getElementById('trust-fill');
+      if (fill) setTimeout(() => fill.classList.add('animated'), 300);
+
+      const items = slide.querySelectorAll('.trust-item');
+      items.forEach((item, i) => {
+        setTimeout(() => item.classList.add('visible'), 600 + i * 200);
+      });
+    }
+
+    // Capability items (slide 7, index 6)
+    if (index === 6) {
+      const items = slide.querySelectorAll('.cap-item');
+      items.forEach((item, i) => {
+        setTimeout(() => item.classList.add('visible'), 200 + i * 200);
+      });
+    }
+
+    // War story cards (slide 8, index 7)
+    if (index === 7) {
+      const cards = slide.querySelectorAll('.war-story-card');
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('visible'), 200 + i * 200);
+      });
+    }
+  }
+
+  // Trigger animations for the first slide on load
+  triggerSlideAnimations(0);
+
+  // ========================================
+  // INTERNATIONALIZATION (i18n)
+  // ========================================
+
+  type Lang = 'en' | 'ca';
+  let currentLang: Lang = (localStorage.getItem('crew-pres-lang') as Lang) || 'en';
+
+  const langBtns = document.querySelectorAll<HTMLButtonElement>('.lang-btn');
+
+  const translations: Record<Lang, Record<string, string>> = {
+    en: {
+      'play-overlay-text': 'Start Presentation',
+      // Slide 1
+      'slide1-eyebrow': 'A Book by Rasmus Bornhoft Schlunsen',
+      'slide1-title': 'The Agentic<br/>Crew',
+      'slide1-subtitle': "Crew Member's Guide",
+      'slide1-tagline': "For people who are great with computers \u2014 but don\u2019t write code.",
+      'slide1-date': 'March 2026',
+      // Slide 2
+      'slide2-heading': 'The Ground Is Shifting',
+      'slide2-quote': '\u201CThe line between \u2018technical\u2019 and \u2018non-technical\u2019 is dissolving. Not because everyone is learning to code \u2014 but because the tools are learning to listen.\u201D',
+      // Slide 3
+      'slide3-heading': "What\u2019s Under the Hood",
+      'slide3-subtitle': 'Every app is a restaurant.',
+      'slide3-frontend': 'Frontend',
+      'slide3-frontend-meta': 'The Dining Room',
+      'slide3-frontend-desc': 'What customers see and touch',
+      'slide3-backend': 'Backend',
+      'slide3-backend-meta': 'The Kitchen',
+      'slide3-backend-desc': 'Where the real work happens',
+      'slide3-database': 'Database',
+      'slide3-database-meta': 'The Filing Cabinet',
+      'slide3-database-desc': 'Where everything is remembered',
+      'slide3-cache': 'Cache',
+      'slide3-cache-meta': 'The Whiteboard',
+      'slide3-cache-desc': 'Quick notes for the rush',
+      // Slide 4
+      'slide4-heading': 'What Is an Agent?',
+      'slide4-observe': 'Observe',
+      'slide4-plan': 'Plan',
+      'slide4-act': 'Act',
+      'slide4-check': 'Check',
+      'slide4-repeat': 'Repeat',
+      'slide4-quote': '\u201CNot magic. Not sentient. A loop.\u201D',
+      // Slide 5
+      'slide5-heading': 'Good vs Bad Instructions',
+      'slide5-bad-label': 'BAD',
+      'slide5-bad-text': '\u201CFix the website\u201D',
+      'slide5-bad-result': 'Confused, sprawling changes',
+      'slide5-good-label': 'GOOD',
+      'slide5-good-text': '\u201CChange the homepage button from blue (#3b82f6) to green (#22c55e). Don\u2019t change anything else.\u201D',
+      'slide5-good-result': 'Precise, verifiable result',
+      // Slide 6
+      'slide6-heading': 'The Trust Gradient',
+      'slide6-tight': 'Tight control',
+      'slide6-full': 'Full autonomy',
+      'slide6-item1': 'Draft internal notes',
+      'slide6-item2': 'Send emails',
+      'slide6-item3': 'Modify database',
+      'slide6-item4': 'Deploy to production',
+      'slide6-quote': '\u201CStart tight. Loosen with evidence.\u201D',
+      // Slide 7
+      'slide7-heading': 'Building Something Real',
+      'slide7-body': "The GlassView story \u2014 a window installer\u2019s quoting app.",
+      'slide7-cap1': '3D window preview',
+      'slide7-cap2': 'PDF quotes with pricing',
+      'slide7-cap3': 'Customer database',
+      'slide7-highlight': 'Built in a weekend. Without writing code.',
+      // Slide 8
+      'slide8-heading': 'When Things Go Wrong',
+      'slide8-story1': "The Email That Wasn\u2019t Ready",
+      'slide8-story2': 'The Confident Statistic',
+      'slide8-story3': 'The Overzealous Redesign',
+      'slide8-recovery-label': 'Recovery pattern:',
+      'slide8-step1': 'Stop',
+      'slide8-step2': 'Assess',
+      'slide8-step3': 'Restore',
+      'slide8-step4': 'Learn',
+      'slide8-step5': 'Try again',
+      // Slide 9
+      'slide9-heading': 'Now go build something.',
+      'slide9-cta': 'Get the Book \u2014 Free',
+    },
+    ca: {
+      'play-overlay-text': 'Iniciar Presentació',
+      // Slide 1
+      'slide1-eyebrow': 'Un llibre de Rasmus Bornhoft Schlunsen',
+      'slide1-title': 'The Agentic<br/>Crew',
+      'slide1-subtitle': "Guia del Membre de la Tripulaci\u00F3",
+      'slide1-tagline': "Per a persones que s\u00F3n genials amb els ordinadors \u2014 per\u00F2 no escriuen codi.",
+      'slide1-date': 'Mar\u00E7 2026',
+      // Slide 2
+      'slide2-heading': 'El Terreny Est\u00E0 Canviant',
+      'slide2-quote': '\u201CLa l\u00EDnia entre \u2018t\u00E8cnic\u2019 i \u2018no t\u00E8cnic\u2019 s\u2019est\u00E0 dissolent. No perqu\u00E8 tothom estigui aprenent a programar \u2014 sin\u00F3 perqu\u00E8 les eines estan aprenent a escoltar.\u201D',
+      // Slide 3
+      'slide3-heading': "Qu\u00E8 Hi Ha Sota el Cap\u00F3",
+      'slide3-subtitle': 'Cada aplicaci\u00F3 \u00E9s un restaurant.',
+      'slide3-frontend': 'Frontend',
+      'slide3-frontend-meta': 'El Menjador',
+      'slide3-frontend-desc': 'El que veuen i toquen els clients',
+      'slide3-backend': 'Backend',
+      'slide3-backend-meta': 'La Cuina',
+      'slide3-backend-desc': 'On passa la feina de deb\u00F2',
+      'slide3-database': 'Base de Dades',
+      'slide3-database-meta': "L\u2019Arxivador",
+      'slide3-database-desc': 'On es recorda tot',
+      'slide3-cache': 'Cau',
+      'slide3-cache-meta': 'La Pissarra',
+      'slide3-cache-desc': 'Notes r\u00E0pides per al moment',
+      // Slide 4
+      'slide4-heading': 'Qu\u00E8 \u00C9s un Agent?',
+      'slide4-observe': 'Observar',
+      'slide4-plan': 'Planificar',
+      'slide4-act': 'Actuar',
+      'slide4-check': 'Comprovar',
+      'slide4-repeat': 'Repetir',
+      'slide4-quote': '\u201CNi m\u00E0gia. Ni sentient. Un bucle.\u201D',
+      // Slide 5
+      'slide5-heading': 'Bones vs Males Instruccions',
+      'slide5-bad-label': 'MALAMENT',
+      'slide5-bad-text': '\u201CArregla el web\u201D',
+      'slide5-bad-result': 'Canvis confusos i dispersos',
+      'slide5-good-label': 'B\u00C9',
+      'slide5-good-text': '\u201CCanvia el bot\u00F3 de la p\u00E0gina principal de blau (#3b82f6) a verd (#22c55e). No canvi\u00EFs res m\u00E9s.\u201D',
+      'slide5-good-result': 'Resultat prec\u00EDs i verificable',
+      // Slide 6
+      'slide6-heading': 'El Gradient de Confian\u00E7a',
+      'slide6-tight': 'Control estricte',
+      'slide6-full': 'Autonomia total',
+      'slide6-item1': 'Esborrany de notes internes',
+      'slide6-item2': 'Enviar correus electr\u00F2nics',
+      'slide6-item3': 'Modificar la base de dades',
+      'slide6-item4': 'Desplegar a producci\u00F3',
+      'slide6-quote': '\u201CComence estret. Afluixa amb evid\u00E8ncia.\u201D',
+      // Slide 7
+      'slide7-heading': 'Construint Quelcom Real',
+      'slide7-body': "La hist\u00F2ria de GlassView \u2014 una app de pressupostos per a instal\u00B7ladors de finestres.",
+      'slide7-cap1': 'Previsualitzaci\u00F3 3D de finestres',
+      'slide7-cap2': 'Pressupostos en PDF amb preus',
+      'slide7-cap3': 'Base de dades de clients',
+      'slide7-highlight': "Constru\u00EFt en un cap de setmana. Sense escriure codi.",
+      // Slide 8
+      'slide8-heading': 'Quan les Coses Surten Malament',
+      'slide8-story1': "El Correu que No Estava Preparat",
+      'slide8-story2': "L\u2019Estad\u00EDstica Confident",
+      'slide8-story3': 'El Redisseny Excessiu',
+      'slide8-recovery-label': "Patr\u00F3 de recuperaci\u00F3:",
+      'slide8-step1': 'Atura',
+      'slide8-step2': 'Avalua',
+      'slide8-step3': 'Restaura',
+      'slide8-step4': "Apr\u00E8n",
+      'slide8-step5': 'Torna-ho a provar',
+      // Slide 9
+      'slide9-heading': 'Ara v\u00E9s i construeix alguna cosa.',
+      'slide9-cta': 'Aconsegueix el Llibre \u2014 Gratu\u00EFt',
+    },
+  };
+
+  function applyLanguage(lang: Lang) {
+    currentLang = lang;
+    localStorage.setItem('crew-pres-lang', lang);
+
+    // Update active button
+    langBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    // Apply translations
+    const elements = document.querySelectorAll<HTMLElement>('[data-i18n]');
+    elements.forEach(el => {
+      const key = el.dataset.i18n!;
+      const text = translations[lang]?.[key];
+      if (text) {
+        el.innerHTML = text;
+      }
+    });
+  }
+
+  // Language button handlers
+  langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang as Lang;
+      if (lang !== currentLang) {
+        applyLanguage(lang);
+      }
+    });
+  });
+
+  // Apply saved language on load
+  if (currentLang !== 'en') {
+    applyLanguage(currentLang);
+  }
+
+  // ========================================
+  // AUDIO NARRATION SYSTEM
+  // ========================================
+
+  const audioToggle = document.getElementById('audio-toggle')!;
+  const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
+  const audioProgressBar = document.getElementById('audio-progress-bar')!;
+
+  let audioEnabled = true;
+  let audioVolume = 0.8;
+  let currentAudio: HTMLAudioElement | null = null;
+  let audioProgressInterval: number | null = null;
+
+  // Preload audio for all slides
+  let slideAudioCache: Record<number, HTMLAudioElement> = {};
+
+  function preloadSlideAudio(slideIndex: number) {
+    const slideNum = slideIndex + 1;
+    const paddedNum = slideNum.toString().padStart(2, '0');
+    const langSuffix = currentLang === 'ca' ? '-ca' : '';
+    const audioUrl = `/crew-presentation-audio/slide-${paddedNum}${langSuffix}.mp3`;
+
+    const audio = new Audio();
+    audio.preload = 'auto';
+    audio.src = audioUrl;
+    audio.volume = audioVolume;
+    audio.addEventListener('error', () => {
+      delete slideAudioCache[slideIndex];
+    });
+    audio.addEventListener('canplaythrough', () => {
+      slideAudioCache[slideIndex] = audio;
+    }, { once: true });
+    slideAudioCache[slideIndex] = audio;
+  }
+
+  function preloadAllAudio() {
+    // Clear cache when language changes
+    Object.values(slideAudioCache).forEach(a => { a.pause(); a.src = ''; });
+    slideAudioCache = {};
+    for (let i = 0; i < totalSlides; i++) {
+      preloadSlideAudio(i);
+    }
+  }
+
+  // Initial preload
+  preloadAllAudio();
+
+  // Re-preload when language changes
+  const origApplyLanguage = applyLanguage;
+  applyLanguage = function(lang: Lang) {
+    origApplyLanguage(lang);
+    stopCurrentAudio();
+    preloadAllAudio();
+    // Auto-play audio for current slide in new language after a brief delay
+    setTimeout(() => {
+      if (audioEnabled) playSlideAudio(currentSlide);
+    }, 500);
+  };
+
+  const FADE_DURATION = 600;
+  const FADE_STEPS = 30;
+
+  function fadeOutAudio(audio: HTMLAudioElement): Promise<void> {
+    return new Promise((resolve) => {
+      const startVol = audio.volume;
+      if (startVol === 0 || audio.paused) { resolve(); return; }
+      const step = startVol / FADE_STEPS;
+      const interval = FADE_DURATION / FADE_STEPS;
+      const timer = setInterval(() => {
+        const newVol = Math.max(0, audio.volume - step);
+        audio.volume = newVol;
+        if (newVol <= 0.01) {
+          clearInterval(timer);
+          audio.pause();
+          audio.volume = startVol;
+          resolve();
+        }
+      }, interval);
+    });
+  }
+
+  function fadeInAudio(audio: HTMLAudioElement, targetVol: number) {
+    audio.volume = 0;
+    audio.play().catch(() => {
+      console.log('Audio autoplay blocked. Click the speaker icon to enable.');
+    });
+    const step = targetVol / FADE_STEPS;
+    const interval = FADE_DURATION / FADE_STEPS;
+    const timer = setInterval(() => {
+      const newVol = Math.min(targetVol, audio.volume + step);
+      audio.volume = newVol;
+      if (newVol >= targetVol - 0.01) {
+        audio.volume = targetVol;
+        clearInterval(timer);
+      }
+    }, interval);
+  }
+
+  function stopCurrentAudio() {
+    if (currentAudio) {
+      const audio = currentAudio;
+      const startVol = audio.volume;
+      const step = startVol / 15;
+      const timer = setInterval(() => {
+        const newVol = Math.max(0, audio.volume - step);
+        audio.volume = newVol;
+        if (newVol <= 0.01) {
+          clearInterval(timer);
+          audio.pause();
+          audio.currentTime = 0;
+          audio.volume = startVol;
+        }
+      }, 20);
+      currentAudio = null;
+    }
+    if (audioProgressInterval) {
+      clearInterval(audioProgressInterval);
+      audioProgressInterval = null;
+    }
+    audioProgressBar.style.width = '0%';
+  }
+
+  let pendingAudioTimer: number | null = null;
+
+  function playSlideAudio(slideIndex: number) {
+    if (pendingAudioTimer) {
+      clearTimeout(pendingAudioTimer);
+      pendingAudioTimer = null;
+    }
+
+    if (!audioEnabled) { stopCurrentAudio(); return; }
+
+    const nextAudio = slideAudioCache[slideIndex];
+    if (!nextAudio) { stopCurrentAudio(); return; }
+
+    if (currentAudio && !currentAudio.paused) {
+      const prevAudio = currentAudio;
+      currentAudio = null;
+      if (audioProgressInterval) { clearInterval(audioProgressInterval); audioProgressInterval = null; }
+
+      fadeOutAudio(prevAudio).then(() => {
+        prevAudio.currentTime = 0;
+        pendingAudioTimer = window.setTimeout(() => {
+          pendingAudioTimer = null;
+          if (!currentAudio || currentAudio.paused) {
+            startNewAudio(nextAudio, slideIndex);
+          }
+        }, 1000);
+      });
+    } else {
+      Object.values(slideAudioCache).forEach(a => {
+        if (a !== nextAudio && !a.paused) { a.pause(); a.currentTime = 0; }
+      });
+      stopCurrentAudio();
+      pendingAudioTimer = window.setTimeout(() => {
+        pendingAudioTimer = null;
+        startNewAudio(nextAudio, slideIndex);
+      }, 1200);
+    }
+  }
+
+  function startNewAudio(audio: HTMLAudioElement, slideIndex: number) {
+    if (!audioEnabled) return;
+
+    audio.currentTime = 0;
+    currentAudio = audio;
+
+    fadeInAudio(audio, audioVolume);
+
+    audioProgressInterval = window.setInterval(() => {
+      if (audio.duration && !audio.paused) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        audioProgressBar.style.width = `${pct}%`;
+      }
+    }, 200);
+
+    audio.addEventListener('ended', () => {
+      audioProgressBar.style.width = '100%';
+      setTimeout(() => { audioProgressBar.style.width = '0%'; }, 500);
+      if (audioProgressInterval) clearInterval(audioProgressInterval);
+    }, { once: true });
+  }
+
+  // Toggle mute
+  audioToggle.addEventListener('click', () => {
+    audioEnabled = !audioEnabled;
+    audioToggle.classList.toggle('muted', !audioEnabled);
+
+    if (!audioEnabled) {
+      stopCurrentAudio();
+    } else {
+      playSlideAudio(currentSlide);
+    }
+  });
+
+  // Volume control
+  volumeSlider.addEventListener('input', () => {
+    audioVolume = parseInt(volumeSlider.value) / 100;
+    if (currentAudio) { currentAudio.volume = audioVolume; }
+    if (audioVolume === 0) {
+      audioToggle.classList.add('muted');
+      audioEnabled = false;
+    } else if (!audioEnabled) {
+      audioEnabled = true;
+      audioToggle.classList.remove('muted');
+    }
+  });
+
+  // 'A' key to toggle audio
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'a' || e.key === 'A') {
+      audioToggle.click();
+    }
+  });
+
+  // Export audio function so goToSlide can call it
+  (window as any).__playSlideAudio = playSlideAudio;
+
+  // ========================================
+  // PLAY OVERLAY — start presentation on click
+  // ========================================
+
+  const playOverlay = document.getElementById('play-overlay')!;
+  const playOverlayBtn = document.getElementById('play-overlay-btn')!;
+
+  playOverlayBtn.addEventListener('click', () => {
+    playOverlay.classList.add('hidden');
+    playSlideAudio(0);
+  });
+
+  // Also allow Enter/Space to start
+  document.addEventListener('keydown', function startOnKey(e) {
+    if (!playOverlay.classList.contains('hidden') && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      playOverlay.classList.add('hidden');
+      playSlideAudio(0);
+      document.removeEventListener('keydown', startOnKey);
+    }
+  });
+
+  // ========================================
+  // AUTO-ADVANCE — go to next slide when audio ends
+  // ========================================
+
+  let autoAdvanceEnabled = true;
+
+  // Patch startNewAudio to add auto-advance on audio end
+  const _origStartNewAudio = startNewAudio;
+  startNewAudio = function(audio: HTMLAudioElement, slideIndex: number) {
+    _origStartNewAudio(audio, slideIndex);
+
+    // When narration ends, auto-advance to next slide after a short pause
+    audio.addEventListener('ended', () => {
+      if (autoAdvanceEnabled && audioEnabled && slideIndex < totalSlides - 1) {
+        setTimeout(() => {
+          goToSlide(slideIndex + 1, 'next');
+        }, 1200); // 1.2s pause before advancing
+      }
+    }, { once: true });
+  };
+</script>

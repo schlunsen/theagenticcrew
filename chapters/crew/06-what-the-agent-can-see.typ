@@ -1,13 +1,13 @@
-= What the Agent Can See
+= Context In, Verification Out
 
 #figure(
   image("../../assets/illustrations/crew/ch06-workbench.jpg", width: 80%),
   caption: [_An agent can only work with what's on the bench._],
 )
 
-The single most important thing about working with agents isn't how you prompt them. It's what you put in front of them before you ask the question.
+Working with an agent is a loop with two sides. On one side: what you put in front of the agent before you ask the question. On the other: how you read what comes back. Most people focus on the prompt — the words in the middle. But the real skill is managing both ends. Give it the right context, and the output is sharp. Read the output with the right eye, and you catch the things the agent can't.
 
-An agent is only as good as what it can see. Give it a vague description and a blank slate, and it will hallucinate confidently. Give it the right files, the right constraints, the right view of the problem — and it will do things that feel like magic. The difference isn't the model. It's you.
+This chapter is about both halves of that loop.
 
 == The Workbench
 
@@ -66,8 +66,67 @@ For each task, ask yourself:
 
 A focused workbench beats a cluttered one. Three relevant files are better than thirty irrelevant ones. The specific error message is better than the entire log file.
 
+== Now Read What Comes Back
+
+Good context gets you better output. But better output is not the same as _correct_ output. An agent will never tell you it's wrong. It doesn't know it's wrong. It produces output with the same confidence whether it's perfectly accurate or completely fabricated.
+
+Your job — the skill that separates a productive agent user from a dangerous one — is learning to read the output with healthy scepticism. This isn't about distrust. It's about _calibrated_ trust. A good editor trusts their writers but still checks the facts. You're the editor.
+
+== Hallucinations
+
+The technical term is "hallucination" — when an agent produces information that sounds plausible but is factually wrong. It's the most important failure mode to understand because it's the hardest to catch.
+
+A hallucination isn't a random error. It's a _plausible_ error. The agent doesn't say "the revenue was purple." It says "Q2 revenue was \$2.3 million" when the actual number is \$2.1 million. It doesn't cite a source that obviously doesn't exist — it cites one that _sounds_ like it should exist.
+
+This is why hallucinations are dangerous: they pass the sniff test. You read the output, it sounds reasonable, and you move on. The error propagates into your report, your presentation, your decision.
+
+== The Verification Checklist
+
+For any agent output that matters, run through this:
+
+*Numbers:* Where did they come from? Can you trace them back to the source data? If the agent says "sales grew 15%," check the actual data. Don't trust percentages, totals, or statistics without verification.
+
+*Names and dates:* Agents frequently get details slightly wrong. The right person but the wrong date. The right company but the wrong product. Spot-check specifics.
+
+*Claims and facts:* If the agent states something as fact, ask yourself — is this something I already know to be true, or am I learning it from the agent? If you're learning it from the agent, verify it.
+
+*Sources and citations:* If the agent cites a source, check that the source exists and actually says what the agent claims. Agents are notorious for citing real-sounding publications with fabricated content.
+
+*Completeness:* Is the output missing anything obvious? Agents tend to produce plausible-looking work that covers 80% of what you asked for. The missing 20% is often the part that would have revealed a problem.
+
+== The Confidence Trap
+
+Agents express everything with the same level of confidence. "The meeting is at 3pm" looks identical whether the agent is reading it from your calendar or guessing based on your usual schedule.
+
+There's no italic font for uncertainty. No "I think" or "I'm not sure." You have to develop your own sense for which types of output are likely to be accurate:
+
+*High confidence (usually reliable):*
+- Formatting and restructuring existing data you provided
+- Following explicit instructions ("sort this list alphabetically")
+- Performing calculations on data you gave it
+- Summarising a document you provided
+
+*Lower confidence (always verify):*
+- Factual claims about the world (dates, statistics, current events)
+- Anything involving recent events (the model's training has a cutoff date)
+- Specific numbers it didn't calculate from data you provided
+- Legal, medical, or financial advice
+- Claims about what's in a document it hasn't actually read
+
+== Building the Habit
+
+Verification shouldn't feel like a burden. It should feel like proofreading — a natural, quick pass over the output before you use it.
+
+For low-stakes tasks (drafting an internal message, organising notes), a quick skim is enough. Did it capture the key points? Does the tone feel right? Good enough.
+
+For medium-stakes tasks (a client report, a data analysis), check the numbers and key claims. Trace at least one or two facts back to their source.
+
+For high-stakes tasks (a board presentation, a financial projection, a legal document), verify everything. Treat the agent's output as a first draft that needs fact-checking, not a finished product.
+
 == The Compound Effect
 
-Every time you give an agent good context, the output is better. Better output means less time spent correcting. Less correcting means more time for the next task. Over a week, the difference between someone who dumps vague descriptions and someone who provides clean, focused context is enormous — not because they're smarter, but because they've learned to set the agent up for success.
+Every time you give an agent good context, the output is better. Better output means less time spent correcting. Every time you verify efficiently, you build intuition for where agents are reliable and where they're brittle.
 
-This skill compounds. And it's the exact same skill that makes you better at delegating to humans, writing clearer emails, and filing better bug reports. The agent just gives you faster feedback on whether your communication was clear enough.
+These two skills compound together. Over a week, the difference between someone who dumps vague descriptions and blindly accepts output versus someone who provides clean context and verifies smartly is enormous — not because they're smarter, but because they've learned to manage both ends of the loop.
+
+And it's the exact same skill that makes you better at delegating to humans, writing clearer emails, and filing better bug reports. The agent just gives you faster feedback on whether your communication was clear enough.

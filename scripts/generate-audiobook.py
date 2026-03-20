@@ -184,12 +184,57 @@ HAS_FFMPEG = shutil.which("ffmpeg") is not None
 # ---------------------------------------------------------------------------
 
 def strip_typst(text: str) -> str:
-    """Remove Typst markup and return plain text."""
+    """Remove Typst markup and return plain text.
 
-    # Remove code blocks (```...```)
-    text = re.sub(r"```[\s\S]*?```", "", text)
+    Code blocks and figure captions are preserved as narrated content
+    so the audiobook matches the PDF book.
+    """
 
-    # Remove #image(...), #figure(...), #v(...), #pagebreak() and similar commands
+    # Convert code blocks to narrated content instead of removing them
+    def _narrate_code_block(m):
+        code = m.group(0)
+        # Strip the ``` delimiters and optional language tag
+        code = re.sub(r"^```\w*\n?", "", code)
+        code = re.sub(r"\n?```$", "", code)
+        code = code.strip()
+        if not code:
+            return ""
+        # Read the code content as-is so listeners hear exactly what's in the book
+        return f"\n\n{code}\n\n"
+
+    text = re.sub(r"```[\s\S]*?```", _narrate_code_block, text)
+
+    # Extract figure captions before removing figure commands
+    # Matches #figure(..., caption: [...]) and keeps the caption text
+    def _extract_figure_caption(t):
+        pattern = r"#figure\("
+        while True:
+            m = re.search(pattern, t)
+            if not m:
+                break
+            start = m.start()
+            depth = 0
+            i = m.end() - 1  # position of opening paren
+            while i < len(t):
+                if t[i] == "(":
+                    depth += 1
+                elif t[i] == ")":
+                    depth -= 1
+                    if depth == 0:
+                        break
+                i += 1
+            figure_text = t[start:i + 1]
+            # Try to extract caption content from caption: [...]
+            cap_match = re.search(r"caption:\s*\[([^\]]*)\]", figure_text)
+            replacement = ""
+            if cap_match:
+                replacement = f"\n\n{cap_match.group(1).strip()}\n\n"
+            t = t[:start] + replacement + t[i + 1:]
+        return t
+
+    text = _extract_figure_caption(text)
+
+    # Remove #image(...), #v(...), #pagebreak() and similar commands
     # These can span multiple lines with nested parens
     def remove_command(t, cmd):
         pattern = r"#" + cmd + r"\("

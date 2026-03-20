@@ -24,32 +24,6 @@ test.describe('The Agentic Crew Website', () => {
     await expect(page.locator('.lang-tab').filter({ hasText: 'Dansk' })).toBeVisible();
   });
 
-  test('kids edition section exists', async ({ page }) => {
-    await page.goto('/');
-    const kidsCard = page.locator('.kids-card');
-    await expect(kidsCard).toBeVisible();
-    await expect(kidsCard.locator('h2')).toHaveText("Kids' Edition");
-  });
-
-  test('kids edition has language tabs', async ({ page }) => {
-    await page.goto('/');
-    await expect(page.locator('.lang-tab-kids').filter({ hasText: 'English' })).toBeVisible();
-    await expect(page.locator('.lang-tab-kids').filter({ hasText: 'Español' })).toBeVisible();
-    await expect(page.locator('.lang-tab-kids').filter({ hasText: 'Català' })).toBeVisible();
-    await expect(page.locator('.lang-tab-kids').filter({ hasText: 'Dansk' })).toBeVisible();
-  });
-
-  test('English kids PDF download link works', async ({ page }) => {
-    await page.goto('/');
-    const kidsLink = page.locator('a[href="/the-agentic-crew-kids.pdf"]');
-    await expect(kidsLink).toBeVisible();
-
-    // Verify it returns a valid response (not 404)
-    const response = await page.request.get('/the-agentic-crew-kids.pdf');
-    expect(response.status()).toBe(200);
-    expect(response.headers()['content-type']).toContain('application/pdf');
-  });
-
   test('adult book PDF downloads are available', async ({ page }) => {
     const pdfs = [
       '/the-agentic-crew.pdf',
@@ -88,18 +62,6 @@ test.describe('The Agentic Crew Website', () => {
     const esPanel = page.locator('.lang-panel[data-lang="es"]');
     await expect(esPanel).toBeVisible();
     await expect(esPanel.locator('.lang-title')).toHaveText('La Tripulación Agéntica');
-  });
-
-  test('language tab switching works for kids book', async ({ page }) => {
-    await page.goto('/');
-
-    // Click Danish kids tab
-    await page.locator('.lang-tab-kids').filter({ hasText: 'Dansk' }).click();
-
-    // Verify Danish kids panel is now visible
-    const daPanel = page.locator('.lang-panel-kids[data-lang-kids="da"]');
-    await expect(daPanel).toBeVisible();
-    await expect(daPanel.locator('.lang-title')).toHaveText('Det Agentiske Mandskab — Børneguide');
   });
 
   test('buy me a coffee link is present', async ({ page }) => {

@@ -1,0 +1,605 @@
+---
+const chapters = [
+  { id: "01-welcome-to-the-crew", number: "01", title: "Welcome to the Crew", titleCa: "Benvingut a la tripulacio" },
+  { id: "02-the-ground-is-shifting", number: "02", title: "The Ground Is Shifting", titleCa: "El terra s'esta movent" },
+  { id: "03-whats-under-the-hood", number: "03", title: "What's Under the Hood", titleCa: "Que hi ha sota el capo" },
+  { id: "04-what-is-an-agent", number: "04", title: "What Is an Agent, Really?", titleCa: "Que es un agent, realment?" },
+  { id: "05-how-to-give-good-instructions", number: "05", title: "How to Give Good Instructions", titleCa: "Com donar bones instruccions" },
+  { id: "06-what-the-agent-can-see", number: "06", title: "What the Agent Can See", titleCa: "Que pot veure l'agent" },
+  { id: "07-the-trust-gradient", number: "07", title: "The Trust Gradient", titleCa: "El Gradient de Confianca" },
+  { id: "08-extending-the-crews-reach", number: "08", title: "Extending the Crew's Reach", titleCa: "Ampliant l'Abast de la Tripulacio" },
+  { id: "09-the-padlock", number: "09", title: "The Padlock", titleCa: "El Cadenat" },
+  { id: "10-reading-the-output-like-a-pro", number: "10", title: "Reading the Output Like a Pro", titleCa: "Llegir la Sortida com un Professional" },
+  { id: "11-building-something-real", number: "11", title: "Building Something Real", titleCa: "Construir Alguna Cosa Real" },
+  { id: "12-when-things-go-wrong", number: "12", title: "When Things Go Wrong", titleCa: "Quan les coses surten malament" },
+  { id: "13-when-to-do-it-yourself", number: "13", title: "When to Do It Yourself", titleCa: "Quan fer-ho tu mateix" },
+  { id: "14-being-the-human-in-the-loop", number: "14", title: "Being the Human in the Loop", titleCa: "Ser l'huma en el proces" },
+  { id: "15-talking-to-your-tech-team", number: "15", title: "Talking to Your Tech Team", titleCa: "Parlant amb el Teu Equip Tecnic" },
+  { id: "16-keeping-your-finger-on-the-pulse", number: "16", title: "Keeping Your Finger on the Pulse", titleCa: "Mantenir el Pols" },
+  { id: "17-final-words", number: "17", title: "Final Words", titleCa: "Paraules Finals" },
+];
+---
+
+<section class="audiobook" id="crew-audiobook">
+  <div class="audiobook-inner">
+    <div class="audiobook-header">
+      <p class="audiobook-eyebrow">
+        <span class="eyebrow-icon">&#9835;</span>
+        <span data-i18n-crew="eyebrow">Listen Free</span>
+      </p>
+      <h2 data-i18n-crew="title">Crew Member's Guide — Audiobook</h2>
+      <p class="audiobook-subtitle" data-i18n-crew="subtitle">Listen to the full Crew Member's Guide, chapter by chapter. AI-narrated with a natural voice.</p>
+    </div>
+
+    <div class="audiobook-card">
+      <!-- Language Toggle -->
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en" data-book="crew">
+          English
+        </button>
+        <button class="lang-btn" data-lang="ca" data-book="crew-ca">
+          Catala
+        </button>
+      </div>
+
+      <!-- Audio Player -->
+      <div class="player-container">
+        <div class="now-playing">
+          <span class="now-playing-label" data-i18n-crew="now-playing">Now playing</span>
+          <span class="now-playing-title" id="crew-now-playing-title" data-i18n-crew="select-chapter">Select a chapter</span>
+        </div>
+        <audio id="crew-audiobook-player" controls preload="none">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <!-- Chapter List -->
+      <div class="chapter-list-audio">
+        {chapters.map((chapter) => (
+          <button
+            class="chapter-row"
+            data-chapter-id={chapter.id}
+            data-chapter-title={chapter.title}
+            data-chapter-title-ca={chapter.titleCa}
+            data-chapter-num={chapter.number}
+          >
+            <span class="chapter-row-num">{chapter.number}</span>
+            <span class="chapter-row-title">{chapter.title}</span>
+            <span class="chapter-row-play">
+              <svg class="play-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <polygon points="5,3 19,12 5,21" />
+              </svg>
+              <svg class="pause-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="display:none;">
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <!-- Download Full Book -->
+      <div class="download-full">
+        <div class="download-full-divider"></div>
+        <p class="download-full-label" data-i18n-crew="download-label">Download the full audiobook</p>
+        <div class="download-full-buttons">
+          <a href="/audiobook/crew/kitt/full-book.mp3" class="download-btn" download id="crew-download-full">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
+            </svg>
+            <span data-i18n-crew="download-btn">Full Audiobook (MP3)</span>
+          </a>
+        </div>
+        <p class="download-full-note" data-i18n-crew="download-note">Individual chapters are being added as they are generated.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const player = document.getElementById('crew-audiobook-player') as HTMLAudioElement;
+    const nowPlayingTitle = document.getElementById('crew-now-playing-title');
+    const langBtns = document.querySelectorAll('#crew-audiobook .lang-btn');
+    const chapterRows = document.querySelectorAll('#crew-audiobook .chapter-row');
+
+    let currentLang = 'en';
+    let currentBook = 'crew';
+    let currentChapterId: string | null = null;
+
+    const translations: Record<string, Record<string, string>> = {
+      en: {
+        'eyebrow': 'Listen Free',
+        'title': "Crew Member's Guide — Audiobook",
+        'subtitle': "Listen to the full Crew Member's Guide, chapter by chapter. AI-narrated with a natural voice.",
+        'now-playing': 'Now playing',
+        'select-chapter': 'Select a chapter',
+        'download-label': 'Download the full audiobook',
+        'download-btn': 'Full Audiobook (MP3)',
+        'download-note': 'Individual chapters are being added as they are generated.',
+      },
+      ca: {
+        'eyebrow': 'Escolta Gratis',
+        'title': "Guia del Tripulant — Audiolllibre",
+        'subtitle': "Escolta la Guia del Tripulant completa, capitol per capitol. Narrat per IA amb veu natural.",
+        'now-playing': 'Reproduint',
+        'select-chapter': 'Selecciona un capitol',
+        'download-label': "Descarrega l'audiollibre complet",
+        'download-btn': 'Audiollibre Complet (MP3)',
+        'download-note': "S'estan afegint capitols a mesura que es generen.",
+      },
+    };
+
+    function getAudioPath(chapterId: string) {
+      const voice = currentLang === 'en' ? 'kitt' : 'female';
+      return `/audiobook/${currentBook}/${voice}/${chapterId}.mp3`;
+    }
+
+    function getChapterTitle(row: Element) {
+      if (currentLang !== 'en') {
+        return row.getAttribute(`data-chapter-title-${currentLang}`) || row.getAttribute('data-chapter-title');
+      }
+      return row.getAttribute('data-chapter-title');
+    }
+
+    function updateI18n() {
+      const t = translations[currentLang] || translations['en'];
+      document.querySelectorAll('#crew-audiobook [data-i18n-crew]').forEach(el => {
+        const key = el.getAttribute('data-i18n-crew');
+        if (key && t[key]) {
+          el.textContent = t[key];
+        }
+      });
+    }
+
+    function updateChapterTitles() {
+      chapterRows.forEach(row => {
+        const titleEl = row.querySelector('.chapter-row-title');
+        if (titleEl) {
+          titleEl.textContent = getChapterTitle(row) || '';
+        }
+      });
+    }
+
+    // Update download link for current language
+    function updateDownloadLink() {
+      const downloadBtn = document.getElementById('crew-download-full') as HTMLAnchorElement;
+      if (downloadBtn) {
+        const voice = currentLang === 'en' ? 'kitt' : 'female';
+        downloadBtn.href = `/audiobook/${currentBook}/${voice}/full-book.mp3`;
+      }
+    }
+
+    // Language toggle
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        const book = btn.getAttribute('data-book');
+        if (!lang || lang === currentLang) return;
+
+        currentLang = lang;
+        currentBook = book || 'crew';
+        langBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        updateI18n();
+        updateChapterTitles();
+        updateDownloadLink();
+
+        if (currentChapterId) {
+          const wasPlaying = !player.paused;
+          player.src = getAudioPath(currentChapterId);
+          player.currentTime = 0;
+          if (wasPlaying) {
+            player.play().catch(() => {});
+          }
+          const activeRow = document.querySelector(`#crew-audiobook .chapter-row[data-chapter-id="${currentChapterId}"]`);
+          if (nowPlayingTitle && activeRow) {
+            const num = activeRow.getAttribute('data-chapter-num');
+            nowPlayingTitle.textContent = `${num}. ${getChapterTitle(activeRow)}`;
+          }
+        }
+      });
+    });
+
+    // Chapter selection
+    chapterRows.forEach(row => {
+      row.addEventListener('click', () => {
+        const chapterId = row.getAttribute('data-chapter-id');
+        const chapterTitle = getChapterTitle(row);
+        const chapterNum = row.getAttribute('data-chapter-num');
+
+        if (!chapterId) return;
+
+        if (currentChapterId === chapterId && player.src) {
+          if (player.paused) {
+            player.play().catch(() => {});
+          } else {
+            player.pause();
+          }
+          return;
+        }
+
+        currentChapterId = chapterId;
+
+        if (nowPlayingTitle) {
+          nowPlayingTitle.textContent = `${chapterNum}. ${chapterTitle}`;
+        }
+
+        chapterRows.forEach(r => r.classList.remove('active'));
+        row.classList.add('active');
+
+        player.src = getAudioPath(chapterId);
+        player.play().catch(() => {});
+      });
+    });
+
+    // Update play/pause icons
+    const updateIcons = () => {
+      chapterRows.forEach(row => {
+        const playIcon = row.querySelector('.play-icon') as HTMLElement;
+        const pauseIcon = row.querySelector('.pause-icon') as HTMLElement;
+        const isActive = row.getAttribute('data-chapter-id') === currentChapterId;
+
+        if (isActive && !player.paused) {
+          playIcon.style.display = 'none';
+          pauseIcon.style.display = 'block';
+        } else {
+          playIcon.style.display = 'block';
+          pauseIcon.style.display = 'none';
+        }
+      });
+    };
+
+    player.addEventListener('play', updateIcons);
+    player.addEventListener('pause', updateIcons);
+    player.addEventListener('ended', () => {
+      updateIcons();
+      // Auto-play next chapter
+      if (currentChapterId) {
+        const rows = Array.from(chapterRows);
+        const currentIndex = rows.findIndex(r => r.getAttribute('data-chapter-id') === currentChapterId);
+        if (currentIndex >= 0 && currentIndex < rows.length - 1) {
+          const nextRow = rows[currentIndex + 1] as HTMLElement;
+          nextRow.click();
+        }
+      }
+    });
+
+    // Handle audio errors gracefully
+    player.addEventListener('error', () => {
+      if (nowPlayingTitle && currentChapterId) {
+        const t = translations[currentLang] || translations['en'];
+        nowPlayingTitle.textContent += currentLang === 'ca' ? ' (encara no disponible)' : ' (not yet available)';
+      }
+    });
+  });
+</script>
+
+<style>
+  .audiobook {
+    padding: 6rem 2rem;
+    position: relative;
+  }
+
+  .audiobook::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(46, 155, 183, 0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .audiobook-inner {
+    max-width: 650px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .audiobook-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .audiobook-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-pirate-teal);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .eyebrow-icon {
+    font-size: 1rem;
+  }
+
+  .audiobook-header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .audiobook-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .audiobook-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .audiobook-card:hover {
+    border-color: var(--color-pirate-teal);
+    box-shadow: 0 8px 40px rgba(46, 155, 183, 0.1);
+  }
+
+  /* Language Toggle */
+  .lang-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+  }
+
+  .lang-btn.active {
+    background: rgba(232, 150, 62, 0.1);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  /* Player */
+  .player-container {
+    margin-bottom: 2rem;
+    background: var(--color-bg-elevated);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--color-border-light);
+  }
+
+  .now-playing {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .now-playing-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-pirate-teal);
+    white-space: nowrap;
+  }
+
+  .now-playing-title {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  audio {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+  }
+
+  audio::-webkit-media-controls-panel {
+    background: var(--color-bg-elevated);
+  }
+
+  /* Chapter List */
+  .chapter-list-audio {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+  }
+
+  .chapter-list-audio::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chapter-list-audio::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .chapter-list-audio::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+
+  .chapter-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    border: none;
+    border-bottom: 1px solid var(--color-border-light);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+    text-align: left;
+    width: 100%;
+    color: inherit;
+  }
+
+  .chapter-row:last-child {
+    border-bottom: none;
+  }
+
+  .chapter-row:hover {
+    background: rgba(46, 155, 183, 0.04);
+  }
+
+  .chapter-row.active {
+    background: rgba(46, 155, 183, 0.08);
+  }
+
+  .chapter-row-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    min-width: 1.75rem;
+    opacity: 0.5;
+  }
+
+  .chapter-row.active .chapter-row-num {
+    opacity: 1;
+    color: var(--color-pirate-teal);
+  }
+
+  .chapter-row-title {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .chapter-row.active .chapter-row-title {
+    color: var(--color-pirate-teal);
+    font-weight: 600;
+  }
+
+  .chapter-row-play {
+    color: var(--color-text-muted);
+    opacity: 0.4;
+    transition: opacity 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .chapter-row:hover .chapter-row-play {
+    opacity: 0.8;
+    color: var(--color-pirate-teal);
+  }
+
+  .chapter-row.active .chapter-row-play {
+    opacity: 1;
+    color: var(--color-pirate-teal);
+  }
+
+  /* Download Full */
+  .download-full {
+    text-align: center;
+  }
+
+  .download-full-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--color-border);
+    margin: 0 auto 1.25rem;
+  }
+
+  .download-full-label {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .download-full-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .download-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent-deep);
+    background: rgba(232, 150, 62, 0.06);
+    transform: translateY(-1px);
+  }
+
+  .download-full-note {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    .audiobook {
+      padding: 4rem 1.5rem;
+    }
+
+    .audiobook-card {
+      padding: 1.75rem 1.25rem;
+    }
+
+    .chapter-list-audio {
+      max-height: 300px;
+    }
+
+    .download-full-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .download-btn {
+      width: 100%;
+      max-width: 220px;
+      justify-content: center;
+    }
+  }
+</style>

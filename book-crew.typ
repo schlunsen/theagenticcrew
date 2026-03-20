@@ -60,7 +60,6 @@
   #let gold-dim = rgb("#6b5a2e")
   #let cream = rgb("#f0ead6")
   #let navy = rgb("#1a2040")
-  #let sea-green = rgb("#2d8a6e")
 
   #block(width: 100%, height: 100%, fill: bg)[
 
@@ -69,36 +68,51 @@
       #rect(width: 100%, height: 40%, fill: gradient.linear(navy, bg))
     ]
 
+    // Compass rose illustration — centred, large
+    #place(dx: 18%, dy: 30%)[
+      #block(width: 64%, clip: true)[
+        #set image(width: 100%)
+        #image("assets/illustrations/crew/cover-compass.jpg")
+      ]
+    ]
+
+    // Semi-transparent overlay to blend compass into background
+    #place(dx: 0%, dy: 30%)[
+      #rect(width: 100%, height: 45%, fill: bg.transparentize(40%))
+    ]
+
     // Left gold accent strip
     #place(dx: 0%, dy: 0%)[
-      #rect(width: 4pt, height: 100%, fill: gold)
+      #rect(width: 3.5pt, height: 100%, fill: gold)
     ]
 
     // Eyebrow
     #place(dx: 8%, dy: 8%)[
-      #text(size: 8pt, fill: gold, weight: "bold", tracking: 3pt)[FOR THE WHOLE CREW]
+      #text(size: 7.5pt, fill: gold, weight: "bold", tracking: 3pt)[FOR THE WHOLE CREW]
     ]
 
     // Title
     #place(dx: 8%, dy: 14%)[
       #block(width: 84%)[
         #text(
-          size: 30pt,
+          size: 34pt,
           weight: "bold",
           fill: cream,
           font: "New Computer Modern",
-          tracking: -0.4pt,
+          tracking: -0.6pt,
         )[The Agentic Crew]
       ]
     ]
 
-    // Subtitle
-    #place(dx: 8%, dy: 24%)[
-      #text(
-        size: 12pt,
-        fill: gold-light,
-        style: "italic",
-      )[Crew Member's Guide]
+    // Subtitle — below title
+    #place(dx: 8%, dy: 72%)[
+      #block(width: 84%)[
+        #text(
+          size: 11pt,
+          fill: gold-light.transparentize(20%),
+          style: "italic",
+        )[Crew Member's Guide]
+      ]
     ]
 
     // Separator
@@ -111,12 +125,13 @@
       #text(
         size: 10.5pt,
         fill: cream.transparentize(25%),
-      )[Rasmus Bornhoft Schlunsen]
+      )[Rasmus Bornhøft Schlünsen]
     ]
 
     // Date & revision
     #place(dx: 8%, dy: 93%)[
       #text(size: 7.5pt, fill: gold-dim)[March 2026]
+      #h(1fr)
     ]
     #place(dx: 0%, dy: 93%)[
       #h(1fr)
@@ -161,14 +176,16 @@ By the end, you'll understand what agents actually are, how modern software work
 #include "chapters/crew/06-what-the-agent-can-see.typ"
 #include "chapters/crew/07-the-trust-gradient.typ"
 #include "chapters/crew/08-extending-the-crews-reach.typ"
-#include "chapters/crew/09-reading-the-output-like-a-pro.typ"
-#include "chapters/crew/10-building-something-real.typ"
-#include "chapters/crew/11-when-things-go-wrong.typ"
-#include "chapters/crew/12-when-to-do-it-yourself.typ"
-#include "chapters/crew/13-being-the-human-in-the-loop.typ"
-#include "chapters/crew/14-talking-to-your-tech-team.typ"
-#include "chapters/crew/15-keeping-your-finger-on-the-pulse.typ"
-#include "chapters/crew/16-final-words.typ"
+#include "chapters/crew/11-building-something-real.typ"
+#include "chapters/crew/09-the-padlock.typ"
+#include "chapters/crew/12-building-something-else.typ"
+#include "chapters/crew/12-when-things-go-wrong.typ"
+#include "chapters/crew/13-when-to-do-it-yourself.typ"
+#include "chapters/crew/14-being-the-human-in-the-loop.typ"
+#include "chapters/crew/15-talking-to-your-tech-team.typ"
+#include "chapters/crew/16-keeping-your-finger-on-the-pulse.typ"
+#include "chapters/crew/18-getting-started.typ"
+#include "chapters/crew/17-final-words.typ"
 
 // ─── Dedication ───
 

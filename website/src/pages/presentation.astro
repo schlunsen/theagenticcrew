@@ -15,6 +15,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <button class="lang-btn" data-lang="es">ES</button>
     </div>
 
+    <!-- Voice Selector -->
+    <div class="voice-selector" id="voice-selector">
+      <button class="voice-btn active" data-voice="male" title="Male narrator (original)">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>M</span>
+      </button>
+      <button class="voice-btn" data-voice="female" title="Female narrator">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>F</span>
+      </button>
+    </div>
+
     <!-- Progress Dots -->
     <div class="progress-dots" id="progress-dots">
       {Array.from({ length: 11 }).map((_, i) => (
@@ -768,6 +780,66 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   /* ========================================
+     VOICE SELECTOR
+     ======================================== */
+
+  .voice-selector {
+    position: fixed;
+    top: 1.5rem;
+    right: 12.5rem;
+    z-index: 100;
+    display: flex;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .voice-btn {
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0.55rem;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    transition: all 0.25s ease;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .voice-btn svg {
+    opacity: 0.6;
+  }
+
+  .voice-btn:hover {
+    color: var(--color-text);
+    background: rgba(232, 150, 62, 0.08);
+  }
+
+  .voice-btn.active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 1px 6px rgba(232, 150, 62, 0.35);
+  }
+
+  .voice-btn.active svg {
+    stroke: white;
+    opacity: 1;
+  }
+
+  /* ========================================
      PLAY OVERLAY
      ======================================== */
 
@@ -921,6 +993,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .lang-selector {
       top: auto;
       bottom: 6.5rem;
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .voice-selector {
+      top: auto;
+      bottom: 8.5rem;
       right: auto;
       left: 50%;
       transform: translateX(-50%);
@@ -2132,6 +2212,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   let currentLang: Lang = (localStorage.getItem('presentation-lang') as Lang) || 'en';
 
   // ========================================
+  // VOICE STATE
+  // ========================================
+
+  type Voice = 'male' | 'female';
+  let currentVoice: Voice = (localStorage.getItem('presentation-voice') as Voice) || 'male';
+
+  // ========================================
   // SLIDE NAVIGATION
   // ========================================
 
@@ -2584,11 +2671,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   // Preload audio for all slides
   const slideAudioCache: Record<number, HTMLAudioElement> = {};
 
-  function preloadSlideAudio(slideIndex: number) {
+  function getAudioUrl(slideIndex: number): string {
     const slideNum = slideIndex + 1;
     const paddedNum = slideNum.toString().padStart(2, '0');
     const langSuffix = currentLang === 'es' ? '-es' : '';
-    const audioUrl = `/presentation-audio/slide-${paddedNum}${langSuffix}.mp3`;
+    const voiceSuffix = currentVoice === 'female' ? '-female' : '';
+    return `/presentation-audio/slide-${paddedNum}${langSuffix}${voiceSuffix}.mp3`;
+  }
+
+  function preloadSlideAudio(slideIndex: number) {
+    const audioUrl = getAudioUrl(slideIndex);
     if (slideAudioCache[slideIndex]) return;
 
     const audio = new Audio();
@@ -3103,12 +3195,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       });
       currentAudio = null;
 
-      // Rebuild audio cache with language-specific paths
+      // Rebuild audio cache with language/voice-specific paths
       for (let i = 0; i < totalSlides; i++) {
-        const slideNum = i + 1;
-        const paddedNum = slideNum.toString().padStart(2, '0');
-        const langSuffix = currentLang === 'es' ? '-es' : '';
-        const audioUrl = `/presentation-audio/slide-${paddedNum}${langSuffix}.mp3`;
+        const audioUrl = getAudioUrl(i);
 
         const audio = new Audio();
         audio.preload = 'auto';
@@ -3139,6 +3228,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     });
   });
+
+  // ========================================
+  // VOICE SWITCHER
+  // ========================================
+
+  const voiceBtns = document.querySelectorAll<HTMLButtonElement>('.voice-btn');
+
+  function applyVoice(voice: Voice) {
+    currentVoice = voice;
+    localStorage.setItem('presentation-voice', voice);
+
+    // Update voice selector buttons
+    voiceBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.voice === voice);
+    });
+
+    // Reload audio with new voice
+    reloadAudioForLanguage();
+  }
+
+  // Voice button click handlers
+  voiceBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const voice = btn.dataset.voice as Voice;
+      if (voice !== currentVoice) {
+        applyVoice(voice);
+      }
+    });
+  });
+
+  // Apply saved voice on load
+  if (currentVoice !== 'male') {
+    applyVoice(currentVoice);
+  }
 
   // Apply saved language on load
   if (currentLang !== 'en') {

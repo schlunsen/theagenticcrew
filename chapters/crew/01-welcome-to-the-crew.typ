@@ -47,8 +47,10 @@ By the end, you won't be a programmer. But you'll be something that might matter
 
 == The Nautical Theme
 
-You might notice this book talks a lot about ships, crews, and captains. That's not an accident. The main edition of _The Agentic Crew_ uses the metaphor of a ship's crew throughout — the engineer as captain, the agents as crew members. The kids' edition takes it even further, with illustrated characters and adventures at sea.
+You might notice this book talks a lot about ships, crews, and captains. That's not an accident. The main edition of _The Agentic Crew_ uses the metaphor of a ship's crew throughout — the engineer as captain, the agents as crew members.
 
-In this edition, you're the crew member. Not the captain — that's the engineer who builds the ship. Not a passenger — you're not just along for the ride. You're a vital part of the crew. You know things the captain doesn't. You see things from the deck that aren't visible from the helm. And increasingly, you're the one telling the crew where to sail.
+In this edition, you're the navigator. You might not have built the ship — that's the engineer's job. But you know the waters. You know the destination. You read the currents and the weather. And increasingly, you're the one charting the course.
 
-Every great ship needs a captain. But no captain has ever sailed anywhere alone.
+In any real crew, the navigator's judgment determines whether the ship reaches the right island or wrecks on the wrong one. The captain builds the vessel. The navigator decides where it goes. That's you.
+
+Every great ship needs a builder. But no ship has ever found its way without someone who knows the waters.
