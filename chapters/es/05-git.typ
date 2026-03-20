@@ -1,7 +1,7 @@
 = Git Como Infraestructura de Agentes
 
 #figure(
-  image("../../assets/illustrations/ch06-git-branches.jpg", width: 80%),
+  image("../../assets/illustrations/ch05-git-branches.jpg", width: 80%),
 )
 
 Ya conoces Git. Llevas años haciendo commits, ramas y merges. Pero en la ingeniería agéntica, Git no es solo control de versiones — es la columna vertebral de todo tu flujo de trabajo. Es tu botón de deshacer, tu framework de ejecución paralela, tu interfaz de revisión y tu sistema de documentación, todo a la vez.

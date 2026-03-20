@@ -1,7 +1,7 @@
 = Testing Som Feedback Loop
 
 #figure(
-  image("../../assets/illustrations/ch08-feedback-loop.jpg", width: 50%),
+  image("../../assets/illustrations/ch07-feedback-loop.jpg", width: 50%),
 )
 
 To codebases. Samme agent. Samme opgave: "Tilføj en rate limiter til API'et der returnerer 429 efter 100 requests per minut per bruger."

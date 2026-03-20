@@ -1,7 +1,7 @@
 = Ampliando el Alcance del Agente
 
 #figure(
-  image("../../assets/illustrations/ch09b-mcp-connections.jpg", width: 70%),
+  image("../../assets/illustrations/ch09-mcp-connections.jpg", width: 70%),
 )
 
 El mes pasado estaba depurando un problema en producción — 502s intermitentes en un endpoint de checkout. Los logs estaban en Datadog. La configuración relevante estaba en nuestro clúster de Kubernetes. El historial del ticket estaba en Linear. El esquema de base de datos estaba en PostgreSQL. El código estaba en mi editor.

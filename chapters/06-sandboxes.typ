@@ -1,7 +1,7 @@
 = Sandboxes
 
 #figure(
-  image("../assets/illustrations/ch07-sandbox.jpg", width: 60%),
+  image("../assets/illustrations/ch06-sandbox.jpg", width: 60%),
 )
 
 A sandbox is a gift you give your agent: the freedom to be wrong.
@@ -18,33 +18,9 @@ Sandboxes solve this by making the _cost of failure_ essentially zero. And when 
 
 == Git Worktrees
 
-For code-focused work, git worktrees are the lightest sandbox you can build. A worktree gives you a full copy of your repo in a separate directory, on its own branch, in seconds.
+We covered worktrees in the Git chapter as an isolation and branching tool. Here they earn a second mention because, viewed through the sandbox lens, they're the lightest disposable environment you can build — a full copy of your repo in a separate directory, on its own branch, in seconds. No containers to build, no VMs to boot. Just git.
 
-The workflow looks like this:
-+ Create a worktree for the task
-+ Point the agent at it
-+ Let it work — commits, file changes, test runs, whatever it needs
-+ Review the result
-+ Merge if good, delete the worktree if not
-
-In practice, this looks like:
-
-```bash
-# Create an isolated workspace for the agent
-git worktree add ../myapp-refactor agent/refactor-auth
-cd ../myapp-refactor
-
-# Agent works here — completely isolated
-# When done, review and merge:
-cd ../myapp
-git merge agent/refactor-auth
-
-# Clean up
-git worktree remove ../myapp-refactor
-git branch -d agent/refactor-auth
-```
-
-No containers to build, no VMs to boot. Just git. This is especially powerful when you're running multiple agents in parallel — each gets its own worktree, its own branch, its own isolated workspace.
+The sandbox value is distinct from the version-control value: a worktree makes the _cost of failure_ essentially zero. The agent can try wild approaches, install odd dependencies, rewrite modules from scratch — and if the result is bad, you delete the worktree. No cleanup. This is especially powerful when you're running multiple agents in parallel — each gets its own worktree, its own branch, its own isolated workspace.
 
 I keep a shell alias for this because I use it so often:
 

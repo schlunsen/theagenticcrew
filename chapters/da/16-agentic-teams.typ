@@ -1,7 +1,7 @@
 = Agentiske Teams
 
 #figure(
-  image("../../assets/illustrations/ch15-crew.jpg", width: 80%),
+  image("../../assets/illustrations/ch16-crew.jpg", width: 80%),
 )
 
 Software har altid været en holdsport. Agenter ændrer ikke det. Men de ændrer holdets form, arbejdets rytme og de færdigheder der tæller. Hvis du leder et hold — eller arbejder på et — skal du tænke over det nu, ikke senere.

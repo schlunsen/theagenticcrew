@@ -1,7 +1,7 @@
 = Quan els Agents s'Equivoquen
 
 #figure(
-  image("../../assets/illustrations/ch13-storm.jpg", width: 80%),
+  image("../../assets/illustrations/ch14-storm.jpg", width: 80%),
 )
 
 Tots els enginyers que treballen amb agents prou temps tenen una col·leccio d'aquestes histories. Els moments on et recolzes a la cadira, mires la pantalla, i murmures alguna cosa impublicable. Son humiliants. Son educatius. I son _inevitables_.

@@ -1,7 +1,7 @@
 = Udvidelse Af Agentens Rækkevidde
 
 #figure(
-  image("../../assets/illustrations/ch09b-mcp-connections.jpg", width: 70%),
+  image("../../assets/illustrations/ch09-mcp-connections.jpg", width: 70%),
 )
 
 Sidste måned debuggede jeg et produktionsproblem — periodiske 502-fejl på et checkout-endpoint. Loggene var i Datadog. Den relevante konfiguration var i vores Kubernetes-cluster. Ticket-historikken var i Linear. Databaseskemaet var i PostgreSQL. Koden var i min editor.

@@ -1,7 +1,7 @@
 = Els Tests com a Bucle de Retroalimentacio
 
 #figure(
-  image("../../assets/illustrations/ch08-feedback-loop.jpg", width: 50%),
+  image("../../assets/illustrations/ch07-feedback-loop.jpg", width: 50%),
 )
 
 Dues bases de codi. El mateix agent. La mateixa tasca: "Afegeix un limitador de velocitat a l'API que retorni 429 despres de 100 peticions per minut per usuari."

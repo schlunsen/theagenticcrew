@@ -1,7 +1,7 @@
 = Cuando los Agentes Se Equivocan
 
 #figure(
-  image("../../assets/illustrations/ch13-storm.jpg", width: 80%),
+  image("../../assets/illustrations/ch14-storm.jpg", width: 80%),
 )
 
 Todo ingeniero que trabaja con agentes el tiempo suficiente tiene una colección de estas historias. Los momentos en que te echas hacia atrás en la silla, miras la pantalla y murmuras algo impublicable. Son humillantes. Son educativas. Y son _inevitables_.

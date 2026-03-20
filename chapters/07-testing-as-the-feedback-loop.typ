@@ -1,7 +1,7 @@
 = Testing as the Feedback Loop
 
 #figure(
-  image("../assets/illustrations/ch08-feedback-loop.jpg", width: 50%),
+  image("../assets/illustrations/ch07-feedback-loop.jpg", width: 50%),
 )
 
 Two codebases. Same agent. Same task: "Add a rate limiter to the API that returns 429 after 100 requests per minute per user."

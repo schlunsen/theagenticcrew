@@ -1,7 +1,7 @@
 = Git Som Agentinfrastruktur
 
 #figure(
-  image("../../assets/illustrations/ch06-git-branches.jpg", width: 80%),
+  image("../../assets/illustrations/ch05-git-branches.jpg", width: 80%),
 )
 
 Du kender allerede Git. Du har committet, branchet og merged i årevis. Men i agentisk ingeniørarbejde er Git ikke bare versionskontrol — det er rygraden i hele dit workflow. Det er din fortrydelsesknap, dit parallelle eksekverings-framework, din review-grænseflade og dit dokumentationssystem på én gang.
