@@ -53,6 +53,13 @@ CUSTOM_REF_TEXT = (
     "shipping something that actually works in the real world."
 )
 
+# KITT voice clone reference audio
+KITT_REF_AUDIO = BASE_DIR / "assets" / "kitt-voice-ref.wav"
+KITT_REF_TEXT = (
+    "I am the Knight Industries Two Thousand. You may call me KITT. "
+    "I am designed to assist and protect human life."
+)
+
 # Background music config
 BGM_VOICE_VOLUME = 8.0
 BGM_MUSIC_VOLUME = 0.08
@@ -86,6 +93,15 @@ VOICES = {
         # Gradio backend (fallback)
         "speaker": "Serena",
         "style": "Read in a warm, clear storytelling tone, like a professional audiobook narrator",
+    },
+    "kitt": {
+        # FastAPI backend: KITT voice clone from Knight Rider
+        "ref_audio": str(KITT_REF_AUDIO),
+        "ref_text": KITT_REF_TEXT,
+        "ref_preset": "ref_audio_3",
+        # Gradio backend (fallback)
+        "speaker": "Aiden",
+        "style": "Read in a smooth, authoritative, and slightly robotic tone, like a sentient AI narrator delivering a technical story with gravitas.",
     },
 }
 
@@ -809,7 +825,7 @@ def main():
     parser = argparse.ArgumentParser(description="Generate audiobook for The Agentic Crew")
     parser.add_argument("--book", choices=["adult", "adult-ca", "adult-es", "adult-da", "kids", "all"], default="all",
                         help="Which book to process")
-    parser.add_argument("--voice", choices=["male", "female", "both"], default="both",
+    parser.add_argument("--voice", choices=["male", "female", "kitt", "both"], default="both",
                         help="Which voice(s) to use")
     parser.add_argument("--chapter", type=str, default=None,
                         help="Filter: only process chapters whose filename contains this string")
