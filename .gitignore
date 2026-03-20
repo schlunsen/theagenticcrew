@@ -10,4 +10,8 @@ test-results/
 website/public/*.pdf
 website/public/*.epub
 website/public/revisions/
-website/public/audiobook/adult/male/full-book.mp3
+
+# Audio and video files — hosted externally, not in git
+*.mp3
+*.wav
+
