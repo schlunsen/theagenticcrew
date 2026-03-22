@@ -10,6 +10,7 @@ test-results/
 website/public/*.pdf
 website/public/*.epub
 website/public/revisions/
+revisions/
 
 # Audio and video files — hosted externally, not in git
 *.mp3

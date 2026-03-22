@@ -138,20 +138,20 @@ deploy:
     cp build/the-agentic-crew-crew-ca.pdf website/public/the-agentic-crew-crew-ca.pdf
     cp build/the-agentic-crew-crew-ca.epub website/public/the-agentic-crew-crew-ca.epub
 
-    # Archive revisions
-    mkdir -p website/public/revisions
-    cp build/the-agentic-crew.pdf "website/public/revisions/the-agentic-crew-rev${rev}.pdf"
-    cp build/the-agentic-crew.epub "website/public/revisions/the-agentic-crew-rev${rev}.epub"
-    cp build/the-agentic-crew-ca.pdf "website/public/revisions/the-agentic-crew-ca-rev${rev}.pdf"
-    cp build/the-agentic-crew-ca.epub "website/public/revisions/the-agentic-crew-ca-rev${rev}.epub"
-    cp build/the-agentic-crew-da.pdf "website/public/revisions/the-agentic-crew-da-rev${rev}.pdf"
-    cp build/the-agentic-crew-da.epub "website/public/revisions/the-agentic-crew-da-rev${rev}.epub"
-    cp build/the-agentic-crew-es.pdf "website/public/revisions/the-agentic-crew-es-rev${rev}.pdf"
-    cp build/the-agentic-crew-es.epub "website/public/revisions/the-agentic-crew-es-rev${rev}.epub"
-    cp build/the-agentic-crew-crew.pdf "website/public/revisions/the-agentic-crew-crew-rev${rev}.pdf"
-    cp build/the-agentic-crew-crew.epub "website/public/revisions/the-agentic-crew-crew-rev${rev}.epub"
-    cp build/the-agentic-crew-crew-ca.pdf "website/public/revisions/the-agentic-crew-crew-ca-rev${rev}.pdf"
-    cp build/the-agentic-crew-crew-ca.epub "website/public/revisions/the-agentic-crew-crew-ca-rev${rev}.epub"
+    # Archive revisions locally (not deployed to website)
+    mkdir -p revisions
+    cp build/the-agentic-crew.pdf "revisions/the-agentic-crew-rev${rev}.pdf"
+    cp build/the-agentic-crew.epub "revisions/the-agentic-crew-rev${rev}.epub"
+    cp build/the-agentic-crew-ca.pdf "revisions/the-agentic-crew-ca-rev${rev}.pdf"
+    cp build/the-agentic-crew-ca.epub "revisions/the-agentic-crew-ca-rev${rev}.epub"
+    cp build/the-agentic-crew-da.pdf "revisions/the-agentic-crew-da-rev${rev}.pdf"
+    cp build/the-agentic-crew-da.epub "revisions/the-agentic-crew-da-rev${rev}.epub"
+    cp build/the-agentic-crew-es.pdf "revisions/the-agentic-crew-es-rev${rev}.pdf"
+    cp build/the-agentic-crew-es.epub "revisions/the-agentic-crew-es-rev${rev}.epub"
+    cp build/the-agentic-crew-crew.pdf "revisions/the-agentic-crew-crew-rev${rev}.pdf"
+    cp build/the-agentic-crew-crew.epub "revisions/the-agentic-crew-crew-rev${rev}.epub"
+    cp build/the-agentic-crew-crew-ca.pdf "revisions/the-agentic-crew-crew-ca-rev${rev}.pdf"
+    cp build/the-agentic-crew-crew-ca.epub "revisions/the-agentic-crew-crew-ca-rev${rev}.epub"
 
     # Build website
     cd website && npm run build && cd ..
