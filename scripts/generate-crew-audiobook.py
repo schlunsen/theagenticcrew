@@ -28,6 +28,7 @@ from pathlib import Path
 from typing import List, Optional
 
 import requests
+import numpy as np
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -51,14 +52,16 @@ CREW_VOICE_REF = BASE_DIR / "assets" / "voice-ref-crew.wav"
 KITT_VOICE_REF = BASE_DIR / "assets" / "kitt-voice-ref.wav"
 AUTHOR_VOICE_REF = BASE_DIR / "assets" / "voice-ref.wav"
 
-# Voice configs
+# Voice configs — Qwen3-TTS voices (voice cloning)
 VOICES = {
     "female": {
+        "backend": "qwen",
         "ref_audio": str(CREW_VOICE_REF),
         "ref_text": "La Balenguera fila, fila, la Balenguera filarà. Qui sap quan acabarà, de filar la seva tela.",
         "ref_preset": "ref_audio_2",
     },
     "kitt": {
+        "backend": "qwen",
         "ref_audio": str(KITT_VOICE_REF),
         "ref_text": (
             "I am the Knight Industries Two Thousand. You may call me KITT. "
@@ -67,6 +70,7 @@ VOICES = {
         "ref_preset": "ref_audio_3",
     },
     "male": {
+        "backend": "qwen",
         "ref_audio": str(AUTHOR_VOICE_REF),
         "ref_text": (
             "The best software is built by people who care deeply about the problem "
@@ -76,11 +80,33 @@ VOICES = {
         ),
         "ref_preset": "ref_audio_3",
     },
+    "sky": {
+        "backend": "kokoro",
+        "kokoro_voice": "af_sky",
+        "kokoro_speed": 1.0,
+        "kokoro_lang": "a",  # American English
+    },
 }
 
+# Lazy-loaded Kokoro pipeline (initialized on first use)
+_kokoro_pipeline = None
+
+def get_kokoro_pipeline(lang_code: str = "a"):
+    """Lazily initialize and return the Kokoro TTS pipeline."""
+    global _kokoro_pipeline
+    if _kokoro_pipeline is None:
+        from kokoro import KPipeline
+        print("  [kokoro] Initializing Kokoro pipeline ...")
+        _kokoro_pipeline = KPipeline(lang_code=lang_code)
+    return _kokoro_pipeline
+
 # Background music
-BGM_VOICE_VOLUME = 8.0
+BGM_VOICE_VOLUME = 8.0  # Default for Qwen voices (their output is quiet)
 BGM_MUSIC_VOLUME = 0.08
+# Per-backend voice volume overrides (Kokoro output is already loud)
+VOICE_VOLUME_OVERRIDES = {
+    "kokoro": 1.5,
+}
 DEFAULT_BGM = "bgm-hazelwood.mp3"
 CHAPTER_BGM = {
     "01": "bgm-hazelwood.mp3",
@@ -306,7 +332,33 @@ def chunk_text(text: str, max_chars: int = MAX_CHUNK_CHARS) -> List[str]:
 # TTS API
 # ---------------------------------------------------------------------------
 
-def tts_generate(text: str, voice: dict) -> bytes:
+def tts_generate_kokoro(text: str, voice: dict) -> bytes:
+    """Generate speech using Kokoro TTS (local model). Returns WAV bytes."""
+    import soundfile as sf
+    import io
+
+    pipeline = get_kokoro_pipeline(voice.get("kokoro_lang", "a"))
+    kokoro_voice = voice.get("kokoro_voice", "af_sky")
+    speed = voice.get("kokoro_speed", 1.0)
+
+    # Generate all audio chunks and concatenate
+    all_audio = []
+    for gs, ps, audio in pipeline(text, voice=kokoro_voice, speed=speed):
+        all_audio.append(audio)
+
+    if not all_audio:
+        raise RuntimeError("Kokoro generated no audio")
+
+    # Concatenate all chunks
+    combined = np.concatenate(all_audio) if len(all_audio) > 1 else all_audio[0]
+
+    # Write to WAV bytes
+    buf = io.BytesIO()
+    sf.write(buf, combined, 24000, format="WAV")
+    return buf.getvalue()
+
+
+def tts_generate_qwen(text: str, voice: dict) -> bytes:
     """Call faster-qwen3-tts FastAPI and return WAV audio bytes."""
     form_data = {
         "text": text,
@@ -350,6 +402,15 @@ def tts_generate(text: str, voice: dict) -> bytes:
                 backoff = min(backoff * 2, 120)
             else:
                 raise RuntimeError(f"Failed after {MAX_RETRIES} attempts: {e}")
+
+
+def tts_generate(text: str, voice: dict) -> bytes:
+    """Generate TTS audio using the appropriate backend for this voice."""
+    backend = voice.get("backend", "qwen")
+    if backend == "kokoro":
+        return tts_generate_kokoro(text, voice)
+    else:
+        return tts_generate_qwen(text, voice)
 
 
 # ---------------------------------------------------------------------------
@@ -420,18 +481,21 @@ def get_bgm_path(chapter_stem: str) -> Optional[Path]:
     print(f"  [warn] BGM not found at {bgm_path}")
     return None
 
-def mix_with_bgm(narration_path: Path, output_path: Path, chapter_stem: str = ""):
+def mix_with_bgm(narration_path: Path, output_path: Path, chapter_stem: str = "", voice_config: dict = None):
     bgm_path = get_bgm_path(chapter_stem)
     if not bgm_path:
         shutil.copy2(narration_path, output_path)
         return
+    # Use voice-specific volume if available (Kokoro is louder than Qwen)
+    backend = (voice_config or {}).get("backend", "qwen")
+    voice_vol = VOICE_VOLUME_OVERRIDES.get(backend, BGM_VOICE_VOLUME)
     print(f"  Using BGM: {bgm_path.name}")
     subprocess.run(
         ["ffmpeg", "-y",
          "-i", str(narration_path),
          "-stream_loop", "-1", "-i", str(bgm_path),
          "-filter_complex",
-         f"[0:a]volume={BGM_VOICE_VOLUME}[voice];"
+         f"[0:a]volume={voice_vol}[voice];"
          f"[1:a]volume={BGM_MUSIC_VOLUME}[bgm];"
          f"[voice][bgm]amix=inputs=2:duration=first:dropout_transition=3[out]",
          "-map", "[out]",
@@ -574,7 +638,7 @@ def process_chapter(
     # Mix with BGM
     if add_bgm and slowed_narration.exists():
         print(f"  Mixing with background music ...")
-        mix_with_bgm(slowed_narration, final_path, stem)
+        mix_with_bgm(slowed_narration, final_path, stem, voice_config=voice)
     elif slowed_narration.exists():
         shutil.copy2(slowed_narration, final_path)
 
@@ -644,7 +708,7 @@ def process_special_section(
         slowed = raw_narration
 
     if add_bgm and slowed.exists():
-        mix_with_bgm(slowed, final_path, name)
+        mix_with_bgm(slowed, final_path, name, voice_config=voice)
     elif slowed.exists():
         shutil.copy2(slowed, final_path)
 
@@ -699,8 +763,8 @@ def main():
     parser = argparse.ArgumentParser(description="Generate audiobook for Crew Member's Guide")
     parser.add_argument("--book", choices=["crew", "crew-ca", "all"], default="all",
                         help="Which edition to process")
-    parser.add_argument("--voice", choices=["male", "female", "kitt", "both"], default="female",
-                        help="Which voice to use (default: female)")
+    parser.add_argument("--voice", choices=["male", "female", "kitt", "sky", "both"], default="female",
+                        help="Which voice to use (default: female). 'sky' uses Kokoro TTS af_sky.")
     parser.add_argument("--chapter", type=str, default=None,
                         help="Filter: only process chapters containing this string (e.g. '01', '09-the-padlock')")
     parser.add_argument("--no-skip", action="store_true",
