@@ -2,10 +2,10 @@
 """
 Generate alternate narration audio for the slide presentation using Qwen3-TTS.
 
-Uses a young female voice clone — warm, confident, and engaging — via the
-HuggingFace faster-qwen3-tts FastAPI mirror.
+Uses a Q-from-Bond voice clone — young, sharp, intellectual British accent,
+dry wit, quietly confident — via the HuggingFace faster-qwen3-tts FastAPI mirror.
 
-The voice reference is generated from assets/voice-ref-female.wav.
+The voice reference is cloned from assets/voice-ref-q.wav.
 
 Output: website/public/presentation-audio/slide-{01..13}-female.mp3
 """
@@ -27,13 +27,13 @@ import requests
 BASE_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = BASE_DIR / "website" / "public" / "presentation-audio"
 
-# Female voice clone reference audio
-FEMALE_REF_AUDIO = BASE_DIR / "assets" / "voice-ref-female.wav"
-FEMALE_REF_TEXT = (
-    "The best software is built by people who care deeply about the problem "
-    "they are solving. It's not about the tools you use or the frameworks you "
-    "pick. It's about understanding what matters, making smart trade-offs and "
-    "shipping something that actually works in the real world."
+# Q-from-Bond voice clone reference audio
+Q_REF_AUDIO = BASE_DIR / "assets" / "voice-ref-q.wav"
+Q_REF_TEXT = (
+    "Now pay attention, double-oh seven. I've designed this system to be quite "
+    "elegant. Every component serves a purpose. The encryption protocol is "
+    "unbreakable, the interface is intuitive, and the entire architecture can "
+    "be deployed in under thirty seconds. Please do bring it back in one piece."
 )
 
 FASTAPI_BASE = "https://huggingfacem4-faster-qwen3-tts-demo.hf.space"
@@ -182,13 +182,13 @@ SLIDE_NARRATIONS = {
 # ---------------------------------------------------------------------------
 
 def tts_generate(text: str) -> bytes:
-    """Call the faster-qwen3-tts FastAPI mirror with female voice clone and return WAV bytes."""
+    """Call the faster-qwen3-tts FastAPI mirror with Q voice clone and return WAV bytes."""
     form_data = {
         "text": text,
-        "ref_text": FEMALE_REF_TEXT,
+        "ref_text": Q_REF_TEXT,
     }
 
-    use_custom_ref = FEMALE_REF_AUDIO.exists()
+    use_custom_ref = Q_REF_AUDIO.exists()
     if not use_custom_ref:
         # Fallback to a preset if the female reference audio is missing
         form_data["ref_preset"] = "ref_audio_2"
@@ -198,7 +198,7 @@ def tts_generate(text: str) -> bytes:
         try:
             files = None
             if use_custom_ref:
-                files = {"ref_audio": ("ref.wav", open(FEMALE_REF_AUDIO, "rb"), "audio/wav")}
+                files = {"ref_audio": ("ref.wav", open(Q_REF_AUDIO, "rb"), "audio/wav")}
 
             resp = requests.post(
                 f"{FASTAPI_BASE}/generate",
@@ -252,8 +252,8 @@ def slow_down_audio(input_path: Path, output_path: Path, speed: float = SPEED):
 def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    print("Female Voice Presentation Audio Generator")
-    print(f"  Voice ref: {FEMALE_REF_AUDIO} ({'exists' if FEMALE_REF_AUDIO.exists() else 'MISSING'})")
+    print("Q Voice Presentation Audio Generator")
+    print(f"  Voice ref: {Q_REF_AUDIO} ({'exists' if Q_REF_AUDIO.exists() else 'MISSING'})")
     print(f"  Output:    {OUTPUT_DIR}")
     print(f"  Slides:    {len(SLIDE_NARRATIONS)}")
     print(f"  ffmpeg:    {'available' if HAS_FFMPEG else 'NOT available'}")
