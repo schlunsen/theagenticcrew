@@ -6,6 +6,10 @@ node_modules/
 output/
 test-results/
 
+# Editor / tool config (personal, not project-level)
+.claude/
+.vscode/
+
 # Generated book files (built by justfile, deployed separately)
 website/public/*.pdf
 website/public/*.epub

@@ -22,4 +22,4 @@ just wc       # Word count
 
 ## Production Server
 
-The book's website runs on: `ssh root@theagenticcrew.com`
+The book's website runs on theagenticcrew.com (deployment details kept outside repo).
