@@ -5,7 +5,7 @@ Generate narration audio for the slide presentation using Qwen3-TTS.
 Uses the author's voice reference (assets/voice-ref.wav) to clone the voice
 via the HuggingFace faster-qwen3-tts FastAPI mirror.
 
-Output: website/public/presentation-audio/slide-{01..11}.mp3
+Output: website/public/presentation-audio/slide-{01..13}.mp3
 """
 
 import base64
@@ -52,21 +52,23 @@ SLIDE_NARRATIONS = {
     2: (
         "For twenty years, being a software engineer meant one thing. "
         "You open an editor, you write code, you ship it. "
-        "The tools changed, from Vim to VS Code, from SVN to Git, but the fundamental loop stayed the same. "
-        "That loop is breaking. And it's breaking fast. "
-        "AI agents don't just autocomplete your code. They read your entire codebase, "
-        "reason about architecture, make changes across dozens of files, run your tests, "
-        "and iterate on failures. All without you touching the keyboard."
+        "That loop is breaking. And the numbers tell the story. "
+        "Seventy-two percent of developers used AI coding tools in twenty twenty-five. "
+        "At leading firms, agents now write over thirty percent of shipped code. "
+        "The old loop was write, run, ship. The new loop is instruct, review, steer. "
+        "AI agents don't just autocomplete. They read your codebase, reason about architecture, "
+        "make changes across dozens of files, run your tests, and iterate on failures. "
+        "All without you touching the keyboard."
     ),
     3: (
         "The craft isn't dying. It's molting. "
-        "The outer shell, the keystrokes, the syntax, the boilerplate, that part is falling away. "
-        "But the animal underneath? "
-        "The part that knows what to build and why, "
-        "that smells a bad abstraction from three files away, "
-        "that can hold a whole system in mind and feel where it's fragile? "
-        "That part is more alive than ever. "
-        "We're not being replaced. We're being promoted. From typists to thinkers."
+        "The keystrokes, the syntax, the boilerplate, that part is falling away. "
+        "But the judgment and taste underneath? More alive than ever. "
+        "This book covers eighteen chapters of what comes next. "
+        "Guardrails and sandboxes. Prompt engineering. Multi-agent orchestration. "
+        "Agents in CI CD pipelines. Testing as the feedback loop. "
+        "And knowing when not to use agents at all. "
+        "It's a practical guide, not a manifesto."
     ),
     4: (
         "So what actually is an agent? Let's get precise. "
@@ -115,14 +117,41 @@ SLIDE_NARRATIONS = {
         "These five reinforce each other. Together, they're the ship that makes any crew productive."
     ),
     9: (
-        "I built Clovr Code Terminal as a way to practice what I preach. "
-        "It's a self-hosted web dashboard for running multiple AI agent sessions from your browser. "
+        "Multi-agent orchestration sounds abstract until you build it. "
+        "Wee is a self-hosted control plane for running multiple AI agent sessions from your browser. "
         "Built in Go, single fifteen megabyte binary, no dependencies. "
-        "It has voice input, live metrics, multi-session support, and permission controls. "
-        "The best way to learn agentic engineering is to build agentic tooling. "
-        "That's what this project taught me."
+        "But the interesting part isn't the features. "
+        "It's what building it taught me about orchestration in practice. "
+        "Running multiple sessions is multi-agent orchestration from chapter twelve. "
+        "Granular permissions are guardrails in code, from chapter four. "
+        "And pipeline integration is agents in CI CD, from chapter thirteen. "
+        "The best way to learn agentic engineering is to build agentic tooling."
     ),
     10: (
+        "Everything in this book converges in one of the most compelling applications "
+        "of agentic engineering: automated penetration testing. "
+        "Donna is an open-source pentesting platform built on the Claude Agent SDK and Temporal. "
+        "It runs thirteen specialised agents across five phases: reconnaissance, "
+        "vulnerability analysis with five agents in parallel, "
+        "exploitation with another five in parallel, and reporting. "
+        "The exploitation agents don't just flag potential issues. "
+        "They execute real attacks to confirm vulnerabilities, capturing evidence along the way. "
+        "Every principle from the book, guardrails, sandboxes, orchestration, testing, converges here. "
+        "If you can safely let agents attack your software, you've mastered agentic engineering."
+    ),
+    11: (
+        "Here's the irony of pentesting agents. "
+        "The same guardrails that protect you from rogue agents in normal development "
+        "now need to protect the world from your intentionally hostile agents. "
+        "Two rules are non-negotiable. "
+        "First, isolate and authorize. Sandbox your pentesting agents. Get written permission. "
+        "A SQL injection test against your production database is not a test, it's an incident. "
+        "Second, verify everything. Agents hallucinate vulnerabilities just as readily as they "
+        "hallucinate library names. Every finding needs human eyes before it becomes an action item. "
+        "If your guardrail configuration can handle an agent that's trying to break things, "
+        "it can handle anything."
+    ),
+    12: (
         "This is the central metaphor of the book. "
         "You're the captain. The agents are your crew. The codebase is the ship. "
         "Most days, I spin up an agent, give it a job, take the output, and throw it overboard. "
@@ -131,7 +160,7 @@ SLIDE_NARRATIONS = {
         "Your conventions, your test suites, your project rules, those are the ship. "
         "And if you've built the ship well, any new crew member will be productive in minutes."
     ),
-    11: (
+    13: (
         "Here's what I want you to do. "
         "Tonight, not tomorrow, not next week, tonight, open your terminal. "
         "Pick a bug you've been avoiding. Point an agent at it. Give it context. Set a guardrail. "

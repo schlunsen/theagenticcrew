@@ -100,6 +100,14 @@ The response isn't to remove autonomy — it's to improve the guardrails and add
 
 The best agentic engineers don't fear agent mistakes. They build systems where mistakes are caught early, contained quickly, and learned from automatically.
 
+== When Your Agent _Is_ the Threat Model
+
+There's a special case worth flagging: agents that are _designed_ to be destructive. In Chapter 18, we'll look at autonomous pentesting — AI agents that probe your application for security vulnerabilities by actively exploiting them. Injection payloads, authentication bypasses, SSRF attacks — the agent does it all, on purpose.
+
+This inverts the usual guardrail calculus. Normally, guardrails protect your system from the agent's mistakes. With a pentesting agent, guardrails protect _everything else_ from the agent's _intentional_ hostility. The trust gradient doesn't loosen over time — it stays locked down permanently. The sandbox isn't a convenience — it's a legal requirement. And human oversight isn't a nice-to-have — it's the difference between a security assessment and an incident.
+
+The principles are the same. The stakes are higher. If your guardrail configuration can handle an agent that's _trying_ to break things, it can handle anything.
+
 == The Cost of Too Many Guardrails
 
 There's a failure mode that looks like caution but isn't. You configure your agent with approval gates on everything — every file write, every shell command, every git operation. Fifteen minutes into a task, you've clicked "yes" forty times and you're not reading them any more.

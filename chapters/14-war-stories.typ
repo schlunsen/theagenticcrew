@@ -84,6 +84,20 @@ The worst part wasn't the bundle size — it was the maintenance surface. Six ne
 
 *What you do differently now:* Constrain what agents can install. "No new dependencies without asking me first" is a legitimate and often _wise_ instruction. When you do allow new packages, tell the agent your constraints: bundle budget, no packages with fewer than N weekly downloads, no packages that pull in transitive mega-dependencies. Agents don't have opinions about bundle size or maintenance burden. They don't maintain the project next year. _You_ do. So you set the boundaries.
 
+== The Phantom Vulnerability
+
+This one comes from running an autonomous pentesting agent — the kind we'll discuss in Chapter 18.
+
+The agent was scanning a staging application for security vulnerabilities. It reported a critical finding: a blind SQL injection on the `/api/search` endpoint. The report was detailed — it described the payload, the timing difference it observed, the CWE classification, the CVSS score. It even included a recommended fix.
+
+The security team spent four hours investigating. They instrumented the endpoint, replayed the agent's exact payload, monitored database query logs, and analysed network traffic. There was no injection. The endpoint used parameterised queries throughout. The timing difference the agent had "observed" was network jitter between the scanning agent and the staging server.
+
+The agent had hallucinated a vulnerability. Not a vague one — a _detailed_, _plausible_, _well-documented_ hallucination. It had the structure of a real finding. It had the confidence of a real finding. It just wasn't real.
+
+The team wasted half a day chasing a ghost. Worse, the noise eroded trust in the tool. The next time it reported a real finding — an actual IDOR vulnerability on a different endpoint — the team was slower to investigate, because they remembered the phantom.
+
+*What you do differently now:* Every agent-generated security finding gets human verification before it becomes an action item. Not "a quick glance" — actual reproduction of the exploit. You also calibrate expectations: a pentesting agent is a triage tool, not an oracle. It finds candidates. Humans confirm them. The agent's job is to reduce the search space from "the entire application" to "these twelve endpoints deserve a closer look." If you treat its output as ground truth, you'll chase phantoms and miss real issues.
+
 == The Common Thread
 
 Every one of these stories has the same root cause: the agent was doing _exactly what it was designed to do_, and the human wasn't providing enough structure.
