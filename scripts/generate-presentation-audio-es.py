@@ -52,21 +52,23 @@ SLIDE_NARRATIONS_ES = {
     2: (
         "Durante veinte años, ser ingeniero de software significaba una cosa. "
         "Abres un editor, escribes código, lo despliegas. "
-        "Las herramientas cambiaron, de Vim a VS Code, de SVN a Git, pero el ciclo fundamental seguía igual. "
-        "Ese ciclo se está rompiendo. Y se está rompiendo rápido. "
-        "Los agentes de IA no solo autocompletan tu código. Leen toda tu base de código, "
-        "razonan sobre la arquitectura, hacen cambios en docenas de archivos, ejecutan tus tests "
-        "e iteran sobre los fallos. Todo sin que toques el teclado."
+        "Ese ciclo se está rompiendo. Y los números cuentan la historia. "
+        "El setenta y dos por ciento de los desarrolladores usaron herramientas de IA para código en dos mil veinticinco. "
+        "En las empresas líderes, los agentes escriben más del treinta por ciento del código que se despliega. "
+        "El viejo ciclo era escribir, ejecutar, desplegar. El nuevo ciclo es instruir, revisar, dirigir. "
+        "Los agentes de IA no solo autocompletan. Leen tu base de código, razonan sobre la arquitectura, "
+        "hacen cambios en docenas de archivos, ejecutan tus tests e iteran sobre los fallos. "
+        "Todo sin que toques el teclado."
     ),
     3: (
         "El oficio no está muriendo. Está mudando. "
-        "La cáscara exterior, las pulsaciones, la sintaxis, el código repetitivo, esa parte se está cayendo. "
-        "Pero el animal interior? "
-        "La parte que sabe qué construir y por qué, "
-        "que detecta una mala abstracción desde tres archivos de distancia, "
-        "que puede mantener un sistema entero en mente y sentir dónde es frágil? "
-        "Esa parte está más viva que nunca. "
-        "No nos están reemplazando. Nos están ascendiendo. De mecanógrafos a pensadores."
+        "Las pulsaciones, la sintaxis, el código repetitivo, esa parte se está cayendo. "
+        "Pero el juicio y el gusto que hay debajo? Más vivos que nunca. "
+        "Este libro cubre dieciocho capítulos de lo que viene después. "
+        "Barandillas y sandboxes. Ingeniería de prompts. Orquestación multi-agente. "
+        "Agentes en pipelines de CI CD. Testing como bucle de retroalimentación. "
+        "Y saber cuándo no usar agentes en absoluto. "
+        "Es una guía práctica, no un manifiesto."
     ),
     4: (
         "Entonces, qué es exactamente un agente? Seamos precisos. "
@@ -115,14 +117,40 @@ SLIDE_NARRATIONS_ES = {
         "Estas cinco se refuerzan mutuamente. Juntas, son el barco que hace productiva a cualquier tripulación."
     ),
     9: (
-        "Construí Clovr Code Terminal como una forma de practicar lo que predico. "
-        "Es un panel web auto-alojado para ejecutar múltiples sesiones de agentes de IA desde tu navegador. "
+        "La orquestación multi-agente suena abstracta hasta que la construyes. "
+        "Wee es un plano de control auto-alojado para ejecutar múltiples sesiones de agentes de IA desde tu navegador. "
         "Construido en Go, un solo binario de quince megabytes, sin dependencias. "
-        "Tiene entrada de voz, métricas en vivo, soporte multi-sesión y controles de permisos. "
-        "La mejor manera de aprender ingeniería agéntica es construir herramientas agénticas. "
-        "Eso es lo que me enseñó este proyecto."
+        "Pero lo interesante no son las funciones. Es lo que construirlo me enseñó sobre orquestación en la práctica. "
+        "Ejecutar múltiples sesiones es orquestación multi-agente del capítulo doce. "
+        "Permisos granulares son barandillas en código, del capítulo cuatro. "
+        "E integración con pipelines es agentes en CI CD, del capítulo trece. "
+        "La mejor manera de aprender ingeniería agéntica es construir herramientas agénticas."
     ),
     10: (
+        "Todo en este libro converge en una de las aplicaciones más convincentes "
+        "de la ingeniería agéntica: las pruebas de penetración automatizadas. "
+        "Donna es una plataforma de pentesting de código abierto construida sobre el SDK de Claude Agent y Temporal. "
+        "Ejecuta trece agentes especializados en cinco fases: reconocimiento, "
+        "análisis de vulnerabilidades con cinco agentes en paralelo, "
+        "explotación con otros cinco en paralelo, y reportes. "
+        "Los agentes de explotación no solo señalan problemas potenciales. "
+        "Ejecutan ataques reales para confirmar vulnerabilidades, capturando evidencia en el proceso. "
+        "Cada principio del libro, barandillas, sandboxes, orquestación, testing, converge aquí. "
+        "Si puedes dejar que los agentes ataquen tu software de forma segura, has dominado la ingeniería agéntica."
+    ),
+    11: (
+        "La ironía de los agentes de pentesting es que las mismas barandillas "
+        "que te protegen de agentes descontrolados en el desarrollo normal "
+        "ahora necesitan proteger al mundo de tus agentes intencionalmente hostiles. "
+        "Dos reglas son innegociables. "
+        "Primero, aislar y autorizar. Aísla tus agentes de pentesting en sandbox. Obtén permiso por escrito. "
+        "Una prueba de inyección SQL contra tu base de datos de producción no es una prueba, es un incidente. "
+        "Segundo, verificar todo. Los agentes alucinan vulnerabilidades tan fácilmente como alucinan nombres de bibliotecas. "
+        "Cada hallazgo necesita ojos humanos antes de convertirse en un punto de acción. "
+        "Si tu configuración de barandillas puede manejar un agente que intenta romper cosas, "
+        "puede manejar cualquier cosa."
+    ),
+    12: (
         "Esta es la metáfora central del libro. "
         "Tú eres el capitán. Los agentes son tu tripulación. La base de código es el barco. "
         "La mayoría de los días, inicio un agente, le doy una tarea, tomo el resultado y lo descarto. "
@@ -131,7 +159,7 @@ SLIDE_NARRATIONS_ES = {
         "Tus convenciones, tus suites de tests, las reglas de tu proyecto, eso es el barco. "
         "Y si has construido bien el barco, cualquier nuevo miembro de la tripulación será productivo en minutos."
     ),
-    11: (
+    13: (
         "Esto es lo que quiero que hagas. "
         "Esta noche, no mañana, no la próxima semana, esta noche, abre tu terminal. "
         "Elige un bug que has estado evitando. Apunta un agente hacia él. Dale contexto. Establece una barandilla. "

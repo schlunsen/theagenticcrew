@@ -212,6 +212,7 @@ Hvis du nogensinde har set en AI skrive kode, der lignede din egen, og mærket m
 #include "chapters/da/12-multi-agent-orchestration.typ"
 #include "chapters/da/13-cicd-and-agents.typ"
 #include "chapters/da/14-war-stories.typ"
+#include "chapters/da/18-agents-as-pentesters.typ"
 #include "chapters/da/15-when-not-to-use-agents.typ"
 #include "chapters/da/16-agentic-teams.typ"
 #include "chapters/da/17-final-words.typ"

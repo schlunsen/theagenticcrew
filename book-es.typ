@@ -212,6 +212,7 @@ Si alguna vez has visto a una IA escribir código que se parecía al tuyo y has 
 #include "chapters/es/12-multi-agent-orchestration.typ"
 #include "chapters/es/13-cicd-and-agents.typ"
 #include "chapters/es/14-war-stories.typ"
+#include "chapters/es/18-agents-as-pentesters.typ"
 #include "chapters/es/15-when-not-to-use-agents.typ"
 #include "chapters/es/16-agentic-teams.typ"
 #include "chapters/es/17-final-words.typ"
