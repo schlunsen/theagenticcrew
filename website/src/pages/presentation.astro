@@ -15,17 +15,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <button class="lang-btn" data-lang="es">ES</button>
     </div>
 
-    <!-- Voice Selector -->
-    <div class="voice-selector" id="voice-selector">
-      <button class="voice-btn active" data-voice="male" title="Male narrator (original)">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>M</span>
-      </button>
-      <button class="voice-btn" data-voice="female" title="Female narrator">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>F</span>
-      </button>
-    </div>
 
     <!-- Progress Dots -->
     <div class="progress-dots" id="progress-dots">
@@ -853,61 +842,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
      VOICE SELECTOR
      ======================================== */
 
-  .voice-selector {
-    position: fixed;
-    top: 1.5rem;
-    right: 12.5rem;
-    z-index: 100;
-    display: flex;
-    gap: 2px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
-    padding: 3px;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-
-  .voice-btn {
-    background: transparent;
-    border: none;
-    padding: 0.25rem 0.55rem;
-    border-radius: 16px;
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    transition: all 0.25s ease;
-    letter-spacing: 0.05em;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
-
-  .voice-btn svg {
-    opacity: 0.6;
-  }
-
-  .voice-btn:hover {
-    color: var(--color-text);
-    background: rgba(232, 150, 62, 0.08);
-  }
-
-  .voice-btn.active {
-    background: var(--color-accent);
-    color: white;
-    box-shadow: 0 1px 6px rgba(232, 150, 62, 0.35);
-  }
-
-  .voice-btn.active svg {
-    stroke: white;
-    opacity: 1;
-  }
 
   /* ========================================
      PLAY OVERLAY
@@ -1068,13 +1002,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       transform: translateX(-50%);
     }
 
-    .voice-selector {
-      top: auto;
-      bottom: 8.5rem;
-      right: auto;
-      left: 50%;
-      transform: translateX(-50%);
-    }
   }
 
   /* ========================================
@@ -2517,8 +2444,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   // VOICE STATE
   // ========================================
 
-  type Voice = 'male' | 'female';
-  let currentVoice: Voice = (localStorage.getItem('presentation-voice') as Voice) || 'male';
+  // Single voice (female/Q-style narrator)
+  const currentVoice = 'female';
 
   // ========================================
   // SLIDE NAVIGATION
@@ -3191,6 +3118,117 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   (window as any).__playSlideAudio = playSlideAudio;
 
   // ========================================
+  // BACKGROUND MUSIC SYSTEM
+  // ========================================
+
+  const bgMusic = new Audio('/presentation-audio/bg-music.mp3');
+  bgMusic.loop = true;
+  bgMusic.volume = 0;
+  bgMusic.preload = 'auto';
+
+  const BG_MUSIC_HIGH = 0.35;  // Volume when no narration playing
+  const BG_MUSIC_LOW = 0.15;   // Volume when narration is playing (ducked)
+  const BG_FADE_DURATION = 800; // ms for music volume transitions
+  const BG_FADE_STEPS = 40;
+  let bgMusicStarted = false;
+  let bgFadeTimer: number | null = null;
+
+  function fadeBgMusicTo(targetVol: number, duration: number = BG_FADE_DURATION): Promise<void> {
+    return new Promise((resolve) => {
+      if (bgFadeTimer) clearInterval(bgFadeTimer);
+      const startVol = bgMusic.volume;
+      if (Math.abs(startVol - targetVol) < 0.005) {
+        bgMusic.volume = targetVol;
+        resolve();
+        return;
+      }
+      const steps = BG_FADE_STEPS;
+      const stepSize = (targetVol - startVol) / steps;
+      const interval = duration / steps;
+      let currentStep = 0;
+      bgFadeTimer = window.setInterval(() => {
+        currentStep++;
+        const newVol = Math.max(0, Math.min(1, startVol + stepSize * currentStep));
+        bgMusic.volume = newVol;
+        if (currentStep >= steps) {
+          clearInterval(bgFadeTimer!);
+          bgFadeTimer = null;
+          bgMusic.volume = targetVol;
+          resolve();
+        }
+      }, interval);
+    });
+  }
+
+  function startBgMusic() {
+    if (bgMusicStarted) return;
+    bgMusicStarted = true;
+    bgMusic.volume = 0;
+    bgMusic.play().then(() => {
+      fadeBgMusicTo(BG_MUSIC_HIGH, 2000); // 2s fade-in on page start
+    }).catch(() => {
+      bgMusicStarted = false;
+      console.log('Background music autoplay blocked');
+    });
+  }
+
+  function duckBgMusic() {
+    if (!bgMusicStarted) return;
+    fadeBgMusicTo(BG_MUSIC_LOW);
+  }
+
+  function unduckBgMusic() {
+    if (!bgMusicStarted) return;
+    fadeBgMusicTo(BG_MUSIC_HIGH);
+  }
+
+  function stopBgMusic() {
+    if (!bgMusicStarted) return;
+    fadeBgMusicTo(0, 3000).then(() => { // 3s fade-out
+      bgMusic.pause();
+      bgMusicStarted = false;
+    });
+  }
+
+  // Hook into narration: duck when narration starts, unduck when it ends
+  const _origStartNewAudioBg = startNewAudio;
+  startNewAudio = function(audio: HTMLAudioElement, slideIndex: number) {
+    duckBgMusic();
+    _origStartNewAudioBg(audio, slideIndex);
+
+    audio.addEventListener('ended', () => {
+      // If this is the last slide, wait 3s then fade out music entirely
+      if (slideIndex >= totalSlides - 1) {
+        setTimeout(() => {
+          stopBgMusic();
+        }, 3000);
+      } else {
+        unduckBgMusic();
+      }
+    }, { once: true });
+  };
+
+  // Hook into stop: unduck when narration is stopped manually
+  const _origStopCurrentAudio = stopCurrentAudio;
+  stopCurrentAudio = function() {
+    _origStopCurrentAudio();
+    unduckBgMusic();
+  };
+
+  // Hook into mute toggle: also mute/unmute bg music
+  const _origAudioToggleHandler = audioToggle.onclick;
+  audioToggle.addEventListener('click', () => {
+    if (!audioEnabled && bgMusicStarted) {
+      // Muting — fade bg music to silence but keep it playing
+      fadeBgMusicTo(0);
+    } else if (audioEnabled && bgMusicStarted) {
+      // Unmuting — restore bg music
+      const isNarrating = currentAudio && !currentAudio.paused;
+      fadeBgMusicTo(isNarrating ? BG_MUSIC_LOW : BG_MUSIC_HIGH);
+    }
+  });
+
+  // ========================================
   // INITIALIZE
   // ========================================
 
@@ -3209,6 +3247,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   playOverlayBtn.addEventListener('click', () => {
     playOverlay.classList.add('hidden');
+    startBgMusic();
     playSlideAudio(0);
   });
 
@@ -3217,6 +3256,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     if (!playOverlay.classList.contains('hidden') && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
       playOverlay.classList.add('hidden');
+      startBgMusic();
       playSlideAudio(0);
       document.removeEventListener('keydown', startOnKey);
     }
@@ -3581,39 +3621,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     });
   });
 
-  // ========================================
-  // VOICE SWITCHER
-  // ========================================
-
-  const voiceBtns = document.querySelectorAll<HTMLButtonElement>('.voice-btn');
-
-  function applyVoice(voice: Voice) {
-    currentVoice = voice;
-    localStorage.setItem('presentation-voice', voice);
-
-    // Update voice selector buttons
-    voiceBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.voice === voice);
-    });
-
-    // Reload audio with new voice
-    reloadAudioForLanguage();
-  }
-
-  // Voice button click handlers
-  voiceBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const voice = btn.dataset.voice as Voice;
-      if (voice !== currentVoice) {
-        applyVoice(voice);
-      }
-    });
-  });
-
-  // Apply saved voice on load
-  if (currentVoice !== 'male') {
-    applyVoice(currentVoice);
-  }
+  // Voice is fixed — no switcher needed
 
   // Apply saved language on load
   if (currentLang !== 'en') {
