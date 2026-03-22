@@ -2,13 +2,12 @@
 """
 Generate alternate narration audio for the slide presentation using Qwen3-TTS.
 
-Uses a KITT-from-Knight-Rider voice clone — smooth, calm, articulate, and
-authoritative — via the HuggingFace faster-qwen3-tts FastAPI mirror.
+Uses a young female voice clone — warm, confident, and engaging — via the
+HuggingFace faster-qwen3-tts FastAPI mirror.
 
-The voice reference is cloned from assets/kitt-voice-ref.wav (William Daniels
-as KITT from Knight Rider).
+The voice reference is generated from assets/voice-ref-female.wav.
 
-Output: website/public/presentation-audio/slide-{01..11}-female.mp3
+Output: website/public/presentation-audio/slide-{01..13}-female.mp3
 """
 
 import base64
@@ -28,11 +27,13 @@ import requests
 BASE_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = BASE_DIR / "website" / "public" / "presentation-audio"
 
-# KITT voice clone reference audio (extracted from Knight Rider)
-KITT_REF_AUDIO = BASE_DIR / "assets" / "kitt-voice-ref.wav"
-KITT_REF_TEXT = (
-    "I am the voice of Knight Industries Two Thousand's micro processor. "
-    "KITT for easy reference. Knight Industries Two Thousand."
+# Female voice clone reference audio
+FEMALE_REF_AUDIO = BASE_DIR / "assets" / "voice-ref-female.wav"
+FEMALE_REF_TEXT = (
+    "The best software is built by people who care deeply about the problem "
+    "they are solving. It's not about the tools you use or the frameworks you "
+    "pick. It's about understanding what matters, making smart trade-offs and "
+    "shipping something that actually works in the real world."
 )
 
 FASTAPI_BASE = "https://huggingfacem4-faster-qwen3-tts-demo.hf.space"
@@ -181,23 +182,23 @@ SLIDE_NARRATIONS = {
 # ---------------------------------------------------------------------------
 
 def tts_generate(text: str) -> bytes:
-    """Call the faster-qwen3-tts FastAPI mirror with KITT voice clone and return WAV bytes."""
+    """Call the faster-qwen3-tts FastAPI mirror with female voice clone and return WAV bytes."""
     form_data = {
         "text": text,
-        "ref_text": KITT_REF_TEXT,
+        "ref_text": FEMALE_REF_TEXT,
     }
 
-    use_custom_ref = KITT_REF_AUDIO.exists()
+    use_custom_ref = FEMALE_REF_AUDIO.exists()
     if not use_custom_ref:
-        # Fallback to a preset if the KITT reference audio is missing
-        form_data["ref_preset"] = "ref_audio_3"
+        # Fallback to a preset if the female reference audio is missing
+        form_data["ref_preset"] = "ref_audio_2"
 
     backoff = INITIAL_BACKOFF
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             files = None
             if use_custom_ref:
-                files = {"ref_audio": ("ref.wav", open(KITT_REF_AUDIO, "rb"), "audio/wav")}
+                files = {"ref_audio": ("ref.wav", open(FEMALE_REF_AUDIO, "rb"), "audio/wav")}
 
             resp = requests.post(
                 f"{FASTAPI_BASE}/generate",
@@ -251,8 +252,8 @@ def slow_down_audio(input_path: Path, output_path: Path, speed: float = SPEED):
 def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    print("KITT Voice Presentation Audio Generator")
-    print(f"  Voice ref: {KITT_REF_AUDIO} ({'exists' if KITT_REF_AUDIO.exists() else 'MISSING'})")
+    print("Female Voice Presentation Audio Generator")
+    print(f"  Voice ref: {FEMALE_REF_AUDIO} ({'exists' if FEMALE_REF_AUDIO.exists() else 'MISSING'})")
     print(f"  Output:    {OUTPUT_DIR}")
     print(f"  Slides:    {len(SLIDE_NARRATIONS)}")
     print(f"  ffmpeg:    {'available' if HAS_FFMPEG else 'NOT available'}")
