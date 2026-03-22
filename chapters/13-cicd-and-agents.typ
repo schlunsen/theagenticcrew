@@ -148,3 +148,17 @@ Notice what's _not_ on this roadmap: auto-merging, autonomous deployments, or ag
 Resist the urge to skip steps. Each one builds on the last. You learn what your agents are good at, where they struggle, and what guardrails you need. By month three, agent-assisted CI feels natural — not because you automated everything at once, but because you earned each piece of it through experience.
 
 The pipeline is just another environment where agents work. The same principles apply: scope tightly, verify thoroughly, trust incrementally. The only difference is that nobody's watching, so your safety nets need to be that much stronger.
+
+== The Security Sentinel
+
+There's one more pipeline pattern worth mentioning, because it combines everything in this chapter into something genuinely new: continuous security scanning.
+
+Donna (#link("https://github.com/schlunsen/donna")) is an open-source pentesting platform that runs as a Sentinel — a cron-scheduled workflow that watches your git repository for changes and automatically runs security scans against your application. Think of it as an overnight agent, but for offensive security.
+
+When Donna detects a code change, it doesn't blindly re-run everything. It examines the diff and routes changes to the relevant vulnerability scanners. Modified a SQL query builder? Route to the injection agent. Touched an authentication handler? Route to the auth bypass agent. Changed infrastructure files? Trigger a full scan. Nothing changed? Skip entirely — zero cost.
+
+This is the CI agent pattern taken to its logical extreme. Your pipeline already catches lint failures, type errors, and test regressions. A security sentinel catches the vulnerabilities that none of those tools are looking for.
+
+The cost control principles from earlier in this chapter apply directly. Token budgets per scan, concurrency limits on parallel agents, spend alerts, and kill switches. Security scanning agents are expensive — they run Opus-tier models for exploitation and can consume significant tokens on a complex application. Budget accordingly.
+
+And the review question? It applies doubly. Agent-generated security findings _must_ be human-verified. LLMs hallucinate vulnerabilities just as readily as they hallucinate library names. Every finding needs a human reviewer who can look at the evidence, reproduce the exploit, and decide whether it's real. We'll cover this in detail in Chapter 18.
