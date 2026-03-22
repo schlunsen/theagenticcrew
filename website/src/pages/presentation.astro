@@ -2,12 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="The Agentic Crew — Interactive Presentation" description="An interactive slide presentation with voice narration about agentic software engineering. 11 slides covering what agents are, how they fail, and how to work with them.">
+<BaseLayout title="The Agentic Crew — Interactive Presentation" description="An interactive slide presentation with voice narration about agentic software engineering. 13 slides covering what agents are, how they fail, autonomous pentesting, and how to work with them.">
   <canvas id="bg-canvas"></canvas>
 
   <div class="presentation" id="presentation">
     <!-- Slide Counter -->
-    <div class="slide-counter" id="slide-counter">1 / 11</div>
+    <div class="slide-counter" id="slide-counter">1 / 13</div>
 
     <!-- Language Selector -->
     <div class="lang-selector" id="lang-selector">
@@ -15,21 +15,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <button class="lang-btn" data-lang="es">ES</button>
     </div>
 
-    <!-- Voice Selector -->
-    <div class="voice-selector" id="voice-selector">
-      <button class="voice-btn active" data-voice="male" title="Male narrator (original)">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>M</span>
-      </button>
-      <button class="voice-btn" data-voice="female" title="Female narrator">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>F</span>
-      </button>
-    </div>
 
     <!-- Progress Dots -->
     <div class="progress-dots" id="progress-dots">
-      {Array.from({ length: 11 }).map((_, i) => (
+      {Array.from({ length: 13 }).map((_, i) => (
         <button class={`dot ${i === 0 ? 'active' : ''}`} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>
       ))}
     </div>
@@ -121,8 +110,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="slide-content slide-quote-layout">
         <h2 class="slide-heading" data-i18n="slide2-heading">The Ground Is Shifting</h2>
         <blockquote class="slide-blockquote reveal-text" id="quote-slide2" data-i18n="slide2-quote" data-i18n-html="true">
-          "For twenty years, being a software engineer meant one thing: you open an editor, you write code, you ship it. <em>That loop is breaking.</em>"
+          "You write code, you ship it. <em>That loop is breaking.</em>"
         </blockquote>
+        <div class="stat-badges">
+          <span class="stat-badge" data-i18n="slide2-stat1">72% of developers used AI coding tools in 2025</span>
+          <span class="stat-badge" data-i18n="slide2-stat2">Agents now write 30%+ of code at leading firms</span>
+          <span class="stat-badge" data-i18n="slide2-stat3">Old: write → run → ship. New: instruct → review → steer.</span>
+        </div>
         <div class="agent-loop-svg" aria-hidden="true">
           <svg viewBox="0 0 500 200" width="500" height="200" fill="none">
             <!-- Keyboard to agent loop -->
@@ -165,8 +159,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="slide-text-side">
           <h2 class="slide-heading" data-i18n="slide3-heading">The Craft Is Molting</h2>
           <blockquote class="slide-blockquote" data-i18n="slide3-quote" data-i18n-html="true">
-            "The craft isn't dying. It's molting. The outer shell -- the keystrokes, the syntax, the boilerplate -- is falling away. But the animal underneath? The part that knows <em>what to build</em> and <em>why</em>? That part is more alive than ever."
+            "The craft isn't dying — it's molting."
           </blockquote>
+          <p class="topic-tags-eyebrow" data-i18n="slide3-topics-eyebrow">18 chapters covering:</p>
+          <div class="topic-tags">
+            <span class="topic-tag" data-i18n="slide3-tag1">Guardrails & Sandboxes</span>
+            <span class="topic-tag" data-i18n="slide3-tag2">Prompt Engineering</span>
+            <span class="topic-tag" data-i18n="slide3-tag3">Multi-Agent Orchestration</span>
+            <span class="topic-tag" data-i18n="slide3-tag4">Agents in CI/CD</span>
+            <span class="topic-tag" data-i18n="slide3-tag5">Testing as Feedback</span>
+            <span class="topic-tag" data-i18n="slide3-tag6">When NOT to Use Agents</span>
+          </div>
         </div>
         <div class="slide-image-side">
           <img src="/illustrations/foreword-molting.jpg" alt="A cocoon cracking open with light emerging" class="oval-vignette slide-illustration" loading="lazy" />
@@ -438,15 +441,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </section>
 
-    <!-- ============ SLIDE 9: CCT — Building My Own Control Plane ============ -->
-    <section class="slide" data-index="8" data-notes="I built CCT (Clovr Code Terminal) as a way to practice agentic engineering myself. It's a browser-based control plane for running multiple Claude agent sessions. Built in Go and Vue, single binary, no dependencies.">
+    <!-- ============ SLIDE 9: Wee — Building My Own Control Plane ============ -->
+    <section class="slide" data-index="8" data-notes="I built Wee as a way to practice agentic engineering myself. It's a browser-based control plane for running multiple Claude agent sessions. Built in Go and Vue, single binary, no dependencies.">
       <div class="slide-content slide-cct-layout">
-        <h2 class="slide-heading" data-i18n="slide9-heading">I Built the Control Plane</h2>
-        <p class="slide-subtitle-cct" data-i18n="slide9-subtitle">Clovr Code Terminal (CCT) — practicing what I preach</p>
+        <h2 class="slide-heading" data-i18n="slide9-heading">Multi-Agent Orchestration in Practice</h2>
+        <p class="slide-subtitle-cct" data-i18n="slide9-subtitle">Wee — from theory to working code</p>
         <div class="cct-showcase">
           <div class="cct-diagram">
             <!-- Architecture SVG -->
-            <svg viewBox="0 0 480 220" width="480" height="220" fill="none" class="cct-arch-svg">
+            <svg viewBox="0 0 480 110" width="480" height="110" fill="none" class="cct-arch-svg">
               <!-- Browser -->
               <rect x="10" y="20" width="120" height="70" rx="8" stroke="var(--color-pirate-teal)" stroke-width="1.5" />
               <text x="70" y="48" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="11" font-family="var(--font-mono)">Browser</text>
@@ -469,81 +472,137 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <rect x="366" y="25" width="100" height="60" rx="8" stroke="var(--color-accent-deep)" stroke-width="1.5" />
               <text x="416" y="52" text-anchor="middle" fill="var(--color-accent-deep)" font-size="11" font-family="var(--font-mono)">Claude API</text>
               <text x="416" y="68" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">+ DeepSeek, GLM...</text>
-              <!-- Features row -->
-              <g transform="translate(10, 120)">
-                <rect x="0" y="0" width="90" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
-                <text x="45" y="22" text-anchor="middle" fill="var(--color-accent)" font-size="18">&#127908;</text>
-                <text x="45" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Voice Input</text>
-                <text x="45" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Parakeet v3</text>
-                <text x="45" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Local STT</text>
-              </g>
-              <g transform="translate(100, 120)">
-                <rect x="0" y="0" width="90" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
-                <text x="45" y="22" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="18">&#128202;</text>
-                <text x="45" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Live Metrics</text>
-                <text x="45" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Tokens, cost,</text>
-                <text x="45" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">tools, git status</text>
-              </g>
-              <g transform="translate(200, 120)">
-                <rect x="0" y="0" width="90" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
-                <text x="45" y="22" text-anchor="middle" fill="var(--color-accent)" font-size="18">&#128260;</text>
-                <text x="45" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Multi-Session</text>
-                <text x="45" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Run agents</text>
-                <text x="45" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">side by side</text>
-              </g>
-              <g transform="translate(300, 120)">
-                <rect x="0" y="0" width="90" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
-                <text x="45" y="22" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="18">&#128274;</text>
-                <text x="45" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Permissions</text>
-                <text x="45" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">Granular control</text>
-                <text x="45" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">+ YOLO mode</text>
-              </g>
-              <g transform="translate(400, 120)">
-                <rect x="0" y="0" width="70" height="80" rx="6" stroke="var(--color-border)" stroke-width="1" fill="rgba(255,255,255,0.5)" />
-                <text x="35" y="22" text-anchor="middle" fill="var(--color-accent-deep)" font-size="18">&#128279;</text>
-                <text x="35" y="40" text-anchor="middle" fill="var(--color-text)" font-size="10" font-weight="600">Handoff</text>
-                <text x="35" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">AI context</text>
-                <text x="35" y="67" text-anchor="middle" fill="var(--color-text-muted)" font-size="8">summaries</text>
-              </g>
             </svg>
+            <div class="lesson-callouts">
+              <div class="lesson-callout" data-i18n="slide9-lesson1">Multi-session = multi-agent orchestration (Ch 12)</div>
+              <div class="lesson-callout" data-i18n="slide9-lesson2">Granular permissions = guardrails in code (Ch 4)</div>
+              <div class="lesson-callout" data-i18n="slide9-lesson3">Pipeline integration = agents in CI/CD (Ch 13)</div>
+            </div>
           </div>
           <div class="cct-quote">
             <blockquote class="slide-blockquote slide-blockquote-small" data-i18n="slide9-quote">
               "The best way to learn agentic engineering is to build agentic tooling."
             </blockquote>
-            <a href="https://github.com/clovrlabs/clovr-code-terminal" target="_blank" rel="noopener" class="cct-github-link">
+            <a href="https://github.com/schlunsen/wee" target="_blank" rel="noopener" class="cct-github-link">
               <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              <span>clovrlabs/clovr-code-terminal</span>
+              <span>schlunsen/wee</span>
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ SLIDE 10: The Crew Metaphor ============ -->
-    <section class="slide" data-index="9" data-notes="This is the central metaphor of the book. You are the captain. The agents are your crew. The codebase is the ship. The crew is replaceable. The ship is not.">
-      <div class="slide-content slide-image-quote-layout slide-image-quote-reverse">
-        <div class="slide-image-side">
-          <img src="/illustrations/ch15-crew.jpg" alt="A ship with its crew" class="oval-vignette slide-illustration" loading="lazy" />
+    <!-- ============ SLIDE 10: Agents as Pentesters ============ -->
+    <section class="slide" data-index="9" data-notes="The same agent patterns — orchestration, feedback loops, guardrails — apply to security. Donna is an open-source autonomous pentesting platform I maintain. It runs 13 agents across 5 phases — recon, analysis, exploitation, and reporting — to find and exploit vulnerabilities continuously. It's built on Claude Agent SDK and Temporal, and it's the culmination of every principle in the book.">
+      <div class="slide-content slide-center-layout">
+        <h2 class="slide-heading" data-i18n="slide10-heading">Agents as Pentesters</h2>
+        <p class="slide-body" data-i18n="slide10-body">What if your pipeline could hack itself before attackers do?</p>
+        <p class="slide-body-small" data-i18n="slide10-case-study">(Case study: <a href="https://github.com/schlunsen/donna" target="_blank" rel="noopener">Donna</a> — open-source, Claude Agent SDK + Temporal)</p>
+        <div class="pentest-pipeline" id="pentest-pipeline">
+          <svg viewBox="0 0 700 180" width="700" height="180" fill="none" class="pentest-pipeline-svg">
+            <!-- Phase 1: Recon -->
+            <rect x="10" y="30" width="120" height="60" rx="8" stroke="var(--color-pirate-teal)" stroke-width="1.5" />
+            <text x="70" y="55" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="11" font-family="var(--font-mono)" font-weight="bold">Recon</text>
+            <text x="70" y="72" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">nmap, source analysis</text>
+            <!-- Arrow -->
+            <line x1="130" y1="60" x2="150" y2="60" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-dasharray="4 3" />
+            <polygon points="148,55 158,60 148,65" fill="var(--color-text-muted)" opacity="0.5" />
+            <!-- Phase 2: Analysis (5 parallel) -->
+            <rect x="158" y="10" width="140" height="100" rx="8" stroke="var(--color-accent)" stroke-width="2" />
+            <text x="228" y="30" text-anchor="middle" fill="var(--color-accent)" font-size="11" font-family="var(--font-mono)" font-weight="bold">Analysis</text>
+            <text x="228" y="48" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-sans)">Injection | XSS</text>
+            <text x="228" y="62" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-sans)">Auth | AuthZ | SSRF</text>
+            <text x="228" y="80" text-anchor="middle" fill="var(--color-accent)" font-size="9" font-family="var(--font-mono)" opacity="0.7">5 agents in parallel</text>
+            <!-- Arrow -->
+            <line x1="298" y1="60" x2="318" y2="60" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-dasharray="4 3" />
+            <polygon points="316,55 326,60 316,65" fill="var(--color-text-muted)" opacity="0.5" />
+            <!-- Phase 3: Exploitation (5 parallel) -->
+            <rect x="326" y="10" width="140" height="100" rx="8" stroke="#d94f4f" stroke-width="2" />
+            <text x="396" y="30" text-anchor="middle" fill="#d94f4f" font-size="11" font-family="var(--font-mono)" font-weight="bold">Exploitation</text>
+            <text x="396" y="48" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-sans)">Confirm vulnerabilities</text>
+            <text x="396" y="62" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-sans)">by executing attacks</text>
+            <text x="396" y="80" text-anchor="middle" fill="#d94f4f" font-size="9" font-family="var(--font-mono)" opacity="0.7">5 agents in parallel</text>
+            <!-- Arrow -->
+            <line x1="466" y1="60" x2="486" y2="60" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-dasharray="4 3" />
+            <polygon points="484,55 494,60 484,65" fill="var(--color-text-muted)" opacity="0.5" />
+            <!-- Phase 4: Report -->
+            <rect x="494" y="30" width="120" height="60" rx="8" stroke="var(--color-pirate-teal)" stroke-width="1.5" />
+            <text x="554" y="55" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="11" font-family="var(--font-mono)" font-weight="bold">Report</text>
+            <text x="554" y="72" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">CVSS, CWE, evidence</text>
+            <!-- Feedback loop arrow -->
+            <path d="M396 110 L396 140 L228 140 L228 110" stroke="var(--color-accent)" stroke-width="1.5" stroke-dasharray="5 3" fill="none" />
+            <polygon points="224,112 228,102 232,112" fill="var(--color-accent)" opacity="0.6" />
+            <text x="312" y="155" text-anchor="middle" fill="var(--color-accent)" font-size="9" font-family="var(--font-mono)" opacity="0.7">Exploitation feedback loop</text>
+            <!-- Temporal badge -->
+            <text x="628" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-mono)">Orchestrated by</text>
+            <text x="628" y="70" text-anchor="middle" fill="var(--color-accent)" font-size="11" font-family="var(--font-mono)" font-weight="bold">Temporal</text>
+          </svg>
         </div>
-        <div class="slide-text-side">
-          <h2 class="slide-heading" data-i18n="slide10-heading">The Crew Metaphor</h2>
-          <blockquote class="slide-blockquote" data-i18n="slide10-quote">
-            "You're the captain. The crew is disposable. The ship is not."
-          </blockquote>
-          <div class="crew-labels" id="crew-labels">
-            <div class="crew-label" data-delay="0"><span class="label-icon">&#9875;</span> <span data-i18n="slide10-label1">Hull = Your Codebase</span></div>
-            <div class="crew-label" data-delay="1"><span class="label-icon">&#9878;</span> <span data-i18n="slide10-label2">Rigging = Conventions</span></div>
-            <div class="crew-label" data-delay="2"><span class="label-icon">&#128214;</span> <span data-i18n="slide10-label3">Logbook = Tests</span></div>
-            <div class="crew-label" data-delay="3"><span class="label-icon">&#9813;</span> <span data-i18n="slide10-label4">Captain = You</span></div>
-            <div class="crew-label" data-delay="4"><span class="label-icon">&#9823;</span> <span data-i18n="slide10-label5">Crew = Agents</span></div>
+        <blockquote class="slide-blockquote" data-i18n="slide10-insight">"Every principle from the book — guardrails, sandboxes, orchestration, testing — converges here. If you can safely let agents attack your software, you've mastered agentic engineering."</blockquote>
+        <div class="pentest-badges">
+          <a href="https://github.com/schlunsen/donna" target="_blank" rel="noopener" class="cct-github-link">
+            <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            <span>schlunsen/donna</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 11: Guardrails for Hostile Agents ============ -->
+    <section class="slide" data-index="10" data-notes="When your agent IS the threat model, guardrails become existential. Never run on production. Require written authorization. Human-verify every finding.">
+      <div class="slide-content slide-center-layout">
+        <h2 class="slide-heading" data-i18n="slide11-heading">When Agents Attack (Responsibly)</h2>
+        <div class="hostile-guardrails">
+          <div class="guardrail-warning">
+            <div class="failure-icon">
+              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
+                <path d="M10 30l10-20 10 20z" />
+                <line x1="20" y1="18" x2="20" y2="24" />
+                <circle cx="20" cy="27" r="1" fill="#d94f4f" />
+              </svg>
+            </div>
+            <blockquote class="slide-blockquote slide-blockquote-small" data-i18n="slide11-quote">
+              "The same guardrails that protect you FROM rogue agents now need to protect the world FROM your intentionally hostile agents."
+            </blockquote>
+          </div>
+          <div class="guardrail-rules">
+            <div class="failure-card" data-delay="0">
+              <h3 data-i18n="slide11-rule1-title">Isolate & Authorize</h3>
+              <p class="failure-desc" data-i18n="slide11-rule1-desc">Sandbox your pentesting agents. Get written permission. Scanning production isn't testing — it's an incident.</p>
+            </div>
+            <div class="failure-card" data-delay="1">
+              <h3 data-i18n="slide11-rule2-title">Verify Everything</h3>
+              <p class="failure-desc" data-i18n="slide11-rule2-desc">Agents hallucinate vulnerabilities. Every finding needs human eyes before it becomes an action item.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ SLIDE 11: Go Build Something ============ -->
-    <section class="slide" data-index="10" data-notes="The call to action. Don't wait. Open your terminal tonight. Pick a real task. Let the agent try. You'll learn more in one hour than in a week of reading.">
+    <!-- ============ SLIDE 12: The Crew Metaphor ============ -->
+    <section class="slide" data-index="11" data-notes="This is the central metaphor of the book. You are the captain. The agents are your crew. The codebase is the ship. The crew is replaceable. The ship is not.">
+      <div class="slide-content slide-image-quote-layout slide-image-quote-reverse">
+        <div class="slide-image-side">
+          <img src="/illustrations/ch15-crew.jpg" alt="A ship with its crew" class="oval-vignette slide-illustration" loading="lazy" />
+        </div>
+        <div class="slide-text-side">
+          <h2 class="slide-heading" data-i18n="slide12-heading">The Crew Metaphor</h2>
+          <blockquote class="slide-blockquote" data-i18n="slide12-quote">
+            "You're the captain. The crew is disposable. The ship is not."
+          </blockquote>
+          <div class="crew-labels" id="crew-labels">
+            <div class="crew-label" data-delay="0"><span class="label-icon">&#9875;</span> <span data-i18n="slide12-label1">Hull = Your Codebase</span></div>
+            <div class="crew-label" data-delay="1"><span class="label-icon">&#9878;</span> <span data-i18n="slide12-label2">Rigging = Conventions</span></div>
+            <div class="crew-label" data-delay="2"><span class="label-icon">&#128214;</span> <span data-i18n="slide12-label3">Logbook = Tests</span></div>
+            <div class="crew-label" data-delay="3"><span class="label-icon">&#9813;</span> <span data-i18n="slide12-label4">Captain = You</span></div>
+            <div class="crew-label" data-delay="4"><span class="label-icon">&#9823;</span> <span data-i18n="slide12-label5">Crew = Agents</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 13: Go Build Something ============ -->
+    <section class="slide" data-index="12" data-notes="The call to action. Don't wait. Open your terminal tonight. Pick a real task. Let the agent try. You'll learn more in one hour than in a week of reading.">
       <div class="slide-content slide-title-layout slide-final">
         <div class="compass-rose-final" aria-hidden="true">
           <svg viewBox="0 0 200 200" width="200" height="200" fill="none" stroke="var(--color-accent)" class="compass-spin">
@@ -557,11 +616,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <polygon points="100,10 105,40 100,35 95,40" fill="var(--color-accent)" opacity="0.2" />
           </svg>
         </div>
-        <h2 class="slide-heading slide-heading-big" data-i18n="slide11-heading">Go Build Something</h2>
+        <h2 class="slide-heading slide-heading-big" data-i18n="slide13-heading">Go Build Something</h2>
         <div class="typing-effect" id="typing-effect"></div>
         <div class="final-actions">
           <a href="/" class="btn-primary-slide">
-            <span data-i18n="slide11-cta">Get the Book -- Free</span>
+            <span data-i18n="slide13-cta">Get the Book -- Free</span>
             <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
             </svg>
@@ -783,61 +842,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
      VOICE SELECTOR
      ======================================== */
 
-  .voice-selector {
-    position: fixed;
-    top: 1.5rem;
-    right: 12.5rem;
-    z-index: 100;
-    display: flex;
-    gap: 2px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
-    padding: 3px;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-
-  .voice-btn {
-    background: transparent;
-    border: none;
-    padding: 0.25rem 0.55rem;
-    border-radius: 16px;
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    transition: all 0.25s ease;
-    letter-spacing: 0.05em;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
-
-  .voice-btn svg {
-    opacity: 0.6;
-  }
-
-  .voice-btn:hover {
-    color: var(--color-text);
-    background: rgba(232, 150, 62, 0.08);
-  }
-
-  .voice-btn.active {
-    background: var(--color-accent);
-    color: white;
-    box-shadow: 0 1px 6px rgba(232, 150, 62, 0.35);
-  }
-
-  .voice-btn.active svg {
-    stroke: white;
-    opacity: 1;
-  }
 
   /* ========================================
      PLAY OVERLAY
@@ -998,13 +1002,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       transform: translateX(-50%);
     }
 
-    .voice-selector {
-      top: auto;
-      bottom: 8.5rem;
-      right: auto;
-      left: 50%;
-      transform: translateX(-50%);
-    }
   }
 
   /* ========================================
@@ -1129,6 +1126,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--color-text-muted);
     margin-bottom: 2rem;
     text-align: center;
+  }
+
+  .slide-body-small {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+  }
+
+  .slide-body-small a {
+    color: var(--color-accent);
   }
 
   .slide-blockquote {
@@ -1336,6 +1343,82 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   @keyframes dash-flow {
     to { stroke-dashoffset: -16; }
+  }
+
+  /* ========================================
+     STAT BADGES (Slide 2)
+     ======================================== */
+
+  .stat-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  .stat-badge {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 2rem;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  /* ========================================
+     TOPIC TAGS (Slide 3)
+     ======================================== */
+
+  .topic-tags-eyebrow {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin: 1.2rem 0 0.5rem;
+    font-family: var(--font-mono);
+  }
+
+  .topic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .topic-tag {
+    background: var(--color-surface);
+    border: 1px solid var(--color-pirate-teal);
+    border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.78rem;
+    font-family: var(--font-sans);
+    color: var(--color-pirate-teal);
+  }
+
+  /* ========================================
+     LESSON CALLOUTS (Slide 9)
+     ======================================== */
+
+  .lesson-callouts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
+  .lesson-callout {
+    background: var(--color-surface);
+    border-left: 3px solid var(--color-pirate-teal);
+    border-radius: 4px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    flex: 1 1 200px;
+    max-width: 280px;
   }
 
   /* ========================================
@@ -1742,7 +1825,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   /* ========================================
-     CCT SLIDE (Slide 9)
+     Wee SLIDE (Slide 9)
      ======================================== */
 
   .slide-cct-layout {
@@ -1827,7 +1910,153 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   /* ========================================
-     CREW LABELS (Slide 10)
+     PENTEST PIPELINE (Slide 10)
+     ======================================== */
+
+  .donna-intro {
+    margin: 0.75rem auto 0.5rem;
+    max-width: 600px;
+    text-align: center;
+  }
+
+  .donna-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .donna-title {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 0.04em;
+  }
+
+  .donna-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-pirate-teal);
+    border: 1px solid var(--color-pirate-teal);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+    opacity: 0.8;
+  }
+
+  .donna-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .donna-features {
+    display: flex;
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0.75rem auto 0;
+    justify-content: center;
+  }
+
+  .donna-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex: 1;
+    padding: 0.6rem 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    text-align: left;
+  }
+
+  .donna-feature-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .donna-feature strong {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.15rem;
+  }
+
+  .donna-feature-desc {
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  .donna-github-link {
+    font-size: 0.9rem !important;
+  }
+
+  @media (max-width: 640px) {
+    .donna-features {
+      flex-direction: column;
+    }
+  }
+
+  .pentest-pipeline {
+    margin: 0.75rem auto;
+    max-width: 720px;
+    overflow-x: auto;
+  }
+
+  .pentest-pipeline-svg {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .pentest-badges {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  /* ========================================
+     HOSTILE GUARDRAILS (Slide 11)
+     ======================================== */
+
+  .hostile-guardrails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .guardrail-warning {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 700px;
+  }
+
+  .guardrail-rules {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .guardrail-rules {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ========================================
+     CREW LABELS (Slide 12)
      ======================================== */
 
   .crew-labels {
@@ -2215,8 +2444,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   // VOICE STATE
   // ========================================
 
-  type Voice = 'male' | 'female';
-  let currentVoice: Voice = (localStorage.getItem('presentation-voice') as Voice) || 'male';
+  // Single voice (female/Q-style narrator)
+  const currentVoice = 'female';
 
   // ========================================
   // SLIDE NAVIGATION
@@ -2476,7 +2705,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const el = document.getElementById('typing-effect');
     if (!el) return;
     const lang = currentLang;
-    const text = translations[lang]['slide11-typing'] || "Tonight -- not tomorrow, not next week, tonight -- open your terminal.";
+    const text = translations[lang]['slide13-typing'] || "Tonight -- not tomorrow, not next week, tonight -- open your terminal.";
     el.textContent = '';
     let i = 0;
 
@@ -2889,6 +3118,117 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   (window as any).__playSlideAudio = playSlideAudio;
 
   // ========================================
+  // BACKGROUND MUSIC SYSTEM
+  // ========================================
+
+  const bgMusic = new Audio('/presentation-audio/bg-music.mp3');
+  bgMusic.loop = true;
+  bgMusic.volume = 0;
+  bgMusic.preload = 'auto';
+
+  const BG_MUSIC_HIGH = 0.35;  // Volume when no narration playing
+  const BG_MUSIC_LOW = 0.15;   // Volume when narration is playing (ducked)
+  const BG_FADE_DURATION = 800; // ms for music volume transitions
+  const BG_FADE_STEPS = 40;
+  let bgMusicStarted = false;
+  let bgFadeTimer: number | null = null;
+
+  function fadeBgMusicTo(targetVol: number, duration: number = BG_FADE_DURATION): Promise<void> {
+    return new Promise((resolve) => {
+      if (bgFadeTimer) clearInterval(bgFadeTimer);
+      const startVol = bgMusic.volume;
+      if (Math.abs(startVol - targetVol) < 0.005) {
+        bgMusic.volume = targetVol;
+        resolve();
+        return;
+      }
+      const steps = BG_FADE_STEPS;
+      const stepSize = (targetVol - startVol) / steps;
+      const interval = duration / steps;
+      let currentStep = 0;
+      bgFadeTimer = window.setInterval(() => {
+        currentStep++;
+        const newVol = Math.max(0, Math.min(1, startVol + stepSize * currentStep));
+        bgMusic.volume = newVol;
+        if (currentStep >= steps) {
+          clearInterval(bgFadeTimer!);
+          bgFadeTimer = null;
+          bgMusic.volume = targetVol;
+          resolve();
+        }
+      }, interval);
+    });
+  }
+
+  function startBgMusic() {
+    if (bgMusicStarted) return;
+    bgMusicStarted = true;
+    bgMusic.volume = 0;
+    bgMusic.play().then(() => {
+      fadeBgMusicTo(BG_MUSIC_HIGH, 2000); // 2s fade-in on page start
+    }).catch(() => {
+      bgMusicStarted = false;
+      console.log('Background music autoplay blocked');
+    });
+  }
+
+  function duckBgMusic() {
+    if (!bgMusicStarted) return;
+    fadeBgMusicTo(BG_MUSIC_LOW);
+  }
+
+  function unduckBgMusic() {
+    if (!bgMusicStarted) return;
+    fadeBgMusicTo(BG_MUSIC_HIGH);
+  }
+
+  function stopBgMusic() {
+    if (!bgMusicStarted) return;
+    fadeBgMusicTo(0, 3000).then(() => { // 3s fade-out
+      bgMusic.pause();
+      bgMusicStarted = false;
+    });
+  }
+
+  // Hook into narration: duck when narration starts, unduck when it ends
+  const _origStartNewAudioBg = startNewAudio;
+  startNewAudio = function(audio: HTMLAudioElement, slideIndex: number) {
+    duckBgMusic();
+    _origStartNewAudioBg(audio, slideIndex);
+
+    audio.addEventListener('ended', () => {
+      // If this is the last slide, wait 3s then fade out music entirely
+      if (slideIndex >= totalSlides - 1) {
+        setTimeout(() => {
+          stopBgMusic();
+        }, 3000);
+      } else {
+        unduckBgMusic();
+      }
+    }, { once: true });
+  };
+
+  // Hook into stop: unduck when narration is stopped manually
+  const _origStopCurrentAudio = stopCurrentAudio;
+  stopCurrentAudio = function() {
+    _origStopCurrentAudio();
+    unduckBgMusic();
+  };
+
+  // Hook into mute toggle: also mute/unmute bg music
+  const _origAudioToggleHandler = audioToggle.onclick;
+  audioToggle.addEventListener('click', () => {
+    if (!audioEnabled && bgMusicStarted) {
+      // Muting — fade bg music to silence but keep it playing
+      fadeBgMusicTo(0);
+    } else if (audioEnabled && bgMusicStarted) {
+      // Unmuting — restore bg music
+      const isNarrating = currentAudio && !currentAudio.paused;
+      fadeBgMusicTo(isNarrating ? BG_MUSIC_LOW : BG_MUSIC_HIGH);
+    }
+  });
+
+  // ========================================
   // INITIALIZE
   // ========================================
 
@@ -2907,6 +3247,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   playOverlayBtn.addEventListener('click', () => {
     playOverlay.classList.add('hidden');
+    startBgMusic();
     playSlideAudio(0);
   });
 
@@ -2915,6 +3256,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     if (!playOverlay.classList.contains('hidden') && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
       playOverlay.classList.add('hidden');
+      startBgMusic();
       playSlideAudio(0);
       document.removeEventListener('keydown', startOnKey);
     }
@@ -2955,10 +3297,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       'slide1-date': 'March 2026',
       // Slide 2
       'slide2-heading': 'The Ground Is Shifting',
-      'slide2-quote': '\u201CFor twenty years, being a software engineer meant one thing: you open an editor, you write code, you ship it. <em>That loop is breaking.</em>\u201D',
+      'slide2-quote': '\u201CYou write code, you ship it. <em>That loop is breaking.</em>\u201D',
+      'slide2-stat1': '72% of developers used AI coding tools in 2025',
+      'slide2-stat2': 'Agents now write 30%+ of code at leading firms',
+      'slide2-stat3': 'Old: write \u2192 run \u2192 ship. New: instruct \u2192 review \u2192 steer.',
       // Slide 3
       'slide3-heading': 'The Craft Is Molting',
-      'slide3-quote': '\u201CThe craft isn\u2019t dying. It\u2019s molting. The outer shell \u2014 the keystrokes, the syntax, the boilerplate \u2014 is falling away. But the animal underneath? The part that knows <em>what to build</em> and <em>why</em>? That part is more alive than ever.\u201D',
+      'slide3-quote': '\u201CThe craft isn\u2019t dying \u2014 it\u2019s molting.\u201D',
+      'slide3-topics-eyebrow': '18 chapters covering:',
+      'slide3-tag1': 'Guardrails & Sandboxes',
+      'slide3-tag2': 'Prompt Engineering',
+      'slide3-tag3': 'Multi-Agent Orchestration',
+      'slide3-tag4': 'Agents in CI/CD',
+      'slide3-tag5': 'Testing as Feedback',
+      'slide3-tag6': 'When NOT to Use Agents',
       // Slide 4
       'slide4-heading': 'What Is an Agent?',
       'slide4-body': 'The spectrum of AI assistance in software engineering:',
@@ -3012,21 +3364,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       'slide8-node5': 'Conventions',
       'slide8-info-default': 'Click any node to learn more',
       // Slide 9
-      'slide9-heading': 'I Built the Control Plane',
-      'slide9-subtitle': 'Clovr Code Terminal (CCT) \u2014 practicing what I preach',
+      'slide9-heading': 'Multi-Agent Orchestration in Practice',
+      'slide9-subtitle': 'Wee \u2014 from theory to working code',
       'slide9-quote': '\u201CThe best way to learn agentic engineering is to build agentic tooling.\u201D',
-      // Slide 10
-      'slide10-heading': 'The Crew Metaphor',
-      'slide10-quote': '\u201CYou\u2019re the captain. The crew is disposable. The ship is not.\u201D',
-      'slide10-label1': 'Hull = Your Codebase',
-      'slide10-label2': 'Rigging = Conventions',
-      'slide10-label3': 'Logbook = Tests',
-      'slide10-label4': 'Captain = You',
-      'slide10-label5': 'Crew = Agents',
-      // Slide 11
-      'slide11-heading': 'Go Build Something',
-      'slide11-cta': 'Get the Book \u2014 Free',
-      'slide11-typing': 'Tonight \u2014 not tomorrow, not next week, tonight \u2014 open your terminal.',
+      'slide9-lesson1': 'Multi-session = multi-agent orchestration (Ch 12)',
+      'slide9-lesson2': 'Granular permissions = guardrails in code (Ch 4)',
+      'slide9-lesson3': 'Pipeline integration = agents in CI/CD (Ch 13)',
+      // Slide 10 - Agents as Pentesters
+      'slide10-heading': 'Agents as Pentesters',
+      'slide10-body': 'What if your pipeline could hack itself before attackers do?',
+      'slide10-case-study': '(Case study: <a href="https://github.com/schlunsen/donna" target="_blank" rel="noopener">Donna</a> \u2014 open-source, Claude Agent SDK + Temporal)',
+      'slide10-insight': '\u201CEvery principle from the book \u2014 guardrails, sandboxes, orchestration, testing \u2014 converges here. If you can safely let agents attack your software, you\u2019ve mastered agentic engineering.\u201D',
+      // Slide 11 - Guardrails for Hostile Agents
+      'slide11-heading': 'When Agents Attack (Responsibly)',
+      'slide11-quote': '\u201CThe same guardrails that protect you FROM rogue agents now need to protect the world FROM your intentionally hostile agents.\u201D',
+      'slide11-rule1-title': 'Isolate & Authorize',
+      'slide11-rule1-desc': 'Sandbox your pentesting agents. Get written permission. Scanning production isn\u2019t testing \u2014 it\u2019s an incident.',
+      'slide11-rule2-title': 'Verify Everything',
+      'slide11-rule2-desc': 'Agents hallucinate vulnerabilities. Every finding needs human eyes before it becomes an action item.',
+      // Slide 12 - The Crew Metaphor
+      'slide12-heading': 'The Crew Metaphor',
+      'slide12-quote': '\u201CYou\u2019re the captain. The crew is disposable. The ship is not.\u201D',
+      'slide12-label1': 'Hull = Your Codebase',
+      'slide12-label2': 'Rigging = Conventions',
+      'slide12-label3': 'Logbook = Tests',
+      'slide12-label4': 'Captain = You',
+      'slide12-label5': 'Crew = Agents',
+      // Slide 13
+      'slide13-heading': 'Go Build Something',
+      'slide13-cta': 'Get the Book \u2014 Free',
+      'slide13-typing': 'Tonight \u2014 not tomorrow, not next week, tonight \u2014 open your terminal.',
     },
     es: {
       'play-overlay-text': 'Iniciar Presentaci\u00F3n',
@@ -3037,10 +3404,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       'slide1-date': 'Marzo 2026',
       // Slide 2
       'slide2-heading': 'El Terreno Est\u00E1 Cambiando',
-      'slide2-quote': '\u201CDurante veinte a\u00F1os, ser ingeniero de software significaba una cosa: abres un editor, escribes c\u00F3digo, lo despliegas. <em>Ese ciclo se est\u00E1 rompiendo.</em>\u201D',
+      'slide2-quote': '\u201CEscribes c\u00F3digo, lo despliegas. <em>Ese ciclo se est\u00E1 rompiendo.</em>\u201D',
+      'slide2-stat1': 'El 72% de los desarrolladores usaron herramientas de IA para programar en 2025',
+      'slide2-stat2': 'Los agentes escriben m\u00E1s del 30% del c\u00F3digo en empresas l\u00EDderes',
+      'slide2-stat3': 'Antes: escribir \u2192 ejecutar \u2192 desplegar. Ahora: instruir \u2192 revisar \u2192 dirigir.',
       // Slide 3
       'slide3-heading': 'El Oficio Est\u00E1 Mudando',
-      'slide3-quote': '\u201CEl oficio no est\u00E1 muriendo. Est\u00E1 mudando. La c\u00E1scara exterior \u2014 las pulsaciones, la sintaxis, el c\u00F3digo repetitivo \u2014 est\u00E1 cayendo. Pero el animal interior? La parte que sabe <em>qu\u00E9 construir</em> y <em>por qu\u00E9</em>? Esa parte est\u00E1 m\u00E1s viva que nunca.\u201D',
+      'slide3-quote': '\u201CEl oficio no est\u00E1 muriendo \u2014 est\u00E1 mudando.\u201D',
+      'slide3-topics-eyebrow': '18 cap\u00EDtulos que cubren:',
+      'slide3-tag1': 'Barandillas y Sandboxes',
+      'slide3-tag2': 'Ingenier\u00EDa de Prompts',
+      'slide3-tag3': 'Orquestaci\u00F3n Multi-Agente',
+      'slide3-tag4': 'Agentes en CI/CD',
+      'slide3-tag5': 'Testing como Retroalimentaci\u00F3n',
+      'slide3-tag6': 'Cu\u00E1ndo NO Usar Agentes',
       // Slide 4
       'slide4-heading': '\u00BFQu\u00E9 Es un Agente?',
       'slide4-body': 'El espectro de la asistencia de IA en ingenier\u00EDa de software:',
@@ -3094,21 +3471,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       'slide8-node5': 'Convenciones',
       'slide8-info-default': 'Haz clic en cualquier nodo para saber m\u00E1s',
       // Slide 9
-      'slide9-heading': 'Constru\u00ED el Plano de Control',
-      'slide9-subtitle': 'Clovr Code Terminal (CCT) \u2014 practicando lo que predico',
+      'slide9-heading': 'Orquestaci\u00F3n Multi-Agente en la Pr\u00E1ctica',
+      'slide9-subtitle': 'Wee \u2014 de la teor\u00EDa al c\u00F3digo funcional',
       'slide9-quote': '\u201CLa mejor manera de aprender ingenier\u00EDa ag\u00E9ntica es construir herramientas ag\u00E9nticas.\u201D',
-      // Slide 10
-      'slide10-heading': 'La Met\u00E1fora de la Tripulaci\u00F3n',
-      'slide10-quote': '\u201CT\u00FA eres el capit\u00E1n. La tripulaci\u00F3n es desechable. El barco no lo es.\u201D',
-      'slide10-label1': 'Casco = Tu Base de C\u00F3digo',
-      'slide10-label2': 'Aparejo = Convenciones',
-      'slide10-label3': 'Cuaderno de Bit\u00E1cora = Tests',
-      'slide10-label4': 'Capit\u00E1n = T\u00FA',
-      'slide10-label5': 'Tripulaci\u00F3n = Agentes',
-      // Slide 11
-      'slide11-heading': 'Ve a Construir Algo',
-      'slide11-cta': 'Obtener el Libro \u2014 Gratis',
-      'slide11-typing': 'Esta noche \u2014 no ma\u00F1ana, no la pr\u00F3xima semana \u2014 esta noche \u2014 abre tu terminal.',
+      'slide9-lesson1': 'Multi-sesi\u00F3n = orquestaci\u00F3n multi-agente (Cap 12)',
+      'slide9-lesson2': 'Permisos granulares = barandillas en c\u00F3digo (Cap 4)',
+      'slide9-lesson3': 'Integraci\u00F3n de pipeline = agentes en CI/CD (Cap 13)',
+      // Slide 10 - Agentes como Pentesters
+      'slide10-heading': 'Agentes como Pentesters',
+      'slide10-body': '\u00BFY si tu pipeline pudiera hackearse a s\u00ED mismo antes que los atacantes?',
+      'slide10-case-study': '(Caso de estudio: <a href="https://github.com/schlunsen/donna" target="_blank" rel="noopener">Donna</a> \u2014 c\u00F3digo abierto, Claude Agent SDK + Temporal)',
+      'slide10-insight': '\u201CCada principio del libro \u2014 barandillas, sandboxes, orquestaci\u00F3n, testing \u2014 converge aqu\u00ED. Si puedes dejar que los agentes ataquen tu software de forma segura, has dominado la ingenier\u00EDa ag\u00E9ntica.\u201D',
+      // Slide 11 - Barandillas para Agentes Hostiles
+      'slide11-heading': 'Cuando los Agentes Atacan (Responsablemente)',
+      'slide11-quote': '\u201CLas mismas barandillas que te protegen DE agentes descontrolados ahora necesitan proteger al mundo DE tus agentes intencionalmente hostiles.\u201D',
+      'slide11-rule1-title': 'Aislar y Autorizar',
+      'slide11-rule1-desc': 'Pon tus agentes de pentesting en sandbox. Obt\u00E9n permiso por escrito. Escanear producci\u00F3n no es testing \u2014 es un incidente.',
+      'slide11-rule2-title': 'Verificar Todo',
+      'slide11-rule2-desc': 'Los agentes alucinan vulnerabilidades. Cada hallazgo necesita ojos humanos antes de convertirse en una acci\u00F3n.',
+      // Slide 12 - La Met\u00E1fora de la Tripulaci\u00F3n
+      'slide12-heading': 'La Met\u00E1fora de la Tripulaci\u00F3n',
+      'slide12-quote': '\u201CT\u00FA eres el capit\u00E1n. La tripulaci\u00F3n es desechable. El barco no lo es.\u201D',
+      'slide12-label1': 'Casco = Tu Base de C\u00F3digo',
+      'slide12-label2': 'Aparejo = Convenciones',
+      'slide12-label3': 'Cuaderno de Bit\u00E1cora = Tests',
+      'slide12-label4': 'Capit\u00E1n = T\u00FA',
+      'slide12-label5': 'Tripulaci\u00F3n = Agentes',
+      // Slide 13
+      'slide13-heading': 'Ve a Construir Algo',
+      'slide13-cta': 'Obtener el Libro \u2014 Gratis',
+      'slide13-typing': 'Esta noche \u2014 no ma\u00F1ana, no la pr\u00F3xima semana \u2014 esta noche \u2014 abre tu terminal.',
     }
   };
 
@@ -3229,39 +3621,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     });
   });
 
-  // ========================================
-  // VOICE SWITCHER
-  // ========================================
-
-  const voiceBtns = document.querySelectorAll<HTMLButtonElement>('.voice-btn');
-
-  function applyVoice(voice: Voice) {
-    currentVoice = voice;
-    localStorage.setItem('presentation-voice', voice);
-
-    // Update voice selector buttons
-    voiceBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.voice === voice);
-    });
-
-    // Reload audio with new voice
-    reloadAudioForLanguage();
-  }
-
-  // Voice button click handlers
-  voiceBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const voice = btn.dataset.voice as Voice;
-      if (voice !== currentVoice) {
-        applyVoice(voice);
-      }
-    });
-  });
-
-  // Apply saved voice on load
-  if (currentVoice !== 'male') {
-    applyVoice(currentVoice);
-  }
+  // Voice is fixed — no switcher needed
 
   // Apply saved language on load
   if (currentLang !== 'en') {

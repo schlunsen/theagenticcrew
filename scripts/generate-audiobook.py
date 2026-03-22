@@ -122,9 +122,10 @@ CHAPTER_TITLES = {
     "12": "Chapter Twelve. Multi-Agent Orchestration.",
     "12b": "Chapter Twelve B. CI CD and Agents.",
     "13": "Chapter Thirteen. War Stories.",
-    "14": "Chapter Fourteen. When Not to Use Agents.",
-    "15": "Chapter Fifteen. Agentic Teams.",
-    "16": "Chapter Sixteen. Final Words.",
+    "18": "Chapter Fourteen. Agents as Pentesters.",
+    "14": "Chapter Fifteen. When Not to Use Agents.",
+    "15": "Chapter Sixteen. Agentic Teams.",
+    "16": "Chapter Seventeen. Final Words.",
 }
 
 CHAPTER_TITLES_CA = {
@@ -143,9 +144,10 @@ CHAPTER_TITLES_CA = {
     "12": "Capítol Dotze. Orquestració Multi-Agent.",
     "12b": "Capítol Dotze B. CI CD i Agents.",
     "13": "Capítol Tretze. Històries de Guerra.",
-    "14": "Capítol Catorze. Quan No Utilitzar Agents.",
-    "15": "Capítol Quinze. Equips Agèntics.",
-    "16": "Capítol Setze. Paraules Finals.",
+    "18": "Capítol Catorze. Agents com a Pentesters.",
+    "14": "Capítol Quinze. Quan No Utilitzar Agents.",
+    "15": "Capítol Setze. Equips Agèntics.",
+    "16": "Capítol Disset. Paraules Finals.",
 }
 
 CHAPTER_TITLES_ES = {
@@ -164,9 +166,10 @@ CHAPTER_TITLES_ES = {
     "12": "Capítulo Doce. Orquestación Multi-Agente.",
     "12b": "Capítulo Doce B. CI CD y Agentes.",
     "13": "Capítulo Trece. Historias de Guerra.",
-    "14": "Capítulo Catorce. Cuándo No Usar Agentes.",
-    "15": "Capítulo Quince. Equipos Agénticos.",
-    "16": "Capítulo Dieciséis. Palabras Finales.",
+    "18": "Capítulo Catorce. Agentes como Pentesters.",
+    "14": "Capítulo Quince. Cuándo No Usar Agentes.",
+    "15": "Capítulo Dieciséis. Equipos Agénticos.",
+    "16": "Capítulo Diecisiete. Palabras Finales.",
 }
 
 CHAPTER_TITLES_DA = {
@@ -185,9 +188,10 @@ CHAPTER_TITLES_DA = {
     "12": "Kapitel Tolv. Multi-Agent Orkestrering.",
     "12b": "Kapitel Tolv B. CI CD og Agenter.",
     "13": "Kapitel Tretten. Krigshistorier.",
-    "14": "Kapitel Fjorten. Hvornår Man Ikke Skal Bruge Agenter.",
-    "15": "Kapitel Femten. Agentiske Teams.",
-    "16": "Kapitel Seksten. Sidste Ord.",
+    "18": "Kapitel Fjorten. Agenter som Pentestere.",
+    "14": "Kapitel Femten. Hvornår Man Ikke Skal Bruge Agenter.",
+    "15": "Kapitel Seksten. Agentiske Teams.",
+    "16": "Kapitel Sytten. Sidste Ord.",
 }
 
 MAX_CHUNK_CHARS = 500

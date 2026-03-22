@@ -2,13 +2,12 @@
 """
 Generate alternate narration audio for the slide presentation using Qwen3-TTS.
 
-Uses a KITT-from-Knight-Rider voice clone — smooth, calm, articulate, and
-authoritative — via the HuggingFace faster-qwen3-tts FastAPI mirror.
+Uses a Q-from-Bond voice clone — young, sharp, intellectual British accent,
+dry wit, quietly confident — via the HuggingFace faster-qwen3-tts FastAPI mirror.
 
-The voice reference is cloned from assets/kitt-voice-ref.wav (William Daniels
-as KITT from Knight Rider).
+The voice reference is cloned from assets/voice-ref-q.wav.
 
-Output: website/public/presentation-audio/slide-{01..11}-female.mp3
+Output: website/public/presentation-audio/slide-{01..13}-female.mp3
 """
 
 import base64
@@ -28,11 +27,13 @@ import requests
 BASE_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = BASE_DIR / "website" / "public" / "presentation-audio"
 
-# KITT voice clone reference audio (extracted from Knight Rider)
-KITT_REF_AUDIO = BASE_DIR / "assets" / "kitt-voice-ref.wav"
-KITT_REF_TEXT = (
-    "I am the voice of Knight Industries Two Thousand's micro processor. "
-    "KITT for easy reference. Knight Industries Two Thousand."
+# Q-from-Bond voice clone reference audio
+Q_REF_AUDIO = BASE_DIR / "assets" / "voice-ref-q.wav"
+Q_REF_TEXT = (
+    "Now pay attention, double-oh seven. I've designed this system to be quite "
+    "elegant. Every component serves a purpose. The encryption protocol is "
+    "unbreakable, the interface is intuitive, and the entire architecture can "
+    "be deployed in under thirty seconds. Please do bring it back in one piece."
 )
 
 FASTAPI_BASE = "https://huggingfacem4-faster-qwen3-tts-demo.hf.space"
@@ -55,21 +56,23 @@ SLIDE_NARRATIONS = {
     2: (
         "For twenty years, being a software engineer meant one thing. "
         "You open an editor, you write code, you ship it. "
-        "The tools changed, from Vim to VS Code, from SVN to Git, but the fundamental loop stayed the same. "
-        "That loop is breaking. And it's breaking fast. "
-        "AI agents don't just autocomplete your code. They read your entire codebase, "
-        "reason about architecture, make changes across dozens of files, run your tests, "
-        "and iterate on failures. All without you touching the keyboard."
+        "That loop is breaking. And the numbers tell the story. "
+        "Seventy-two percent of developers used AI coding tools in twenty twenty-five. "
+        "At leading firms, agents now write over thirty percent of shipped code. "
+        "The old loop was write, run, ship. The new loop is instruct, review, steer. "
+        "AI agents don't just autocomplete. They read your codebase, reason about architecture, "
+        "make changes across dozens of files, run your tests, and iterate on failures. "
+        "All without you touching the keyboard."
     ),
     3: (
         "The craft isn't dying. It's molting. "
-        "The outer shell, the keystrokes, the syntax, the boilerplate, that part is falling away. "
-        "But the animal underneath? "
-        "The part that knows what to build and why, "
-        "that smells a bad abstraction from three files away, "
-        "that can hold a whole system in mind and feel where it's fragile? "
-        "That part is more alive than ever. "
-        "We're not being replaced. We're being promoted. From typists to thinkers."
+        "The keystrokes, the syntax, the boilerplate, that part is falling away. "
+        "But the judgment and taste underneath? More alive than ever. "
+        "This book covers eighteen chapters of what comes next. "
+        "Guardrails and sandboxes. Prompt engineering. Multi-agent orchestration. "
+        "Agents in CI CD pipelines. Testing as the feedback loop. "
+        "And knowing when not to use agents at all. "
+        "It's a practical guide, not a manifesto."
     ),
     4: (
         "So what actually is an agent? Let's get precise. "
@@ -118,14 +121,41 @@ SLIDE_NARRATIONS = {
         "These five reinforce each other. Together, they're the ship that makes any crew productive."
     ),
     9: (
-        "Rasmus built Clovr Code Terminal as a way to practice what he preaches. "
-        "It's a self-hosted web dashboard for running multiple AI agent sessions from your browser. "
+        "Multi-agent orchestration sounds abstract until you build it. "
+        "Wee is a self-hosted control plane for running multiple AI agent sessions from your browser. "
         "Built in Go, single fifteen megabyte binary, no dependencies. "
-        "It has voice input, live metrics, multi-session support, and permission controls. "
-        "The best way to learn agentic engineering is to build agentic tooling. "
-        "That's what this project taught him."
+        "But the interesting part isn't the features. "
+        "It's what building it teaches about orchestration in practice. "
+        "Running multiple sessions is multi-agent orchestration from chapter twelve. "
+        "Granular permissions are guardrails in code, from chapter four. "
+        "And pipeline integration is agents in CI CD, from chapter thirteen. "
+        "The best way to learn agentic engineering is to build agentic tooling."
     ),
     10: (
+        "Everything in this book converges in one of the most compelling applications "
+        "of agentic engineering: automated penetration testing. "
+        "Donna is an open-source pentesting platform Rasmus maintains. "
+        "Built on the Claude Agent SDK and Temporal. "
+        "It runs thirteen specialised agents across five phases. "
+        "The exploitation agents don't just flag potential issues. "
+        "They execute real attacks to confirm vulnerabilities, capturing evidence along the way. "
+        "Every principle from the book, guardrails, sandboxes, orchestration, testing, converges here. "
+        "If you can safely let agents attack your software, you've mastered agentic engineering."
+    ),
+    11: (
+        "The irony of pentesting agents is that the same guardrails "
+        "that protect you from rogue agents in normal development "
+        "now need to protect the world from your intentionally hostile agents. "
+        "Two rules are non-negotiable. "
+        "First, isolate and authorize. Sandbox your pentesting agents. Get written permission. "
+        "A SQL injection test against your production database is not a test, it's an incident. "
+        "Second, verify everything. Agents hallucinate vulnerabilities "
+        "just as readily as they hallucinate library names. "
+        "Every finding needs human eyes before it becomes an action item. "
+        "If your guardrail configuration can handle an agent that's trying to break things, "
+        "it can handle anything."
+    ),
+    12: (
         "This is the central metaphor of the book. "
         "You're the captain. The agents are your crew. The codebase is the ship. "
         "Most days, you spin up an agent, give it a job, take the output, and throw it overboard. "
@@ -134,7 +164,7 @@ SLIDE_NARRATIONS = {
         "Your conventions, your test suites, your project rules, those are the ship. "
         "And if you've built the ship well, any new crew member will be productive in minutes."
     ),
-    11: (
+    13: (
         "Here's what I want you to do. "
         "Tonight, not tomorrow, not next week, tonight, open your terminal. "
         "Pick a bug you've been avoiding. Point an agent at it. Give it context. Set a guardrail. "
@@ -152,23 +182,23 @@ SLIDE_NARRATIONS = {
 # ---------------------------------------------------------------------------
 
 def tts_generate(text: str) -> bytes:
-    """Call the faster-qwen3-tts FastAPI mirror with KITT voice clone and return WAV bytes."""
+    """Call the faster-qwen3-tts FastAPI mirror with Q voice clone and return WAV bytes."""
     form_data = {
         "text": text,
-        "ref_text": KITT_REF_TEXT,
+        "ref_text": Q_REF_TEXT,
     }
 
-    use_custom_ref = KITT_REF_AUDIO.exists()
+    use_custom_ref = Q_REF_AUDIO.exists()
     if not use_custom_ref:
-        # Fallback to a preset if the KITT reference audio is missing
-        form_data["ref_preset"] = "ref_audio_3"
+        # Fallback to a preset if the female reference audio is missing
+        form_data["ref_preset"] = "ref_audio_2"
 
     backoff = INITIAL_BACKOFF
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             files = None
             if use_custom_ref:
-                files = {"ref_audio": ("ref.wav", open(KITT_REF_AUDIO, "rb"), "audio/wav")}
+                files = {"ref_audio": ("ref.wav", open(Q_REF_AUDIO, "rb"), "audio/wav")}
 
             resp = requests.post(
                 f"{FASTAPI_BASE}/generate",
@@ -222,8 +252,8 @@ def slow_down_audio(input_path: Path, output_path: Path, speed: float = SPEED):
 def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    print("KITT Voice Presentation Audio Generator")
-    print(f"  Voice ref: {KITT_REF_AUDIO} ({'exists' if KITT_REF_AUDIO.exists() else 'MISSING'})")
+    print("Q Voice Presentation Audio Generator")
+    print(f"  Voice ref: {Q_REF_AUDIO} ({'exists' if Q_REF_AUDIO.exists() else 'MISSING'})")
     print(f"  Output:    {OUTPUT_DIR}")
     print(f"  Slides:    {len(SLIDE_NARRATIONS)}")
     print(f"  ffmpeg:    {'available' if HAS_FFMPEG else 'NOT available'}")
