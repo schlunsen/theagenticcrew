@@ -53,6 +53,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="audio-progress" id="audio-progress">
         <div class="audio-progress-bar" id="audio-progress-bar"></div>
       </div>
+      <div class="bgm-divider"></div>
+      <button class="bgm-toggle active" id="bgm-toggle" aria-label="Toggle background music" title="Toggle music (M)">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+      </button>
+      <input type="range" class="bgm-volume" id="bgm-volume" min="0" max="100" value="50" aria-label="Music volume" title="Music volume" />
     </div>
 
     <!-- Play Overlay -->
@@ -963,6 +972,69 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .volume-slider::-moz-range-thumb {
     width: 14px;
     height: 14px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .bgm-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--color-border);
+    margin: 0 0.15rem;
+  }
+
+  .bgm-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    border-radius: 50%;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .bgm-toggle:hover {
+    background: rgba(232, 150, 62, 0.1);
+  }
+
+  .bgm-toggle.active {
+    color: var(--color-accent);
+  }
+
+  .bgm-toggle:not(.active) {
+    opacity: 0.5;
+  }
+
+  .bgm-volume {
+    width: 50px;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--color-border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .bgm-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .bgm-volume::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--color-accent);
     cursor: pointer;
@@ -3126,12 +3198,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   bgMusic.volume = 0;
   bgMusic.preload = 'auto';
 
-  const BG_MUSIC_HIGH = 0.35;  // Volume when no narration playing
-  const BG_MUSIC_LOW = 0.15;   // Volume when narration is playing (ducked)
+  const BG_MUSIC_HIGH = 0.35;  // Base volume when no narration playing
+  const BG_MUSIC_LOW = 0.15;   // Base volume when narration is playing (ducked)
   const BG_FADE_DURATION = 800; // ms for music volume transitions
   const BG_FADE_STEPS = 40;
   let bgMusicStarted = false;
+  let bgMusicEnabled = true;
   let bgFadeTimer: number | null = null;
+
+  const bgmToggle = document.getElementById('bgm-toggle')!;
+  const bgmVolumeSlider = document.getElementById('bgm-volume') as HTMLInputElement;
+
+  // Scale base volumes by the user's music volume slider (0-100)
+  function getBgHighVol(): number {
+    return (parseInt(bgmVolumeSlider.value) / 100) * BG_MUSIC_HIGH * 3;
+  }
+
+  function getBgLowVol(): number {
+    return (parseInt(bgmVolumeSlider.value) / 100) * BG_MUSIC_LOW * 3;
+  }
 
   function fadeBgMusicTo(targetVol: number, duration: number = BG_FADE_DURATION): Promise<void> {
     return new Promise((resolve) => {
@@ -3161,11 +3246,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   function startBgMusic() {
-    if (bgMusicStarted) return;
+    if (bgMusicStarted || !bgMusicEnabled) return;
     bgMusicStarted = true;
     bgMusic.volume = 0;
     bgMusic.play().then(() => {
-      fadeBgMusicTo(BG_MUSIC_HIGH, 2000); // 2s fade-in on page start
+      fadeBgMusicTo(getBgHighVol(), 2000); // 2s fade-in on page start
     }).catch(() => {
       bgMusicStarted = false;
       console.log('Background music autoplay blocked');
@@ -3173,13 +3258,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   function duckBgMusic() {
-    if (!bgMusicStarted) return;
-    fadeBgMusicTo(BG_MUSIC_LOW);
+    if (!bgMusicStarted || !bgMusicEnabled) return;
+    fadeBgMusicTo(getBgLowVol());
   }
 
   function unduckBgMusic() {
-    if (!bgMusicStarted) return;
-    fadeBgMusicTo(BG_MUSIC_HIGH);
+    if (!bgMusicStarted || !bgMusicEnabled) return;
+    fadeBgMusicTo(getBgHighVol());
   }
 
   function stopBgMusic() {
@@ -3215,16 +3300,50 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     unduckBgMusic();
   };
 
-  // Hook into mute toggle: also mute/unmute bg music
-  const _origAudioToggleHandler = audioToggle.onclick;
+  // Hook into narration mute toggle: also mute/unmute bg music
   audioToggle.addEventListener('click', () => {
+    if (!bgMusicEnabled) return; // music independently disabled, leave it alone
     if (!audioEnabled && bgMusicStarted) {
-      // Muting — fade bg music to silence but keep it playing
+      // Muting narration — fade bg music to silence but keep it playing
       fadeBgMusicTo(0);
     } else if (audioEnabled && bgMusicStarted) {
-      // Unmuting — restore bg music
+      // Unmuting narration — restore bg music
       const isNarrating = currentAudio && !currentAudio.paused;
-      fadeBgMusicTo(isNarrating ? BG_MUSIC_LOW : BG_MUSIC_HIGH);
+      fadeBgMusicTo(isNarrating ? getBgLowVol() : getBgHighVol());
+    }
+  });
+
+  // Music toggle button
+  bgmToggle.addEventListener('click', () => {
+    bgMusicEnabled = !bgMusicEnabled;
+    bgmToggle.classList.toggle('active', bgMusicEnabled);
+    if (!bgMusicEnabled && bgMusicStarted) {
+      // Turning off music — fade out and pause
+      fadeBgMusicTo(0, 500).then(() => {
+        bgMusic.pause();
+        bgMusicStarted = false;
+      });
+    } else if (bgMusicEnabled && audioEnabled) {
+      // Turning on music — start if presentation is running
+      startBgMusic();
+      const isNarrating = currentAudio && !currentAudio.paused;
+      if (bgMusicStarted) {
+        fadeBgMusicTo(isNarrating ? getBgLowVol() : getBgHighVol());
+      }
+    }
+  });
+
+  // Music volume slider
+  bgmVolumeSlider.addEventListener('input', () => {
+    if (!bgMusicStarted || !bgMusicEnabled) return;
+    const isNarrating = currentAudio && !currentAudio.paused;
+    bgMusic.volume = isNarrating ? getBgLowVol() : getBgHighVol();
+  });
+
+  // 'M' key to toggle music
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'm' || e.key === 'M') {
+      bgmToggle.click();
     }
   });
 
