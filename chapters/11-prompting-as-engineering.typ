@@ -126,6 +126,10 @@ Each iteration tightens the loop. First prompt gets you 70% of the way. A follow
 
 Most of us prompt by typing. That makes sense — we are engineers, we live in text. But there is another input channel that is faster, more natural, and surprisingly underused: your voice.
 
+Let me be honest: the first time I tried speaking a prompt instead of typing it, I felt ridiculous. There is something deeply awkward about talking to your editor. You feel self-conscious. You stumble over your words. You wonder if this is really how serious engineering gets done. That initial discomfort is real, and it stops most people from ever trying again.
+
+Push through it. The payoff is enormous.
+
 Modern speech-to-text has reached the point where you can speak a prompt into your terminal and have it transcribed with near-perfect accuracy. Tools like Whisper, macOS Dictation, and SuperWhisper let you talk to your agent instead of typing. The result is the same — text goes in, code comes out. But the experience is fundamentally different.
 
 Here is why: typing and speaking are different modes of thinking. When you type, you edit as you go. You delete a word, rephrase, backspace, restructure. The text you produce is _polished_ — you had time to smooth out the rough edges before it left your fingers. Speaking doesn't give you that luxury. When you speak, you commit. The words leave your mouth and they're gone. There is no backspace.
@@ -138,13 +142,27 @@ But something happens if you keep doing it. You get better. Not just at promptin
 
 This skill transfers everywhere. Standup meetings. Architecture discussions. Pair programming. Incident calls. Every situation where you need to articulate a technical idea clearly, under time pressure, without the safety net of a text editor. Voice-driven development is not just a faster way to prompt — it is practice for every technical conversation you will ever have.
 
-There is also a practical speed advantage. Most people speak at 130 words per minute. Most people type at 40 to 80. For the kind of high-level, intent-driven prompts that produce the best agent output — "here is the problem, here is the context, here is what I want, here is what I don't want" — speaking is simply faster. You spend less time on input and more time reviewing output.
+=== The Context Advantage
+
+There is also a practical speed advantage. Most people speak at 130 words per minute. Most people type at 40 to 80. But speed is only half the story. The real advantage is _volume of context_.
+
+Think about what happens when you type a prompt. There is a cost to every character — the physical effort of pressing keys, the mental overhead of spelling and formatting, the fatigue that builds over a long session. That cost acts as a filter. You unconsciously abbreviate. You leave out background. You skip the "obvious" context that is only obvious to you. By the time you hit enter, your prompt is a compressed summary of what you actually know about the problem.
+
+Now think about what happens when you speak. The friction drops to nearly zero. You can describe the full history of a bug — how you first noticed it, what you already tried, why the obvious fix did not work, what you suspect the root cause might be. You can narrate your mental model of the system. You can provide the kind of rich, layered context that we talked about in the context chapter — the intent, the constraints, the tribal knowledge — without the fatigue of typing it all out.
+
+I have found that my spoken prompts routinely contain two to three times as much useful context as my typed ones. Not because I am a slow typist, but because typing is _tiring_ in a way that speaking is not. Over a long engineering session — the kind where you are steering agents through a complex feature for hours — typing fatigue is real. Your prompts get shorter. Your context gets thinner. Your agent's output gets worse. Speaking eliminates that decay. You can provide the same quality of context in hour four as you did in hour one, because your voice does not get tired the way your fingers do.
+
+This is the underappreciated argument for voice input: it is not just faster, it is _more sustainable_. The engineer who speaks their prompts can maintain high-quality context delivery across an entire work session. The engineer who types will, inevitably, start cutting corners as the day wears on.
+
+=== Getting Started with Voice
 
 Try it for a week. Pick a speech-to-text tool, wire it into your workflow, and speak your prompts instead of typing them. The first day will feel awkward. By the third day, you will notice your spoken prompts getting tighter. By the end of the week, you will notice your _spoken communication in general_ getting tighter.
 
-It is also worth noting that speech-to-text models can run entirely on your machine. NVIDIA's Parakeet family of models — compact, high-accuracy ASR models — run locally without any cloud dependency. Tools like SuperWhisper and whisper.cpp do the same using OpenAI's Whisper weights. A modern MacBook can run these models in near real-time with accurate transcription and low latency. You do not need a cloud service to turn speech into text — the local tooling is already there.
+Here is a practical workflow that works well: open a recorder in your editor or terminal, speak your thoughts, let the transcription run, and then review the text before sending it to the agent. You do not have to go fully live — a quick review pass lets you catch the worst rambling while still getting the speed and context benefits of speech. Over time, you will need that review step less and less.
 
-The agents don't care whether your prompt was typed or spoken. But _you_ will be a clearer thinker for having spoken it.
+It is also worth noting that speech-to-text models can run entirely on your machine. NVIDIA's Parakeet family of models — compact, high-accuracy ASR models — run locally without any cloud dependency. Tools like SuperWhisper and whisper.cpp do the same using OpenAI's Whisper weights. A modern MacBook can run these models in near real-time with accurate transcription and low latency. You do not need a cloud service to turn speech into text — the local tooling is already there. And yes, there is a pleasing irony in using locally running AI to transcribe your voice so that another AI can act on it.
+
+The agents don't care whether your prompt was typed or spoken. But _you_ will be a clearer thinker for having spoken it — and you will have given your agent far more to work with.
 
 == Visual Context: When Words Aren't Enough
 
