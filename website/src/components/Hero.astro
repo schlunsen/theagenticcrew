@@ -50,6 +50,9 @@
             <div class="book-spine"></div>
             <div class="book-front">
               <img src="/book-cover.png" alt="The Agentic Crew book cover" class="cover-image" />
+              <div class="book-ribbon">
+                <span>In the Making</span>
+              </div>
             </div>
           </div>
         </div>
@@ -430,6 +433,53 @@
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  /* "In the Making" ribbon */
+  .book-ribbon {
+    position: absolute;
+    top: 18px;
+    right: -10px;
+    z-index: 10;
+    overflow: visible;
+  }
+
+  .book-ribbon span {
+    display: block;
+    padding: 0.3rem 1.4rem 0.3rem 1.2rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #fff;
+    background: linear-gradient(135deg, var(--color-pirate-teal), #1d7a94);
+    box-shadow:
+      0 3px 10px rgba(46, 155, 183, 0.4),
+      0 1px 3px rgba(0, 0, 0, 0.15);
+    position: relative;
+    white-space: nowrap;
+    border-radius: 3px 0 0 3px;
+  }
+
+  /* Folded edge under the ribbon */
+  .book-ribbon span::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 0;
+    border-style: solid;
+    border-width: 0 10px 8px 0;
+    border-color: transparent #145e72 transparent transparent;
+  }
+
+  /* Subtle pulse animation */
+  .book-ribbon {
+    animation: ribbon-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes ribbon-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
   }
 
   .book-spine {
