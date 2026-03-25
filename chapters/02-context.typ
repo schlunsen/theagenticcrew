@@ -135,6 +135,8 @@ Tools can't provide everything. Your mental model of why something was designed 
 
 *Layer your context.* For complex tasks, don't dump everything at once. Start with the high-level picture — what the system does, what you're trying to change, why. Then provide the specific files. Then provide the error or test failure. This mirrors how you'd brief a human colleague, and it works for the same reason: it builds a mental model before diving into specifics.
 
+*Consider speaking your context instead of typing it.* When you need to inject intent, constraints, and domain knowledge — the Layer 2 context that tools cannot discover — your voice is a remarkably efficient delivery mechanism. Speaking at 130 words per minute versus typing at 40 to 80 means you can narrate far more context in the same time. More importantly, the physical fatigue of typing acts as a silent filter that makes your prompts shorter and thinner as the day goes on. Speaking removes that filter. We cover this in depth in the chapter on prompting, but the point is relevant here: the _medium_ you use to deliver context affects how much of it actually reaches the agent.
+
 *Equip, don't spoon-feed.* When you catch yourself about to paste a file into the context window, ask: could the agent have found this on its own if it had the right tools? If yes, invest the time in setting up that access instead. Pasting is a one-time fix. Tooling is a permanent upgrade. The goal is an agent that needs you for your judgment, not your clipboard.
 
 == Context Across Sessions
