@@ -68,6 +68,15 @@ site:
 site-build:
     cd website && npm run build
 
+# Quick deploy — website only, no book rebuild, compressed rsync
+deploy-fast:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "Fast deploy: website only..."
+    cd website && npm run build && cd ..
+    rsync -az --delete --compress-level=9 --progress website/dist/ root@theagenticcrew.com:/var/www/theagenticcrew.com/
+    echo "Deployed website to https://theagenticcrew.com"
+
 # Deploy website to production (rebuilds all editions + site, archives revision)
 deploy:
     #!/usr/bin/env bash
@@ -76,55 +85,56 @@ deploy:
     rev=$(cat REVISION)
     echo "Deploying revision $rev..."
 
-    # Build all PDFs with revision stamp
-    typst compile --input revision="$rev" book.typ build/the-agentic-crew.pdf
-    typst compile --input revision="$rev" book-ca.typ build/the-agentic-crew-ca.pdf
-    typst compile --input revision="$rev" book-da.typ build/the-agentic-crew-da.pdf
-    typst compile --input revision="$rev" book-es.typ build/the-agentic-crew-es.pdf
+    # Build all PDFs in parallel
+    typst compile --input revision="$rev" book.typ build/the-agentic-crew.pdf &
+    typst compile --input revision="$rev" book-ca.typ build/the-agentic-crew-ca.pdf &
+    typst compile --input revision="$rev" book-da.typ build/the-agentic-crew-da.pdf &
+    typst compile --input revision="$rev" book-es.typ build/the-agentic-crew-es.pdf &
+    typst compile --input revision="$rev" book-crew.typ build/the-agentic-crew-crew.pdf &
+    typst compile --input revision="$rev" book-crew-ca.typ build/the-agentic-crew-crew-ca.pdf &
+    wait
+    echo "PDFs built."
 
-    # Build crew member's guide PDFs
-    typst compile --input revision="$rev" book-crew.typ build/the-agentic-crew-crew.pdf
-    typst compile --input revision="$rev" book-crew-ca.typ build/the-agentic-crew-crew-ca.pdf
-
-    # Build all EPUBs
+    # Build all EPUBs in parallel
     pandoc epub.typ -f typst -t epub3 -o build/the-agentic-crew.epub \
         --metadata title="The Agentic Crew" \
         --metadata "author=Rasmus Bornhøft Schlünsen" \
         --metadata lang=en \
-        --toc --toc-depth=2 --split-level=1
+        --toc --toc-depth=2 --split-level=1 &
 
     pandoc epub-ca.typ -f typst -t epub3 -o build/the-agentic-crew-ca.epub \
         --metadata title="La Tripulació Agèntica" \
         --metadata "author=Rasmus Bornhøft Schlünsen" \
         --metadata lang=ca \
-        --toc --toc-depth=2 --split-level=1
+        --toc --toc-depth=2 --split-level=1 &
 
     pandoc epub-da.typ -f typst -t epub3 -o build/the-agentic-crew-da.epub \
         --metadata title="Det Agentiske Mandskab" \
         --metadata "author=Rasmus Bornhøft Schlünsen" \
         --metadata lang=da \
-        --toc --toc-depth=2 --split-level=1
+        --toc --toc-depth=2 --split-level=1 &
 
     pandoc epub-es.typ -f typst -t epub3 -o build/the-agentic-crew-es.epub \
         --metadata title="La Tripulación Agéntica" \
         --metadata "author=Rasmus Bornhøft Schlünsen" \
         --metadata lang=es \
-        --toc --toc-depth=2 --split-level=1
+        --toc --toc-depth=2 --split-level=1 &
 
-    # Build crew member's guide EPUBs
     pandoc epub-crew.typ -f typst -t epub3 -o build/the-agentic-crew-crew.epub \
         --metadata title="The Agentic Crew: Crew Member's Guide" \
         --metadata "author=Rasmus Bornhøft Schlünsen" \
         --metadata lang=en \
-        --toc --toc-depth=2 --split-level=1
+        --toc --toc-depth=2 --split-level=1 &
 
     pandoc epub-crew-ca.typ -f typst -t epub3 -o build/the-agentic-crew-crew-ca.epub \
         --metadata "title=La Tripulacio Agentica: Guia del Tripulant" \
         --metadata "author=Rasmus Bornhøft Schlünsen" \
         --metadata lang=ca \
-        --toc --toc-depth=2 --split-level=1
+        --toc --toc-depth=2 --split-level=1 &
+    wait
+    echo "EPUBs built."
 
-    # Copy current builds to website public
+    # Copy all builds to website public
     cp build/the-agentic-crew.pdf website/public/the-agentic-crew.pdf
     cp build/the-agentic-crew.epub website/public/the-agentic-crew.epub
     cp build/the-agentic-crew-ca.pdf website/public/the-agentic-crew-ca.pdf
@@ -138,20 +148,12 @@ deploy:
     cp build/the-agentic-crew-crew-ca.pdf website/public/the-agentic-crew-crew-ca.pdf
     cp build/the-agentic-crew-crew-ca.epub website/public/the-agentic-crew-crew-ca.epub
 
-    # Archive revisions locally (not deployed to website)
+    # Archive revisions locally
     mkdir -p revisions
-    cp build/the-agentic-crew.pdf "revisions/the-agentic-crew-rev${rev}.pdf"
-    cp build/the-agentic-crew.epub "revisions/the-agentic-crew-rev${rev}.epub"
-    cp build/the-agentic-crew-ca.pdf "revisions/the-agentic-crew-ca-rev${rev}.pdf"
-    cp build/the-agentic-crew-ca.epub "revisions/the-agentic-crew-ca-rev${rev}.epub"
-    cp build/the-agentic-crew-da.pdf "revisions/the-agentic-crew-da-rev${rev}.pdf"
-    cp build/the-agentic-crew-da.epub "revisions/the-agentic-crew-da-rev${rev}.epub"
-    cp build/the-agentic-crew-es.pdf "revisions/the-agentic-crew-es-rev${rev}.pdf"
-    cp build/the-agentic-crew-es.epub "revisions/the-agentic-crew-es-rev${rev}.epub"
-    cp build/the-agentic-crew-crew.pdf "revisions/the-agentic-crew-crew-rev${rev}.pdf"
-    cp build/the-agentic-crew-crew.epub "revisions/the-agentic-crew-crew-rev${rev}.epub"
-    cp build/the-agentic-crew-crew-ca.pdf "revisions/the-agentic-crew-crew-ca-rev${rev}.pdf"
-    cp build/the-agentic-crew-crew-ca.epub "revisions/the-agentic-crew-crew-ca-rev${rev}.epub"
+    for f in the-agentic-crew the-agentic-crew-ca the-agentic-crew-da the-agentic-crew-es the-agentic-crew-crew the-agentic-crew-crew-ca; do
+        cp "build/${f}.pdf" "revisions/${f}-rev${rev}.pdf" 2>/dev/null || true
+        cp "build/${f}.epub" "revisions/${f}-rev${rev}.epub" 2>/dev/null || true
+    done
 
     # Build website
     cd website && npm run build && cd ..
