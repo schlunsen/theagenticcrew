@@ -1,23 +1,23 @@
 ---
 const chapters = [
-  { id: "01-introduction", number: "01", title: "Introduction", titleCa: "Introducció", titleEs: "Introducción", titleDa: "Introduktion" },
-  { id: "02-context", number: "02", title: "Context", titleCa: "Context", titleEs: "Contexto", titleDa: "Kontekst" },
-  { id: "03-what-is-an-agent", number: "03", title: "What Is an Agent?", titleCa: "Què és un Agent?", titleEs: "¿Qué es un Agente?", titleDa: "Hvad er en Agent?" },
-  { id: "04-wee", number: "04", title: "Principles from Building My Own Agentic Tooling", titleCa: "Claude Code al Terminal", titleEs: "Claude Code en el Terminal", titleDa: "Claude Code i Terminalen" },
-  { id: "05-guardrails", number: "05", title: "Guardrails", titleCa: "Baranes de Seguretat", titleEs: "Barandillas", titleDa: "Sikkerhedsværn" },
-  { id: "06-git", number: "06", title: "Git as Agent Infrastructure", titleCa: "Git", titleEs: "Git", titleDa: "Git" },
-  { id: "07-sandboxes", number: "07", title: "Sandboxes", titleCa: "Sandboxes", titleEs: "Sandboxes", titleDa: "Sandboxes" },
-  { id: "08-testing-as-the-feedback-loop", number: "08", title: "Testing as the Feedback Loop", titleCa: "Els Tests com a Bucle de Retroalimentació", titleEs: "Testing como Bucle de Retroalimentación", titleDa: "Test som Feedback-Loop" },
-  { id: "09-convention-over-configuration", number: "09", title: "Convention Over Configuration", titleCa: "Convenció sobre Configuració", titleEs: "Convención sobre Configuración", titleDa: "Konvention over Konfiguration" },
-  { id: "09b-tool-integrations", number: "09b", title: "Extending the Agent's Reach", titleCa: "Integracions d'Eines", titleEs: "Integraciones de Herramientas", titleDa: "Værktøjsintegrationer" },
-  { id: "10-local-vs-commercial-llms", number: "10", title: "Local LLMs vs. Commercial LLMs", titleCa: "LLMs Locals vs. Comercials", titleEs: "LLMs Locales vs. Comerciales", titleDa: "Lokale vs. Kommercielle LLMs" },
-  { id: "11-prompting-as-engineering", number: "11", title: "Prompting as Engineering", titleCa: "El Prompting com a Enginyeria", titleEs: "Prompting como Ingeniería", titleDa: "Prompting som Ingeniørarbejde" },
-  { id: "12-multi-agent-orchestration", number: "12", title: "Multi-Agent Orchestration", titleCa: "Orquestració Multi-Agent", titleEs: "Orquestación Multi-Agente", titleDa: "Multi-Agent Orkestrering" },
-  { id: "12b-cicd-and-agents", number: "12b", title: "Agents in the Pipeline", titleCa: "CI/CD i Agents", titleEs: "CI/CD y Agentes", titleDa: "CI/CD og Agenter" },
-  { id: "13-war-stories", number: "13", title: "When Agents Get It Wrong", titleCa: "Històries de Guerra", titleEs: "Historias de Guerra", titleDa: "Krigshistorier" },
-  { id: "14-when-not-to-use-agents", number: "14", title: "When Not to Use Agents", titleCa: "Quan No Utilitzar Agents", titleEs: "Cuándo No Usar Agentes", titleDa: "Hvornår Man Ikke Skal Bruge Agenter" },
-  { id: "15-agentic-teams", number: "15", title: "Agentic Teams", titleCa: "Equips Agèntics", titleEs: "Equipos Agénticos", titleDa: "Agentiske Teams" },
-  { id: "16-final-words", number: "16", title: "Final Words", titleCa: "Paraules Finals", titleEs: "Palabras Finales", titleDa: "Sidste Ord" },
+  { id: "01-introduction", number: "01", title: "Introduction" },
+  { id: "02-context", number: "02", title: "Context" },
+  { id: "03-what-is-an-agent", number: "03", title: "What Is an Agent?" },
+  { id: "04-guardrails", number: "04", title: "Guardrails" },
+  { id: "05-git", number: "05", title: "Git as Agent Infrastructure" },
+  { id: "06-sandboxes", number: "06", title: "Sandboxes" },
+  { id: "07-testing-as-the-feedback-loop", number: "07", title: "Testing as the Feedback Loop" },
+  { id: "08-convention-over-configuration", number: "08", title: "Convention Over Configuration" },
+  { id: "09-tool-integrations", number: "09", title: "Tool Integrations" },
+  { id: "10-local-vs-commercial-llms", number: "10", title: "Local LLMs vs. Commercial LLMs" },
+  { id: "11-prompting-as-engineering", number: "11", title: "Prompting as Engineering" },
+  { id: "12-multi-agent-orchestration", number: "12", title: "Multi-Agent Orchestration" },
+  { id: "13-cicd-and-agents", number: "13", title: "CI/CD and Agents" },
+  { id: "14-war-stories", number: "14", title: "War Stories" },
+  { id: "15-when-not-to-use-agents", number: "15", title: "When Not to Use Agents" },
+  { id: "16-agentic-teams", number: "16", title: "Agentic Teams" },
+  { id: "17-final-words", number: "17", title: "Final Words" },
+  { id: "18-agents-as-pentesters", number: "18", title: "Agents as Pentesters" },
 ];
 ---
 
@@ -29,57 +29,10 @@ const chapters = [
         Listen Free
       </p>
       <h2>Audiobook</h2>
-      <p class="audiobook-subtitle">Listen to the full book, chapter by chapter. AI-narrated with natural voices.</p>
+      <p class="audiobook-subtitle">Listen to the full book, chapter by chapter. AI-narrated with a bespoke voice designed by Qwen3-TTS.</p>
     </div>
 
     <div class="audiobook-card">
-      <!-- Language Toggle -->
-      <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="en" data-book="adult">
-          🇬🇧 English
-        </button>
-        <button class="lang-btn" data-lang="ca" data-book="adult-ca">
-          Català
-        </button>
-        <button class="lang-btn" data-lang="es" data-book="adult-es">
-          Español
-        </button>
-        <button class="lang-btn" data-lang="da" data-book="adult-da">
-          Dansk
-        </button>
-      </div>
-
-      <!-- Voice Toggle -->
-      <div class="voice-toggle">
-        <button class="voice-btn active" data-voice="male">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-            <line x1="12" y1="19" x2="12" y2="23"/>
-            <line x1="8" y1="23" x2="16" y2="23"/>
-          </svg>
-          Rasmus
-        </button>
-        <button class="voice-btn" data-voice="female">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-            <line x1="12" y1="19" x2="12" y2="23"/>
-            <line x1="8" y1="23" x2="16" y2="23"/>
-          </svg>
-          Amy
-        </button>
-        <button class="voice-btn" data-voice="kitt">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-            <line x1="12" y1="19" x2="12" y2="23"/>
-            <line x1="8" y1="23" x2="16" y2="23"/>
-          </svg>
-          KITT
-        </button>
-      </div>
-
       <!-- Audio Player -->
       <div class="player-container">
         <div class="now-playing">
@@ -89,6 +42,17 @@ const chapters = [
         <audio id="audiobook-player" controls preload="none">
           Your browser does not support the audio element.
         </audio>
+        <div class="bgm-controls">
+          <button class="bgm-toggle active" id="bgm-toggle" title="Toggle background music">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M9 18V5l12-2v13"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+            <span>Music</span>
+          </button>
+          <input type="range" class="bgm-volume" id="bgm-volume" min="0" max="100" value="30" title="Background music volume" />
+        </div>
       </div>
 
       <!-- Chapter List -->
@@ -98,9 +62,6 @@ const chapters = [
             class="chapter-row"
             data-chapter-id={chapter.id}
             data-chapter-title={chapter.title}
-            data-chapter-title-ca={chapter.titleCa}
-            data-chapter-title-es={chapter.titleEs}
-            data-chapter-title-da={chapter.titleDa}
             data-chapter-num={chapter.number}
           >
             <span class="chapter-row-num">{chapter.number}</span>
@@ -123,17 +84,11 @@ const chapters = [
         <div class="download-full-divider"></div>
         <p class="download-full-label">Download the full audiobook</p>
         <div class="download-full-buttons">
-          <a href="/audiobook/the-agentic-crew-full_male.mp3" class="download-btn" download id="download-male">
+          <a href="/audiobook/adult/kitt/full-book.mp3" class="download-btn" download>
             <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
             </svg>
-            Male Voice (MP3)
-          </a>
-          <a href="/audiobook/the-agentic-crew-full_female.mp3" class="download-btn" download id="download-female">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
-            </svg>
-            Female Voice (MP3)
+            Full Audiobook (MP3)
           </a>
         </div>
         <p class="download-full-note">Full audiobook files will be available soon. Individual chapters are being added as they are generated.</p>
@@ -146,107 +101,19 @@ const chapters = [
   document.addEventListener('DOMContentLoaded', () => {
     const player = document.getElementById('audiobook-player') as HTMLAudioElement;
     const nowPlayingTitle = document.getElementById('now-playing-title');
-    const voiceBtns = document.querySelectorAll('.voice-btn');
-    const langBtns = document.querySelectorAll('.lang-btn');
     const chapterRows = document.querySelectorAll('.chapter-row');
 
-    let currentVoice = 'male';
-    let currentLang = 'en';
-    let currentBook = 'adult';
     let currentChapterId: string | null = null;
-    const voiceToggleEl = document.querySelector('.audiobook .voice-toggle') as HTMLElement;
 
     function getAudioPath(chapterId: string) {
-      return `/audiobook/${currentBook}/${currentVoice}/${chapterId}.mp3`;
+      return `/audiobook/adult/kitt/${chapterId}.mp3`;
     }
-
-    function getChapterTitle(row: Element) {
-      if (currentLang !== 'en') {
-        return row.getAttribute(`data-chapter-title-${currentLang}`) || row.getAttribute('data-chapter-title');
-      }
-      return row.getAttribute('data-chapter-title');
-    }
-
-    function updateChapterTitles() {
-      chapterRows.forEach(row => {
-        const titleEl = row.querySelector('.chapter-row-title');
-        if (titleEl) {
-          titleEl.textContent = getChapterTitle(row) || '';
-        }
-      });
-    }
-
-    // Language toggle
-    langBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        const book = btn.getAttribute('data-book');
-        if (!lang || lang === currentLang) return;
-
-        currentLang = lang;
-        currentBook = book || 'adult';
-        langBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        updateChapterTitles();
-
-        // Only show voice toggle for English (other languages only have male)
-        if (voiceToggleEl) {
-          voiceToggleEl.style.display = currentLang === 'en' ? 'flex' : 'none';
-        }
-        // Reset to male voice for non-English
-        if (currentLang !== 'en' && currentVoice !== 'male') {
-          currentVoice = 'male';
-          voiceBtns.forEach(b => b.classList.remove('active'));
-          const maleBtn = document.querySelector('.voice-btn[data-voice="male"]');
-          if (maleBtn) maleBtn.classList.add('active');
-        }
-
-        if (currentChapterId) {
-          const wasPlaying = !player.paused;
-          const currentTime = player.currentTime;
-          player.src = getAudioPath(currentChapterId);
-          player.currentTime = 0; // Reset on language change
-          if (wasPlaying) {
-            player.play().catch(() => {});
-          }
-          // Update now playing title
-          const activeRow = document.querySelector(`.chapter-row[data-chapter-id="${currentChapterId}"]`);
-          if (nowPlayingTitle && activeRow) {
-            const num = activeRow.getAttribute('data-chapter-num');
-            nowPlayingTitle.textContent = `${num}. ${getChapterTitle(activeRow)}`;
-          }
-        }
-      });
-    });
-
-    // Voice toggle
-    voiceBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const voice = btn.getAttribute('data-voice');
-        if (!voice || voice === currentVoice) return;
-
-        currentVoice = voice;
-        voiceBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        if (currentChapterId) {
-          const wasPlaying = !player.paused;
-          const currentTime = player.currentTime;
-          player.src = getAudioPath(currentChapterId);
-          player.currentTime = currentTime;
-          if (wasPlaying) {
-            player.play().catch(() => {});
-          }
-        }
-      });
-    });
 
     // Chapter selection
     chapterRows.forEach(row => {
       row.addEventListener('click', () => {
         const chapterId = row.getAttribute('data-chapter-id');
-        const chapterTitle = getChapterTitle(row);
+        const chapterTitle = row.getAttribute('data-chapter-title');
         const chapterNum = row.getAttribute('data-chapter-num');
 
         if (!chapterId) return;
@@ -311,6 +178,134 @@ const chapters = [
       if (nowPlayingTitle && currentChapterId) {
         nowPlayingTitle.textContent += ' (not yet available)';
       }
+    });
+
+    // ========================================
+    // BACKGROUND MUSIC
+    // ========================================
+
+    const bgMusic = new Audio('/presentation-audio/bg-music.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0;
+    bgMusic.preload = 'auto';
+
+    const BG_HIGH = 0.30;   // Volume when no narration
+    const BG_LOW = 0.10;    // Ducked volume during narration
+    const BG_FADE_MS = 800;
+    const BG_FADE_STEPS = 40;
+
+    let bgEnabled = true;
+    let bgStarted = false;
+    let bgFadeTimer: number | null = null;
+
+    const bgToggle = document.getElementById('bgm-toggle')!;
+    const bgVolumeSlider = document.getElementById('bgm-volume') as HTMLInputElement;
+
+    function fadeBgTo(targetVol: number, duration: number = BG_FADE_MS): Promise<void> {
+      return new Promise((resolve) => {
+        if (bgFadeTimer) clearInterval(bgFadeTimer);
+        const startVol = bgMusic.volume;
+        if (Math.abs(startVol - targetVol) < 0.005) {
+          bgMusic.volume = targetVol;
+          resolve();
+          return;
+        }
+        const steps = BG_FADE_STEPS;
+        const stepSize = (targetVol - startVol) / steps;
+        const interval = duration / steps;
+        let currentStep = 0;
+        bgFadeTimer = window.setInterval(() => {
+          currentStep++;
+          bgMusic.volume = Math.max(0, Math.min(1, startVol + stepSize * currentStep));
+          if (currentStep >= steps) {
+            clearInterval(bgFadeTimer!);
+            bgFadeTimer = null;
+            bgMusic.volume = targetVol;
+            resolve();
+          }
+        }, interval);
+      });
+    }
+
+    function getBgHighVol(): number {
+      return (parseInt(bgVolumeSlider.value) / 100) * BG_HIGH * 3;
+    }
+
+    function getBgLowVol(): number {
+      return (parseInt(bgVolumeSlider.value) / 100) * BG_LOW * 3;
+    }
+
+    function startBgMusic() {
+      if (bgStarted || !bgEnabled) return;
+      bgStarted = true;
+      bgMusic.volume = 0;
+      bgMusic.play().then(() => {
+        fadeBgTo(getBgHighVol(), 2000);
+      }).catch(() => {
+        bgStarted = false;
+      });
+    }
+
+    function duckBg() {
+      if (!bgStarted || !bgEnabled) return;
+      fadeBgTo(getBgLowVol());
+    }
+
+    function unduckBg() {
+      if (!bgStarted || !bgEnabled) return;
+      fadeBgTo(getBgHighVol());
+    }
+
+    // Start music on first chapter play
+    player.addEventListener('play', () => {
+      startBgMusic();
+      duckBg();
+    });
+
+    player.addEventListener('pause', () => {
+      unduckBg();
+    });
+
+    player.addEventListener('ended', () => {
+      // Check if this is the last chapter
+      if (currentChapterId) {
+        const rows = Array.from(chapterRows);
+        const currentIndex = rows.findIndex(r => r.getAttribute('data-chapter-id') === currentChapterId);
+        if (currentIndex >= rows.length - 1) {
+          // Last chapter ended — wait 3s then fade out
+          setTimeout(() => {
+            fadeBgTo(0, 3000).then(() => {
+              bgMusic.pause();
+              bgStarted = false;
+            });
+          }, 3000);
+        } else {
+          // Between chapters, unduck briefly
+          unduckBg();
+        }
+      }
+    });
+
+    // Toggle button
+    bgToggle.addEventListener('click', () => {
+      bgEnabled = !bgEnabled;
+      bgToggle.classList.toggle('active', bgEnabled);
+      if (!bgEnabled && bgStarted) {
+        fadeBgTo(0, 500).then(() => {
+          bgMusic.pause();
+          bgStarted = false;
+        });
+      } else if (bgEnabled && !player.paused) {
+        startBgMusic();
+        duckBg();
+      }
+    });
+
+    // Volume slider
+    bgVolumeSlider.addEventListener('input', () => {
+      if (!bgStarted || !bgEnabled) return;
+      const isPlaying = !player.paused;
+      bgMusic.volume = isPlaying ? getBgLowVol() : getBgHighVol();
     });
   });
 </script>
@@ -389,78 +384,6 @@ const chapters = [
     box-shadow: 0 8px 40px rgba(46, 155, 183, 0.1);
   }
 
-  /* Language Toggle */
-  .lang-toggle {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .lang-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--color-border);
-    background: transparent;
-    color: var(--color-text-muted);
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .lang-btn:hover {
-    border-color: var(--color-accent);
-    color: var(--color-text);
-  }
-
-  .lang-btn.active {
-    background: rgba(232, 150, 62, 0.1);
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-    font-weight: 600;
-  }
-
-  /* Voice Toggle */
-  .voice-toggle {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .voice-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1.25rem;
-    border-radius: 8px;
-    border: 1px solid var(--color-border);
-    background: transparent;
-    color: var(--color-text-muted);
-    font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .voice-btn:hover {
-    border-color: var(--color-pirate-teal);
-    color: var(--color-text);
-  }
-
-  .voice-btn.active {
-    background: rgba(46, 155, 183, 0.1);
-    border-color: var(--color-pirate-teal);
-    color: var(--color-pirate-teal);
-    font-weight: 600;
-  }
-
   /* Player */
   .player-container {
     margin-bottom: 2rem;
@@ -501,6 +424,81 @@ const chapters = [
 
   audio::-webkit-media-controls-panel {
     background: var(--color-bg-elevated);
+  }
+
+  /* Background Music Controls */
+  .bgm-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .bgm-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .bgm-toggle:hover {
+    border-color: var(--color-pirate-teal);
+    color: var(--color-text);
+  }
+
+  .bgm-toggle.active {
+    background: rgba(46, 155, 183, 0.1);
+    border-color: var(--color-pirate-teal);
+    color: var(--color-pirate-teal);
+    font-weight: 600;
+  }
+
+  .bgm-toggle.active svg {
+    stroke: var(--color-pirate-teal);
+  }
+
+  .bgm-volume {
+    flex: 1;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--color-border);
+    border-radius: 2px;
+    outline: none;
+    max-width: 120px;
+  }
+
+  .bgm-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-pirate-teal);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  .bgm-volume::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-pirate-teal);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
 
   /* Chapter List */
@@ -660,17 +658,6 @@ const chapters = [
 
     .audiobook-card {
       padding: 1.75rem 1.25rem;
-    }
-
-    .voice-toggle {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .voice-btn {
-      width: 100%;
-      max-width: 220px;
-      justify-content: center;
     }
 
     .chapter-list-audio {

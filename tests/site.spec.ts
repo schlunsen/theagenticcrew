@@ -70,6 +70,13 @@ test.describe('The Agentic Crew Website', () => {
     await expect(coffeeLink).toBeVisible();
   });
 
+  test('book cover has "In the Making" ribbon badge', async ({ page }) => {
+    await page.goto('/');
+    const ribbon = page.locator('.book-ribbon');
+    await expect(ribbon).toBeVisible();
+    await expect(ribbon.locator('span')).toHaveText('In the Making');
+  });
+
   test('takes a full page screenshot', async ({ page }) => {
     await page.goto('/');
     await page.waitForTimeout(2000); // Wait for animations
