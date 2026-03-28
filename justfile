@@ -27,11 +27,89 @@ build-crew:
 build-crew-ca:
     typst compile --input revision={{revision}} book-crew-ca.typ build/the-agentic-crew-crew-ca.pdf
 
+# Build English hands-on guides (OS-specific editions)
+build-hands-on-windows:
+    typst compile --input revision={{revision}} --input illustrations=true --input os=windows book-hands-on-windows.typ build/the-agentic-crew-hands-on-windows.pdf
+
+build-hands-on-mac:
+    typst compile --input revision={{revision}} --input illustrations=true --input os=mac book-hands-on-mac.typ build/the-agentic-crew-hands-on-mac.pdf
+
+build-hands-on-linux:
+    typst compile --input revision={{revision}} --input illustrations=true --input os=linux book-hands-on-linux.typ build/the-agentic-crew-hands-on-linux.pdf
+
+build-hands-on: build-hands-on-windows build-hands-on-mac build-hands-on-linux
+
+# Build Spanish hands-on guides (OS-specific editions)
+build-hands-on-es-windows:
+    typst compile --input revision={{revision}} --input illustrations=true --input os=windows book-hands-on-es-windows.typ build/the-agentic-crew-hands-on-es-windows.pdf
+
+build-hands-on-es-mac:
+    typst compile --input revision={{revision}} --input illustrations=true --input os=mac book-hands-on-es-mac.typ build/the-agentic-crew-hands-on-es-mac.pdf
+
+build-hands-on-es-linux:
+    typst compile --input revision={{revision}} --input illustrations=true --input os=linux book-hands-on-es-linux.typ build/the-agentic-crew-hands-on-es-linux.pdf
+
+build-hands-on-es: build-hands-on-es-windows build-hands-on-es-mac build-hands-on-es-linux
+
+# Build hands-on guide EPUBs (OS-specific, illustrations stripped)
+epub-hands-on-windows:
+    pandoc book-hands-on-windows.typ -f typst -t epub3 -o build/the-agentic-crew-hands-on-windows.epub \
+        --metadata title="The Agentic Crew: Hands-On Guide — Windows Edition" \
+        --metadata "author=Rasmus Bornhøft Schlünsen" \
+        --metadata lang=en \
+        --toc --toc-depth=2 --split-level=1
+    @echo "Built build/the-agentic-crew-hands-on-windows.epub"
+
+epub-hands-on-mac:
+    pandoc book-hands-on-mac.typ -f typst -t epub3 -o build/the-agentic-crew-hands-on-mac.epub \
+        --metadata title="The Agentic Crew: Hands-On Guide — macOS Edition" \
+        --metadata "author=Rasmus Bornhøft Schlünsen" \
+        --metadata lang=en \
+        --toc --toc-depth=2 --split-level=1
+    @echo "Built build/the-agentic-crew-hands-on-mac.epub"
+
+epub-hands-on-linux:
+    pandoc book-hands-on-linux.typ -f typst -t epub3 -o build/the-agentic-crew-hands-on-linux.epub \
+        --metadata title="The Agentic Crew: Hands-On Guide — Linux Edition" \
+        --metadata "author=Rasmus Bornhøft Schlünsen" \
+        --metadata lang=en \
+        --toc --toc-depth=2 --split-level=1
+    @echo "Built build/the-agentic-crew-hands-on-linux.epub"
+
+epub-hands-on: epub-hands-on-windows epub-hands-on-mac epub-hands-on-linux
+
+# Build Spanish hands-on guide EPUBs (OS-specific)
+epub-hands-on-es-windows:
+    pandoc book-hands-on-es-windows.typ -f typst -t epub3 -o build/the-agentic-crew-hands-on-es-windows.epub \
+        --metadata "title=La Tripulación Agéntica: Guía Práctica — Edición Windows" \
+        --metadata "author=Rasmus Bornhøft Schlünsen" \
+        --metadata lang=es \
+        --toc --toc-depth=2 --split-level=1
+    @echo "Built build/the-agentic-crew-hands-on-es-windows.epub"
+
+epub-hands-on-es-mac:
+    pandoc book-hands-on-es-mac.typ -f typst -t epub3 -o build/the-agentic-crew-hands-on-es-mac.epub \
+        --metadata "title=La Tripulación Agéntica: Guía Práctica — Edición macOS" \
+        --metadata "author=Rasmus Bornhøft Schlünsen" \
+        --metadata lang=es \
+        --toc --toc-depth=2 --split-level=1
+    @echo "Built build/the-agentic-crew-hands-on-es-mac.epub"
+
+epub-hands-on-es-linux:
+    pandoc book-hands-on-es-linux.typ -f typst -t epub3 -o build/the-agentic-crew-hands-on-es-linux.epub \
+        --metadata "title=La Tripulación Agéntica: Guía Práctica — Edición Linux" \
+        --metadata "author=Rasmus Bornhøft Schlünsen" \
+        --metadata lang=es \
+        --toc --toc-depth=2 --split-level=1
+    @echo "Built build/the-agentic-crew-hands-on-es-linux.epub"
+
+epub-hands-on-es: epub-hands-on-es-windows epub-hands-on-es-mac epub-hands-on-es-linux
+
 # Build all crew editions
 build-crew-all: build-crew build-crew-ca
 
-# Build all PDFs (adult + crew)
-build-all: build build-ca build-da build-es build-crew-all
+# Build all PDFs (adult + crew + hands-on)
+build-all: build build-ca build-da build-es build-crew-all build-hands-on
 
 # Watch for changes and rebuild automatically
 watch:
@@ -44,6 +122,10 @@ open: build
 # Open the crew member's guide PDF (macOS)
 open-crew: build-crew
     open build/the-agentic-crew-crew.pdf
+
+# Open the hands-on guide PDF (macOS — opens the Mac edition by default)
+open-hands-on: build-hands-on-mac
+    open build/the-agentic-crew-hands-on-mac.pdf
 
 # Create a new chapter file
 new-chapter name:
@@ -92,6 +174,12 @@ deploy:
     typst compile --input revision="$rev" book-es.typ build/the-agentic-crew-es.pdf &
     typst compile --input revision="$rev" book-crew.typ build/the-agentic-crew-crew.pdf &
     typst compile --input revision="$rev" book-crew-ca.typ build/the-agentic-crew-crew-ca.pdf &
+    typst compile --input revision="$rev" --input illustrations=true --input os=windows book-hands-on-windows.typ build/the-agentic-crew-hands-on-windows.pdf &
+    typst compile --input revision="$rev" --input illustrations=true --input os=mac book-hands-on-mac.typ build/the-agentic-crew-hands-on-mac.pdf &
+    typst compile --input revision="$rev" --input illustrations=true --input os=linux book-hands-on-linux.typ build/the-agentic-crew-hands-on-linux.pdf &
+    typst compile --input revision="$rev" --input illustrations=true --input os=windows book-hands-on-es-windows.typ build/the-agentic-crew-hands-on-es-windows.pdf &
+    typst compile --input revision="$rev" --input illustrations=true --input os=mac book-hands-on-es-mac.typ build/the-agentic-crew-hands-on-es-mac.pdf &
+    typst compile --input revision="$rev" --input illustrations=true --input os=linux book-hands-on-es-linux.typ build/the-agentic-crew-hands-on-es-linux.pdf &
     wait
     echo "PDFs built."
 
@@ -131,6 +219,7 @@ deploy:
         --metadata "author=Rasmus Bornhøft Schlünsen" \
         --metadata lang=ca \
         --toc --toc-depth=2 --split-level=1 &
+
     wait
     echo "EPUBs built."
 
@@ -145,12 +234,18 @@ deploy:
     cp build/the-agentic-crew-es.epub website/public/the-agentic-crew-es.epub
     cp build/the-agentic-crew-crew.pdf website/public/the-agentic-crew-crew.pdf
     cp build/the-agentic-crew-crew.epub website/public/the-agentic-crew-crew.epub
+    cp build/the-agentic-crew-hands-on-windows.pdf website/public/the-agentic-crew-hands-on-windows.pdf
+    cp build/the-agentic-crew-hands-on-mac.pdf website/public/the-agentic-crew-hands-on-mac.pdf
+    cp build/the-agentic-crew-hands-on-linux.pdf website/public/the-agentic-crew-hands-on-linux.pdf
+    cp build/the-agentic-crew-hands-on-es-windows.pdf website/public/the-agentic-crew-hands-on-es-windows.pdf
+    cp build/the-agentic-crew-hands-on-es-mac.pdf website/public/the-agentic-crew-hands-on-es-mac.pdf
+    cp build/the-agentic-crew-hands-on-es-linux.pdf website/public/the-agentic-crew-hands-on-es-linux.pdf
     cp build/the-agentic-crew-crew-ca.pdf website/public/the-agentic-crew-crew-ca.pdf
     cp build/the-agentic-crew-crew-ca.epub website/public/the-agentic-crew-crew-ca.epub
 
     # Archive revisions locally
     mkdir -p revisions
-    for f in the-agentic-crew the-agentic-crew-ca the-agentic-crew-da the-agentic-crew-es the-agentic-crew-crew the-agentic-crew-crew-ca; do
+    for f in the-agentic-crew the-agentic-crew-ca the-agentic-crew-da the-agentic-crew-es the-agentic-crew-crew the-agentic-crew-crew-ca the-agentic-crew-hands-on-windows the-agentic-crew-hands-on-mac the-agentic-crew-hands-on-linux the-agentic-crew-hands-on-es-windows the-agentic-crew-hands-on-es-mac the-agentic-crew-hands-on-es-linux; do
         cp "build/${f}.pdf" "revisions/${f}-rev${rev}.pdf" 2>/dev/null || true
         cp "build/${f}.epub" "revisions/${f}-rev${rev}.epub" 2>/dev/null || true
     done
