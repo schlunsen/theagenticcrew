@@ -5,6 +5,7 @@ book.pdf
 node_modules/
 output/
 test-results/
+website/dist/
 
 # Editor / tool config (personal, not project-level)
 .claude/
