@@ -59,47 +59,48 @@ const {
       <span class="hamburger-line"></span>
     </button>
 
-    <!-- Mobile menu overlay -->
-    <div class="mobile-overlay" aria-hidden="true"></div>
-
-    <!-- Mobile slide-out drawer -->
-    <div class="mobile-drawer" aria-hidden="true">
-      <div class="mobile-drawer-header">
-        <span class="logo" aria-hidden="true">
-          <span class="logo-flag">&#9760;</span>
-          The Agentic Crew
-        </span>
-        <button class="mobile-close-btn" aria-label="Close menu">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M4 4l12 12M16 4L4 16"/>
-          </svg>
-        </button>
-      </div>
-      <div class="mobile-drawer-links">
-        <a href={isSubpage ? "/#about" : "#about"}>About</a>
-        <a href={isSubpage ? "/#chapters" : "#chapters"}>Chapters</a>
-        <div class="mobile-books-section">
-          <span class="mobile-books-label">Books</span>
-          <a href="/books/the-agentic-crew" class="mobile-book-link">
-            <span class="dm-label">The Agentic Crew</span>
-            <span class="dm-sub">Engineering book · 4 languages</span>
-          </a>
-          <a href="/books/crew-guide" class="mobile-book-link">
-            <span class="dm-label">Crew Member's Guide</span>
-            <span class="dm-sub">For non-coders · 2 languages</span>
-          </a>
-          <a href="/books/hands-on" class="mobile-book-link">
-            <span class="dm-label">Hands-On Guide</span>
-            <span class="dm-sub">Practical exercises</span>
-          </a>
-        </div>
-      </div>
-      <div class="mobile-drawer-cta">
-        <a href={btnHref} class="btn-nav">{btnLabel}</a>
-      </div>
-    </div>
   </div>
 </nav>
+
+<!-- Mobile menu overlay (outside nav to avoid stacking context issues) -->
+<div class="mobile-overlay" aria-hidden="true"></div>
+
+<!-- Mobile slide-out drawer (outside nav to avoid stacking context issues) -->
+<div class="mobile-drawer" aria-hidden="true">
+  <div class="mobile-drawer-header">
+    <span class="logo" aria-hidden="true">
+      <span class="logo-flag">&#9760;</span>
+      The Agentic Crew
+    </span>
+    <button class="mobile-close-btn" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 4l12 12M16 4L4 16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="mobile-drawer-links">
+    <a href={isSubpage ? "/#about" : "#about"}>About</a>
+    <a href={isSubpage ? "/#chapters" : "#chapters"}>Chapters</a>
+    <div class="mobile-books-section">
+      <span class="mobile-books-label">Books</span>
+      <a href="/books/the-agentic-crew" class="mobile-book-link">
+        <span class="dm-label">The Agentic Crew</span>
+        <span class="dm-sub">Engineering book · 4 languages</span>
+      </a>
+      <a href="/books/crew-guide" class="mobile-book-link">
+        <span class="dm-label">Crew Member's Guide</span>
+        <span class="dm-sub">For non-coders · 2 languages</span>
+      </a>
+      <a href="/books/hands-on" class="mobile-book-link">
+        <span class="dm-label">Hands-On Guide</span>
+        <span class="dm-sub">Practical exercises</span>
+      </a>
+    </div>
+  </div>
+  <div class="mobile-drawer-cta">
+    <a href={btnHref} class="btn-nav">{btnLabel}</a>
+  </div>
+</div>
 
 <style define:vars={{ btnFrom, btnTo, btnFromHover, btnShadow }}>
   nav {
@@ -246,13 +247,21 @@ const {
     transform: translateY(-7px) rotate(-45deg);
   }
 
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: flex; }
+  }
+</style>
+
+<!-- Global styles for overlay & drawer (they live outside <nav> to avoid stacking context) -->
+<style is:global>
   /* ── Mobile overlay ── */
   .mobile-overlay {
     display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0, 0, 0, 0.4);
-    z-index: 149;
+    z-index: 9998;
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -269,7 +278,7 @@ const {
     top: 0; right: 0; bottom: 0;
     width: min(320px, 85vw);
     background: var(--color-bg);
-    z-index: 150;
+    z-index: 9999;
     flex-direction: column;
     transform: translateX(100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -290,7 +299,13 @@ const {
   }
 
   .mobile-drawer-header .logo {
+    font-family: var(--font-serif);
+    font-weight: 600;
     font-size: 1rem;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     pointer-events: none;
   }
 
@@ -321,6 +336,7 @@ const {
     font-weight: 500;
     color: var(--color-text);
     transition: background 0.15s;
+    text-decoration: none;
   }
 
   .mobile-drawer-links > a:hover {
@@ -350,11 +366,15 @@ const {
     gap: 0.1rem;
     padding: 0.75rem 1.5rem 0.75rem 2rem;
     transition: background 0.15s;
+    text-decoration: none;
   }
 
   .mobile-book-link:hover {
     background: var(--color-bg-elevated);
   }
+
+  .mobile-book-link .dm-label { font-size: 0.9rem; font-weight: 600; color: var(--color-text); }
+  .mobile-book-link .dm-sub   { font-size: 0.75rem; color: var(--color-text-muted); }
 
   .mobile-drawer-cta {
     padding: 1.25rem 1.5rem;
@@ -367,11 +387,15 @@ const {
     width: 100%;
     padding: 0.75rem 1.25rem;
     font-size: 1rem;
+    background: linear-gradient(135deg, #e8963e, #c97b1e);
+    color: #fff !important;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 2px 12px rgba(232, 150, 62, 0.28);
+    text-decoration: none;
   }
 
   @media (max-width: 640px) {
-    .nav-links { display: none; }
-    .mobile-menu-btn { display: flex; }
     .mobile-drawer { display: flex; }
   }
 </style>
