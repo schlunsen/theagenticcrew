@@ -1,4 +1,23 @@
 ---
+interface Props {
+  btnLabel?: string;
+  btnHref?: string;
+  btnFrom?: string;
+  btnTo?: string;
+  btnFromHover?: string;
+  btnShadow?: string;
+  isSubpage?: boolean;
+}
+
+const {
+  btnLabel    = "Get the Book",
+  btnHref     = "#download",
+  btnFrom     = "#e8963e",
+  btnTo       = "#c97b1e",
+  btnFromHover = "#f5a623",
+  btnShadow   = "rgba(232, 150, 62, 0.28)",
+  isSubpage   = false,
+} = Astro.props;
 ---
 
 <nav>
@@ -8,20 +27,36 @@
       The Agentic Crew
     </a>
     <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#chapters">Chapters</a>
-      <a href="#author">Author</a>
-      <a href="#download" class="btn-nav">Get the Book</a>
+      <a href={isSubpage ? "/#about" : "#about"}>About</a>
+      <a href={isSubpage ? "/#chapters" : "#chapters"}>Chapters</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" aria-expanded="false" aria-haspopup="true">
+          Books <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3.5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="/books/the-agentic-crew" role="menuitem">
+            <span class="dm-label">The Agentic Crew</span>
+            <span class="dm-sub">Engineering book · 4 languages</span>
+          </a>
+          <a href="/books/crew-guide" role="menuitem">
+            <span class="dm-label">Crew Member's Guide</span>
+            <span class="dm-sub">For non-coders · 2 languages</span>
+          </a>
+          <a href="/books/hands-on" role="menuitem">
+            <span class="dm-label">Hands-On Guide</span>
+            <span class="dm-sub">Practical exercises</span>
+          </a>
+        </div>
+      </div>
+      <a href={btnHref} class="btn-nav">{btnLabel}</a>
     </div>
   </div>
 </nav>
 
-<style>
+<style define:vars={{ btnFrom, btnTo, btnFromHover, btnShadow }}>
   nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 100;
     background: rgba(255, 253, 247, 0.92);
     backdrop-filter: blur(16px);
@@ -53,13 +88,8 @@
     transition: transform 0.6s ease;
   }
 
-  .logo:hover {
-    color: var(--color-accent);
-  }
-
-  .logo:hover .logo-flag {
-    transform: rotate(15deg) scale(1.15);
-  }
+  .logo:hover { color: var(--btnFrom); }
+  .logo:hover .logo-flag { transform: rotate(15deg) scale(1.15); }
 
   .nav-links {
     display: flex;
@@ -73,30 +103,91 @@
     font-weight: 500;
   }
 
-  .nav-links a:hover {
-    color: var(--color-text);
-  }
+  .nav-links a:hover { color: var(--color-text); }
 
+  /* ── CTA button — colour driven by props ── */
   .btn-nav {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
+    background: linear-gradient(135deg, var(--btnFrom), var(--btnTo));
     color: #fff !important;
     padding: 0.5rem 1.25rem;
     border-radius: 8px;
     font-weight: 600;
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 12px rgba(232, 150, 62, 0.25);
+    box-shadow: 0 2px 12px var(--btnShadow);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
   }
 
   .btn-nav:hover {
-    background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+    background: linear-gradient(135deg, var(--btnFromHover), var(--btnFrom));
     transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(232, 150, 62, 0.35);
+    box-shadow: 0 4px 20px var(--btnShadow);
     color: #fff !important;
   }
 
+  /* ── Books dropdown ── */
+  .nav-dropdown { position: relative; }
+
+  .nav-dropdown-btn {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.9rem; color: var(--color-text-muted); font-weight: 500;
+    background: none; border: none; cursor: pointer; font-family: inherit;
+    padding: 0; transition: color 0.2s;
+  }
+
+  .nav-dropdown-btn:hover { color: var(--color-text); }
+  .nav-dropdown-btn svg { transition: transform 0.2s; }
+  .nav-dropdown-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 0.75rem); left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    min-width: 220px;
+    overflow: hidden;
+    z-index: 200;
+  }
+
+  .nav-dropdown-menu.open { display: block; }
+
+  .nav-dropdown-menu a {
+    display: flex; flex-direction: column; gap: 0.15rem;
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background 0.15s;
+    color: var(--color-text) !important;
+  }
+
+  .nav-dropdown-menu a:last-child { border-bottom: none; }
+  .nav-dropdown-menu a:hover { background: var(--color-bg-elevated); color: var(--color-text) !important; }
+
+  .dm-label { font-size: 0.9rem; font-weight: 600; color: var(--color-text); }
+  .dm-sub   { font-size: 0.75rem; color: var(--color-text-muted); }
+
   @media (max-width: 640px) {
-    .nav-links a:not(.btn-nav) {
-      display: none;
-    }
+    .nav-links a:not(.btn-nav),
+    .nav-dropdown { display: none; }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn  = document.querySelector('.nav-dropdown-btn') as HTMLButtonElement | null;
+    const menu = document.querySelector('.nav-dropdown-menu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!btn.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+        menu.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>

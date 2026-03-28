@@ -1,0 +1,456 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import Nav from '../../components/Nav.astro';
+---
+
+<BaseLayout
+  title="The Agentic Crew — Engineering with AI Agents"
+  description="A free book for software engineers on building with AI agents. Context management, guardrails, multi-agent workflows and more. Available in 4 languages."
+>
+  <Nav
+    btnLabel="Download Free"
+    btnHref="#download"
+    btnFrom="#e8963e"
+    btnTo="#c97b1e"
+    btnFromHover="#f5a623"
+    btnShadow="rgba(232, 150, 62, 0.28)"
+    isSubpage={true}
+  />
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-book">
+        <div class="book-mock">
+          <div class="book-cover">
+            <div class="book-spine"></div>
+            <div class="book-front">
+              <img src="/book-cover.png" alt="The Agentic Crew book cover" class="cover-img" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-text">
+        <p class="eyebrow">Engineering Book</p>
+        <h1>The Agentic Crew</h1>
+        <p class="tagline">How software engineers learn to build with agents</p>
+        <p class="hero-desc">
+          A practical guide to the craft of agentic engineering — context management,
+          guardrails, multi-agent orchestration, CI/CD integration, and knowing when
+          to put the agent away. Free, in four languages.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-n">17</span><span class="stat-l">chapters</span></div>
+          <div class="stat"><span class="stat-n">4</span><span class="stat-l">languages</span></div>
+          <div class="stat"><span class="stat-n">Free</span><span class="stat-l">forever</span></div>
+        </div>
+        <div class="hero-actions">
+          <a href="#download" class="btn-primary">Download free →</a>
+          <a href="/presentation" class="btn-secondary">
+            <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <rect x="2" y="3" width="16" height="12" rx="2" />
+              <path d="M8 9l4-2.5v5L8 9z" fill="currentColor" opacity="0.6" />
+            </svg>
+            Interactive presentation
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Who it's for -->
+  <section class="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-label">Who it's for</p>
+          <h2>Written for working engineers</h2>
+          <p>
+            You already know how to code. You've used GitHub Copilot, maybe tried Claude or
+            ChatGPT. But using an AI assistant and building with AI agents are different things —
+            and that gap is what this book bridges.
+          </p>
+          <p>
+            Covers the practical craft: what context to give your agent, how to scope its
+            permissions, when to run agents in parallel, how to make test suites agent-friendly,
+            and what to do when the agent confidently does something wrong.
+          </p>
+        </div>
+        <div class="about-cards">
+          <div class="feature-card">
+            <div class="feature-icon"><img src="/illustrations/eng-context.jpg" alt="" /></div>
+            <h3>Context management</h3>
+            <p>The single most important skill in agentic engineering — curating what your agents see.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><img src="/illustrations/eng-guardrails.jpg" alt="" /></div>
+            <h3>Guardrails</h3>
+            <p>Trust gradients, permission scoping, and approval gates that let agents work without breaking things.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><img src="/illustrations/eng-multiagent.jpg" alt="" /></div>
+            <h3>Multi-agent workflows</h3>
+            <p>Running agents in parallel, branch-per-agent isolation, and knowing when more isn't better.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><img src="/illustrations/eng-cicd.jpg" alt="" /></div>
+            <h3>CI/CD integration</h3>
+            <p>PR pre-screening, overnight agents, and the trust question when nobody's watching.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapter list -->
+  <section class="chapters">
+    <div class="section-inner">
+      <p class="section-label">Contents</p>
+      <h2>17 chapters</h2>
+      <div class="chapter-grid">
+        {[
+          ["01", "Introduction", "The fundamental loop of software engineering is breaking."],
+          ["02", "Context", "The single most important skill in agentic engineering."],
+          ["03", "What Is an Agent?", "From autocomplete to autonomous systems."],
+          ["04", "Guardrails", "Giving agents power without giving them the keys to production."],
+          ["05", "Git as Agent Infrastructure", "Small commits, branch-per-task, and worktrees for parallel agents."],
+          ["06", "Sandboxes", "Making failure cheap and experimentation free."],
+          ["07", "Testing as the Feedback Loop", "Tests become the agent's eyes."],
+          ["08", "Convention Over Configuration", "Why consistency makes agents dramatically more effective."],
+          ["09", "Extending the Agent's Reach", "MCP, tool integrations, and connecting agents to the world."],
+          ["10", "Local LLMs vs. Commercial LLMs", "Privacy, cost, and the practical hybrid approach."],
+          ["11", "Prompting as Engineering", "Task decomposition, constraint specification, and anti-patterns."],
+          ["12", "Multi-Agent Orchestration", "Parallel agents, handover patterns, and branch isolation."],
+          ["13", "Agents in the Pipeline", "Using agents in CI/CD — and knowing when not to."],
+          ["14", "When Agents Get It Wrong", "War stories and a diagnostic playbook."],
+          ["15", "When Not to Use Agents", "The overhead tax and the craft argument."],
+          ["16", "Agentic Teams", "Shared standards, onboarding, and team-level practices."],
+          ["17", "What Comes Next", "Where the field is heading and how to keep up."],
+        ].map(([num, title, desc]) => (
+          <div class="chapter-row">
+            <span class="ch-num">{num}</span>
+            <div class="ch-body">
+              <strong>{title}</strong>
+              <span class="ch-desc">{desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="download" id="download">
+    <div class="section-inner download-inner">
+      <p class="section-label">Free download</p>
+      <h2>Get the book</h2>
+      <p class="dl-sub">Choose your language and preferred format. No sign-up required.</p>
+
+      <div class="lang-tabs">
+        <button class="lang-tab active" data-lang="en">English</button>
+        <button class="lang-tab" data-lang="es">Español</button>
+        <button class="lang-tab" data-lang="ca">Català</button>
+        <button class="lang-tab" data-lang="da">Dansk</button>
+      </div>
+
+      <div class="lang-panel active" data-lang="en">
+        <div class="format-grid">
+          <a href="/the-agentic-crew.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>Best for desktop &amp; tablet. Fixed layout with full formatting.</p>
+          </a>
+          <a href="/the-agentic-crew.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Reflowable text for iPad, Kindle, Kobo &amp; other e-readers.</p>
+          </a>
+        </div>
+      </div>
+      <div class="lang-panel" data-lang="es">
+        <p class="lang-title">La Tripulación Agéntica</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-es.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div><h3>PDF</h3>
+            <p>Para escritorio y tableta. Diseño fijo con formato completo.</p>
+          </a>
+          <a href="/the-agentic-crew-es.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div><h3>EPUB</h3>
+            <p>Texto adaptable para iPad, Kindle, Kobo y otros lectores.</p>
+          </a>
+        </div>
+      </div>
+      <div class="lang-panel" data-lang="ca">
+        <p class="lang-title">La Tripulació Agèntica</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-ca.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div><h3>PDF</h3>
+            <p>Per a escriptori i tauleta. Disseny fix amb format complet.</p>
+          </a>
+          <a href="/the-agentic-crew-ca.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div><h3>EPUB</h3>
+            <p>Text adaptable per a iPad, Kindle, Kobo i altres lectors.</p>
+          </a>
+        </div>
+      </div>
+      <div class="lang-panel" data-lang="da">
+        <p class="lang-title">Det Agentiske Mandskab</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-da.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div><h3>PDF</h3>
+            <p>Bedst til desktop og tablet. Fast layout med fuld formatering.</p>
+          </a>
+          <a href="/the-agentic-crew-da.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div><h3>EPUB</h3>
+            <p>Flydende tekst til iPad, Kindle, Kobo og andre e-bogslæsere.</p>
+          </a>
+        </div>
+      </div>
+
+      <p class="dl-note">All formats free. Download as many times as you like.</p>
+
+      <div class="also-section">
+        <p class="also-label">Also available</p>
+        <div class="also-links">
+          <a href="/presentation" class="also-link">
+            <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="16" height="12" rx="2" /><path d="M8 9l4-2.5v5L8 9z" fill="currentColor" opacity="0.6" /></svg>
+            Interactive presentation
+          </a>
+          <a href="/books/crew-guide" class="also-link">
+            Not a coder? Try the Crew Member's Guide →
+          </a>
+          <a href="/books/hands-on" class="also-link">
+            Want exercises? Try the Hands-On Guide →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.lang-tab');
+    const panels = document.querySelectorAll('.lang-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const lang = (tab as HTMLElement).getAttribute('data-lang');
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.lang-panel[data-lang="${lang}"]`)?.classList.add('active');
+      });
+    });
+  });
+</script>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    padding: 8rem 2rem 5rem;
+    background: linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg) 100%);
+  }
+  .hero-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: auto 1fr; gap: 5rem; align-items: center;
+  }
+  .book-mock { perspective: 800px; }
+  .book-cover {
+    width: 220px; height: 312px; position: relative;
+    transform: rotateY(-15deg) rotateX(3deg);
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.18));
+  }
+  .book-cover:hover { transform: rotateY(-5deg) rotateX(1deg) scale(1.03); }
+  .book-front {
+    width: 100%; height: 100%;
+    border-radius: 3px 10px 10px 3px; overflow: hidden;
+    box-shadow: 8px 8px 30px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.1);
+    position: relative;
+  }
+  .book-front::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none; border-radius: inherit;
+  }
+  .cover-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .book-spine {
+    position: absolute; left: -16px; top: 0; width: 16px; height: 100%;
+    background: linear-gradient(to right, #c97b1e, #e8963e);
+    transform: rotateY(90deg); transform-origin: right;
+    border-radius: 3px 0 0 3px;
+  }
+  .eyebrow {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--color-accent); margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: var(--font-serif); font-size: 3.5rem; font-weight: 700;
+    color: var(--color-text); line-height: 1.1; margin-bottom: 0.75rem;
+  }
+  .tagline {
+    font-family: var(--font-serif); font-size: 1.25rem; font-style: italic;
+    color: var(--color-text-muted); margin-bottom: 1.25rem;
+  }
+  .hero-desc {
+    font-size: 1.05rem; color: var(--color-text-muted);
+    line-height: 1.75; max-width: 52ch; margin-bottom: 2rem;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-bottom: 2.5rem;
+  }
+  .stat { display: flex; flex-direction: column; gap: 0.15rem; }
+  .stat-n { font-size: 2rem; font-weight: 700; color: var(--color-accent); line-height: 1; }
+  .stat-l { font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; padding: 0.85rem 2rem; border-radius: 10px;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
+    color: #fff !important; font-weight: 700; font-size: 1rem;
+    box-shadow: 0 4px 20px rgba(232,150,62,0.3);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+    transform: translateY(-2px); color: #fff !important;
+  }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.85rem 1.5rem; border-radius: 10px;
+    border: 1.5px solid var(--color-border); background: transparent;
+    color: var(--color-text-muted) !important; font-weight: 500;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent) !important; }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-book { display: flex; justify-content: center; }
+    h1 { font-size: 2.5rem; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .book-cover { width: 160px; height: 228px; }
+    h1 { font-size: 2rem; }
+  }
+
+  /* ── Shared section styles ── */
+  .section-inner { max-width: var(--max-width); margin: 0 auto; padding: 5rem 2rem; }
+  .section-label {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--color-accent); margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700;
+    color: var(--color-text); margin-bottom: 1.5rem;
+  }
+
+  /* ── About ── */
+  .about { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text h2 { margin-bottom: 1.25rem; }
+  .about-text p { color: var(--color-text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  .about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .feature-card {
+    background: var(--color-bg-card); border: 1px solid var(--color-border);
+    border-radius: 14px; padding: 1.25rem; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 20px rgba(232,150,62,0.08);
+  }
+  .feature-icon {
+    width: 72px; height: 72px; margin-bottom: 0.85rem;
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  .feature-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .feature-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--color-text); }
+  .feature-card p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; }
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) { .about-cards { grid-template-columns: 1fr; } }
+
+  /* ── Chapters ── */
+  .chapters { background: var(--color-bg-elevated); border-top: 1px solid var(--color-border); }
+  .chapter-grid { display: flex; flex-direction: column; gap: 0; }
+  .chapter-row {
+    display: grid; grid-template-columns: 3rem 1fr;
+    gap: 1.25rem; padding: 1rem 0;
+    border-bottom: 1px solid var(--color-border-light);
+    align-items: baseline;
+  }
+  .chapter-row:last-child { border-bottom: none; }
+  .ch-num {
+    font-family: var(--font-mono); font-size: 0.75rem;
+    color: var(--color-accent); font-weight: 600;
+  }
+  .ch-body { display: flex; flex-direction: column; gap: 0.2rem; }
+  .ch-body strong { font-size: 0.95rem; color: var(--color-text); }
+  .ch-desc { font-size: 0.85rem; color: var(--color-text-muted); }
+
+  /* ── Download ── */
+  .download { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .download-inner { text-align: center; max-width: 560px !important; }
+  .dl-sub { color: var(--color-text-muted); margin-bottom: 2rem; }
+  .lang-tabs {
+    display: flex; justify-content: center; gap: 0.5rem;
+    margin-bottom: 1.5rem; flex-wrap: wrap;
+  }
+  .lang-tab {
+    padding: 0.4rem 0.9rem; border-radius: 8px;
+    border: 1px solid var(--color-border); background: transparent;
+    color: var(--color-text-muted); font-family: inherit;
+    font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+  }
+  .lang-tab:hover { border-color: var(--color-accent); color: var(--color-text); }
+  .lang-tab.active {
+    background: rgba(232,150,62,0.1); border-color: var(--color-accent);
+    color: var(--color-accent-deep); font-weight: 600;
+  }
+  .lang-panel { display: none; }
+  .lang-panel.active { display: block; }
+  .lang-title {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 1.25rem;
+  }
+  .format-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .format-card {
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    background: var(--color-bg); border: 1px solid var(--color-border);
+    border-radius: 14px; padding: 1.5rem 1rem;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .format-card:hover {
+    border-color: var(--color-accent); transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(232,150,62,0.1); color: inherit;
+  }
+  .format-icon {
+    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+    color: var(--color-accent-deep); background: rgba(232,150,62,0.1);
+    padding: 0.5rem 1rem; border-radius: 8px; letter-spacing: 0.05em;
+  }
+  .format-card h3 { font-size: 1.1rem; font-weight: 600; color: var(--color-text); }
+  .format-card p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; }
+  .dl-note { font-size: 0.8rem; color: var(--color-text-muted); opacity: 0.6; margin-top: 0.5rem; }
+  .also-section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+  .also-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 1rem;
+  }
+  .also-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .also-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.9rem; color: var(--color-accent-deep);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .also-link:hover { color: var(--color-accent); }
+  @media (max-width: 480px) { .format-grid { grid-template-columns: 1fr; } }
+</style>
