@@ -4,7 +4,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-compass" aria-hidden="true">
-      <span class="footer-flag">&#9760;</span>
+      <img src="/pirate-icon-nav.png" alt="" class="footer-flag" width="32" height="32" />
     </div>
     <p class="footer-title">The Agentic Crew</p>
     <p class="footer-tagline">Chart your course. Lead your crew.</p>
@@ -43,8 +43,10 @@
   }
 
   .footer-flag {
-    font-size: 1.5rem;
-    color: var(--color-accent);
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: inline-block;
   }
 
   .footer-title {
