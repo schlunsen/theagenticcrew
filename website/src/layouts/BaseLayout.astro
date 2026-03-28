@@ -1,10 +1,12 @@
 ---
+import ClientRouter from 'astro/components/ClientRouter.astro';
+
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = "How software engineers learn to build with agents — a free book by Rasmus Schlünsen" } = Astro.props;
+const { title, description = "A free guide by Rasmus Schlünsen on building with AI agents. Learn context management, guardrails, and multi-agent workflows — born from porting the Claude Agent SDK using Claude Code." } = Astro.props;
 
 const siteUrl = "https://theagenticcrew.com";
 const pageUrl = `${siteUrl}${Astro.url.pathname}`;
@@ -52,6 +54,8 @@ const ogImage = `${siteUrl}/og-image.png`;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap"
       rel="stylesheet"
     />
+
+    <ClientRouter />
   </head>
   <body>
     <slot />
