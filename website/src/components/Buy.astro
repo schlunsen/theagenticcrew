@@ -96,6 +96,7 @@
         </svg>
         Interactive Presentation
       </a>
+      <a href="/books/the-agentic-crew" class="book-page-link">Full book page →</a>
       <p class="download-note">All formats free. Download as many times as you like.</p>
     </div>
 
@@ -159,7 +160,45 @@
         </svg>
         Interactive Presentation
       </a>
+      <a href="/books/crew-guide" class="book-page-link crew-book-page-link">Full book page →</a>
       <p class="download-note">Same ideas as the engineering book, translated for non-programmers.</p>
+    </div>
+
+    <!-- Hands-On Guide Card -->
+    <div class="download-card hands-on-card">
+      <div class="download-book-display">
+        <div class="mini-book-mock">
+          <div class="mini-book-cover hands-on-book-cover">
+            <div class="mini-book-spine hands-on-spine"></div>
+            <div class="mini-book-front">
+              <div class="hands-on-cover-placeholder">
+                <span class="hands-on-cover-eyebrow">LEARN BY DOING</span>
+                <span class="hands-on-cover-title">The Agentic Crew</span>
+                <span class="hands-on-cover-subtitle">Hands-On Guide</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="download-eyebrow">Practical exercises</p>
+      <h2>Hands-On Guide</h2>
+      <p class="download-subtitle">Set up your machine, fork a repo, submit a PR — learn by doing.</p>
+
+      <div class="format-grid">
+        <a href="/the-agentic-crew-hands-on.pdf" class="format-card hands-on-format" download>
+          <div class="format-icon hands-on-icon">PDF</div>
+          <h3>PDF</h3>
+          <p>Step-by-step exercises. Fixed layout, great on desktop & tablet.</p>
+        </a>
+        <a href="/the-agentic-crew-hands-on.epub" class="format-card hands-on-format" download>
+          <div class="format-icon hands-on-icon">EPUB</div>
+          <h3>EPUB</h3>
+          <p>Reflowable text for iPad, Kindle, Kobo & other e-readers.</p>
+        </a>
+      </div>
+
+      <a href="/books/hands-on" class="book-page-link hands-on-book-page-link">Full book page →</a>
+      <p class="download-note">The lab companion to the engineering and crew books.</p>
     </div>
 
     <!-- Support Section -->
@@ -402,6 +441,21 @@
     transform: translateY(-1px);
   }
 
+  .book-page-link {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+  }
+
+  .book-page-link:hover { color: var(--color-accent); }
+
+  .crew-book-page-link:hover { color: rgb(180, 140, 50); }
+
+  .hands-on-book-page-link:hover { color: rgb(60, 140, 80); }
+
 
   .crew-presentation-link {
     color: rgb(160, 120, 30);
@@ -604,6 +658,77 @@
     box-shadow: 0 8px 30px rgba(201, 168, 76, 0.1) !important;
   }
 
+
+  /* Hands-On Guide styles */
+  .hands-on-card {
+    border-color: rgba(100, 180, 120, 0.3);
+    background: linear-gradient(135deg, #ffffff, rgba(100, 180, 120, 0.04));
+  }
+
+  .hands-on-card:hover {
+    border-color: rgb(80, 160, 100);
+    box-shadow: 0 8px 40px rgba(80, 160, 100, 0.12);
+  }
+
+  .hands-on-card .download-eyebrow {
+    color: rgb(60, 140, 80);
+  }
+
+  .hands-on-spine {
+    background: linear-gradient(to right, #2d7a3e, #4a9e5c) !important;
+  }
+
+  .hands-on-book-cover {
+    filter: drop-shadow(0 12px 24px rgba(80, 160, 100, 0.15));
+  }
+
+  .hands-on-book-cover:hover {
+    filter: drop-shadow(0 16px 32px rgba(80, 160, 100, 0.22));
+  }
+
+  .hands-on-icon {
+    color: rgb(50, 130, 70) !important;
+    background: rgba(80, 160, 100, 0.1) !important;
+  }
+
+  .hands-on-format:hover {
+    border-color: rgb(80, 160, 100) !important;
+    box-shadow: 0 8px 30px rgba(80, 160, 100, 0.1) !important;
+  }
+
+  .hands-on-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a0e1a, #1a2040);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  .hands-on-cover-eyebrow {
+    font-size: 0.4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgb(100, 200, 130);
+  }
+
+  .hands-on-cover-title {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f0ead6;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .hands-on-cover-subtitle {
+    font-size: 0.55rem;
+    font-style: italic;
+    color: rgba(100, 200, 130, 0.8);
+  }
 
   .support-card {
     grid-column: 1 / -1;

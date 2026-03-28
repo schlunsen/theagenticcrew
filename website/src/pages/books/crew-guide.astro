@@ -1,0 +1,508 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import CrewAudiobook from '../../components/CrewAudiobook.astro';
+import Nav from '../../components/Nav.astro';
+---
+
+<BaseLayout
+  title="The Agentic Crew: Crew Member's Guide — For the Whole Team"
+  description="A free guide for people who work alongside software engineers but don't write code. Understand agents, direct them, and build real things without programming."
+>
+  <Nav
+    btnLabel="Download Free"
+    btnHref="#download"
+    btnFrom="#c9a84c"
+    btnTo="#8b6914"
+    btnFromHover="#d4b45a"
+    btnShadow="rgba(201, 168, 76, 0.32)"
+    isSubpage={true}
+  />
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-book">
+        <div class="book-mock">
+          <div class="book-cover">
+            <div class="book-spine"></div>
+            <div class="book-front">
+              <img src="/book-cover-crew.png" alt="The Agentic Crew: Crew Member's Guide cover" class="cover-img" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-text">
+        <p class="eyebrow">Crew Member's Guide</p>
+        <h1>Not a programmer?<br/>This is for you.</h1>
+        <p class="tagline">Understanding and working with AI agents — no code required</p>
+        <p class="hero-desc">
+          Designers, product managers, writers, analysts — everyone on the team
+          is affected by the shift to agentic engineering. This guide explains what
+          agents actually are, how your team is using them, and how to direct them
+          yourself to get real work done.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-n">No</span><span class="stat-l">coding needed</span></div>
+          <div class="stat"><span class="stat-n">2</span><span class="stat-l">languages</span></div>
+          <div class="stat"><span class="stat-n">Free</span><span class="stat-l">forever</span></div>
+        </div>
+        <div class="hero-actions">
+          <a href="#download" class="btn-primary">Download free →</a>
+          <a href="/crew-presentation" class="btn-secondary">
+            <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="16" height="12" rx="2" /><path d="M8 9l4-2.5v5L8 9z" fill="currentColor" opacity="0.6" /></svg>
+            Interactive presentation
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Who it's for -->
+  <section class="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-label">Who it's for</p>
+          <h2>Everyone on the crew</h2>
+          <p>
+            Your engineering team is moving to agentic workflows. You don't need to
+            understand the code — but you do need to understand what's changing, what
+            you can ask for, and how to work effectively in a team that uses AI agents.
+          </p>
+          <p>
+            This guide covers the same ground as the engineering book, translated for
+            people who think in terms of outcomes, not implementations. You'll learn
+            to direct agents yourself for your own work — writing, research,
+            data analysis, documentation — without writing a single line of code.
+          </p>
+        </div>
+        <div class="about-cards">
+          <div class="feature-card">
+            <div class="feature-icon"><img src="/illustrations/crew-what.jpg" alt="" /></div>
+            <h3>What agents actually are</h3>
+            <p>A clear mental model for what AI agents can and can't do — without the jargon.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><img src="/illustrations/crew-direct.jpg" alt="" /></div>
+            <h3>Directing agents yourself</h3>
+            <p>How to use Claude Code or Gemini CLI to get your own work done — no programming required.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><img src="/illustrations/crew-teams.jpg" alt="" /></div>
+            <h3>Working with engineering teams</h3>
+            <p>What the engineers on your team are doing, and how to collaborate effectively.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><img src="/illustrations/crew-pushback.jpg" alt="" /></div>
+            <h3>When to push back</h3>
+            <p>What agents get wrong, what to watch for, and how to keep humans in the loop.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapters -->
+  <section class="chapters">
+    <div class="section-inner">
+      <p class="section-label">Contents</p>
+      <h2>19 chapters</h2>
+      <div class="chapter-grid">
+        {[
+          ["01", "Welcome to the Crew", "What it means to work alongside AI agents — for people who don't write code."],
+          ["02", "The Ground Is Shifting", "Why agentic tools are changing every role on the team, not just engineering."],
+          ["03", "What's Under the Hood", "A plain-English explanation of how large language models and agents actually work."],
+          ["04", "What Is an Agent, Really?", "The difference between a chatbot and an agent — and why it matters."],
+          ["05", "How to Give Good Instructions", "Prompting as a skill: how to get consistent, useful results from an AI agent."],
+          ["06", "What the Agent Can See", "Context windows, files, tools — understanding what your agent knows and doesn't."],
+          ["07", "The Trust Gradient", "How much autonomy to give an agent, and how to calibrate it for your team."],
+          ["08", "Extending the Crew's Reach", "Connecting agents to databases, calendars, and other tools beyond the codebase."],
+          ["09", "The Padlock", "Security, privacy, and what you should never hand to an AI agent."],
+          ["10", "Reading the Output Like a Pro", "How to review agent work, spot mistakes, and know when to push back."],
+          ["11", "Building Something Real", "A step-by-step walkthrough of a non-engineer directing an agent to build a thing."],
+          ["12a", "Building Something Else", "A second build exercise — different domain, same approach."],
+          ["12b", "When Things Go Wrong", "How to diagnose agent failures and get back on track without calling a developer."],
+          ["13", "When to Do It Yourself", "The cases where an agent adds overhead rather than value."],
+          ["14", "Being the Human in the Loop", "Your most important role: reviewing, approving, and catching what the agent misses."],
+          ["15", "Talking to Your Tech Team", "How to collaborate with engineers who are using agents — shared language and expectations."],
+          ["16", "Keeping Your Finger on the Pulse", "How to stay current as the tools change without following every release."],
+          ["17", "Final Words", "What agentic work means for careers, creativity, and the way teams get things done."],
+          ["18", "Getting Started", "The practical first steps for a non-coder who wants to start working with AI agents today."],
+        ].map(([num, title, desc]) => (
+          <div class="chapter-row">
+            <span class="ch-num">{num}</span>
+            <div class="ch-body">
+              <strong>{title}</strong>
+              <span class="ch-desc">{desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Presentations -->
+  <section class="presentations">
+    <div class="section-inner">
+      <p class="section-label">Watch &amp; listen</p>
+      <h2>Interactive presentations</h2>
+      <p class="pres-intro">Short narrated slideshows that cover the core ideas — no reading required.</p>
+      <div class="pres-grid">
+        <a href="/crew-presentation" class="pres-card">
+          <div class="pres-card-header">
+            <div class="pres-icon">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <path d="M10 10.5l5-3-5-3v6z" fill="currentColor" opacity="0.7" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <span class="pres-badge">Non-technical</span>
+          </div>
+          <h3>Crew Presentation</h3>
+          <p>9 slides. Designed for people who don't write code — explains what agents are, what they can do, and how to work alongside them.</p>
+          <span class="pres-cta">Watch now →</span>
+        </a>
+        <a href="/presentation" class="pres-card pres-card-eng">
+          <div class="pres-card-header">
+            <div class="pres-icon pres-icon-eng">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <path d="M10 10.5l5-3-5-3v6z" fill="currentColor" opacity="0.7" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <span class="pres-badge pres-badge-eng">For engineers</span>
+          </div>
+          <h3>Engineering Presentation</h3>
+          <p>13 slides. The full technical version — context management, guardrails, multi-agent workflows, and CI/CD integration.</p>
+          <span class="pres-cta pres-cta-eng">Watch now →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="download" id="download">
+    <div class="section-inner download-inner">
+      <p class="section-label">Free download</p>
+      <h2>Get the guide</h2>
+      <p class="dl-sub">No sign-up, no email required. Just pick your format.</p>
+
+      <div class="lang-tabs">
+        <button class="lang-tab active" data-lang="en">English</button>
+        <button class="lang-tab" data-lang="ca">Català</button>
+      </div>
+
+      <div class="lang-panel active" data-lang="en">
+        <div class="format-grid">
+          <a href="/the-agentic-crew-crew.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div>
+            <h3>PDF</h3>
+            <p>No coding required. Understand agents, direct them, build real things.</p>
+          </a>
+          <a href="/the-agentic-crew-crew.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div>
+            <h3>EPUB</h3>
+            <p>Reflowable text for iPad, Kindle, Kobo &amp; other e-readers.</p>
+          </a>
+        </div>
+      </div>
+      <div class="lang-panel" data-lang="ca">
+        <p class="lang-title">La Tripulació Agèntica — Guia del Tripulant</p>
+        <div class="format-grid">
+          <a href="/the-agentic-crew-crew-ca.pdf" class="format-card" download>
+            <div class="format-icon">PDF</div><h3>PDF</h3>
+            <p>Sense programació. Entén els agents, dirigeix-los, construeix coses reals.</p>
+          </a>
+          <a href="/the-agentic-crew-crew-ca.epub" class="format-card" download>
+            <div class="format-icon">EPUB</div><h3>EPUB</h3>
+            <p>Text adaptable per a iPad, Kindle, Kobo i altres lectors.</p>
+          </a>
+        </div>
+      </div>
+
+      <p class="dl-note">Same ideas as the engineering book, translated for non-programmers.</p>
+
+      <div class="also-section">
+        <p class="also-label">Also in this series</p>
+        <div class="also-links">
+          <a href="/books/the-agentic-crew" class="also-link">
+            Are you an engineer? Try the main book →
+          </a>
+          <a href="/books/hands-on" class="also-link">
+            Want hands-on exercises? Try the Hands-On Guide →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CrewAudiobook />
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.lang-tab');
+    const panels = document.querySelectorAll('.lang-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const lang = (tab as HTMLElement).getAttribute('data-lang');
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.lang-panel[data-lang="${lang}"]`)?.classList.add('active');
+      });
+    });
+  });
+</script>
+
+<style>
+  :root {
+    --crew-accent: rgb(180, 140, 50);
+    --crew-accent-light: rgb(201, 168, 76);
+    --crew-accent-deep: rgb(140, 105, 20);
+    --crew-glow: rgba(201, 168, 76, 0.12);
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 8rem 2rem 5rem;
+    background: linear-gradient(180deg, rgba(201,168,76,0.06) 0%, var(--color-bg) 100%);
+  }
+  .hero-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: auto 1fr; gap: 5rem; align-items: center;
+  }
+  .book-mock { perspective: 800px; }
+  .book-cover {
+    width: 220px; height: 312px; position: relative;
+    transform: rotateY(-15deg) rotateX(3deg);
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.18));
+  }
+  .book-cover:hover { transform: rotateY(-5deg) rotateX(1deg) scale(1.03); }
+  .book-front {
+    width: 100%; height: 100%;
+    border-radius: 3px 10px 10px 3px; overflow: hidden;
+    box-shadow: 8px 8px 30px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.1);
+    position: relative;
+  }
+  .book-front::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none; border-radius: inherit;
+  }
+  .cover-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .book-spine {
+    position: absolute; left: -16px; top: 0; width: 16px; height: 100%;
+    background: linear-gradient(to right, #8b6914, #c9a84c);
+    transform: rotateY(90deg); transform-origin: right;
+    border-radius: 3px 0 0 3px;
+  }
+  .eyebrow {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--crew-accent); margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: var(--font-serif); font-size: 3rem; font-weight: 700;
+    color: var(--color-text); line-height: 1.15; margin-bottom: 0.75rem;
+  }
+  .tagline {
+    font-family: var(--font-serif); font-size: 1.2rem; font-style: italic;
+    color: var(--color-text-muted); margin-bottom: 1.25rem;
+  }
+  .hero-desc {
+    font-size: 1.05rem; color: var(--color-text-muted);
+    line-height: 1.75; max-width: 52ch; margin-bottom: 2rem;
+  }
+  .hero-stats { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; }
+  .stat { display: flex; flex-direction: column; gap: 0.15rem; }
+  .stat-n { font-size: 2rem; font-weight: 700; color: var(--crew-accent); line-height: 1; }
+  .stat-l { font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; padding: 0.85rem 2rem; border-radius: 10px;
+    background: linear-gradient(135deg, var(--crew-accent-light), var(--crew-accent-deep));
+    color: #fff !important; font-weight: 700; font-size: 1rem;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+    transition: transform 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); color: #fff !important; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.85rem 1.5rem; border-radius: 10px;
+    border: 1.5px solid var(--color-border); background: transparent;
+    color: var(--color-text-muted) !important; font-weight: 500;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--crew-accent); color: var(--crew-accent) !important; }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-book { display: flex; justify-content: center; }
+    h1 { font-size: 2.4rem; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .book-cover { width: 160px; height: 228px; }
+    h1 { font-size: 2rem; }
+  }
+
+  /* ── About ── */
+  .section-inner { max-width: var(--max-width); margin: 0 auto; padding: 5rem 2rem; }
+  .section-label {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--crew-accent); margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700;
+    color: var(--color-text); margin-bottom: 1.5rem;
+  }
+  .about { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--color-text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  .about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .feature-card {
+    background: var(--color-bg-card); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 14px; padding: 1.25rem; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover {
+    border-color: var(--crew-accent-light);
+    box-shadow: 0 4px 20px rgba(201,168,76,0.1);
+  }
+  .feature-icon {
+    width: 72px; height: 72px; margin-bottom: 0.85rem;
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  .feature-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .feature-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--color-text); }
+  .feature-card p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; }
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) { .about-cards { grid-template-columns: 1fr; } }
+
+  /* ── Chapters ── */
+  .chapters { background: var(--color-bg-elevated); border-top: 1px solid var(--color-border); }
+  .chapter-grid { display: flex; flex-direction: column; }
+  .chapter-row {
+    display: grid; grid-template-columns: 3rem 1fr;
+    gap: 1.25rem; padding: 1rem 0;
+    border-bottom: 1px solid var(--color-border-light);
+    align-items: baseline;
+  }
+  .chapter-row:last-child { border-bottom: none; }
+  .ch-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--crew-accent); font-weight: 600; }
+  .ch-body { display: flex; flex-direction: column; gap: 0.2rem; }
+  .ch-body strong { font-size: 0.95rem; color: var(--color-text); }
+  .ch-desc { font-size: 0.85rem; color: var(--color-text-muted); }
+
+  /* ── Presentations ── */
+  .presentations { background: var(--color-bg-elevated); border-top: 1px solid var(--color-border); }
+  .pres-intro { color: var(--color-text-muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
+  .pres-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .pres-card {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    background: var(--color-bg-card); border: 1.5px solid rgba(201,168,76,0.25);
+    border-radius: 18px; padding: 2rem;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  }
+  .pres-card:hover {
+    border-color: var(--crew-accent-light);
+    box-shadow: 0 8px 40px rgba(201,168,76,0.14);
+    transform: translateY(-3px); color: inherit;
+  }
+  .pres-card-eng { border-color: rgba(232,150,62,0.2); }
+  .pres-card-eng:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 40px rgba(232,150,62,0.12);
+  }
+  .pres-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+  .pres-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: rgba(201,168,76,0.12);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--crew-accent);
+  }
+  .pres-icon-eng { background: rgba(232,150,62,0.1); color: var(--color-accent); }
+  .pres-badge {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.3rem 0.7rem;
+    border-radius: 6px; background: rgba(201,168,76,0.12);
+    color: var(--crew-accent-deep);
+  }
+  .pres-badge-eng { background: rgba(232,150,62,0.1); color: var(--color-accent-deep); }
+  .pres-card h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; color: var(--color-text); }
+  .pres-card p { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.7; flex: 1; }
+  .pres-cta {
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--crew-accent); margin-top: 0.25rem;
+  }
+  .pres-cta-eng { color: var(--color-accent); }
+  @media (max-width: 640px) { .pres-grid { grid-template-columns: 1fr; } }
+
+  /* ── Download ── */
+  .download { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .download-inner { text-align: center; max-width: 560px !important; }
+  .dl-sub { color: var(--color-text-muted); margin-bottom: 2rem; }
+  .lang-tabs { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .lang-tab {
+    padding: 0.4rem 0.9rem; border-radius: 8px;
+    border: 1px solid var(--color-border); background: transparent;
+    color: var(--color-text-muted); font-family: inherit;
+    font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+  }
+  .lang-tab:hover { border-color: var(--crew-accent); color: var(--color-text); }
+  .lang-tab.active {
+    background: rgba(201,168,76,0.1); border-color: var(--crew-accent-light);
+    color: var(--crew-accent-deep); font-weight: 600;
+  }
+  .lang-panel { display: none; }
+  .lang-panel.active { display: block; }
+  .lang-title {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 1.25rem;
+  }
+  .format-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .format-card {
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    background: var(--color-bg-card); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 14px; padding: 1.5rem 1rem;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .format-card:hover {
+    border-color: var(--crew-accent-light); transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(201,168,76,0.12); color: inherit;
+  }
+  .format-icon {
+    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+    color: var(--crew-accent-deep); background: rgba(201,168,76,0.1);
+    padding: 0.5rem 1rem; border-radius: 8px; letter-spacing: 0.05em;
+  }
+  .format-card h3 { font-size: 1.1rem; font-weight: 600; color: var(--color-text); }
+  .format-card p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; }
+  .dl-note { font-size: 0.8rem; color: var(--color-text-muted); opacity: 0.6; margin-top: 0.5rem; }
+  .also-section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+  .also-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 1rem;
+  }
+  .also-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .also-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.9rem; color: var(--crew-accent-deep);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .also-link:hover { color: var(--crew-accent); }
+  @media (max-width: 480px) { .format-grid { grid-template-columns: 1fr; } }
+</style>
