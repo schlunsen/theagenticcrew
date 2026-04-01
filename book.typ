@@ -214,10 +214,10 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 #include "chapters/12-multi-agent-orchestration.typ"
 #include "chapters/13-cicd-and-agents.typ"
 #include "chapters/14-war-stories.typ"
-#include "chapters/18-agents-as-pentesters.typ"
-#include "chapters/15-when-not-to-use-agents.typ"
-#include "chapters/16-agentic-teams.typ"
-#include "chapters/17-final-words.typ"
+#include "chapters/15-agents-as-pentesters.typ"
+#include "chapters/16-when-not-to-use-agents.typ"
+#include "chapters/17-agentic-teams.typ"
+#include "chapters/18-final-words.typ"
 
 // ─── Dedication (End) ───
 

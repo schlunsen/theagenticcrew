@@ -102,7 +102,7 @@ The best agentic engineers don't fear agent mistakes. They build systems where m
 
 == When Your Agent _Is_ the Threat Model
 
-There's a special case worth flagging: agents that are _designed_ to be destructive. In Chapter 18, we'll look at autonomous pentesting — AI agents that probe your application for security vulnerabilities by actively exploiting them. Injection payloads, authentication bypasses, SSRF attacks — the agent does it all, on purpose.
+There's a special case worth flagging: agents that are _designed_ to be destructive. In Chapter 15, we'll look at autonomous pentesting — AI agents that probe your application for security vulnerabilities by actively exploiting them. Injection payloads, authentication bypasses, SSRF attacks — the agent does it all, on purpose.
 
 This inverts the usual guardrail calculus. Normally, guardrails protect your system from the agent's mistakes. With a pentesting agent, guardrails protect _everything else_ from the agent's _intentional_ hostility. The trust gradient doesn't loosen over time — it stays locked down permanently. The sandbox isn't a convenience — it's a legal requirement. And human oversight isn't a nice-to-have — it's the difference between a security assessment and an incident.
 
