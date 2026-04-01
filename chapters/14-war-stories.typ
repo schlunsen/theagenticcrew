@@ -86,7 +86,7 @@ The worst part wasn't the bundle size — it was the maintenance surface. Six ne
 
 == The Phantom Vulnerability
 
-This one comes from running an autonomous pentesting agent — the kind we'll discuss in Chapter 18.
+This one comes from running an autonomous pentesting agent — the kind we'll discuss in Chapter 15.
 
 The agent was scanning a staging application for security vulnerabilities. It reported a critical finding: a blind SQL injection on the `/api/search` endpoint. The report was detailed — it described the payload, the timing difference it observed, the CWE classification, the CVSS score. It even included a recommended fix.
 
