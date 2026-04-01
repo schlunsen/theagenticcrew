@@ -1,0 +1,513 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<BaseLayout
+  title="Meet Polly — The AI Parrot Behind the Chat Widget"
+  description="How we built Polly, a fine-tuned LLM that runs entirely in your browser using WebGPU. From training to deployment — no servers needed."
+>
+  <Nav
+    btnLabel="Try Polly"
+    btnHref="#try"
+    btnFrom="#2e9bb7"
+    btnTo="#1e7a94"
+    btnFromHover="#3ab5d4"
+    btnShadow="rgba(46, 155, 183, 0.28)"
+    isSubpage={true}
+  />
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-illustration">
+        <img src="/illustrations/polly-hero.jpg" alt="Polly — cyberpunk pirate parrot perched on a GPU" class="hero-img" />
+      </div>
+      <div class="hero-text">
+        <p class="eyebrow">Behind the Build</p>
+        <h1>Meet Polly</h1>
+        <p class="tagline">A fine-tuned LLM running entirely in your browser</p>
+        <p class="hero-desc">
+          Polly is the AI assistant that lives on this website. She's a cyberpunk pirate parrot
+          who knows the books inside-out — and she runs 100% on your device. No servers, no API
+          calls, no data leaving your machine.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-n">0.5B</span><span class="stat-l">parameters</span></div>
+          <div class="stat"><span class="stat-n">4-bit</span><span class="stat-l">quantized</span></div>
+          <div class="stat"><span class="stat-n">0</span><span class="stat-l">servers</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Why -->
+  <section class="section" id="why">
+    <div class="section-inner">
+      <h2>Why Build a Browser-Only Chatbot?</h2>
+      <p class="section-lead">
+        A book about AI agents deserves an AI assistant. But we didn't want the usual SaaS chatbot
+        with API keys, rate limits, and your questions going to someone else's server.
+      </p>
+      <div class="section-illustration">
+        <img src="/illustrations/polly-privacy.jpg" alt="Polly guarding private data" class="section-img" />
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🔒</div>
+          <h3>Privacy First</h3>
+          <p>Your conversations never leave your device. No telemetry, no logging, no third-party APIs.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>No Backend Needed</h3>
+          <p>The entire model downloads once and runs via WebGPU in your browser. Works offline after first load.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💸</div>
+          <h3>Zero Running Cost</h3>
+          <p>No inference servers, no GPU bills, no API fees. The cost of serving Polly is exactly $0/month.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section section-alt" id="how">
+    <div class="section-inner">
+      <h2>How Polly Was Built</h2>
+      <p class="section-lead">
+        From fine-tuning to browser deployment in a weekend. Here's the full pipeline.
+      </p>
+      <div class="section-illustration">
+        <img src="/illustrations/polly-training.jpg" alt="Polly being assembled in a cyberpunk workshop" class="section-img" />
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Training Data</h3>
+            <p>
+              We created 1,113 training examples from the books — Q&A pairs, chapter summaries,
+              and conversational exchanges — all in Polly's pirate-parrot voice. The data was
+              formatted as chat conversations with system, user, and assistant turns.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Fine-Tuning with Unsloth</h3>
+            <p>
+              We fine-tuned <strong>Qwen2.5-0.5B-Instruct</strong> using
+              <a href="https://github.com/unslothai/unsloth" target="_blank">Unsloth</a>
+              with LoRA (rank 128) on an NVIDIA RTX PRO 6000 Blackwell GPU.
+              Training took about 2.5 minutes — fast enough to iterate on the training data
+              and personality multiple times.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>ONNX Export</h3>
+            <p>
+              The fine-tuned model was exported to ONNX format using Hugging Face's
+              <a href="https://huggingface.co/docs/optimum" target="_blank">Optimum</a> library,
+              then quantized to 4-bit precision using ONNX Runtime's MatMul N-bits quantizer.
+              This shrinks the model from 1.9 GB (FP32) down to a manageable browser download.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Browser Inference via WebGPU</h3>
+            <p>
+              In the browser, <a href="https://huggingface.co/docs/transformers.js" target="_blank">Transformers.js</a>
+              loads the quantized ONNX model and runs inference on your GPU via
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API" target="_blank">WebGPU</a>.
+              Tokens stream in real-time using a TextStreamer callback — the same approach used by
+              Hugging Face's own WebGPU demos.
+            </p>
+            <img src="/illustrations/polly-browser.jpg" alt="AI brain running inside a browser" class="step-img" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="section" id="stack">
+    <div class="section-inner">
+      <h2>The Stack</h2>
+      <div class="stack-grid">
+        <div class="stack-item">
+          <strong>Base Model</strong>
+          <span>Qwen2.5-0.5B-Instruct</span>
+        </div>
+        <div class="stack-item">
+          <strong>Fine-Tuning</strong>
+          <span>Unsloth + LoRA (r=128)</span>
+        </div>
+        <div class="stack-item">
+          <strong>Training Data</strong>
+          <span>1,113 custom examples</span>
+        </div>
+        <div class="stack-item">
+          <strong>Export</strong>
+          <span>ONNX via Optimum</span>
+        </div>
+        <div class="stack-item">
+          <strong>Quantization</strong>
+          <span>4-bit (MatMulNBits)</span>
+        </div>
+        <div class="stack-item">
+          <strong>Browser Runtime</strong>
+          <span>Transformers.js + WebGPU</span>
+        </div>
+        <div class="stack-item">
+          <strong>Hosting</strong>
+          <span>HuggingFace Hub (model files)</span>
+        </div>
+        <div class="stack-item">
+          <strong>Website</strong>
+          <span>Astro (static site)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lessons -->
+  <section class="section section-alt" id="lessons">
+    <div class="section-inner">
+      <h2>What We Learned</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>WASM is Too Slow</h3>
+          <p>
+            Our first approach used llama.cpp compiled to WebAssembly (wllama). It worked, but
+            inference was painfully slow — multiple seconds per token. WebGPU was the breakthrough
+            that made it feel instant.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Model Architecture Matters</h3>
+          <p>
+            We initially trained on Qwen3.5-0.8B, but it wasn't supported by browser runtimes yet.
+            Switching to Qwen2.5-0.5B — a well-supported architecture — solved compatibility
+            issues across the entire pipeline.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Quantization Is Essential</h3>
+          <p>
+            Running FP32 in the browser is a non-starter — even with WebGPU, it's too slow and
+            too large to download. 4-bit quantization made both the download size and inference
+            speed practical.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Small Models Can Have Personality</h3>
+          <p>
+            At just 0.5B parameters, Polly isn't going to write your PhD thesis. But with focused
+            fine-tuning on the book content and a clear persona, she gives genuinely useful answers
+            about the material — with personality.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Try It -->
+  <section class="section" id="try">
+    <div class="section-inner try-section">
+      <h2>Try Polly</h2>
+      <p class="section-lead">
+        Click the parrot icon in the bottom-right corner to chat with Polly.
+        She'll download the model on first load (~700 MB, cached after that), then she's all yours — even offline.
+      </p>
+      <p class="try-hint">
+        Ask her about the books, AI agents, or just say "Ahoy!" to see her pirate side.
+      </p>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 6rem 1.5rem 4rem;
+    text-align: center;
+  }
+
+  .hero-inner {
+    max-width: var(--max-width, 900px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .hero-illustration {
+    flex-shrink: 0;
+    width: 320px;
+  }
+
+  .hero-img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(46, 155, 183, 0.25);
+  }
+
+  /* Section illustrations */
+  .section-illustration {
+    max-width: 480px;
+    margin: 0 auto 2rem;
+  }
+
+  .section-img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .step-img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    margin-top: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .eyebrow {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-pirate-teal, #2e9bb7);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display, 'Lora', serif);
+    font-size: 3rem;
+    margin: 0.25rem 0;
+    color: var(--color-heading, #1a1a2e);
+  }
+
+  .tagline {
+    font-size: 1.2rem;
+    color: var(--color-muted, #64748b);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto 1.5rem;
+    color: var(--color-body, #374151);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-n {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-pirate-teal, #2e9bb7);
+  }
+
+  .stat-l {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted, #64748b);
+  }
+
+  /* Sections */
+  .section {
+    padding: 4rem 1.5rem;
+  }
+
+  .section-alt {
+    background: var(--color-surface, #f8fafc);
+  }
+
+  .section-inner {
+    max-width: var(--max-width, 900px);
+    margin: 0 auto;
+  }
+
+  .section h2 {
+    font-family: var(--font-display, 'Lora', serif);
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    color: var(--color-heading, #1a1a2e);
+  }
+
+  .section-lead {
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-body, #374151);
+    max-width: 640px;
+    margin: 0 auto 2.5rem;
+  }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-heading, #1a1a2e);
+  }
+
+  .card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-body, #374151);
+    margin: 0;
+  }
+
+  /* Pipeline */
+  .pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .pipeline-step {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-pirate-teal, #2e9bb7);
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-content h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.1rem;
+    color: var(--color-heading, #1a1a2e);
+  }
+
+  .step-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-body, #374151);
+  }
+
+  .step-content a {
+    color: var(--color-pirate-teal, #2e9bb7);
+    text-decoration: underline;
+  }
+
+  /* Stack Grid */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .stack-item {
+    background: var(--color-surface, #f8fafc);
+    border-radius: 10px;
+    padding: 1.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stack-item strong {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-pirate-teal, #2e9bb7);
+  }
+
+  .stack-item span {
+    font-size: 1rem;
+    color: var(--color-heading, #1a1a2e);
+    font-weight: 500;
+  }
+
+  /* Try Section */
+  .try-section {
+    text-align: center;
+    padding: 2rem 0 3rem;
+  }
+
+  .try-hint {
+    font-size: 0.95rem;
+    color: var(--color-muted, #64748b);
+    font-style: italic;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-inner { flex-direction: column; text-align: center; }
+    .hero-illustration { width: 240px; }
+    .hero-text { text-align: center; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 4rem 1rem 3rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .hero-illustration { width: 200px; }
+    .section { padding: 3rem 1rem; }
+    .pipeline-step { flex-direction: column; gap: 0.75rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .section-illustration { max-width: 300px; }
+  }
+</style>
