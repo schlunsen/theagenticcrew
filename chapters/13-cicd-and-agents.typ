@@ -161,4 +161,4 @@ This is the CI agent pattern taken to its logical extreme. Your pipeline already
 
 The cost control principles from earlier in this chapter apply directly. Token budgets per scan, concurrency limits on parallel agents, spend alerts, and kill switches. Security scanning agents are expensive — they run Opus-tier models for exploitation and can consume significant tokens on a complex application. Budget accordingly.
 
-And the review question? It applies doubly. Agent-generated security findings _must_ be human-verified. LLMs hallucinate vulnerabilities just as readily as they hallucinate library names. Every finding needs a human reviewer who can look at the evidence, reproduce the exploit, and decide whether it's real. We'll cover this in detail in Chapter 18.
+And the review question? It applies doubly. Agent-generated security findings _must_ be human-verified. LLMs hallucinate vulnerabilities just as readily as they hallucinate library names. Every finding needs a human reviewer who can look at the evidence, reproduce the exploit, and decide whether it's real. We'll cover this in detail in Chapter 15.

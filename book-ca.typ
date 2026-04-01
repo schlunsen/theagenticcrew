@@ -212,10 +212,10 @@ Si alguna vegada has vist una IA escriure codi que semblava teu i has sentit un 
 #include "chapters/ca/12-multi-agent-orchestration.typ"
 #include "chapters/ca/13-cicd-and-agents.typ"
 #include "chapters/ca/14-war-stories.typ"
-#include "chapters/ca/18-agents-as-pentesters.typ"
-#include "chapters/ca/15-when-not-to-use-agents.typ"
-#include "chapters/ca/16-agentic-teams.typ"
-#include "chapters/ca/17-final-words.typ"
+#include "chapters/ca/15-agents-as-pentesters.typ"
+#include "chapters/ca/16-when-not-to-use-agents.typ"
+#include "chapters/ca/17-agentic-teams.typ"
+#include "chapters/ca/18-final-words.typ"
 
 // ─── Dedication (End) ───
 
