@@ -147,9 +147,11 @@ By the end of this book, you'll have a working development environment, hands-on
 #include "chapters/hands-on/02-your-first-pull-request.typ"
 #include "chapters/hands-on/03-your-first-ai-project.typ"
 
+#include "chapters/hands-on/04-pair-programming-with-an-agent.typ"
+#include "chapters/hands-on/05-going-live.typ"
+#include "chapters/hands-on/06-pentesting-with-an-agent.typ"
+
 // Future chapters:
-// #include "chapters/hands-on/04-pair-programming-with-an-agent.typ"
-// #include "chapters/hands-on/05-prompts-that-work.typ"
 // #include "chapters/hands-on/06-building-from-scratch.typ"
 // #include "chapters/hands-on/07-adding-guardrails.typ"
 // #include "chapters/hands-on/08-multi-agent-workflows.typ"
