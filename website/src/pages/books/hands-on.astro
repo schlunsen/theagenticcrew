@@ -43,10 +43,10 @@ import Nav from '../../components/Nav.astro';
           Each chapter is an exercise, not an explanation. You'll set up a real development
           environment, submit a pull request to a live repository, build an
           AI-generated multimedia presentation, and pair-program a complete web app with an
-          AI agent — all from a terminal, all without prior coding experience.
+          AI agent — deploy it to a real server with your agent handling SSH and DNS APIs — and then pentest it with autonomous AI security agents — all from a terminal, all without prior coding experience.
         </p>
         <div class="hero-stats">
-          <div class="stat"><span class="stat-n">4</span><span class="stat-l">exercises</span></div>
+          <div class="stat"><span class="stat-n">6</span><span class="stat-l">exercises</span></div>
           <div class="stat"><span class="stat-n">Real</span><span class="stat-l">repositories</span></div>
           <div class="stat"><span class="stat-n">Free</span><span class="stat-l">forever</span></div>
         </div>
@@ -63,7 +63,7 @@ import Nav from '../../components/Nav.astro';
       <div class="about-grid">
         <div class="about-text">
           <p class="section-label">What's inside</p>
-          <h2>Four hands-on exercises</h2>
+          <h2>Six hands-on exercises</h2>
           <p>
             The Hands-On Guide is the practical companion to the main engineering book.
             Where the main book explains the ideas, this one puts them into practice.
@@ -99,6 +99,18 @@ import Nav from '../../components/Nav.astro';
             <h3>Pair Programming with an Agent</h3>
             <p>Build a complete Travel Bucket List web app from scratch — without writing a single line of code yourself. You describe, the agent builds, you iterate.</p>
           </div>
+          <div class="feature-card">
+            <div class="feature-illus"><img src="/illustrations/ho-coming.jpg" alt="" /></div>
+            <div class="feature-num">05</div>
+            <h3>Going Live</h3>
+            <p>Deploy your app to a Hetzner VPS — the agent SSHes in, configures the server, and calls the Cloudflare API for DNS. Real self-hosting, agent-operated.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-illus"><img src="/illustrations/ho-coming.jpg" alt="" /></div>
+            <div class="feature-num">06</div>
+            <h3>Pentesting with an Agent</h3>
+            <p>Attack your own app before anyone else does. Donna orchestrates AI agents through recon, vulnerability analysis, exploitation, and reporting — autonomous security scanning.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -108,21 +120,23 @@ import Nav from '../../components/Nav.astro';
   <section class="chapters">
     <div class="section-inner">
       <p class="section-label">Contents</p>
-      <h2>4 exercises — more coming</h2>
+      <h2>6 exercises — more coming</h2>
       <div class="chapter-grid">
         {[
           ["01", "Setting Up Your Workstation", "Terminal, package manager, Git, GitHub CLI, and an AI coding assistant — from scratch. Each edition is tailored to your OS. Ends with a working environment and a verified connection to GitHub."],
           ["02", "Your First Pull Request", "Fork a real repository, read a chapter, write a review, commit and push, and submit a pull request that goes live on GitHub. The full open-source workflow in one exercise."],
           ["03", "Your First AI-Generated Project", "Fork the web-presenter project and use an AI agent with a Hugging Face API key to generate custom illustrations, spoken narration, and animated backgrounds — all by describing what you want in plain English."],
           ["04", "Pair Programming with an Agent", "Build a complete Travel Bucket List web app from scratch by describing what you want to an AI coding agent. CRUD operations, localStorage persistence, iterative refinement — without writing a single line of code yourself."],
-          ["05", "Prompts That Work", "Coming soon — a practical workshop in writing prompts that get consistent, useful results. Anti-patterns, decomposition, and the prompt-as-spec technique."],
-          ["06", "Building from Scratch", "Coming soon — start with a blank folder and a one-sentence brief, and build a complete working project using an AI agent from the first line to deployment."],
-          ["07", "Adding Guardrails", "Coming soon — take an existing project and add approval gates, permission scoping, and environment-specific rules so the agent can work safely without supervision."],
-          ["08", "Multi-Agent Workflows", "Coming soon — run two agents in parallel on separate branches, then review and merge their work. Branch-per-agent isolation in practice."],
-          ["09", "CI/CD with Agents", "Coming soon — wire an agent into a GitHub Actions pipeline for automated PR pre-screening and overnight test runs."],
-          ["10", "Capstone Project", "Coming soon — a full project from brief to deployed product, using everything covered in the previous exercises."],
+          ["05", "Going Live", "Deploy your Travel Bucket List to a real Hetzner VPS. Your agent provisions the server, SSHes in to configure it, sets up Caddy with automatic HTTPS, creates DNS records via the Cloudflare API, and configures systemd — all from your terminal."],
+          ["06", "Pentesting with an Agent", "Attack your own application before anyone else does. Set up Donna — an autonomous AI pentesting platform — scan a practice target for SQL injection, XSS, and auth bypasses, read a professional security report, and enable continuous monitoring."],
+          ["07", "Prompts That Work", "Coming soon — a practical workshop in writing prompts that get consistent, useful results. Anti-patterns, decomposition, and the prompt-as-spec technique."],
+          ["08", "Building from Scratch", "Coming soon — start with a blank folder and a one-sentence brief, and build a complete working project using an AI agent from the first line to deployment."],
+          ["09", "Adding Guardrails", "Coming soon — take an existing project and add approval gates, permission scoping, and environment-specific rules so the agent can work safely without supervision."],
+          ["10", "Multi-Agent Workflows", "Coming soon — run two agents in parallel on separate branches, then review and merge their work. Branch-per-agent isolation in practice."],
+          ["11", "CI/CD with Agents", "Coming soon — wire an agent into a GitHub Actions pipeline for automated PR pre-screening and overnight test runs."],
+          ["12", "Capstone Project", "Coming soon — a full project from brief to deployed product, using everything covered in the previous exercises."],
         ].map(([num, title, desc]) => (
-          <div class={`chapter-row${parseInt(num as string) > 4 ? ' coming' : ''}`}>
+          <div class={`chapter-row${parseInt(num as string) > 6 ? ' coming' : ''}`}>
             <span class="ch-num">{num}</span>
             <div class="ch-body">
               <strong>{title}</strong>
@@ -180,6 +194,20 @@ import Nav from '../../components/Nav.astro';
           <div class="ex-body">
             <h3>Pair-program with an AI agent</h3>
             <p>Build a Travel Bucket List app from scratch — describe what you want, review what the agent builds, iterate until it's right. Full CRUD with localStorage.</p>
+          </div>
+        </div>
+        <div class="exercise-item">
+          <div class="ex-icon">🚀</div>
+          <div class="ex-body">
+            <h3>Deploy to a real server</h3>
+            <p>Your agent SSHes into a Hetzner VPS, configures Caddy with auto-HTTPS, and calls the Cloudflare API for DNS — real self-hosting, agent-operated.</p>
+          </div>
+        </div>
+        <div class="exercise-item">
+          <div class="ex-icon">🔓</div>
+          <div class="ex-body">
+            <h3>Pentest with AI agents</h3>
+            <p>Donna orchestrates five parallel agents to scan for SQL injection, XSS, auth bypasses, and more — then produces a professional security report with CVSS scores.</p>
           </div>
         </div>
         <div class="exercise-item">
