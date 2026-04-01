@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Polly — 70's Retro Avatar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+    }
+    #canvas-container {
+      width: 512px;
+      height: 512px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(232, 150, 62, 0.3);
+    }
+    canvas { display: block; }
+    .controls {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+    }
+    button {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      background: #e8963e;
+      color: #1a1a2e;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: #f0a850; }
+    .info { margin-top: 12px; opacity: 0.5; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div id="canvas-container">
+    <canvas id="avatar-canvas"></canvas>
+  </div>
+  <div class="controls">
+    <button onclick="saveAvatar()">💾 Save as PNG (512×512)</button>
+    <button onclick="toggleAnimation()">⏯ Pause / Play</button>
+  </div>
+  <p class="info">Three.js retro scene · pause & save when you like the frame</p>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+
+    const SIZE = 512;
+    const canvas = document.getElementById('avatar-canvas');
+    canvas.width = SIZE;
+    canvas.height = SIZE;
+
+    // ── Renderer ──
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, preserveDrawingBuffer: true });
+    renderer.setSize(SIZE, SIZE);
+    renderer.setPixelRatio(1);
+
+    // ── Scene & Camera ──
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
+    camera.position.z = 5;
+
+    // ── Load parrot texture ──
+    const textureLoader = new THREE.TextureLoader();
+    const parrotTex = textureLoader.load('/parrot-avatar-retro70s.png');
+    parrotTex.colorSpace = THREE.SRGBColorSpace;
+
+    // ── 70's warm retro background gradient (radial) ──
+    const bgMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        varying vec2 vUv;
+
+        void main() {
+          vec2 center = vUv - 0.5;
+          float dist = length(center);
+
+          // Warm 70's palette: burnt orange → dusty rose → deep brown
+          vec3 inner = vec3(0.91, 0.59, 0.24);  // warm orange
+          vec3 mid   = vec3(0.76, 0.38, 0.32);  // dusty rose
+          vec3 outer = vec3(0.28, 0.15, 0.18);  // deep brown
+
+          // Subtle pulsing
+          float pulse = sin(uTime * 0.3) * 0.02;
+
+          vec3 col = mix(inner, mid, smoothstep(0.0, 0.35 + pulse, dist));
+          col = mix(col, outer, smoothstep(0.3, 0.7, dist));
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `,
+      depthWrite: false,
+    });
+    const bgPlane = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 2.2), bgMat);
+    bgPlane.position.z = -2;
+    scene.add(bgPlane);
+
+    // ── Subtle retro sunburst rays ──
+    const raysMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        varying vec2 vUv;
+
+        void main() {
+          vec2 center = vUv - 0.5;
+          float angle = atan(center.y, center.x);
+          float dist = length(center);
+
+          // Rotating sunburst
+          float rays = sin((angle + uTime * 0.08) * 12.0) * 0.5 + 0.5;
+          rays = smoothstep(0.35, 0.65, rays);
+
+          // Fade rays toward center and edges
+          float mask = smoothstep(0.05, 0.2, dist) * smoothstep(0.7, 0.3, dist);
+
+          float alpha = rays * mask * 0.12; // Very subtle
+
+          vec3 rayColor = vec3(1.0, 0.85, 0.55); // Warm golden
+          gl_FragColor = vec4(rayColor, alpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    });
+    const raysPlane = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 2.2), raysMat);
+    raysPlane.position.z = -1.5;
+    scene.add(raysPlane);
+
+    // ── Subtle concentric retro rings ──
+    const ringsMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        varying vec2 vUv;
+
+        void main() {
+          vec2 center = vUv - 0.5;
+          float dist = length(center);
+
+          // Expanding concentric rings
+          float ring = sin((dist - uTime * 0.015) * 45.0) * 0.5 + 0.5;
+          ring = smoothstep(0.4, 0.6, ring);
+
+          // Only show in a band behind the avatar
+          float mask = smoothstep(0.22, 0.28, dist) * smoothstep(0.55, 0.42, dist);
+
+          float alpha = ring * mask * 0.08;
+
+          vec3 ringColor = vec3(1.0, 0.75, 0.45);
+          gl_FragColor = vec4(ringColor, alpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    });
+    const ringsPlane = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 2.2), ringsMat);
+    ringsPlane.position.z = -1.0;
+    scene.add(ringsPlane);
+
+    // ── Parrot avatar (center) ──
+    const parrotMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTexture: { value: parrotTex },
+        uTime: { value: 0 },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D uTexture;
+        uniform float uTime;
+        varying vec2 vUv;
+
+        void main() {
+          vec4 tex = texture2D(uTexture, vUv);
+
+          // Subtle warm color grade — 70's film look
+          vec3 col = tex.rgb;
+
+          // Slight warm shift
+          col.r = col.r * 1.05;
+          col.g = col.g * 0.97;
+          col.b = col.b * 0.88;
+
+          // Subtle vignette on the avatar itself
+          vec2 center = vUv - 0.5;
+          float vig = 1.0 - smoothstep(0.3, 0.52, length(center));
+
+          col *= mix(0.92, 1.0, vig);
+
+          gl_FragColor = vec4(col, tex.a);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    });
+    const parrotPlane = new THREE.Mesh(new THREE.PlaneGeometry(1.72, 1.72), parrotMat);
+    parrotPlane.position.z = 0;
+    scene.add(parrotPlane);
+
+    // ── Film grain overlay ──
+    const grainMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        varying vec2 vUv;
+
+        float rand(vec2 co) {
+          return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+        }
+
+        void main() {
+          float grain = rand(vUv * 500.0 + uTime * 7.0) * 0.06;
+
+          // Circular mask
+          float dist = length(vUv - 0.5);
+          float circle = smoothstep(0.5, 0.48, dist);
+
+          gl_FragColor = vec4(vec3(grain), grain * circle * 0.5);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    });
+    const grainPlane = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 2.2), grainMat);
+    grainPlane.position.z = 1;
+    scene.add(grainPlane);
+
+    // ── Soft circular border with retro glow ──
+    const borderMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        varying vec2 vUv;
+
+        void main() {
+          vec2 center = vUv - 0.5;
+          float dist = length(center);
+
+          // Outer dark vignette
+          float outerDark = smoothstep(0.38, 0.52, dist);
+
+          // Warm glow ring
+          float ring = smoothstep(0.44, 0.46, dist) * smoothstep(0.50, 0.47, dist);
+          float glow = ring * (0.6 + sin(uTime * 0.5) * 0.1);
+
+          vec3 darkColor = vec3(0.12, 0.06, 0.08);
+          vec3 glowColor = vec3(0.95, 0.65, 0.25);
+
+          vec3 col = mix(vec3(0.0), darkColor, outerDark);
+          col += glowColor * glow;
+
+          float alpha = outerDark * 0.85 + glow * 0.4;
+
+          // Hard circle cutoff
+          float cutoff = smoothstep(0.50, 0.498, dist);
+
+          gl_FragColor = vec4(col, alpha * cutoff + (1.0 - cutoff));
+
+          // Outside circle is fully transparent (for PNG export)
+          if (dist > 0.5) {
+            gl_FragColor = vec4(0.0);
+          }
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    });
+    const borderPlane = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 2.2), borderMat);
+    borderPlane.position.z = 2;
+    scene.add(borderPlane);
+
+    // ── Animation loop ──
+    let animating = true;
+    const clock = new THREE.Clock();
+
+    function animate() {
+      if (!animating) {
+        requestAnimationFrame(animate);
+        return;
+      }
+      const t = clock.getElapsedTime();
+
+      bgMat.uniforms.uTime.value = t;
+      raysMat.uniforms.uTime.value = t;
+      ringsMat.uniforms.uTime.value = t;
+      parrotMat.uniforms.uTime.value = t;
+      grainMat.uniforms.uTime.value = t;
+      borderMat.uniforms.uTime.value = t;
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // ── Export ──
+    window.saveAvatar = function() {
+      const link = document.createElement('a');
+      link.download = 'parrot-avatar-retro.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+
+    window.toggleAnimation = function() {
+      animating = !animating;
+      if (animating) clock.start();
+    };
+  </script>
+</body>
+</html>
