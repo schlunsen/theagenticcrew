@@ -154,11 +154,10 @@ By the end of this book, you'll have a working development environment, hands-on
 #include "chapters/hands-on/05-going-live.typ"
 #include "chapters/hands-on/06-pentesting-with-an-agent.typ"
 
-// Future chapters:
-// #include "chapters/hands-on/07-adding-guardrails.typ"
-// #include "chapters/hands-on/08-multi-agent-workflows.typ"
-// #include "chapters/hands-on/09-cicd-with-agents.typ"
-// #include "chapters/hands-on/10-capstone-project.typ"
+#include "chapters/hands-on/07-testing-as-a-safety-net.typ"
+#include "chapters/hands-on/08-the-agentic-pipeline.typ"
+#include "chapters/hands-on/09-your-own-saas.typ"
+#include "chapters/hands-on/10-captains-log.typ"
 
 // ─── Dedication ───
 
