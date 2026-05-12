@@ -8,16 +8,17 @@ const chapters = [
   { id: "06-sandboxes", number: "06", title: "Sandboxes" },
   { id: "07-testing-as-the-feedback-loop", number: "07", title: "Testing as the Feedback Loop" },
   { id: "08-convention-over-configuration", number: "08", title: "Convention Over Configuration" },
-  { id: "09-tool-integrations", number: "09", title: "Tool Integrations" },
-  { id: "10-local-vs-commercial-llms", number: "10", title: "Local LLMs vs. Commercial LLMs" },
-  { id: "11-prompting-as-engineering", number: "11", title: "Prompting as Engineering" },
-  { id: "12-multi-agent-orchestration", number: "12", title: "Multi-Agent Orchestration" },
-  { id: "13-cicd-and-agents", number: "13", title: "CI/CD and Agents" },
-  { id: "14-war-stories", number: "14", title: "War Stories" },
-  { id: "15-agents-as-pentesters", number: "15", title: "Agents as Pentesters" },
-  { id: "16-when-not-to-use-agents", number: "16", title: "When Not to Use Agents" },
-  { id: "17-agentic-teams", number: "17", title: "Agentic Teams" },
-  { id: "18-final-words", number: "18", title: "Final Words" },
+  { id: "09-the-ships-log", number: "09", title: "The Ship's Log" },
+  { id: "10-tool-integrations", number: "10", title: "Tool Integrations" },
+  { id: "11-local-vs-commercial-llms", number: "11", title: "Local LLMs vs. Commercial LLMs" },
+  { id: "12-prompting-as-engineering", number: "12", title: "Prompting as Engineering" },
+  { id: "13-multi-agent-orchestration", number: "13", title: "Multi-Agent Orchestration" },
+  { id: "14-cicd-and-agents", number: "14", title: "CI/CD and Agents" },
+  { id: "15-war-stories", number: "15", title: "War Stories" },
+  { id: "16-agents-as-pentesters", number: "16", title: "Agents as Pentesters" },
+  { id: "17-when-not-to-use-agents", number: "17", title: "When Not to Use Agents" },
+  { id: "18-agentic-teams", number: "18", title: "Agentic Teams" },
+  { id: "19-final-words", number: "19", title: "Final Words" },
 ];
 ---
 
@@ -52,6 +53,12 @@ const chapters = [
             <span>Music</span>
           </button>
           <input type="range" class="bgm-volume" id="bgm-volume" min="0" max="100" value="30" title="Background music volume" />
+          <button class="bgm-stop" id="bgm-stop" title="Stop playback">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <rect x="4" y="4" width="16" height="16" rx="2" />
+            </svg>
+            <span>Stop</span>
+          </button>
         </div>
       </div>
 
@@ -97,15 +104,15 @@ const chapters = [
   </div>
 </section>
 
-<script>
+<script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
-    const player = document.getElementById('audiobook-player') as HTMLAudioElement;
+    const player = document.getElementById('audiobook-player');
     const nowPlayingTitle = document.getElementById('now-playing-title');
-    const chapterRows = document.querySelectorAll('.chapter-row');
+    const chapterRows = document.querySelectorAll('#audiobook .chapter-row');
 
-    let currentChapterId: string | null = null;
+    let currentChapterId = null;
 
-    function getAudioPath(chapterId: string) {
+    function getAudioPath(chapterId) {
       return `/audiobook/adult/kitt/${chapterId}.mp3`;
     }
 
@@ -144,8 +151,8 @@ const chapters = [
     // Update play/pause icons based on audio state
     const updateIcons = () => {
       chapterRows.forEach(row => {
-        const playIcon = row.querySelector('.play-icon') as HTMLElement;
-        const pauseIcon = row.querySelector('.pause-icon') as HTMLElement;
+        const playIcon = row.querySelector('.play-icon');
+        const pauseIcon = row.querySelector('.pause-icon');
         const isActive = row.getAttribute('data-chapter-id') === currentChapterId;
 
         if (isActive && !player.paused) {
@@ -167,7 +174,7 @@ const chapters = [
         const rows = Array.from(chapterRows);
         const currentIndex = rows.findIndex(r => r.getAttribute('data-chapter-id') === currentChapterId);
         if (currentIndex >= 0 && currentIndex < rows.length - 1) {
-          const nextRow = rows[currentIndex + 1] as HTMLElement;
+          var nextRow = rows[currentIndex + 1];
           nextRow.click();
         }
       }
@@ -196,12 +203,14 @@ const chapters = [
 
     let bgEnabled = true;
     let bgStarted = false;
-    let bgFadeTimer: number | null = null;
+    let bgFadeTimer = null;
 
-    const bgToggle = document.getElementById('bgm-toggle')!;
-    const bgVolumeSlider = document.getElementById('bgm-volume') as HTMLInputElement;
+    const bgToggle = document.getElementById('bgm-toggle');
+    const bgVolumeSlider = document.getElementById('bgm-volume');
+    const bgStop = document.getElementById('bgm-stop');
 
-    function fadeBgTo(targetVol: number, duration: number = BG_FADE_MS): Promise<void> {
+    function fadeBgTo(targetVol, duration) {
+      duration = duration || BG_FADE_MS;
       return new Promise((resolve) => {
         if (bgFadeTimer) clearInterval(bgFadeTimer);
         const startVol = bgMusic.volume;
@@ -218,7 +227,7 @@ const chapters = [
           currentStep++;
           bgMusic.volume = Math.max(0, Math.min(1, startVol + stepSize * currentStep));
           if (currentStep >= steps) {
-            clearInterval(bgFadeTimer!);
+            clearInterval(bgFadeTimer);
             bgFadeTimer = null;
             bgMusic.volume = targetVol;
             resolve();
@@ -227,11 +236,11 @@ const chapters = [
       });
     }
 
-    function getBgHighVol(): number {
+    function getBgHighVol() {
       return (parseInt(bgVolumeSlider.value) / 100) * BG_HIGH * 3;
     }
 
-    function getBgLowVol(): number {
+    function getBgLowVol() {
       return (parseInt(bgVolumeSlider.value) / 100) * BG_LOW * 3;
     }
 
@@ -304,8 +313,27 @@ const chapters = [
     // Volume slider
     bgVolumeSlider.addEventListener('input', () => {
       if (!bgStarted || !bgEnabled) return;
-      const isPlaying = !player.paused;
+      var isPlaying = !player.paused;
       bgMusic.volume = isPlaying ? getBgLowVol() : getBgHighVol();
+    });
+
+    // Stop button — stops narration and music
+    bgStop.addEventListener('click', () => {
+      player.pause();
+      player.currentTime = 0;
+      if (bgStarted) {
+        fadeBgTo(0, 500).then(function() {
+          bgMusic.pause();
+          bgMusic.currentTime = 0;
+          bgStarted = false;
+        });
+      }
+      currentChapterId = null;
+      chapterRows.forEach(function(r) { r.classList.remove('active'); });
+      updateIcons();
+      if (nowPlayingTitle) {
+        nowPlayingTitle.textContent = 'Select a chapter';
+      }
     });
   });
 </script>
@@ -499,6 +527,30 @@ const chapters = [
     cursor: pointer;
     border: 2px solid white;
     box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  .bgm-stop {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
+  .bgm-stop:hover {
+    border-color: #c44;
+    color: #c44;
+    background: rgba(204, 68, 68, 0.06);
   }
 
   /* Chapter List */
