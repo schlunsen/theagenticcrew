@@ -1,0 +1,539 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Footer from '../../../components/Footer.astro';
+import Nav from '../../../components/Nav.astro';
+
+const exercises = [
+  {
+    slug: "setting-up-your-workstation",
+    num: "01",
+    title: "Setting Up Your Workstation",
+    tagline: "From zero to a fully equipped development machine",
+    illustration: "/illustrations/ho-setup.jpg",
+    intro: "Before you can contribute to a project, fix a bug, or even read source code properly, you need a working environment. This chapter gets your machine ready — from scratch, on whatever OS you're running.",
+    outcome: "By the end of this exercise, you'll have a terminal, a package manager, Git, the GitHub CLI, and an AI coding assistant — all ready to go.",
+    sections: [
+      "Open Your Terminal",
+      "Install a Package Manager",
+      "Install Git",
+      "Configure Git",
+      "Install the GitHub CLI",
+      "Authenticate with GitHub",
+      "Install an AI Coding Assistant",
+    ],
+    skills: ["Terminal basics", "Package management", "Git configuration", "GitHub CLI", "AI coding assistants"],
+    prerequisites: "None — this is where it all starts.",
+    duration: "30–60 minutes",
+  },
+  {
+    slug: "your-first-pull-request",
+    num: "02",
+    title: "Your First Pull Request",
+    tagline: "The complete open-source workflow in one exercise",
+    illustration: "/illustrations/ho-pr.jpg",
+    intro: "This chapter is a hands-on exercise. By the end of it, you'll have forked a real repository, created a branch, written a review of a book chapter, and submitted a pull request — the standard way open-source contributors propose changes.",
+    outcome: "This isn't a simulation. Your pull request will show up on GitHub for real people to read.",
+    sections: [
+      "What You'll Need",
+      "What's About to Happen",
+      "Fork and Clone the Book",
+      "Explore the Project",
+      "Create a Branch",
+      "Write Your Review",
+      "Commit and Push",
+      "Submit the Pull Request",
+    ],
+    skills: ["Forking repositories", "Branching", "Committing changes", "Pull requests", "Code review"],
+    prerequisites: "Exercise 01 — a working terminal, Git, and GitHub CLI.",
+    duration: "30–45 minutes",
+  },
+  {
+    slug: "your-first-ai-project",
+    num: "03",
+    title: "Your First AI-Generated Project",
+    tagline: "Describe your vision in English. The agent builds it.",
+    illustration: "/illustrations/ho-aiproject.jpg",
+    intro: "So far you've set up your tools and submitted your first pull request. Now you're going to do something genuinely impressive: take a real open-source project, describe what you want in plain English, and let an AI agent transform it — generating custom illustrations, narration audio, and animated backgrounds using AI models from Hugging Face.",
+    outcome: "No prior coding experience required. The agent writes the code. You describe the vision.",
+    sections: [
+      "What You'll Build",
+      "What You'll Need",
+      "Set Your Hugging Face Token",
+      "Fork and Clone the Project",
+      "Explore the Project",
+      "Choose Your Topic",
+      "Generate the Illustrations",
+      "Generate the Narration",
+      "Update the Presentation",
+      "Customise the Animated Background",
+      "Preview in Your Browser",
+      "Commit and Push",
+    ],
+    skills: ["Hugging Face API", "AI image generation", "Text-to-speech", "Three.js customisation", "Project forking"],
+    prerequisites: "Exercises 01–02 — terminal, Git, GitHub CLI, and a Hugging Face account.",
+    duration: "45–90 minutes",
+  },
+  {
+    slug: "pair-programming-with-an-agent",
+    num: "04",
+    title: "Pair Programming with an Agent",
+    tagline: "You describe. The agent builds. You iterate.",
+    illustration: "/illustrations/ho-pairprog.jpg",
+    intro: "Now you're going to build something from scratch — a complete web application — by describing what you want to an AI coding agent. You won't write the code yourself. You'll describe what you want, review what the agent builds, and iterate until it's right.",
+    outcome: "This is pair programming with an AI: you bring the vision, the agent brings the implementation. You'll build a complete Travel Bucket List web app with CRUD operations and localStorage persistence.",
+    sections: [
+      "What You'll Build",
+      "What You'll Need",
+      "Create the Project",
+      "Describe the App",
+      "Review What the Agent Built",
+      "Open It in Your Browser",
+      "The CRUD Cycle",
+      "Iterate and Improve",
+      "When Something Goes Wrong",
+      "Understand What Was Built",
+      "Commit and Push",
+    ],
+    skills: ["Pair programming", "Prompt engineering", "CRUD operations", "localStorage", "Iterative development"],
+    prerequisites: "Exercises 01–03 — a working development environment.",
+    duration: "60–90 minutes",
+  },
+  {
+    slug: "going-live",
+    num: "05",
+    title: "Going Live",
+    tagline: "From localhost to the world — agent-operated infrastructure",
+    illustration: "/illustrations/ho-golive.jpg",
+    intro: "Your app works on localhost. It looks great. But try sending the URL to a friend — you can't. localhost means \"this computer, right here.\" To everyone else in the world, your app doesn't exist. This chapter fixes that.",
+    outcome: "You're going to rent a small server, point a domain at it, and deploy your Travel Bucket List for the world to see — with HTTPS, automatic restarts, and a proper setup. Your AI agent will operate the infrastructure directly: provisioning the server, SSHing in to configure it, and calling the Cloudflare API to set up DNS.",
+    sections: [
+      "What You'll Build",
+      "What You'll Need",
+      "Why Self-Host?",
+      "Create Your Server",
+      "The Agent SSHes In",
+      "Harden the Server",
+      "Deploy the App",
+      "Set Up the Web Server",
+      "Point Your Domain with the Cloudflare API",
+      "Make It Survive Reboots",
+      "Test the Full Stack",
+    ],
+    skills: ["VPS provisioning", "SSH", "Caddy web server", "HTTPS", "DNS configuration", "Cloudflare API", "systemd"],
+    prerequisites: "Exercise 04 — a working Travel Bucket List app.",
+    duration: "60–120 minutes",
+  },
+  {
+    slug: "pentesting-with-an-agent",
+    num: "06",
+    title: "Pentesting with an Agent",
+    tagline: "Attack your own app before anyone else does",
+    illustration: "/illustrations/ho-pentest.jpg",
+    intro: "Your app is live. It's on a server, behind HTTPS, with a domain name and a systemd service. It works. But does it hold up? Every application on the internet gets probed. Bots scan for open ports within minutes of a server going live.",
+    outcome: "You're going to attack your own application before anyone else does — using an AI agent as your pentester. A real, autonomous security scan that probes your application for vulnerabilities, attempts to exploit them, and produces a professional report with findings, severity scores, and remediation guidance.",
+    sections: [
+      "What You'll Build",
+      "What You'll Need",
+      "Why Pentest Your Own App?",
+      "Set Up a Practice Target",
+      "Clone and Configure Shannon",
+      "Start the Infrastructure",
+      "Run Your First Scan",
+      "Read the Report",
+      "Understanding the Findings",
+      "The Exploitation Feedback Loop",
+      "Scan Your Own App",
+      "Continuous Monitoring with Sentinel",
+      "The Dashboard",
+    ],
+    skills: ["Security scanning", "Vulnerability analysis", "SQL injection", "XSS detection", "CVSS scoring", "Security reports"],
+    prerequisites: "Exercise 05 — a deployed application with a live URL.",
+    duration: "60–90 minutes",
+  },
+  {
+    slug: "testing-as-a-safety-net",
+    num: "07",
+    title: "Testing as a Safety Net",
+    tagline: "Give the agent eyes. No change ships unchecked.",
+    illustration: "/illustrations/ho-testing.jpg",
+    intro: "Your Travel Bucket List is deployed. It's secured. Everything works. Now change something. Add a feature. Tweak the layout. How do you know you didn't break anything? Right now, you don't.",
+    outcome: "Tests give the agent eyes. A test suite is a machine-readable specification of what your app is supposed to do. You'll write end-to-end tests with Playwright, experience TDD with an AI agent, and set up GitHub Actions CI — so no change ships unchecked.",
+    sections: [
+      "What You'll Build",
+      "What You'll Need",
+      "The Blindfolded Agent",
+      "Your First Test",
+      "Build the Suite",
+      "Red-Green-Refactor with an Agent",
+      "Breaking Things on Purpose",
+      "Automate It: GitHub Actions",
+      "The Checkpoint",
+    ],
+    skills: ["Playwright", "End-to-end testing", "Test-driven development", "GitHub Actions", "CI/CD pipelines"],
+    prerequisites: "Exercise 05 — a deployed Travel Bucket List.",
+    duration: "45–75 minutes",
+  },
+  {
+    slug: "the-agentic-pipeline",
+    num: "08",
+    title: "The Agentic Pipeline",
+    tagline: "Remove yourself from the loop. Let agents handle the boring work.",
+    illustration: "/illustrations/ho-pipeline.jpg",
+    intro: "You've been the one typing prompts. In every chapter so far, you started the conversation. You were the driver. The agent was the engine — powerful, fast, tireless — but it only moved when you turned the key. This chapter is about removing yourself from the loop.",
+    outcome: "You'll build an automated multi-step pipeline: unstructured feedback goes in, AI agents parse, categorise, and prioritise it, GitHub issues come out, and a summary report is generated — all orchestrated by shell scripts and scheduled with cron.",
+    sections: [
+      "What You'll Build",
+      "What You'll Need",
+      "The Boring Work",
+      "Building Block One: The Intake Agent",
+      "Building Block Two: The Triage Agent",
+      "Wiring the Pipe",
+      "Connecting to GitHub",
+      "The Summary Report",
+      "Set It and Forget It",
+    ],
+    skills: ["Shell scripting", "Cron scheduling", "Multi-agent orchestration", "GitHub API", "Automated reporting"],
+    prerequisites: "Exercises 01–07 — all core tools and workflows.",
+    duration: "60–90 minutes",
+  },
+  {
+    slug: "your-own-saas",
+    num: "09",
+    title: "Your Own SaaS",
+    tagline: "The capstone. Build a product. Ship it. Share it.",
+    illustration: "/illustrations/ho-saas.jpg",
+    intro: "Every chapter so far has been an exercise. This one is different. This is the real thing. You are going to build a product — a complete, publicly accessible micro-SaaS application — from scratch, in one chapter.",
+    outcome: "Not a tutorial project. Not a toy. Something with a URL you can text to a friend. Something that solves a real problem, accepts real users, and processes real payments. The AI agent is your co-founder for the day.",
+    sections: [
+      "What You'll Build",
+      "What You'll Need",
+      "Pick Your Idea",
+      "Scaffold the Full Stack",
+      "Add the AI Brain",
+      "Users, Auth, and Payments",
+      "Test It",
+      "Ship It",
+      "The Landing Page and Launch Checklist",
+      "Show Your Work",
+    ],
+    skills: ["Full-stack development", "Authentication", "Stripe payments", "AI features", "CI/CD", "Landing pages"],
+    prerequisites: "Exercises 01–08 — the full journey so far.",
+    duration: "4–8 hours (a full day project)",
+  },
+  {
+    slug: "captains-log",
+    num: "10",
+    title: "Captain's Log",
+    tagline: "You walked in as a passenger. You leave as the captain.",
+    illustration: "/illustrations/ho-captainslog.jpg",
+    intro: "You made it. That's not a figure of speech. There were a dozen moments across these chapters where you could have stopped — when the terminal threw an error you didn't understand, when Git asked you to resolve a merge conflict, when the deploy failed at midnight. You didn't stop. You're here.",
+    outcome: "In Chapter 1, you opened a terminal for the first time. Now you've pair-programmed with an AI agent, shipped a SaaS product, pentested it for vulnerabilities, automated a CI/CD pipeline, and read a professional security report that autonomous agents wrote for you. That's a transformation.",
+    sections: [
+      "Look Astern",
+      "The Ship You Built",
+      "One Last Exercise: Write Your Captain's Orders",
+      "Charts for Open Water",
+      "Signal Flags: A Captain's Checklist",
+      "The Crew is Hiring",
+      "The Maiden Voyage Challenge",
+      "Fair Winds",
+    ],
+    skills: ["CLAUDE.md authoring", "Project reflection", "Self-directed learning", "Agent workflow design"],
+    prerequisites: "Exercises 01–09 — the complete hands-on journey.",
+    duration: "30–45 minutes",
+  },
+];
+
+const { exercise } = Astro.params;
+const ex = exercises.find(e => e.slug === exercise);
+
+if (!ex) {
+  return Astro.redirect('/books/hands-on');
+}
+
+const currentIndex = exercises.findIndex(e => e.slug === exercise);
+const prev = currentIndex > 0 ? exercises[currentIndex - 1] : null;
+const next = currentIndex < exercises.length - 1 ? exercises[currentIndex + 1] : null;
+
+export function getStaticPaths() {
+  return [
+    { params: { exercise: "setting-up-your-workstation" } },
+    { params: { exercise: "your-first-pull-request" } },
+    { params: { exercise: "your-first-ai-project" } },
+    { params: { exercise: "pair-programming-with-an-agent" } },
+    { params: { exercise: "going-live" } },
+    { params: { exercise: "pentesting-with-an-agent" } },
+    { params: { exercise: "testing-as-a-safety-net" } },
+    { params: { exercise: "the-agentic-pipeline" } },
+    { params: { exercise: "your-own-saas" } },
+    { params: { exercise: "captains-log" } },
+  ];
+}
+---
+
+<BaseLayout
+  title={`Exercise ${ex.num}: ${ex.title} — The Agentic Crew Hands-On Guide`}
+  description={ex.intro}
+>
+  <Nav
+    btnLabel="Download Free"
+    btnHref="/books/hands-on#download"
+    btnFrom="#3c8c50"
+    btnTo="#286e3c"
+    btnFromHover="#4aa064"
+    btnShadow="rgba(60, 140, 80, 0.30)"
+    isSubpage={true}
+  />
+
+  <!-- Hero -->
+  <header class="ex-hero">
+    <div class="ex-hero-inner">
+      <a href="/books/hands-on" class="back-link">&larr; All exercises</a>
+      <div class="ex-hero-content">
+        <div class="ex-hero-text">
+          <span class="ex-num">Exercise {ex.num}</span>
+          <h1>{ex.title}</h1>
+          <p class="ex-tagline">{ex.tagline}</p>
+          <div class="ex-meta">
+            <div class="meta-item">
+              <span class="meta-label">Duration</span>
+              <span class="meta-value">{ex.duration}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Prerequisites</span>
+              <span class="meta-value">{ex.prerequisites}</span>
+            </div>
+          </div>
+        </div>
+        <div class="ex-hero-illus">
+          <img src={ex.illustration} alt={ex.title} />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Introduction -->
+  <section class="ex-intro">
+    <div class="section-inner">
+      <div class="intro-grid">
+        <div class="intro-main">
+          <h2>Overview</h2>
+          <p class="intro-text">{ex.intro}</p>
+          <p class="intro-outcome">{ex.outcome}</p>
+        </div>
+        <aside class="intro-sidebar">
+          <div class="sidebar-card">
+            <h3>Skills you'll practise</h3>
+            <ul class="skill-list">
+              {ex.skills.map(skill => (
+                <li>{skill}</li>
+              ))}
+            </ul>
+          </div>
+          <a href="/books/hands-on#download" class="btn-primary">Download the guide (free) &rarr;</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's covered -->
+  <section class="ex-sections">
+    <div class="section-inner">
+      <p class="section-label">What's covered</p>
+      <h2>Sections in this exercise</h2>
+      <div class="sections-grid">
+        {ex.sections.map((section, i) => (
+          <div class="section-item">
+            <span class="section-step">{String(i + 1).padStart(2, '0')}</span>
+            <span class="section-name">{section}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="ex-nav">
+    <div class="section-inner">
+      <div class="nav-grid">
+        {prev ? (
+          <a href={`/books/hands-on/${prev.slug}`} class="nav-card nav-prev">
+            <span class="nav-dir">&larr; Previous exercise</span>
+            <span class="nav-num">{prev.num}</span>
+            <span class="nav-title">{prev.title}</span>
+          </a>
+        ) : <div />}
+        {next ? (
+          <a href={`/books/hands-on/${next.slug}`} class="nav-card nav-next">
+            <span class="nav-dir">Next exercise &rarr;</span>
+            <span class="nav-num">{next.num}</span>
+            <span class="nav-title">{next.title}</span>
+          </a>
+        ) : (
+          <a href="/books/hands-on#download" class="nav-card nav-next">
+            <span class="nav-dir">Ready to start? &rarr;</span>
+            <span class="nav-num">PDF</span>
+            <span class="nav-title">Download the guide</span>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  :root {
+    --ho-accent: rgb(60, 140, 80);
+    --ho-accent-light: rgb(80, 160, 100);
+    --ho-accent-deep: rgb(40, 110, 60);
+    --ho-glow: rgba(80, 160, 100, 0.12);
+  }
+
+  .section-inner { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem; }
+  .section-label {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ho-accent); margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: var(--font-serif); font-size: 2rem; font-weight: 700;
+    color: var(--color-text); margin-bottom: 1.5rem;
+  }
+
+  /* ── Hero ── */
+  .ex-hero {
+    padding: 7rem 2rem 3rem;
+    background: linear-gradient(180deg, rgba(80,160,100,0.06) 0%, var(--color-bg) 100%);
+  }
+  .ex-hero-inner { max-width: var(--max-width); margin: 0 auto; }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.85rem; color: var(--ho-accent); text-decoration: none;
+    margin-bottom: 2rem; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--ho-accent-light); }
+  .ex-hero-content {
+    display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center;
+  }
+  .ex-num {
+    display: inline-block; font-family: var(--font-mono); font-size: 0.85rem;
+    font-weight: 700; color: var(--ho-accent); letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: var(--font-serif); font-size: 2.8rem; font-weight: 700;
+    color: var(--color-text); line-height: 1.15; margin-bottom: 0.75rem;
+  }
+  .ex-tagline {
+    font-family: var(--font-serif); font-size: 1.15rem; font-style: italic;
+    color: var(--color-text-muted); margin-bottom: 2rem; line-height: 1.6;
+  }
+  .ex-meta { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+  .meta-label {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--ho-accent);
+  }
+  .meta-value { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.5; }
+  .ex-hero-illus {
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  }
+  .ex-hero-illus img { width: 100%; height: 280px; object-fit: cover; display: block; }
+
+  @media (max-width: 900px) {
+    .ex-hero-content { grid-template-columns: 1fr; }
+    .ex-hero-illus { max-width: 400px; }
+    h1 { font-size: 2.2rem; }
+  }
+  @media (max-width: 640px) {
+    .ex-hero { padding: 6rem 1.5rem 2rem; }
+    h1 { font-size: 1.8rem; }
+  }
+
+  /* ── Introduction ── */
+  .ex-intro { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .intro-grid { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start; }
+  .intro-text {
+    font-size: 1.1rem; color: var(--color-text-muted); line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .intro-outcome {
+    font-size: 1.05rem; color: var(--color-text); line-height: 1.8;
+    padding: 1.25rem; background: var(--ho-glow); border-left: 3px solid var(--ho-accent);
+    border-radius: 0 10px 10px 0;
+  }
+  .sidebar-card {
+    background: var(--color-bg-card); border: 1px solid var(--color-border);
+    border-radius: 14px; padding: 1.5rem; margin-bottom: 1.25rem;
+  }
+  .sidebar-card h3 {
+    font-size: 0.9rem; font-weight: 700; color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+  .skill-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-list li {
+    font-size: 0.8rem; color: var(--ho-accent-deep); background: rgba(80,160,100,0.1);
+    padding: 0.3rem 0.75rem; border-radius: 100px; font-weight: 500;
+  }
+  .btn-primary {
+    display: inline-block; padding: 0.85rem 2rem; border-radius: 10px;
+    background: linear-gradient(135deg, var(--ho-accent-light), var(--ho-accent-deep));
+    color: #fff !important; font-weight: 700; font-size: 0.95rem;
+    box-shadow: 0 4px 20px rgba(80,160,100,0.35);
+    transition: transform 0.2s; text-decoration: none; text-align: center;
+    width: 100%;
+  }
+  .btn-primary:hover { transform: translateY(-2px); color: #fff !important; }
+
+  @media (max-width: 900px) {
+    .intro-grid { grid-template-columns: 1fr; }
+    .btn-primary { width: auto; }
+  }
+
+  /* ── Sections ── */
+  .ex-sections { background: var(--color-bg-elevated); border-top: 1px solid var(--color-border); }
+  .sections-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .section-item {
+    display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background 0.2s;
+  }
+  .section-item:hover { background: var(--ho-glow); }
+  .section-step {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+    color: var(--ho-accent);
+  }
+  .section-name { font-size: 0.95rem; color: var(--color-text); font-weight: 500; }
+
+  @media (max-width: 640px) {
+    .sections-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Nav ── */
+  .ex-nav { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .nav-card {
+    display: flex; flex-direction: column; gap: 0.3rem;
+    padding: 1.5rem; background: var(--color-bg-card);
+    border: 1px solid var(--color-border); border-radius: 14px;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .nav-card:hover {
+    border-color: var(--ho-accent-light);
+    box-shadow: 0 4px 20px rgba(80,160,100,0.1);
+    color: inherit;
+  }
+  .nav-prev { text-align: left; }
+  .nav-next { text-align: right; }
+  .nav-dir { font-size: 0.75rem; color: var(--ho-accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+  .nav-num { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ho-accent); font-weight: 600; }
+  .nav-title { font-size: 1rem; font-weight: 600; color: var(--color-text); }
+
+  @media (max-width: 640px) {
+    .nav-grid { grid-template-columns: 1fr; }
+  }
+</style>
