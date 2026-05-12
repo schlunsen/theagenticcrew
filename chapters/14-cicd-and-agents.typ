@@ -153,9 +153,9 @@ The pipeline is just another environment where agents work. The same principles 
 
 There's one more pipeline pattern worth mentioning, because it combines everything in this chapter into something genuinely new: continuous security scanning.
 
-Donna (#link("https://github.com/schlunsen/donna")) is an open-source pentesting platform that runs as a Sentinel — a cron-scheduled workflow that watches your git repository for changes and automatically runs security scans against your application. Think of it as an overnight agent, but for offensive security.
+An autonomous pentesting platform can run as a security sentinel — a cron-scheduled workflow that watches your git repository for changes and automatically runs security scans against your application. Think of it as an overnight agent, but for offensive security. Open-source tools like Shannon by KeygraphHQ (#link("https://github.com/KeygraphHQ/shannon")) are emerging to fill this role.
 
-When Donna detects a code change, it doesn't blindly re-run everything. It examines the diff and routes changes to the relevant vulnerability scanners. Modified a SQL query builder? Route to the injection agent. Touched an authentication handler? Route to the auth bypass agent. Changed infrastructure files? Trigger a full scan. Nothing changed? Skip entirely — zero cost.
+When the scanner detects a code change, it doesn't blindly re-run everything. It examines the diff and routes changes to the relevant vulnerability scanners. Modified a SQL query builder? Route to the injection agent. Touched an authentication handler? Route to the auth bypass agent. Changed infrastructure files? Trigger a full scan. Nothing changed? Skip entirely — zero cost.
 
 This is the CI agent pattern taken to its logical extreme. Your pipeline already catches lint failures, type errors, and test regressions. A security sentinel catches the vulnerabilities that none of those tools are looking for.
 
