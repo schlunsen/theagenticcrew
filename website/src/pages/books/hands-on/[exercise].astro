@@ -24,6 +24,24 @@ const exercises = [
     skills: ["Terminal basics", "Package management", "Git configuration", "GitHub CLI", "AI coding assistants"],
     prerequisites: "None — this is where it all starts.",
     duration: "30–60 minutes",
+    difficulty: "Beginner",
+    quote: "AI coding agents live in the terminal. You can't pair-program with an agent if you don't have a place for it to work. Think of this as setting up your workshop before you start building.",
+    deliverables: [
+      "A terminal ready to use (PowerShell, zsh, or bash)",
+      "A package manager installed (Homebrew, WinGet, or apt)",
+      "Git installed and configured with your identity",
+      "GitHub CLI authenticated with your account",
+      "An AI coding assistant (Claude Code or Gemini CLI)",
+    ],
+    tools: ["Terminal", "Homebrew / WinGet / apt", "Git", "GitHub CLI", "Node.js", "Claude Code / Gemini CLI"],
+    concepts: [
+      ["Terminal", "The command-line interface where you'll run everything in this book"],
+      ["Package manager", "Install software by typing one command instead of downloading installers"],
+      ["Git", "Version control — tracks every change you make to a project"],
+      ["GitHub CLI", "Talk to GitHub from your terminal — no browser needed"],
+      ["sudo", "Run a command as administrator (Linux/macOS)"],
+    ],
+    takeaway: "You now have a complete development environment. Every tool the AI agent needs to work with you is installed, configured, and verified. This is your workshop — and it's ready for the first real project.",
   },
   {
     slug: "your-first-pull-request",
@@ -46,6 +64,25 @@ const exercises = [
     skills: ["Forking repositories", "Branching", "Committing changes", "Pull requests", "Code review"],
     prerequisites: "Exercise 01 — a working terminal, Git, and GitHub CLI.",
     duration: "30–45 minutes",
+    difficulty: "Beginner",
+    quote: "This is the open-source workflow. Every contribution to every major project in the world follows these same seven steps. You'll have done all of them by the end of this chapter.",
+    deliverables: [
+      "Your own fork of The Agentic Crew repository on GitHub",
+      "A new branch with your changes isolated from main",
+      "A written review of a book chapter (your words, your opinions)",
+      "A pull request submitted to the original project — visible to real people",
+    ],
+    tools: ["Git", "GitHub CLI", "Text editor (VS Code, nano, or notepad)", "Typst (the book's markup language)"],
+    concepts: [
+      ["Repository", "A project folder that Git is tracking — often called a \"repo\""],
+      ["Fork", "Your personal copy of someone else's repository, stored on GitHub"],
+      ["Clone", "Downloading a repository from GitHub to your machine"],
+      ["Branch", "A parallel version of the project where you work without touching the main copy"],
+      ["Commit", "A saved snapshot of your changes, with a message describing what you did"],
+      ["Push", "Sending your commits from your machine up to GitHub"],
+      ["Pull Request", "A formal request to merge your branch into the original project"],
+    ],
+    takeaway: "You've just completed the workflow that powers every major open-source project in the world — fork, clone, branch, write, commit, push, pull request. Seven steps. You'll use them for the rest of this book, and for the rest of your career.",
   },
   {
     slug: "your-first-ai-project",
@@ -72,6 +109,24 @@ const exercises = [
     skills: ["Hugging Face API", "AI image generation", "Text-to-speech", "Three.js customisation", "Project forking"],
     prerequisites: "Exercises 01–02 — terminal, Git, GitHub CLI, and a Hugging Face account.",
     duration: "45–90 minutes",
+    difficulty: "Beginner–Intermediate",
+    quote: "Make your bullet points visual. Each one will become an AI-generated image, so specific and concrete works better than abstract. 'A warehouse filled with rows of server racks' will generate a better illustration than 'technology infrastructure.'",
+    deliverables: [
+      "A forked copy of the Web Presenter project",
+      "Ten custom AI-generated illustrations using FLUX.1-schnell",
+      "Spoken narration audio generated with text-to-speech models",
+      "A customised Three.js animated background matching your colour palette",
+      "A complete presentation you can open in any browser",
+    ],
+    tools: ["Hugging Face API", "Python 3", "FLUX.1-schnell (image model)", "Facebook MMS-TTS (speech model)", "Three.js", "HTTP server", "Git", "GitHub CLI"],
+    concepts: [
+      ["Hugging Face", "A platform hosting thousands of AI models — like GitHub but for machine learning"],
+      ["API token", "A secret key that proves your identity when making API calls"],
+      ["Text-to-image", "AI models that generate illustrations from plain English descriptions"],
+      ["Text-to-speech", "AI models that convert written text into spoken audio"],
+      ["Environment variable", "A value stored in memory — keeps secrets out of your code files"],
+    ],
+    takeaway: "You described a vision in plain English and an AI agent turned it into a working product — custom illustrations, spoken narration, and animated backgrounds. You didn't write the code. You directed the agent. That's the shift.",
   },
   {
     slug: "pair-programming-with-an-agent",
@@ -97,6 +152,26 @@ const exercises = [
     skills: ["Pair programming", "Prompt engineering", "CRUD operations", "localStorage", "Iterative development"],
     prerequisites: "Exercises 01–03 — a working development environment.",
     duration: "60–90 minutes",
+    difficulty: "Intermediate",
+    quote: "Go off-script. These prompts are suggestions, not assignments. If you want a dark mode toggle, a map view, or a 'random destination' button — ask for it. The agent will figure out how to build it. The point is to practise the back-and-forth: describe, review, refine.",
+    deliverables: [
+      "A Travel Bucket List web app (single HTML file)",
+      "Add destinations with name, reason, and priority",
+      "Visual cards in a responsive grid layout",
+      "Edit, delete, and mark-as-visited functionality",
+      "Data persistence across page refreshes via localStorage",
+    ],
+    tools: ["Claude Code / Gemini CLI", "HTML / CSS / JavaScript", "Browser developer tools", "localStorage API", "Git", "GitHub CLI"],
+    concepts: [
+      ["CRUD", "Create, Read, Update, Delete — the four basic data operations"],
+      ["HTML", "The structure — what elements exist on the page"],
+      ["CSS", "The style — how those elements look (colours, layout, fonts)"],
+      ["JavaScript", "The behaviour — what happens when you interact (click, submit)"],
+      ["localStorage", "Browser storage that persists between visits — no server needed"],
+      ["DOM", "The live representation of the page that JavaScript can change"],
+      ["Event listener", "Code that runs when something happens (click, submit, keypress)"],
+    ],
+    takeaway: "You built a complete web application without writing a single line of code yourself. You described what you wanted, reviewed what the agent produced, and iterated until it was right. This is the core loop: describe, review, iterate, understand.",
   },
   {
     slug: "going-live",
@@ -122,6 +197,28 @@ const exercises = [
     skills: ["VPS provisioning", "SSH", "Caddy web server", "HTTPS", "DNS configuration", "Cloudflare API", "systemd"],
     prerequisites: "Exercise 04 — a working Travel Bucket List app.",
     duration: "60–120 minutes",
+    difficulty: "Intermediate",
+    quote: "Your agent just connected to a remote computer via SSH and ran commands on it. This is the same thing a system administrator does — but instead of remembering arcane commands and flags, you described what you wanted in plain English. Infrastructure-as-conversation.",
+    deliverables: [
+      "A real Ubuntu server provisioned on Hetzner Cloud",
+      "SSH access with hardened security (non-root user, firewall)",
+      "Your app deployed and running via Node.js",
+      "Caddy reverse proxy with automatic HTTPS (Let's Encrypt)",
+      "DNS configured via the Cloudflare API — no dashboards",
+      "systemd service for automatic restarts and boot persistence",
+      "A live URL you can share with anyone in the world",
+    ],
+    tools: ["Hetzner Cloud CLI (hcloud)", "Ubuntu 24.04", "SSH", "Caddy", "UFW (firewall)", "Node.js", "Cloudflare API", "Let's Encrypt", "systemd", "Git"],
+    concepts: [
+      ["VPS", "Virtual Private Server — a small computer you rent in a data centre"],
+      ["SSH", "Secure Shell — a way to connect to and control a remote server"],
+      ["Reverse proxy", "Software that sits in front of your app and handles incoming traffic"],
+      ["HTTPS", "Encrypted web traffic — the padlock icon in your browser"],
+      ["DNS", "The phone book of the internet — maps domain names to IP addresses"],
+      ["A record", "The most basic DNS entry — maps a domain name directly to an IP address"],
+      ["systemd", "Linux's service manager — keeps your app running even after reboots"],
+    ],
+    takeaway: "The agent's role expanded. In Chapter 4, it wrote code. In this chapter, it operated infrastructure — provisioning servers, SSHing into remote machines, calling APIs, managing system services. The agent went from pair programmer to DevOps engineer.",
   },
   {
     slug: "pentesting-with-an-agent",
@@ -149,6 +246,27 @@ const exercises = [
     skills: ["Security scanning", "Vulnerability analysis", "SQL injection", "XSS detection", "CVSS scoring", "Security reports"],
     prerequisites: "Exercise 05 — a deployed application with a live URL.",
     duration: "60–90 minutes",
+    difficulty: "Intermediate–Advanced",
+    quote: "Shannon actively executes attacks against its target. It sends real payloads. It attempts real exploits. You must only run it against applications you own or have explicit written permission to test. Running it against someone else's system is illegal in most jurisdictions.",
+    deliverables: [
+      "OWASP Juice Shop running as a practice target (Docker)",
+      "Shannon AI pentesting platform configured and operational",
+      "A full 5-phase autonomous security scan completed",
+      "A professional-grade security report with CVSS severity scores",
+      "Understanding of SQL injection, XSS, and authentication bypass attacks",
+      "Optional: continuous monitoring with Sentinel dashboard",
+    ],
+    tools: ["Shannon (AI pentesting platform)", "OWASP Juice Shop", "Docker & Docker Compose", "Temporal (workflow orchestration)", "Anthropic API (Opus/Sonnet/Haiku)", "Git", "GitHub CLI"],
+    concepts: [
+      ["SQL injection", "Attacker sends database commands through input fields to extract or modify data"],
+      ["XSS", "Cross-site scripting — injecting JavaScript that runs in other users' browsers"],
+      ["Authentication bypass", "Exploiting flaws to log in without valid credentials"],
+      ["CVSS score", "Common Vulnerability Scoring System — rates severity from 0 (none) to 10 (critical)"],
+      ["IDOR", "Insecure Direct Object Reference — accessing another user's data by changing an ID"],
+      ["False positive", "A reported vulnerability that doesn't actually exist — always verify findings"],
+      ["Temporal", "A workflow engine that tracks long-running jobs and retries failed steps automatically"],
+    ],
+    takeaway: "You flipped the script — attacking your own application before anyone else could. Five AI agents worked in parallel across injection, XSS, authentication, authorisation, and SSRF, producing a professional security report. You now understand the attack surface of every web app you build.",
   },
   {
     slug: "testing-as-a-safety-net",
@@ -172,6 +290,26 @@ const exercises = [
     skills: ["Playwright", "End-to-end testing", "Test-driven development", "GitHub Actions", "CI/CD pipelines"],
     prerequisites: "Exercise 05 — a deployed Travel Bucket List.",
     duration: "45–75 minutes",
+    difficulty: "Intermediate",
+    quote: "Without tests, 'add sorting' is ambiguous. Sort what? By what criteria? In what direction? Where does the button go? The agent makes guesses. With a test, every question has an answer encoded in the assertions. The test is the spec.",
+    deliverables: [
+      "Playwright installed and configured for browser testing",
+      "End-to-end tests covering every core feature of your app",
+      "Experience with TDD: the red-green-refactor cycle with an AI agent",
+      "Confidence from deliberately breaking things and watching tests catch it",
+      "A GitHub Actions CI pipeline that runs tests on every push",
+      "A green checkmark (or red X) on every pull request",
+    ],
+    tools: ["Playwright", "Node.js & npm", "Chromium (headless)", "Python HTTP server", "GitHub Actions", "Git", "Claude Code / Gemini CLI"],
+    concepts: [
+      ["End-to-end test", "A test that uses a real browser to interact with your app like a user would"],
+      ["Headless browser", "A browser that runs without a visible window — same rendering, no screen needed"],
+      ["TDD", "Test-Driven Development — write the test first, then make it pass, then clean up"],
+      ["Red-green-refactor", "Red: test fails. Green: make it pass. Refactor: clean up without breaking it"],
+      ["CI/CD", "Continuous Integration / Continuous Deployment — automated testing and shipping"],
+      ["Assertion", "A statement in a test that says \"this should be true\" — if not, the test fails"],
+    ],
+    takeaway: "You broke your app on purpose and watched the tests catch it. The red X is a feature, not a failure — it caught a problem before it reached production. Your agent now has eyes: a machine-readable specification of what \"working\" means.",
   },
   {
     slug: "the-agentic-pipeline",
@@ -195,6 +333,26 @@ const exercises = [
     skills: ["Shell scripting", "Cron scheduling", "Multi-agent orchestration", "GitHub API", "Automated reporting"],
     prerequisites: "Exercises 01–07 — all core tools and workflows.",
     duration: "60–90 minutes",
+    difficulty: "Intermediate–Advanced",
+    quote: "This is 'multi-agent' orchestration. Two agents, two system prompts, two jobs. The intake agent doesn't know about priorities. The triage agent doesn't do parsing. Each one is specialised, and the shell script connects them. You've just built what framework vendors charge you a monthly subscription for — with two bash scripts and a pipe.",
+    deliverables: [
+      "An Intake Agent that parses unstructured feedback into structured JSON",
+      "A Triage Agent that categorises items (bug/feature/praise) and assigns priorities",
+      "An Issue Creator that automatically files GitHub issues with proper labels",
+      "A Summary Agent that generates weekly Markdown reports with trends",
+      "A pipeline script that orchestrates all agents in sequence",
+      "A cron schedule (or GitHub Actions workflow) that runs it all automatically",
+    ],
+    tools: ["Claude CLI (--print flag)", "Bash scripting", "jq (JSON processor)", "GitHub CLI (gh)", "cron", "GitHub Actions", "Git"],
+    concepts: [
+      ["Pipeline", "A chain of steps where each step's output feeds into the next step's input"],
+      ["--print flag", "Makes the CLI output go to stdout — no interactive conversation, composable with pipes"],
+      ["System prompt", "Instructions that define an agent's role and behaviour for a specific task"],
+      ["Multi-agent", "Multiple specialised agents, each with one job, connected by scripts"],
+      ["cron", "A Linux scheduler that runs commands at specified times (e.g., every Monday at 8 a.m.)"],
+      ["Triage", "Sorting incoming items by type (bug, feature, praise) and priority (high, medium, low)"],
+    ],
+    takeaway: "You built an automated pipeline from nothing but shell scripts and AI agents. The intake agent parses, the triage agent categorises, issues get filed, reports get written — all running on a schedule while you sleep. You designed the system. The agents execute it.",
   },
   {
     slug: "your-own-saas",
@@ -219,6 +377,30 @@ const exercises = [
     skills: ["Full-stack development", "Authentication", "Stripe payments", "AI features", "CI/CD", "Landing pages"],
     prerequisites: "Exercises 01–08 — the full journey so far.",
     duration: "4–8 hours (a full day project)",
+    difficulty: "Advanced",
+    quote: "You are about to ask the agent to generate thousands of lines of code. Without a spec, it will make assumptions — and those assumptions will conflict with each other. A spec is not bureaucracy. It is the single source of truth that keeps you and the agent aligned across dozens of prompts.",
+    deliverables: [
+      "A full-stack Next.js application with TypeScript",
+      "SQLite database with Prisma ORM",
+      "User authentication (email/password with NextAuth.js)",
+      "Stripe payment integration (free tier + paid tier)",
+      "An AI-powered core feature using the Anthropic API",
+      "Rate limiting (free users: 3/day, paid: unlimited)",
+      "A landing page with SEO and social sharing meta tags",
+      "CI/CD pipeline with GitHub Actions",
+      "Deployed to production — a live URL anyone can visit",
+    ],
+    tools: ["Next.js", "TypeScript", "React", "Prisma ORM", "SQLite", "NextAuth.js", "Stripe", "Anthropic API", "Vitest", "GitHub Actions", "Vercel / Railway / VPS"],
+    concepts: [
+      ["SaaS", "Software as a Service — a web app users access via a browser, often with paid tiers"],
+      ["Full-stack", "Frontend (what users see) + backend (server logic) + database (data storage)"],
+      ["ORM", "Object-Relational Mapping — talk to your database using code instead of SQL"],
+      ["Authentication", "Proving who you are — login, sessions, password hashing"],
+      ["Webhook", "A URL that Stripe calls to notify your app when a payment event happens"],
+      ["Rate limiting", "Restricting how many times a user can do something (e.g., 3 AI requests per day)"],
+      ["Environment variables", "Secrets (API keys, database URLs) stored outside your code"],
+    ],
+    takeaway: "You built a complete product — frontend, backend, database, auth, payments, AI features, CI/CD, and a landing page — and shipped it to a live URL. The agent was your co-founder. You brought the vision and the quality bar. It brought the implementation speed.",
   },
   {
     slug: "captains-log",
@@ -241,6 +423,38 @@ const exercises = [
     skills: ["CLAUDE.md authoring", "Project reflection", "Self-directed learning", "Agent workflow design"],
     prerequisites: "Exercises 01–09 — the complete hands-on journey.",
     duration: "30–45 minutes",
+    difficulty: "All levels",
+    quote: "You can't un-learn how to read a stack trace. You can't un-see the structure behind every web application you use. The lens is permanent.",
+    deliverables: [
+      "A CLAUDE.md file — your captain's orders for AI agents on your own projects",
+      "A retrospective of every skill you've built across 10 exercises",
+      "A checklist for your maiden voyage — your first solo project",
+      "A map of resources for continued learning and exploration",
+    ],
+    tools: ["Your text editor", "Your terminal", "Your own judgement"],
+    concepts: [
+      ["CLAUDE.md", "A project-level instruction file that tells AI agents how to work on your codebase"],
+      ["Conventions", "Rules you define: coding style, commit messages, file structure"],
+      ["Boundaries", "Things the agent must not do — no refactoring to TypeScript, no build systems"],
+      ["Maiden voyage", "Your first solo project — applying everything you've learned without a guide"],
+    ],
+    takeaway: "Every effective use of AI agents comes down to one skill: writing clear instructions for a non-human collaborator. The CLAUDE.md file is the purest expression of that skill. Get good at writing these, and every agent you work with — today and in the future — gets better.",
+    shipBuilt: [
+      ["The terminal", "Your helm. Navigation of file systems, running commands, piping output, reading logs."],
+      ["Git and GitHub", "Your logbook and harbour. Track changes, branch experiments, merge work, review code."],
+      ["AI agents", "Your crew. Prompt them, constrain them, read output critically, iterate."],
+      ["Deployment", "Your sea legs. Real servers, real domains, HTTPS, reverse proxies, DNS."],
+      ["Security awareness", "Your lookout. SQL injection, input sanitisation, authentication flaws."],
+      ["The review habit", "Your compass. Never ship without reading. Never trust output without verifying."],
+    ],
+    resources: [
+      ["The Agentic Crew: Theory", "The companion engineering book — 19 chapters on how agents work under the hood"],
+      ["Anthropic Documentation", "docs.anthropic.com — the official reference for Claude models and APIs"],
+      ["Claude Code Documentation", "docs.anthropic.com/claude-code — how to get the most from your AI coding assistant"],
+      ["OWASP Top Ten", "owasp.org — the ten most critical web application security risks"],
+      ["GitHub Good First Issues", "Real open-source projects looking for contributors like you"],
+      ["OverTheWire Wargames", "overthewire.org — progressive security challenges to sharpen your skills"],
+    ],
   },
 ];
 
@@ -300,6 +514,10 @@ export function getStaticPaths() {
               <span class="meta-value">{ex.duration}</span>
             </div>
             <div class="meta-item">
+              <span class="meta-label">Difficulty</span>
+              <span class="meta-value">{ex.difficulty}</span>
+            </div>
+            <div class="meta-item">
               <span class="meta-label">Prerequisites</span>
               <span class="meta-value">{ex.prerequisites}</span>
             </div>
@@ -320,6 +538,12 @@ export function getStaticPaths() {
           <h2>Overview</h2>
           <p class="intro-text">{ex.intro}</p>
           <p class="intro-outcome">{ex.outcome}</p>
+
+          <!-- Quote from the book -->
+          <blockquote class="book-quote">
+            <p>{ex.quote}</p>
+            <cite>— from the exercise</cite>
+          </blockquote>
         </div>
         <aside class="intro-sidebar">
           <div class="sidebar-card">
@@ -330,8 +554,52 @@ export function getStaticPaths() {
               ))}
             </ul>
           </div>
+          <div class="sidebar-card">
+            <h3>Tools used</h3>
+            <ul class="tool-list">
+              {ex.tools.map(tool => (
+                <li>{tool}</li>
+              ))}
+            </ul>
+          </div>
           <a href="/books/hands-on#download" class="btn-primary">Download the guide (free) &rarr;</a>
         </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- What you'll build -->
+  <section class="ex-deliverables">
+    <div class="section-inner">
+      <p class="section-label">What you'll build</p>
+      <h2>By the end of this exercise</h2>
+      <div class="deliverables-grid">
+        {ex.deliverables.map((item, i) => (
+          <div class="deliverable-item">
+            <span class="deliverable-check">&#10003;</span>
+            <span class="deliverable-text">{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Key concepts -->
+  <section class="ex-concepts">
+    <div class="section-inner">
+      <p class="section-label">Key concepts</p>
+      <h2>Terms you'll learn</h2>
+      <div class="concepts-table">
+        <div class="concepts-header">
+          <span>Term</span>
+          <span>What it means</span>
+        </div>
+        {ex.concepts.map(([term, def]) => (
+          <div class="concept-row">
+            <span class="concept-term">{term}</span>
+            <span class="concept-def">{def}</span>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -348,6 +616,52 @@ export function getStaticPaths() {
             <span class="section-name">{section}</span>
           </div>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The Ship You Built (Chapter 10 only) -->
+  {ex.shipBuilt && (
+    <section class="ex-ship">
+      <div class="section-inner">
+        <p class="section-label">Your development environment</p>
+        <h2>The ship you built</h2>
+        <div class="ship-grid">
+          {ex.shipBuilt.map(([name, desc]) => (
+            <div class="ship-item">
+              <h3>{name}</h3>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Resources (Chapter 10 only) -->
+  {ex.resources && (
+    <section class="ex-resources">
+      <div class="section-inner">
+        <p class="section-label">What's next</p>
+        <h2>Charts for open water</h2>
+        <div class="resources-grid">
+          {ex.resources.map(([name, desc]) => (
+            <div class="resource-item">
+              <h3>{name}</h3>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Takeaway -->
+  <section class="ex-takeaway">
+    <div class="section-inner">
+      <div class="takeaway-card">
+        <p class="section-label">What just happened</p>
+        <p class="takeaway-text">{ex.takeaway}</p>
       </div>
     </div>
   </section>
@@ -462,8 +776,29 @@ export function getStaticPaths() {
   .intro-outcome {
     font-size: 1.05rem; color: var(--color-text); line-height: 1.8;
     padding: 1.25rem; background: var(--ho-glow); border-left: 3px solid var(--ho-accent);
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 10px 10px 0; margin-bottom: 2rem;
   }
+
+  /* ── Book quote ── */
+  .book-quote {
+    position: relative; padding: 1.5rem 1.5rem 1.5rem 2rem;
+    background: var(--color-bg-elevated); border-radius: 12px;
+    border: 1px solid var(--color-border);
+  }
+  .book-quote::before {
+    content: "\201C"; position: absolute; top: 0.5rem; left: 0.75rem;
+    font-family: var(--font-serif); font-size: 3rem; color: var(--ho-accent);
+    line-height: 1; opacity: 0.4;
+  }
+  .book-quote p {
+    font-family: var(--font-serif); font-size: 1.05rem; font-style: italic;
+    color: var(--color-text); line-height: 1.7; margin-bottom: 0.5rem;
+  }
+  .book-quote cite {
+    font-size: 0.8rem; color: var(--color-text-muted); font-style: normal;
+  }
+
+  /* ── Sidebar ── */
   .sidebar-card {
     background: var(--color-bg-card); border: 1px solid var(--color-border);
     border-radius: 14px; padding: 1.5rem; margin-bottom: 1.25rem;
@@ -476,6 +811,18 @@ export function getStaticPaths() {
   .skill-list li {
     font-size: 0.8rem; color: var(--ho-accent-deep); background: rgba(80,160,100,0.1);
     padding: 0.3rem 0.75rem; border-radius: 100px; font-weight: 500;
+  }
+  .tool-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .tool-list li {
+    font-size: 0.85rem; color: var(--color-text-muted); padding-left: 1.2rem;
+    position: relative; line-height: 1.5;
+  }
+  .tool-list li::before {
+    content: "\25B8"; position: absolute; left: 0; color: var(--ho-accent);
+    font-size: 0.7rem; top: 0.15rem;
   }
   .btn-primary {
     display: inline-block; padding: 0.85rem 2rem; border-radius: 10px;
@@ -490,6 +837,54 @@ export function getStaticPaths() {
   @media (max-width: 900px) {
     .intro-grid { grid-template-columns: 1fr; }
     .btn-primary { width: auto; }
+  }
+
+  /* ── Deliverables ── */
+  .ex-deliverables { background: var(--color-bg-elevated); border-top: 1px solid var(--color-border); }
+  .deliverables-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+  }
+  .deliverable-item {
+    display: grid; grid-template-columns: 1.5rem 1fr; gap: 0.75rem; align-items: start;
+    padding: 1rem 1.25rem; background: var(--color-bg-card);
+    border: 1px solid var(--color-border); border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .deliverable-item:hover { border-color: var(--ho-accent-light); }
+  .deliverable-check {
+    color: var(--ho-accent); font-weight: 700; font-size: 1rem; line-height: 1.5;
+  }
+  .deliverable-text {
+    font-size: 0.95rem; color: var(--color-text); line-height: 1.5;
+  }
+  @media (max-width: 640px) { .deliverables-grid { grid-template-columns: 1fr; } }
+
+  /* ── Key concepts ── */
+  .ex-concepts { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .concepts-table { max-width: 800px; }
+  .concepts-header {
+    display: grid; grid-template-columns: 180px 1fr; gap: 1.5rem;
+    padding: 0.75rem 1rem; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-muted);
+    border-bottom: 2px solid var(--ho-accent);
+  }
+  .concept-row {
+    display: grid; grid-template-columns: 180px 1fr; gap: 1.5rem;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background 0.2s;
+  }
+  .concept-row:hover { background: var(--ho-glow); }
+  .concept-row:last-child { border-bottom: none; }
+  .concept-term {
+    font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;
+    color: var(--ho-accent-deep);
+  }
+  .concept-def { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; }
+  @media (max-width: 640px) {
+    .concepts-header { grid-template-columns: 1fr; gap: 0.25rem; }
+    .concepts-header span:last-child { display: none; }
+    .concept-row { grid-template-columns: 1fr; gap: 0.25rem; }
   }
 
   /* ── Sections ── */
@@ -507,13 +902,58 @@ export function getStaticPaths() {
     color: var(--ho-accent);
   }
   .section-name { font-size: 0.95rem; color: var(--color-text); font-weight: 500; }
+  @media (max-width: 640px) { .sections-grid { grid-template-columns: 1fr; } }
 
-  @media (max-width: 640px) {
-    .sections-grid { grid-template-columns: 1fr; }
+  /* ── Ship Built (Ch10) ── */
+  .ex-ship { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .ship-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .ship-item {
+    padding: 1.5rem; background: var(--color-bg-card);
+    border: 1px solid var(--color-border); border-radius: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ship-item:hover {
+    border-color: var(--ho-accent-light);
+    box-shadow: 0 4px 20px rgba(80,160,100,0.1);
+  }
+  .ship-item h3 {
+    font-family: var(--font-serif); font-size: 1rem; font-weight: 600;
+    color: var(--color-text); margin-bottom: 0.4rem;
+  }
+  .ship-item p { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; }
+  @media (max-width: 640px) { .ship-grid { grid-template-columns: 1fr; } }
+
+  /* ── Resources (Ch10) ── */
+  .ex-resources { background: var(--color-bg-elevated); border-top: 1px solid var(--color-border); }
+  .resources-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .resource-item {
+    padding: 1.25rem; background: var(--color-bg-card);
+    border: 1px solid var(--color-border); border-radius: 14px;
+    transition: border-color 0.2s;
+  }
+  .resource-item:hover { border-color: var(--ho-accent-light); }
+  .resource-item h3 {
+    font-size: 0.95rem; font-weight: 600; color: var(--ho-accent-deep);
+    margin-bottom: 0.3rem;
+  }
+  .resource-item p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5; }
+  @media (max-width: 640px) { .resources-grid { grid-template-columns: 1fr; } }
+
+  /* ── Takeaway ── */
+  .ex-takeaway { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .takeaway-card {
+    max-width: 720px; margin: 0 auto; text-align: center;
+    padding: 2.5rem; background: linear-gradient(135deg, rgba(80,160,100,0.06), rgba(80,160,100,0.12));
+    border: 1px solid rgba(80,160,100,0.25); border-radius: 18px;
+  }
+  .takeaway-card .section-label { margin-bottom: 1rem; }
+  .takeaway-text {
+    font-family: var(--font-serif); font-size: 1.15rem; font-style: italic;
+    color: var(--color-text); line-height: 1.8;
   }
 
   /* ── Nav ── */
-  .ex-nav { background: var(--color-bg); border-top: 1px solid var(--color-border); }
+  .ex-nav { background: var(--color-bg-elevated); border-top: 1px solid var(--color-border); }
   .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   .nav-card {
     display: flex; flex-direction: column; gap: 0.3rem;
@@ -532,8 +972,5 @@ export function getStaticPaths() {
   .nav-dir { font-size: 0.75rem; color: var(--ho-accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
   .nav-num { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ho-accent); font-weight: 600; }
   .nav-title { font-size: 1rem; font-weight: 600; color: var(--color-text); }
-
-  @media (max-width: 640px) {
-    .nav-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 640px) { .nav-grid { grid-template-columns: 1fr; } }
 </style>
