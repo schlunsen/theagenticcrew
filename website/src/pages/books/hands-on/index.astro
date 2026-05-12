@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Footer from '../../components/Footer.astro';
-import Nav from '../../components/Nav.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Footer from '../../../components/Footer.astro';
+import Nav from '../../../components/Nav.astro';
 ---
 
 <BaseLayout
@@ -76,66 +76,66 @@ import Nav from '../../components/Nav.astro';
           </p>
         </div>
         <div class="about-cards">
-          <div class="feature-card">
+          <a href="/books/hands-on/setting-up-your-workstation" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-setup.jpg" alt="" /></div>
             <div class="feature-num">01</div>
             <h3>Setting Up Your Workstation</h3>
             <p>Terminal, package manager, Git, GitHub CLI, and an AI coding assistant — from scratch, on any OS.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/your-first-pull-request" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-pr.jpg" alt="" /></div>
             <div class="feature-num">02</div>
             <h3>Your First Pull Request</h3>
             <p>Fork a real repository, write a review, commit and push, and submit a pull request that goes live on GitHub.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/your-first-ai-project" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-aiproject.jpg" alt="" /></div>
             <div class="feature-num">03</div>
             <h3>Your First AI-Generated Project</h3>
             <p>Fork the web-presenter project and use an AI agent with a Hugging Face API key to generate custom illustrations, spoken narration, and animated backgrounds — all from prompts.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/pair-programming-with-an-agent" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-pairprog.jpg" alt="" /></div>
             <div class="feature-num">04</div>
             <h3>Pair Programming with an Agent</h3>
             <p>Build a complete Travel Bucket List web app from scratch — without writing a single line of code yourself. You describe, the agent builds, you iterate.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/going-live" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-golive.jpg" alt="" /></div>
             <div class="feature-num">05</div>
             <h3>Going Live</h3>
             <p>Deploy your app to a Hetzner VPS — the agent SSHes in, configures the server, and calls the Cloudflare API for DNS. Real self-hosting, agent-operated.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/pentesting-with-an-agent" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-pentest.jpg" alt="" /></div>
             <div class="feature-num">06</div>
             <h3>Pentesting with an Agent</h3>
             <p>Attack your own app before anyone else does. Donna orchestrates AI agents through recon, vulnerability analysis, exploitation, and reporting — autonomous security scanning.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/testing-as-a-safety-net" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-testing.jpg" alt="" /></div>
             <div class="feature-num">07</div>
             <h3>Testing as a Safety Net</h3>
             <p>Give the agent eyes. Write end-to-end tests with Playwright, experience TDD with an AI agent, and set up GitHub Actions CI — so no change ships unchecked.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/the-agentic-pipeline" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-pipeline.jpg" alt="" /></div>
             <div class="feature-num">08</div>
             <h3>The Agentic Pipeline</h3>
             <p>Build an automated pipeline that reads unstructured input, triages it with AI agents, creates GitHub issues, and generates reports — all running on a cron schedule while you sleep.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/your-own-saas" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-saas.jpg" alt="" /></div>
             <div class="feature-num">09</div>
             <h3>Your Own SaaS</h3>
             <p>The capstone. Build a complete micro-SaaS from scratch — auth, payments, AI features, CI/CD, landing page — and ship it to a live URL you can share with anyone.</p>
-          </div>
-          <div class="feature-card">
+          </a>
+          <a href="/books/hands-on/captains-log" class="feature-card">
             <div class="feature-illus"><img src="/illustrations/ho-captainslog.jpg" alt="" /></div>
             <div class="feature-num">10</div>
             <h3>Captain's Log</h3>
             <p>Write your own CLAUDE.md, reflect on the journey, and take the helm. You walked in as a passenger — you leave as the captain of your own ship.</p>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -148,24 +148,24 @@ import Nav from '../../components/Nav.astro';
       <h2>10 exercises — from zero to shipping</h2>
       <div class="chapter-grid">
         {[
-          ["01", "Setting Up Your Workstation", "Terminal, package manager, Git, GitHub CLI, and an AI coding assistant — from scratch. Each edition is tailored to your OS. Ends with a working environment and a verified connection to GitHub."],
-          ["02", "Your First Pull Request", "Fork a real repository, read a chapter, write a review, commit and push, and submit a pull request that goes live on GitHub. The full open-source workflow in one exercise."],
-          ["03", "Your First AI-Generated Project", "Fork the web-presenter project and use an AI agent with a Hugging Face API key to generate custom illustrations, spoken narration, and animated backgrounds — all by describing what you want in plain English."],
-          ["04", "Pair Programming with an Agent", "Build a complete Travel Bucket List web app from scratch by describing what you want to an AI coding agent. CRUD operations, localStorage persistence, iterative refinement — without writing a single line of code yourself."],
-          ["05", "Going Live", "Deploy your Travel Bucket List to a real Hetzner VPS. Your agent provisions the server, SSHes in to configure it, sets up Caddy with automatic HTTPS, creates DNS records via the Cloudflare API, and configures systemd — all from your terminal."],
-          ["06", "Pentesting with an Agent", "Attack your own application before anyone else does. Set up Donna — an autonomous AI pentesting platform — scan a practice target for SQL injection, XSS, and auth bypasses, read a professional security report, and enable continuous monitoring."],
-          ["07", "Testing as a Safety Net", "Give the agent eyes. Install Playwright, write end-to-end tests by describing behaviours in English, experience test-driven development with an AI agent, and set up a GitHub Actions CI pipeline that runs tests on every push."],
-          ["08", "The Agentic Pipeline", "Build an automated multi-step pipeline: unstructured feedback goes in, AI agents parse, categorise, and prioritise it, GitHub issues come out, and a summary report is generated — all orchestrated by shell scripts and scheduled with cron."],
-          ["09", "Your Own SaaS — From Idea to Launch in a Day", "The capstone. Build a complete micro-SaaS product from scratch — frontend, backend, database, user auth, Stripe payments, an AI-powered feature, CI/CD, and a landing page — deployed to a live URL you can share with anyone."],
-          ["10", "Captain's Log", "The finale. Reflect on the journey, write your own CLAUDE.md to direct agents on your own projects, and set sail on your maiden voyage. You walked in as a passenger — you leave as the captain."],
-        ].map(([num, title, desc]) => (
-          <div class="chapter-row">
+          ["01", "Setting Up Your Workstation", "Terminal, package manager, Git, GitHub CLI, and an AI coding assistant — from scratch. Each edition is tailored to your OS. Ends with a working environment and a verified connection to GitHub.", "setting-up-your-workstation"],
+          ["02", "Your First Pull Request", "Fork a real repository, read a chapter, write a review, commit and push, and submit a pull request that goes live on GitHub. The full open-source workflow in one exercise.", "your-first-pull-request"],
+          ["03", "Your First AI-Generated Project", "Fork the web-presenter project and use an AI agent with a Hugging Face API key to generate custom illustrations, spoken narration, and animated backgrounds — all by describing what you want in plain English.", "your-first-ai-project"],
+          ["04", "Pair Programming with an Agent", "Build a complete Travel Bucket List web app from scratch by describing what you want to an AI coding agent. CRUD operations, localStorage persistence, iterative refinement — without writing a single line of code yourself.", "pair-programming-with-an-agent"],
+          ["05", "Going Live", "Deploy your Travel Bucket List to a real Hetzner VPS. Your agent provisions the server, SSHes in to configure it, sets up Caddy with automatic HTTPS, creates DNS records via the Cloudflare API, and configures systemd — all from your terminal.", "going-live"],
+          ["06", "Pentesting with an Agent", "Attack your own application before anyone else does. Set up Donna — an autonomous AI pentesting platform — scan a practice target for SQL injection, XSS, and auth bypasses, read a professional security report, and enable continuous monitoring.", "pentesting-with-an-agent"],
+          ["07", "Testing as a Safety Net", "Give the agent eyes. Install Playwright, write end-to-end tests by describing behaviours in English, experience test-driven development with an AI agent, and set up a GitHub Actions CI pipeline that runs tests on every push.", "testing-as-a-safety-net"],
+          ["08", "The Agentic Pipeline", "Build an automated multi-step pipeline: unstructured feedback goes in, AI agents parse, categorise, and prioritise it, GitHub issues come out, and a summary report is generated — all orchestrated by shell scripts and scheduled with cron.", "the-agentic-pipeline"],
+          ["09", "Your Own SaaS — From Idea to Launch in a Day", "The capstone. Build a complete micro-SaaS product from scratch — frontend, backend, database, user auth, Stripe payments, an AI-powered feature, CI/CD, and a landing page — deployed to a live URL you can share with anyone.", "your-own-saas"],
+          ["10", "Captain's Log", "The finale. Reflect on the journey, write your own CLAUDE.md to direct agents on your own projects, and set sail on your maiden voyage. You walked in as a passenger — you leave as the captain.", "captains-log"],
+        ].map(([num, title, desc, slug]) => (
+          <a href={`/books/hands-on/${slug}`} class="chapter-row">
             <span class="ch-num">{num}</span>
             <div class="ch-body">
               <strong>{title}</strong>
               <span class="ch-desc">{desc}</span>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
@@ -464,12 +464,16 @@ import Nav from '../../components/Nav.astro';
   .about-text p { color: var(--color-text-muted); line-height: 1.8; margin-bottom: 1rem; }
   .about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .feature-card {
+    display: block; text-decoration: none; color: inherit;
     background: var(--color-bg-card); border: 1px solid rgba(80,160,100,0.2);
-    border-radius: 14px; padding: 1.25rem; transition: border-color 0.2s, box-shadow 0.2s;
+    border-radius: 14px; padding: 1.25rem; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
   }
   .feature-card:hover {
     border-color: var(--ho-accent-light);
     box-shadow: 0 4px 20px rgba(80,160,100,0.1);
+    transform: translateY(-2px);
+    color: inherit;
   }
   .feature-card.coming { opacity: 0.6; border-style: dashed; }
   .feature-card.coming:hover { opacity: 0.8; }
@@ -496,10 +500,14 @@ import Nav from '../../components/Nav.astro';
   .chapter-grid { display: flex; flex-direction: column; }
   .chapter-row {
     display: grid; grid-template-columns: 3rem 1fr;
-    gap: 1.25rem; padding: 1rem 0;
+    gap: 1.25rem; padding: 1rem 0.75rem;
     border-bottom: 1px solid var(--color-border-light);
     align-items: baseline;
+    text-decoration: none; color: inherit;
+    border-radius: 8px; margin: 0 -0.75rem;
+    transition: background 0.2s;
   }
+  .chapter-row:hover { background: var(--ho-glow); color: inherit; }
   .chapter-row:last-child { border-bottom: none; }
   .chapter-row.coming { opacity: 0.45; }
   .ch-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ho-accent); font-weight: 600; }
