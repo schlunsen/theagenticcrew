@@ -148,10 +148,10 @@ One more thing worth noting: you don't always have to orchestrate manually. As w
 
 The notification example above is familiar territory — building features. But multi-agent orchestration shines in less obvious domains too.
 
-Consider automated penetration testing. Donna (#link("https://github.com/schlunsen/donna")), an open-source pentesting platform built on the Claude Agent SDK and Temporal, runs thirteen specialised agents across five phases: reconnaissance, vulnerability analysis (five agents in parallel), exploitation (five agents in parallel), and reporting. Each agent focuses on a single vulnerability category — injection, XSS, authentication, authorization, or SSRF.
+Consider automated penetration testing. Autonomous pentesting platforms — like Shannon by KeygraphHQ (#link("https://github.com/KeygraphHQ/shannon")) — can run over a dozen specialised agents across multiple phases: reconnaissance, vulnerability analysis (several agents in parallel), exploitation (several agents in parallel), and reporting. Each agent focuses on a single vulnerability category — injection, XSS, authentication, authorization, or SSRF.
 
 The decomposition follows the "by concern" pattern. The injection agent never thinks about XSS. The authentication agent never thinks about SSRF. They work in parallel, touch different aspects of the target, and their findings get deduplicated and merged in a reporting phase — solving the merge problem not with git branches but with CVSS normalization and CWE classification.
 
-The orchestration overhead is managed by Temporal, which provides durability — if an agent crashes mid-scan, it resumes from where it left off. This is the kind of infrastructure you need when orchestration runs unattended for hours, not the thirty-minute feature sprint from the example above.
+The orchestration overhead in such a platform is typically managed by a workflow engine like Temporal, which provides durability — if an agent crashes mid-scan, it resumes from where it left off. This is the kind of infrastructure you need when orchestration runs unattended for hours, not the thirty-minute feature sprint from the example above.
 
 We'll explore this in depth in Chapter 16. But the point here is that multi-agent orchestration isn't just for building software. Any complex task that can be decomposed into focused, loosely-coupled subtasks is a candidate.
