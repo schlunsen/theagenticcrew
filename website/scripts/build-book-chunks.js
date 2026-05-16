@@ -22,7 +22,7 @@ const BOOKS = [
     id: 'engineering',
     title: 'The Agentic Crew — Engineering Guide',
     dir: CHAPTERS_DIR,
-    pattern: /^\d{2}-.*\.typ$/,   // 01-introduction.typ etc (no language suffix)
+    pattern: /^(\d{2}-|appendix-).*\.typ$/,   // 01-introduction.typ, appendix-a-*.typ etc
     exclude: /-(?:ca|es|da)\.typ$/,
   },
   {
