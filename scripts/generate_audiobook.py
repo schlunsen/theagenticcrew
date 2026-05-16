@@ -23,7 +23,7 @@ import requests
 
 BASE_DIR = os.path.join(os.path.dirname(__file__), "..")
 CHAPTERS_DIR = os.path.join(BASE_DIR, "chapters")
-OUTPUT_DIR = os.path.join(BASE_DIR, "website", "public", "audiobook")
+OUTPUT_DIR = os.path.join(BASE_DIR, "website", "public", "audiobook", "adult", "kitt")
 
 # FastAPI mirror (most reliable)
 FASTAPI_BASE = "https://huggingfacem4-faster-qwen3-tts-demo.hf.space"
