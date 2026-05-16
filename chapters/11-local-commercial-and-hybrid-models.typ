@@ -98,7 +98,7 @@ Consider what happens when an agent tackles a moderately complex bug fix. It rea
 
 Now consider a complex refactoring task. The agent might read twenty files, generate a plan, implement changes across eight files, run the test suite four times, debug two regressions, and write new tests. That's easily 200,000 tokens. At frontier model pricing, that's somewhere between \$3 and \$15 depending on the model and the input/output ratio.
 
-Here are rough cost ranges I've seen in practice, based on using frontier commercial models:
+Here are rough cost ranges I've seen in practice, based on early-2026 frontier model pricing (these numbers trend downward — check current rates):
 
 - *Simple bug fix or small feature:* \$0.30–\$1.00
 - *Moderate feature with tests:* \$2–\$5

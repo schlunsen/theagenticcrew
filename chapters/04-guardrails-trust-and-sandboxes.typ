@@ -1,4 +1,4 @@
-= Guardrails
+= Guardrails, Trust, and Sandboxes
 
 Giving an agent power without boundaries isn't bold engineering — it's negligence. Guardrails are what make autonomous agents _usable_ in real work. They're the difference between an agent that helps you ship and one that takes down your staging environment at 3am.
 
@@ -102,7 +102,7 @@ The best agentic engineers don't fear agent mistakes. They build systems where m
 
 == When Your Agent _Is_ the Threat Model
 
-There's a special case worth flagging: agents that are _designed_ to be destructive. In Chapter 16, we'll look at autonomous pentesting — AI agents that probe your application for security vulnerabilities by actively exploiting them. Injection payloads, authentication bypasses, SSRF attacks — the agent does it all, on purpose.
+There's a special case worth flagging: agents that are _designed_ to be destructive. In Appendix A, we look at autonomous pentesting — AI agents that probe your application for security vulnerabilities by actively exploiting them. Injection payloads, authentication bypasses, SSRF attacks — the agent does it all, on purpose.
 
 This inverts the usual guardrail calculus. Normally, guardrails protect your system from the agent's mistakes. With a pentesting agent, guardrails protect _everything else_ from the agent's _intentional_ hostility. The trust gradient doesn't loosen over time — it stays locked down permanently. The sandbox isn't a convenience — it's a legal requirement. And human oversight isn't a nice-to-have — it's the difference between a security assessment and an incident.
 
@@ -119,6 +119,24 @@ The skill is in finding the sweet spot. You want guardrails tight enough to catc
 Another heuristic: track how often your approvals actually reject something. If you've approved five hundred actions and rejected three, your guardrails are too aggressive for those action types. If you've approved fifty and rejected ten, they're well-calibrated — those ten rejections are the ones that matter.
 
 The goal is an agent that works like a skilled contractor. It shows up, does the job, and checks in with you at meaningful milestones. Not after every hammer swing.
+
+== The Ethics of Delegation
+
+There's a guardrail that no configuration file can enforce: your own judgment about what _should_ be delegated to an agent.
+
+An agent can write a performance improvement plan for an employee. Should it? An agent can draft a response to a customer complaint. Should it? An agent can generate commit messages that make it look like a human wrote code that an agent actually produced. Should it?
+
+These aren't technical questions. They're ethical ones, and they deserve explicit attention because the default — "the agent can do it, therefore I'll let it" — is not an answer. It's the absence of one.
+
+Three principles that hold up well in practice:
+
+*Transparency about provenance.* If an agent generated the code, the commit should say so. If an agent drafted the document, the reader should know. Not because agent work is inferior — often it isn't — but because hiding the provenance undermines trust. When a colleague reviews a PR and later discovers it was agent-generated with no indication, they feel deceived — even if the code is flawless. A simple `Co-Authored-By` tag or a note in the PR description is enough. Transparency costs nothing and buys trust.
+
+*Accountability doesn't delegate.* The agent doesn't have a performance review. It doesn't get paged at 2am. When you delegate to an agent, you're still the engineer of record. If the agent introduces a bug, you own it. If the agent makes a design decision that creates technical debt, you own that too. This isn't about blame — it's about recognising that delegation doesn't transfer responsibility. You are the pilot. The agent is the autopilot. When the autopilot makes a mistake, the investigation starts with the pilot.
+
+*Human decisions stay human.* Anything that affects people's careers, compensation, access, or wellbeing should involve human judgment, not agent output. An agent can gather data for a code review, but the _assessment_ of a colleague's work should come from a person. An agent can draft options for a technical decision, but the _decision_ — with its tradeoffs, politics, and long-term implications — belongs to the team. The boundary isn't always clear, but the principle is: agents inform, humans decide.
+
+The teams that think about these questions early build healthier relationships with their tools. The ones that don't tend to discover the boundaries the hard way — when someone feels deceived, when accountability is unclear, or when an agent makes a decision that nobody would have approved if they'd been asked.
 
 == Environment-Specific Guardrails
 
@@ -137,3 +155,48 @@ Some teams allow agents to execute pre-approved runbooks in production: restart 
 The pattern is simple: the closer you are to real users and real data, the tighter the guardrails get. Your local agent is a collaborator. Your staging agent is a supervised worker. Your production agent is a read-only observer.
 
 Set this up once, and it becomes invisible. The agent adjusts its behaviour based on the environment it's operating in. It moves fast locally, checks in on staging, and goes hands-off in production. Once your team agrees on these boundaries, they rarely need revisiting — and when they do, it's because something went wrong in production, which is exactly when you want to be rethinking guardrails anyway.
+
+== Sandboxes: The Freedom to Be Wrong
+
+#figure(
+  image("../assets/illustrations/ch06-sandbox.jpg", width: 60%),
+)
+
+A sandbox is a gift you give your agent: the freedom to be wrong.
+
+When an agent operates in a sandbox, it can try things without consequences. Install a weird dependency. Rewrite a module from scratch. Run a script that might crash. If it works, great — you pull the result out. If it doesn't, you throw the sandbox away. No cleanup, no rollback, no damage.
+
+This isn't just a safety measure. It fundamentally changes how productive an agent can be. Without a sandbox, every agent action carries risk. You add more constraints, more approval gates — and soon the agent is barely more useful than a fancy autocomplete. Sandboxes solve this by making the cost of failure essentially zero. And when failure is cheap, experimentation is free.
+
+=== The Sandbox Spectrum
+
+There's a spectrum of sandboxing, and the right choice depends on the task:
+
+*Git worktrees* — for pure code changes. A worktree is a separate checkout of your repo in a different directory, on its own branch, sharing the same `.git` history. Creating one takes seconds. The agent works in its own branch, its own directory. If the result is good, you merge it. If not, you delete the worktree and move on. No containers, no VMs, no cloud resources. Just Git.
+
+I keep a shell alias for this because I use it so often:
+
+```bash
+# In .bashrc / .zshrc
+agent-sandbox() {
+  local name="${1:?Usage: agent-sandbox <name>}"
+  local branch="agent/$name"
+  local dir="../$(basename $PWD)-$name"
+  git worktree add "$dir" -b "$branch"
+  echo "Sandbox ready: $dir (branch: $branch)"
+}
+```
+
+*Containers* — for code plus environment. Isolated filesystem, network, and processes. Good for: dependency changes, system-level work, anything that might pollute your local machine. The key is to make your project container-friendly — a good `Dockerfile` and `docker-compose.yml` aren't just for deployment anymore, they're agent infrastructure. Optimise for rebuild speed: layer your dependencies, use slim base images, cache aggressively.
+
+*Ephemeral cloud environments* — for full-stack verification. Services like Railway, Fly.io, or cloud dev environments give you a full running stack that's completely disposable. A preview environment that runs for two hours while the agent works costs pennies. The production incident it prevents costs thousands.
+
+*VMs* — for maximum isolation. Separate kernel, separate everything. Good for: security-sensitive work, untrusted agents, infrastructure automation.
+
+Start with worktrees. Move up the spectrum when the task demands it. Most day-to-day agentic work never needs more than a worktree.
+
+=== The Sandbox Mindset
+
+The deeper lesson isn't about tools — it's about designing your workflow around disposability. If your development environment takes an hour to set up, sandboxes are impractical. If it takes thirty seconds, they're natural.
+
+A useful litmus test: can a new developer (or a new agent) go from `git clone` to running tests in under two minutes? If not, you have sandbox debt. Every minute of setup friction is a minute that discourages sandboxing — and unsandboxed agents are agents working without a net.

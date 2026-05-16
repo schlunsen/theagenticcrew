@@ -50,6 +50,16 @@ The better path is using agents as _tutors_, not replacements. A junior writing 
 
 Pair programming with agents, _supervised by seniors_, is the most promising model I've seen. The junior drives the agent. The senior watches, asks questions, and intervenes when the junior accepts something they don't understand. It's slower than letting the agent do everything, but it produces engineers who actually know what they're doing.
 
+There's also a structured progression that works well:
+
+*Month 1: Agent as explainer.* The junior writes code by hand. When stuck, they ask the agent to _explain_, not to _write_. "Why does this test fail?" "What does this error mean?" "Walk me through what this function does." The agent is a patient tutor, and the junior builds genuine understanding.
+
+*Month 2: Agent as pair.* The junior starts using the agent to generate code, but reviews every line before accepting it. The key discipline: if they can't explain why a line exists, they don't keep it. The senior spot-checks by asking the junior to walk through agent-generated PRs without the agent's help.
+
+*Month 3: Agent as drafter.* The junior prompts the agent with full task descriptions, reviews the output, and iterates. They're learning prompt craft — scoping, constraints, context — which is itself a valuable engineering skill. Seniors review the _prompts_ as well as the code, coaching the junior on how to communicate intent effectively.
+
+*Month 6+: Agent as multiplier.* The junior now has enough understanding to use agents the way seniors do — as force multipliers on a foundation of genuine skill. They can debug agent-generated code. They can spot hallucinated libraries. They can recognise when the agent is going in circles. The foundation is real because they built it through understanding, not through copy-paste.
+
 Teams that skip this investment are borrowing from the future. Today's unsupervised juniors are tomorrow's seniors who can't debug production without an AI crutch.
 
 == Knowledge Distribution

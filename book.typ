@@ -201,24 +201,28 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 // ─── Chapters ───
 
 #include "chapters/01-introduction.typ"
-#include "chapters/02-context.typ"
-#include "chapters/03-what-is-an-agent.typ"
-#include "chapters/04-guardrails.typ"
+#include "chapters/02-what-is-an-agent.typ"
+#include "chapters/03-context.typ"
+#include "chapters/04-guardrails-trust-and-sandboxes.typ"
 #include "chapters/05-git.typ"
-#include "chapters/06-sandboxes.typ"
-#include "chapters/07-testing-as-the-feedback-loop.typ"
-#include "chapters/08-convention-over-configuration.typ"
-#include "chapters/09-the-ships-log.typ"
-#include "chapters/10-tool-integrations.typ"
-#include "chapters/11-local-vs-commercial-llms.typ"
-#include "chapters/12-prompting-as-engineering.typ"
-#include "chapters/13-multi-agent-orchestration.typ"
-#include "chapters/14-cicd-and-agents.typ"
-#include "chapters/15-war-stories.typ"
-#include "chapters/16-agents-as-pentesters.typ"
-#include "chapters/17-when-not-to-use-agents.typ"
-#include "chapters/18-agentic-teams.typ"
-#include "chapters/19-final-words.typ"
+#include "chapters/06-testing-as-the-feedback-loop.typ"
+#include "chapters/07-convention-over-configuration.typ"
+#include "chapters/08-the-ships-log.typ"
+#include "chapters/09-extending-the-agents-reach.typ"
+#include "chapters/10-articulating-intent.typ"
+#include "chapters/11-local-commercial-and-hybrid-models.typ"
+#include "chapters/12-multi-agent-orchestration.typ"
+#include "chapters/13-agents-in-the-pipeline.typ"
+#include "chapters/14-when-agents-get-it-wrong.typ"
+#include "chapters/15-when-not-to-use-agents.typ"
+#include "chapters/16-agentic-teams.typ"
+#include "chapters/17-final-words.typ"
+
+// ─── Appendices ───
+
+#heading(outlined: true, numbering: none)[Appendix A: Agents as Pentesters]
+
+#include "chapters/appendix-a-agents-as-pentesters.typ"
 
 // ─── Dedication (End) ───
 

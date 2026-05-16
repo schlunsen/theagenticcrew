@@ -86,7 +86,7 @@ The worst part wasn't the bundle size — it was the maintenance surface. Six ne
 
 == The Phantom Vulnerability
 
-This one comes from running an autonomous pentesting agent — the kind we'll discuss in Chapter 16.
+This one comes from running an autonomous pentesting agent — the kind discussed in Appendix A.
 
 The agent was scanning a staging application for security vulnerabilities. It reported a critical finding: a blind SQL injection on the `/api/search` endpoint. The report was detailed — it described the payload, the timing difference it observed, the CWE classification, the CVSS score. It even included a recommended fix.
 
@@ -97,6 +97,20 @@ The agent had hallucinated a vulnerability. Not a vague one — a _detailed_, _p
 The team wasted half a day chasing a ghost. Worse, the noise eroded trust in the tool. The next time it reported a real finding — an actual IDOR vulnerability on a different endpoint — the team was slower to investigate, because they remembered the phantom.
 
 *What you do differently now:* Every agent-generated security finding gets human verification before it becomes an action item. Not "a quick glance" — actual reproduction of the exploit. You also calibrate expectations: a pentesting agent is a triage tool, not an oracle. It finds candidates. Humans confirm them. The agent's job is to reduce the search space from "the entire application" to "these twelve endpoints deserve a closer look." If you treat its output as ground truth, you'll chase phantoms and miss real issues.
+
+== Debugging the Agent Itself
+
+There's a meta-skill that the war stories above all point to: knowing how to debug the _agent_, not just the code.
+
+When a human colleague writes bad code, you can ask them what they were thinking. With an agent, you have to reconstruct its reasoning from its behaviour. This is a learnable skill, and it's one of the most valuable things you can develop as an agentic engineer.
+
+*Read the agent's trail, not just its output.* The diff is the end product. The _sequence_ of actions — which files it read, which commands it ran, what order it worked in — tells you what it was thinking. If the agent read `auth.ts` but not `auth.test.ts` before modifying the auth flow, you know it was flying blind on test expectations. If it ran `npm test` four times in a row with different edits, you know it was in a guess-and-check loop.
+
+*Reproduce with a simpler prompt.* When an agent does something baffling, strip the prompt to its minimum. Remove context. Remove constraints. Give it the simplest version of the task. If it still fails, the problem is capability. If it succeeds, the problem was something in your original prompt — ambiguity, contradictory constraints, too much context drowning the signal. This is the agent equivalent of writing a minimal reproduction for a bug report.
+
+*Check what it _didn't_ see.* Half of agent failures come from missing context, not bad reasoning. The agent that used Prisma despite your "no ORM" instruction hadn't lost the instruction — it had been buried under ninety minutes of intermediate context. The agent that hallucinated a library hadn't been malicious — it hadn't been given the chance to run `npm install` and discover the package didn't exist. Before blaming the model, ask: did it have what it needed?
+
+*Watch for the confidence trap.* Agents don't say "I'm not sure about this." They present every output with equal conviction. A response that says "I've fixed the race condition by adding a mutex" and a response that says "I've fixed the race condition by adding a sleep" arrive with identical confidence. Your calibration on _when to be sceptical_ is the guardrail no tool can provide. Learn the patterns: when does this model tend to be wrong? Concurrency? Security? Performance under load? Everyone's model has blind spots. Learn yours.
 
 == The Common Thread
 
@@ -124,7 +138,7 @@ Did you ask for too much in one prompt? The Eager Refactorer happened because "f
 
 *2. Is it a context problem?*
 
-Did the agent have what it needed to solve the actual problem? Think back to the billing bug story from Chapter 2 — one engineer gave vague context and got a vague answer, the other gave specific files and error traces and got a working fix. If the agent solved the _wrong_ problem, it probably couldn't see the right one. Feed it the relevant files, the error output, the constraints it can't infer. Agents don't guess well. They work with what you give them.
+Did the agent have what it needed to solve the actual problem? Think back to the billing bug story from the Context chapter — one engineer gave vague context and got a vague answer, the other gave specific files and error traces and got a working fix. If the agent solved the _wrong_ problem, it probably couldn't see the right one. Feed it the relevant files, the error output, the constraints it can't infer. Agents don't guess well. They work with what you give them.
 
 *3. Is it a feedback signal problem?*
 

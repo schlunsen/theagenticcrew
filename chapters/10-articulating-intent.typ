@@ -1,4 +1,4 @@
-= Prompting as Engineering
+= Articulating Intent
 
 There's no secret syntax. No magic incantation that makes an agent produce perfect code. Prompting is _communication_ — and you already know how to communicate.
 
@@ -202,6 +202,28 @@ Some prompting habits consistently produce poor results. Learn to recognise them
 *Assuming shared context.* "Do it the same way we did the payments module." The agent doesn't remember your last session. It doesn't know what "we" decided in standup. Every prompt starts from scratch. Provide the context explicitly, every time.
 
 *Doing the agent's job for it.* You spend five minutes grepping through the codebase to find the exact file, line number, and function name, then paste all of that into your prompt. That's work the agent's tools can do in seconds. Provide the _problem_ — the symptom, the context, the failing test name. Let the agent investigate. That's what its tools are for. Your time is better spent on the parts the agent _can't_ do: understanding the domain, defining the constraints, knowing why this behaviour is wrong in the first place.
+
+== Prompt Versioning and Evaluation
+
+Here's something most engineers don't think about until it bites them: your prompts are code. They have inputs, outputs, and behaviour. They change over time. And like code, they should be versioned.
+
+The `CLAUDE.md` file is already versioned — it lives in git. But the prompts you type into agent sessions? They're ephemeral. You discover a phrasing that works beautifully for database migrations, use it for a month, then one day rephrase it slightly and the output degrades. You can't diff what you changed because the old prompt was never written down.
+
+The fix is simple: keep a prompt library. A directory in your project — `prompts/` or `.agent/prompts/` — with your team's proven prompt templates. Not rigid scripts, but starting points:
+
+```
+prompts/
+  new-endpoint.md      — "Add a REST endpoint following our pattern..."
+  refactor-module.md   — "Refactor this module. Preserve all tests..."
+  debug-test-failure.md — "This test is failing. Read the error..."
+  migration.md         — "Write a database migration that..."
+```
+
+Each file contains the prompt template plus notes on what works and what doesn't. "Include the API contract in the prompt or the agent will invent its own." "Always specify 'no new dependencies' or you'll get a dependency avalanche." These are your team's hard-won lessons about communicating with agents, stored where they compound.
+
+Evaluation is the other half. When you change a prompt — or change models, or update your `CLAUDE.md` — how do you know the output got better and not worse? For critical prompts, keep a small set of test cases. Run the prompt against them before and after the change. This isn't formal benchmarking — it's the prompt equivalent of running the test suite before you merge.
+
+The teams that treat prompting as an engineering discipline — versioned, reviewed, evaluated — get consistently better output than the ones who treat it as improvisation.
 
 == Prompting Is a Skill
 
