@@ -154,4 +154,4 @@ The decomposition follows the "by concern" pattern. The injection agent never th
 
 The orchestration overhead in such a platform is typically managed by a workflow engine like Temporal, which provides durability — if an agent crashes mid-scan, it resumes from where it left off. This is the kind of infrastructure you need when orchestration runs unattended for hours, not the thirty-minute feature sprint from the example above.
 
-We'll explore this in depth in Chapter 16. But the point here is that multi-agent orchestration isn't just for building software. Any complex task that can be decomposed into focused, loosely-coupled subtasks is a candidate.
+Multi-agent orchestration isn't just for building software — Appendix A explores its application to automated security testing. Any complex task that can be decomposed into focused, loosely-coupled subtasks is a candidate.

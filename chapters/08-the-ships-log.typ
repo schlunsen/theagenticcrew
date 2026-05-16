@@ -46,7 +46,7 @@ This is the difference between a captain who keeps a log and one who doesn't. Th
 
 == What a Memory System Looks Like
 
-To make active memory concrete, let's walk through what the architecture of such a system actually looks like. The category is young and the tooling is evolving fast, but the design patterns are converging. What follows is a blueprint — a way of thinking about how to organise engineering knowledge so that agents can store it, search it, and build on it across sessions.
+To make active memory concrete, let's walk through what the architecture of such a system actually looks like. The category is young and the tooling is evolving fast — tools like Wee Memory (#link("https://wee.cat")), mem0, and Zep are all exploring this space — but the design patterns are converging. What follows is a blueprint — a way of thinking about how to organise engineering knowledge so that agents can store it, search it, and build on it across sessions.
 
 The core idea is structured storage with semantic retrieval. Your knowledge isn't dumped into a flat text file — it's organised into a hierarchy that mirrors how you actually think about your work.
 
@@ -60,11 +60,33 @@ This structure means searches can be precise. "What do we know about timeout iss
 
 === Setting It Up
 
-The setup is simpler than it sounds. A typical memory tool installs as a CLI and runs as an MCP server — the same protocol we discussed in the tool integrations chapter. The steps are roughly the same across implementations: install the tool, initialise a memory store scoped to your project, and optionally mine your existing agent sessions and project files to bootstrap the store with knowledge you've already generated.
+The setup is simpler than it sounds. A typical memory tool installs as a CLI and runs as an MCP server — the same protocol we discussed in the tool integrations chapter. Here's what the setup looks like with a tool like Wee Memory:
+
+```bash
+# Install the memory CLI
+npm install -g @anthropic/wee-memory  # or your tool of choice
+
+# Initialise a memory store for your project
+wee memory init --project my-billing-app
+
+# Mine existing Claude sessions into the store
+wee memory mine --sessions ~/.claude/sessions/
+```
 
 That last step — mining existing sessions — is worth pausing on. It takes your _existing_ conversation history — all those sessions you've already had — and indexes them into the memory store. Knowledge you thought was lost is recovered. Every discovery, every dead end, every "oh, _that's_ why it works that way" moment that happened in a past session becomes searchable.
 
-These tools typically run as MCP servers that expose memory operations to your agent, just like any other tool integration. Once connected, a set of tools for storing, searching, and navigating memories becomes available to your agent. It can now _remember_ and _recall_ as naturally as it reads files and runs tests.
+Once running, the memory server exposes tools to your agent via MCP — `store_memory`, `recall_memories`, `search_memories`. Your agent can now _remember_ and _recall_ as naturally as it reads files and runs tests. A typical MCP configuration looks like this:
+
+```json
+{
+  "mcpServers": {
+    "memory": {
+      "command": "wee",
+      "args": ["memory", "serve", "--project", "my-billing-app"]
+    }
+  }
+}
+```
 
 === The Session Lifecycle
 
@@ -148,15 +170,7 @@ Together, they form a complete memory system. Conventions are the habits. Memori
 
 There's also a promotion path between them. When a memory keeps coming up — "the third time an agent stored a note about the 2MB truncation issue" — that's a signal. It should be promoted from experiential memory to structural convention. Add it to the `CLAUDE.md`. Add a code comment. Maybe add a test that catches it explicitly. The memory system becomes a _discovery engine_ for conventions you haven't formalised yet.
 
-== Privacy and Locality
-
-One of the things that makes active memory viable in real engineering environments is that it can run entirely locally. A local-first memory system stores everything on your machine — the vector store, the knowledge graph, the embedding model. No API calls for the core functionality. Nothing crosses the network.
-
-This matters for the same reasons we discussed in the local-vs-commercial chapter. If your code can't leave the building — because of HIPAA, because of government classification, because of competitive secrecy — your _memories about that code_ can't leave the building either. A memory system that phones home with "we discovered a SQL injection vulnerability in the auth handler" is a security incident waiting to happen.
-
-Local-first memory also means zero marginal cost. Store a thousand memories or ten thousand — no API bill. This removes the economic friction that might otherwise make you hesitate to store "minor" discoveries. And those minor discoveries are often the ones that save the most time.
-
-== The Compounding Effect
+== The Knowledge Flywheel
 
 Active memory compounds in a way that's qualitatively different from the other investments in this book.
 
