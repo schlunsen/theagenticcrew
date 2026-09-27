@@ -5,49 +5,49 @@ revision := `cat REVISION`
 
 # Build the English book to PDF (with revision stamp)
 build:
-    typst compile --input revision={{revision}} book.typ build/the-agentic-crew.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} book.typ build/the-agentic-crew.pdf
 
 # Build Catalan edition
 build-ca:
-    typst compile --input revision={{revision}} book-ca.typ build/the-agentic-crew-ca.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} book-ca.typ build/the-agentic-crew-ca.pdf
 
 # Build Danish edition
 build-da:
-    typst compile --input revision={{revision}} book-da.typ build/the-agentic-crew-da.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} book-da.typ build/the-agentic-crew-da.pdf
 
 # Build Spanish edition
 build-es:
-    typst compile --input revision={{revision}} book-es.typ build/the-agentic-crew-es.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} book-es.typ build/the-agentic-crew-es.pdf
 
 # Build English crew member's guide
 build-crew:
-    typst compile --input revision={{revision}} book-crew.typ build/the-agentic-crew-crew.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} book-crew.typ build/the-agentic-crew-crew.pdf
 
 # Build Catalan crew member's guide
 build-crew-ca:
-    typst compile --input revision={{revision}} book-crew-ca.typ build/the-agentic-crew-crew-ca.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} book-crew-ca.typ build/the-agentic-crew-crew-ca.pdf
 
 # Build English hands-on guides (OS-specific editions)
 build-hands-on-windows:
-    typst compile --input revision={{revision}} --input illustrations=true --input os=windows book-hands-on-windows.typ build/the-agentic-crew-hands-on-windows.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} --input illustrations=true --input os=windows book-hands-on-windows.typ build/the-agentic-crew-hands-on-windows.pdf
 
 build-hands-on-mac:
-    typst compile --input revision={{revision}} --input illustrations=true --input os=mac book-hands-on-mac.typ build/the-agentic-crew-hands-on-mac.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} --input illustrations=true --input os=mac book-hands-on-mac.typ build/the-agentic-crew-hands-on-mac.pdf
 
 build-hands-on-linux:
-    typst compile --input revision={{revision}} --input illustrations=true --input os=linux book-hands-on-linux.typ build/the-agentic-crew-hands-on-linux.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} --input illustrations=true --input os=linux book-hands-on-linux.typ build/the-agentic-crew-hands-on-linux.pdf
 
 build-hands-on: build-hands-on-windows build-hands-on-mac build-hands-on-linux
 
 # Build Spanish hands-on guides (OS-specific editions)
 build-hands-on-es-windows:
-    typst compile --input revision={{revision}} --input illustrations=true --input os=windows book-hands-on-es-windows.typ build/the-agentic-crew-hands-on-es-windows.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} --input illustrations=true --input os=windows book-hands-on-es-windows.typ build/the-agentic-crew-hands-on-es-windows.pdf
 
 build-hands-on-es-mac:
-    typst compile --input revision={{revision}} --input illustrations=true --input os=mac book-hands-on-es-mac.typ build/the-agentic-crew-hands-on-es-mac.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} --input illustrations=true --input os=mac book-hands-on-es-mac.typ build/the-agentic-crew-hands-on-es-mac.pdf
 
 build-hands-on-es-linux:
-    typst compile --input revision={{revision}} --input illustrations=true --input os=linux book-hands-on-es-linux.typ build/the-agentic-crew-hands-on-es-linux.pdf
+    typst compile --font-path assets/fonts --input revision={{revision}} --input illustrations=true --input os=linux book-hands-on-es-linux.typ build/the-agentic-crew-hands-on-es-linux.pdf
 
 build-hands-on-es: build-hands-on-es-windows build-hands-on-es-mac build-hands-on-es-linux
 
@@ -113,7 +113,7 @@ build-all: build build-ca build-da build-es build-crew-all build-hands-on
 
 # Watch for changes and rebuild automatically
 watch:
-    typst watch --input revision={{revision}} book.typ build/the-agentic-crew.pdf
+    typst watch --font-path assets/fonts --input revision={{revision}} book.typ build/the-agentic-crew.pdf
 
 # Open the built PDF (macOS)
 open: build
@@ -168,26 +168,31 @@ deploy:
     echo "Deploying revision $rev..."
 
     # Build all PDFs in parallel
-    typst compile --input revision="$rev" book.typ build/the-agentic-crew.pdf &
-    typst compile --input revision="$rev" book-ca.typ build/the-agentic-crew-ca.pdf &
-    typst compile --input revision="$rev" book-da.typ build/the-agentic-crew-da.pdf &
-    typst compile --input revision="$rev" book-es.typ build/the-agentic-crew-es.pdf &
-    typst compile --input revision="$rev" book-crew.typ build/the-agentic-crew-crew.pdf &
-    typst compile --input revision="$rev" book-crew-ca.typ build/the-agentic-crew-crew-ca.pdf &
-    typst compile --input revision="$rev" --input illustrations=true --input os=windows book-hands-on-windows.typ build/the-agentic-crew-hands-on-windows.pdf &
-    typst compile --input revision="$rev" --input illustrations=true --input os=mac book-hands-on-mac.typ build/the-agentic-crew-hands-on-mac.pdf &
-    typst compile --input revision="$rev" --input illustrations=true --input os=linux book-hands-on-linux.typ build/the-agentic-crew-hands-on-linux.pdf &
-    typst compile --input revision="$rev" --input illustrations=true --input os=windows book-hands-on-es-windows.typ build/the-agentic-crew-hands-on-es-windows.pdf &
-    typst compile --input revision="$rev" --input illustrations=true --input os=mac book-hands-on-es-mac.typ build/the-agentic-crew-hands-on-es-mac.pdf &
-    typst compile --input revision="$rev" --input illustrations=true --input os=linux book-hands-on-es-linux.typ build/the-agentic-crew-hands-on-es-linux.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" book.typ build/the-agentic-crew.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" book-ca.typ build/the-agentic-crew-ca.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" book-da.typ build/the-agentic-crew-da.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" book-es.typ build/the-agentic-crew-es.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" book-crew.typ build/the-agentic-crew-crew.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" book-crew-ca.typ build/the-agentic-crew-crew-ca.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" --input illustrations=true --input os=windows book-hands-on-windows.typ build/the-agentic-crew-hands-on-windows.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" --input illustrations=true --input os=mac book-hands-on-mac.typ build/the-agentic-crew-hands-on-mac.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" --input illustrations=true --input os=linux book-hands-on-linux.typ build/the-agentic-crew-hands-on-linux.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" --input illustrations=true --input os=windows book-hands-on-es-windows.typ build/the-agentic-crew-hands-on-es-windows.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" --input illustrations=true --input os=mac book-hands-on-es-mac.typ build/the-agentic-crew-hands-on-es-mac.pdf &
+    typst compile --font-path assets/fonts --input revision="$rev" --input illustrations=true --input os=linux book-hands-on-es-linux.typ build/the-agentic-crew-hands-on-es-linux.pdf &
     wait
     echo "PDFs built."
 
     # Build all EPUBs in parallel
-    pandoc epub.typ -f typst -t epub3 -o build/the-agentic-crew.epub \
-        --metadata title="The Agentic Crew" \
-        --metadata "author=Rasmus Bornhøft Schlünsen" \
-        --metadata lang=en \
+    python3 scripts/build-epub-source.py && pandoc epub.typ -f typst -t epub3 -o build/the-agentic-crew.epub \
+        --metadata-file=assets/epub/metadata.yaml \
+        --resource-path=.:chapters \
+        --css=assets/epub/style.css \
+        --epub-cover-image=assets/epub/cover.jpg \
+        --lua-filter=assets/epub/filter.lua \
+        --epub-embed-font='assets/fonts/SourceSerif4-*.ttf' \
+        --epub-embed-font='assets/fonts/Fraunces-*.ttf' \
+        --epub-embed-font='assets/fonts/JetBrainsMono-400.ttf' \
         --toc --toc-depth=2 --split-level=1 &
 
     pandoc epub-ca.typ -f typst -t epub3 -o build/the-agentic-crew-ca.epub \
@@ -264,10 +269,15 @@ deploy:
 
 # Build the English book to EPUB
 epub:
-    pandoc epub.typ -f typst -t epub3 -o build/the-agentic-crew.epub \
-        --metadata title="The Agentic Crew" \
-        --metadata "author=Rasmus Bornhøft Schlünsen" \
-        --metadata lang=en \
+    python3 scripts/build-epub-source.py && pandoc epub.typ -f typst -t epub3 -o build/the-agentic-crew.epub \
+        --metadata-file=assets/epub/metadata.yaml \
+        --resource-path=.:chapters \
+        --css=assets/epub/style.css \
+        --epub-cover-image=assets/epub/cover.jpg \
+        --lua-filter=assets/epub/filter.lua \
+        --epub-embed-font='assets/fonts/SourceSerif4-*.ttf' \
+        --epub-embed-font='assets/fonts/Fraunces-*.ttf' \
+        --epub-embed-font='assets/fonts/JetBrainsMono-400.ttf' \
         --toc --toc-depth=2 --split-level=1
     @echo "Built build/the-agentic-crew.epub"
 

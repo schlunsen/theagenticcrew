@@ -4,55 +4,12 @@
 // Revision stamp — auto-incremented on deploy
 #let revision = sys.inputs.at("revision", default: "dev")
 
-#set document(
-  title: "The Agentic Crew",
-  author: "Rasmus Bornhøft Schlünsen",
-)
-
-#set page(
-  paper: "a5",
-  margin: (top: 0.75in, bottom: 0.75in, left: 0.7in, right: 0.7in),
-  header: context {
-    if counter(page).get().first() > 1 {
-      set text(size: 9pt, fill: luma(100))
-      emph[The Agentic Crew]
-      h(1fr)
-      counter(page).display()
-    }
-  },
-)
-
-#set text(
-  font: "New Computer Modern",
-  size: 10pt,
-  lang: "en",
-)
-
-#set par(
-  justify: true,
-  leading: 0.65em,
-)
-
-#set heading(numbering: "1.1")
-
-#show heading.where(level: 1): it => {
-  pagebreak(weak: true)
-  v(2em)
-  set text(size: 20pt, weight: "bold")
-  it
-  v(1em)
-}
-
-#show heading.where(level: 2): it => {
-  v(1.2em)
-  set text(size: 13pt, weight: "bold")
-  it
-  v(0.6em)
-}
+#import "theme.typ": *
+#show: book.with(revision: revision)
 
 // ─── Cover Page ───
 
-#page(margin: 0pt, header: none)[
+#page(margin: 0pt, header: none, footer: none)[
   #let bg = rgb("#0a0e1a")
   #let gold = rgb("#c9a84c")
   #let gold-light = rgb("#e0c878")
@@ -110,19 +67,19 @@
 
     // Eyebrow
     #place(dx: 8%, dy: 8%)[
-      #text(size: 7.5pt, fill: gold, weight: "bold", tracking: 3pt)[A FIELD GUIDE]
+      #text(font: sans, size: 7pt, fill: gold, weight: 500, tracking: 3.2pt)[A FIELD GUIDE]
     ]
 
     // Title
     #place(dx: 8%, dy: 14%)[
       #block(width: 84%)[
         #text(
-          size: 34pt,
-          weight: "bold",
+          size: 38pt,
+          weight: 400,
           fill: cream,
-          font: "New Computer Modern",
-          tracking: -0.6pt,
-        )[The Agentic Crew]
+          font: display,
+          tracking: -0.8pt,
+        )[The Agentic #text(style: "italic", weight: 300, fill: gold-light)[Crew]]
       ]
     ]
 
@@ -130,8 +87,10 @@
     #place(dx: 8%, dy: 72%)[
       #block(width: 84%)[
         #text(
-          size: 11pt,
-          fill: gold-light.transparentize(20%),
+          font: display,
+          size: 12pt,
+          weight: 300,
+          fill: gold-light.transparentize(15%),
           style: "italic",
         )[Engineering in the age of AI agents]
       ]
@@ -145,19 +104,20 @@
     // Author
     #place(dx: 8%, dy: 86%)[
       #text(
-        size: 10.5pt,
-        fill: cream.transparentize(25%),
+        font: display,
+        size: 11pt,
+        fill: cream.transparentize(20%),
       )[Rasmus Bornhøft Schlünsen]
     ]
 
     // Date & revision
     #place(dx: 8%, dy: 93%)[
-      #text(size: 7.5pt, fill: gold-dim)[Second Edition · September 2026]
+      #text(font: sans, size: 6.5pt, tracking: 1.4pt, fill: gold)[SECOND EDITION · SEPTEMBER 2026]
       #h(1fr)
     ]
     #place(dx: 0%, dy: 93%)[
       #h(1fr)
-      #text(size: 6pt, fill: gold-dim.transparentize(50%))[rev #revision]
+      #text(font: sans, size: 5.5pt, fill: gold-dim.transparentize(30%))[rev #revision]
       #h(8%)
     ]
   ]
@@ -224,25 +184,30 @@ What didn't change is the core of the book: context, guardrails, tests, conventi
 
 // ─── Table of Contents ───
 
-#outline(title: "Contents", indent: 1.5em, depth: 2)
+#outline(title: "Contents", depth: 2)
 
 // ─── Chapters ───
 
+#part("I", [Setting Sail], [What changed, and what an agent really is.])
 #include "chapters/01-introduction.typ"
 #include "chapters/02-what-is-an-agent.typ"
+#part("II", [Rigging the Ship], [The durable foundations — context, guardrails, git, tests, conventions, and memory.])
 #include "chapters/03-context.typ"
 #include "chapters/04-guardrails-trust-and-sandboxes.typ"
 #include "chapters/05-git.typ"
 #include "chapters/06-testing-as-the-feedback-loop.typ"
 #include "chapters/07-convention-over-configuration.typ"
 #include "chapters/08-the-ships-log.typ"
+#part("III", [Beyond the Harbour], [Reach, risk, intent, and the models underneath.])
 #include "chapters/09-extending-the-agents-reach.typ"
 #include "chapters/09b-the-agent-attack-surface.typ"
 #include "chapters/10-articulating-intent.typ"
 #include "chapters/11-local-commercial-and-hybrid-models.typ"
+#part("IV", [Running a Fleet], [Many agents, pipelines, and building your own.])
 #include "chapters/12-multi-agent-orchestration.typ"
 #include "chapters/13-agents-in-the-pipeline.typ"
 #include "chapters/13b-building-your-own-agents.typ"
+#part("V", [Hard-Won Lessons], [Failure, restraint, teams, and what lasts.])
 #include "chapters/14-when-agents-get-it-wrong.typ"
 #include "chapters/15-when-not-to-use-agents.typ"
 #include "chapters/16-agentic-teams.typ"
@@ -250,11 +215,13 @@ What didn't change is the core of the book: context, guardrails, tests, conventi
 
 // ─── Appendices ───
 
-#heading(outlined: true, numbering: none)[Appendix A: Agents as Pentesters]
+#part("", [Appendices], [Two companions to the main text — one that pushes every principle to its limit, and one that is meant to go out of date.])
+
+#appendix("A", [Agents as Pentesters])
 
 #include "chapters/appendix-a-agents-as-pentesters.typ"
 
-#heading(outlined: true, numbering: none)[Appendix B: The State of the Tools (September 2026)]
+#appendix("B", [The State of the Tools (September 2026)])
 
 #include "chapters/appendix-b-state-of-the-tools.typ"
 

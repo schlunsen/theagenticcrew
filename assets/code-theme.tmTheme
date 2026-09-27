@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>name</key><string>Midnight Brass Light</string>
+<key>settings</key><array>
+<dict><key>settings</key><dict><key>foreground</key><string>#1b1e29</string><key>background</key><string>#f6f1e4</string></dict></dict>
+<dict><key>scope</key><string>comment, punctuation.definition.comment</string><key>settings</key><dict><key>foreground</key><string>#8f8878</string><key>fontStyle</key><string>italic</string></dict></dict>
+<dict><key>scope</key><string>string, string.quoted, meta.structure.dictionary.value.json string</string><key>settings</key><dict><key>foreground</key><string>#7a5d1c</string></dict></dict>
+<dict><key>scope</key><string>meta.structure.dictionary.key.json string, support.type.property-name, entity.name.tag, variable.other.property</string><key>settings</key><dict><key>foreground</key><string>#2c3a78</string></dict></dict>
+<dict><key>scope</key><string>keyword, storage, storage.type, keyword.control, keyword.operator.word</string><key>settings</key><dict><key>foreground</key><string>#2c3a78</string><key>fontStyle</key><string>bold</string></dict></dict>
+<dict><key>scope</key><string>constant, constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#9a4d2a</string></dict></dict>
+<dict><key>scope</key><string>entity.name.function, support.function, variable.function</string><key>settings</key><dict><key>foreground</key><string>#1f5f5b</string></dict></dict>
+<dict><key>scope</key><string>markup.heading, entity.name.section</string><key>settings</key><dict><key>foreground</key><string>#2c3a78</string><key>fontStyle</key><string>bold</string></dict></dict>
+<dict><key>scope</key><string>variable.other, variable.parameter</string><key>settings</key><dict><key>foreground</key><string>#1b1e29</string></dict></dict>
+</array></dict></plist>

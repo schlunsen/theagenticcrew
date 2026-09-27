@@ -1,0 +1,19 @@
+title:
+  - type: main
+    text: The Agentic Crew
+  - type: subtitle
+    text: Engineering in the age of AI agents
+creator:
+  - role: author
+    text: Rasmus Bornhøft Schlünsen
+edition: Second Edition
+date: 2026-09-01
+lang: en-GB
+rights: © 2026 Rasmus Bornhøft Schlünsen. Free to read and share.
+publisher: theagenticcrew.com
+subject: [Software engineering, AI agents, Agentic engineering]
+description: >-
+  A field guide for software engineers learning to work with AI agents —
+  context engineering, guardrails, testing, conventions, memory, tool
+  integrations, prompt injection, multi-agent workflows, CI/CD, and building
+  your own agents. Second edition, September 2026.
