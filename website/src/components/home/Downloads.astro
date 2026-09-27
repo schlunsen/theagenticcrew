@@ -1,0 +1,58 @@
+---
+const langs = [
+  { code: 'en', label: 'English', title: 'The Agentic Crew — second edition, September 2026', pdf: '/the-agentic-crew.pdf', epub: '/the-agentic-crew.epub' },
+  { code: 'es', label: 'Español', title: 'La Tripulación Agéntica — primera edición', pdf: '/the-agentic-crew-es.pdf', epub: '/the-agentic-crew-es.epub' },
+  { code: 'ca', label: 'Català', title: 'La Tripulació Agèntica — primera edició', pdf: '/the-agentic-crew-ca.pdf', epub: '/the-agentic-crew-ca.epub' },
+  { code: 'da', label: 'Dansk', title: 'Det Agentiske Mandskab — første udgave', pdf: '/the-agentic-crew-da.pdf', epub: '/the-agentic-crew-da.epub' },
+];
+const arrow = '<svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg>';
+---
+<section class="band band--ink" id="download" aria-labelledby="dl-title">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Free download</span>
+      <h2 id="dl-title" class="h2">Take it <em>aboard.</em></h2>
+      <p class="lede">No sign-up, no email wall. PDF for reading at a desk, EPUB for e-readers. Download it as often as you like.</p>
+    </div>
+    <div class="dl">
+      <div class="dl__card reveal" data-downloads>
+        <div class="dl__langs" role="group" aria-label="Language">
+          {langs.map((l, i) => (
+            <button type="button" aria-pressed={i === 0 ? 'true' : 'false'} data-lang={l.code} data-title={l.title} data-pdf={l.pdf} data-epub={l.epub}>{l.label}</button>
+          ))}
+        </div>
+        <p class="dl__edition" data-edition>{langs[0].title}</p>
+        <div class="dl__formats">
+          <a class="dl__format" href={langs[0].pdf} download data-fmt="pdf">
+            <b>PDF</b>
+            <strong>Print layout <Fragment set:html={arrow} /></strong>
+            <span>Desktop and tablet. Full typesetting.</span>
+          </a>
+          <a class="dl__format" href={langs[0].epub} download data-fmt="epub">
+            <b>EPUB</b>
+            <strong>E-reader <Fragment set:html={arrow} /></strong>
+            <span>Reflowable for Kindle, Kobo, iPad.</span>
+          </a>
+        </div>
+        <p class="dl__note" data-note>
+          Prefer slides? Try the <a href="/presentation/">interactive presentation</a>. Past versions live in the <a href="/revisions/">revision archive</a>.
+        </p>
+      </div>
+      <div class="series reveal">
+        <p class="series__label">More from the series</p>
+        <a class="series__card" href="/books/crew-guide">
+          <img src="/book-cover-crew.png" alt="" loading="lazy" />
+          <div><h3>Crew Member's Guide</h3><p>The same ideas for people who don't write code. English and Català.</p></div>
+        </a>
+        <a class="series__card" href="/books/hands-on">
+          <div class="series__cover" aria-hidden="true">Hands-On Guide</div>
+          <div><h3>Hands-On Guide</h3><p>Exercises for your own machine: fork, build, ship, and pentest with an agent.</p></div>
+        </a>
+        <div class="coffee">
+          <p>This project is free and always will be.</p>
+          <a href="https://buymeacoffee.com/schlunsen" target="_blank" rel="noopener" class="btn btn--ghost">&#9749; Buy me a coffee</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

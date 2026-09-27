@@ -1,0 +1,17 @@
+---
+// The ship's helm from the book cover, as a scalable line drawing.
+interface Props { size?: number | string; stroke?: number; class?: string; title?: string }
+const { size = 24, stroke = 1.2, class: cls = '', title } = Astro.props;
+const spokes = Array.from({ length: 8 }, (_, i) => (i * Math.PI) / 4);
+---
+<svg class={cls} width={size} height={size} viewBox="-104 -104 208 208" fill="none" stroke="currentColor" stroke-width={stroke} role={title ? 'img' : undefined} aria-hidden={title ? undefined : 'true'} aria-label={title}>
+  <circle r="50" stroke-width={stroke * 1.6} />
+  <circle r="27.5" />
+  {spokes.map((a) => (
+    <line x1={(-100 * Math.cos(a)).toFixed(2)} y1={(-100 * Math.sin(a)).toFixed(2)} x2={(100 * Math.cos(a)).toFixed(2)} y2={(100 * Math.sin(a)).toFixed(2)} />
+  ))}
+  {spokes.map((a) => (
+    <circle cx={(57.5 * Math.cos(a)).toFixed(2)} cy={(57.5 * Math.sin(a)).toFixed(2)} r="3.6" fill="currentColor" stroke="none" />
+  ))}
+  <circle r="6" fill="currentColor" stroke="none" />
+</svg>

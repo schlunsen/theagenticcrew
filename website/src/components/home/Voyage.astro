@@ -1,0 +1,60 @@
+---
+import { engineeringChapters, crewChapters, parts, newInSecondEdition } from '../../data/chapters';
+const grouped = parts.map((p) => ({ ...p, chapters: engineeringChapters.slice(p.from - 1, p.to) }));
+---
+<section class="band band--night" id="chapters" aria-labelledby="voyage-title">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">What's inside</span>
+      <h2 id="voyage-title" class="h2">The voyage, <em>chapter by chapter.</em></h2>
+      <p class="lede">Nineteen chapters in five parts, from what an agent really is to how whole teams work with them — plus two appendices.</p>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Choose a book">
+      <button role="tab" id="tab-eng" aria-controls="panel-eng" aria-selected="true" data-tab="eng">The Agentic Crew</button>
+      <button role="tab" id="tab-crew" aria-controls="panel-crew" aria-selected="false" tabindex="-1" data-tab="crew">Crew Member's Guide</button>
+    </div>
+
+    <div class="voyage-panel" id="panel-eng" role="tabpanel" aria-labelledby="tab-eng" data-panel="eng">
+      {grouped.map((part) => (
+        <div class="part">
+          <div class="part__head">
+            <div class="part__numeral">{part.numeral}</div>
+            <h3 class="part__title">{part.title}</h3>
+            <p class="part__sub">{part.subtitle}</p>
+          </div>
+          <ol class="chap-list">
+            {part.chapters.map((c) => (
+              <li class="chap">
+                <span class="chap__num">{c.number}</span>
+                <div>
+                  <h3>{c.title}{newInSecondEdition.has(c.title) && <span class="pill">New</span>}</h3>
+                  <p>{c.description.replace(/^New in the second edition\.\s*/, '')}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+      <div class="appendices">
+        <span><b>Appendix A</b>Agents as Pentesters</span>
+        <span><b>Appendix B</b>The State of the Tools <span class="pill">New</span></span>
+      </div>
+    </div>
+
+    <div class="voyage-panel" id="panel-crew" role="tabpanel" aria-labelledby="tab-crew" data-panel="crew" hidden>
+      <p class="lede" style="margin-bottom:1.6rem">
+        Tech-savvy but don't write code? The same ideas, translated for designers, PMs, founders and everyone else on the crew.
+        <a href="/books/crew-guide" style="color:var(--brass-light)">About the Crew Member's Guide &rarr;</a>
+      </p>
+      <ol class="crew-grid">
+        {crewChapters.map((c) => (
+          <li class="chap">
+            <span class="chap__num">{c.number}</span>
+            <div><h3>{c.title}</h3><p>{c.description}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

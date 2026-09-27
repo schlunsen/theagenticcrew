@@ -1,30 +1,114 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Quote from '../components/Quote.astro';
-import Chapters from '../components/Chapters.astro';
-import Author from '../components/Author.astro';
-import Buy from '../components/Buy.astro';
+import Header from '../components/home/Header.astro';
+import Hero from '../components/home/Hero.astro';
+import WhatsNew from '../components/home/WhatsNew.astro';
+import Shift from '../components/home/Shift.astro';
+import Foreword from '../components/home/Foreword.astro';
+import Voyage from '../components/home/Voyage.astro';
+import AuthorBio from '../components/home/AuthorBio.astro';
+import Downloads from '../components/home/Downloads.astro';
+import SiteFooter from '../components/home/SiteFooter.astro';
 import Audiobook from '../components/Audiobook.astro';
 import CrewAudiobook from '../components/CrewAudiobook.astro';
-import Footer from '../components/Footer.astro';
-import BackgroundScene from '../components/BackgroundScene.astro';
 import ChatWidget from '../components/ChatWidget.astro';
+import '../styles/home.css';
 ---
 
-<BaseLayout title="The Agentic Crew — How software engineers learn to build with agents">
-  <BackgroundScene />
-  <Nav />
-  <Hero />
-  <About />
-  <Quote />
-  <Chapters />
-  <Author />
-  <Buy />
-  <Audiobook />
-  <CrewAudiobook />
+<BaseLayout
+  title="The Agentic Crew — Engineering in the age of AI agents (Second Edition)"
+  description="A free field guide for software engineers working with AI agents: context engineering, guardrails, testing, conventions, prompt injection, multi-agent workflows, and building your own agents. Second edition, September 2026."
+>
+  <div class="home">
+    <Header />
+    <main>
+      <Hero />
+      <WhatsNew />
+      <Shift />
+      <Foreword />
+      <Voyage />
+      <AuthorBio />
+      <Downloads />
+      <section class="band band--paper" id="listen" aria-labelledby="listen-title">
+        <div class="wrap">
+          <div class="section-head section-head--center reveal">
+            <span class="eyebrow">Listen free</span>
+            <h2 id="listen-title" class="h2">Hear it <em>on watch.</em></h2>
+            <p class="lede">AI-narrated audiobooks, chapter by chapter. The engineering audiobook currently narrates the first edition.</p>
+          </div>
+        </div>
+        <div class="listen-host">
+          <Audiobook />
+          <CrewAudiobook />
+        </div>
+      </section>
+    </main>
+    <SiteFooter />
+  </div>
   <ChatWidget />
-  <Footer />
 </BaseLayout>
+
+<script>
+  function initHome() {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    if (!header) return;
+
+    // Header: solid on scroll, mobile drawer
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    const toggle = header.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const drawer = document.querySelector<HTMLElement>('[data-drawer]');
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('is-open', open);
+      toggle?.setAttribute('aria-expanded', String(open));
+    };
+    toggle?.addEventListener('click', () => setOpen(!header.classList.contains('is-open')));
+    drawer?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+    // Chapter tabs
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-tab]'));
+    const select = (tab: HTMLButtonElement) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.querySelector<HTMLElement>(`[data-panel="${t.dataset.tab}"]`);
+        if (panel) panel.hidden = !on;
+      });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+          select(next); next.focus();
+        }
+      });
+    });
+
+    // Download language switcher
+    const dl = document.querySelector<HTMLElement>('[data-downloads]');
+    if (dl) {
+      const buttons = Array.from(dl.querySelectorAll<HTMLButtonElement>('[data-lang]'));
+      const edition = dl.querySelector<HTMLElement>('[data-edition]');
+      const pdf = dl.querySelector<HTMLAnchorElement>('[data-fmt="pdf"]');
+      const epub = dl.querySelector<HTMLAnchorElement>('[data-fmt="epub"]');
+      buttons.forEach((b) => b.addEventListener('click', () => {
+        buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        if (edition) edition.textContent = b.dataset.title ?? '';
+        if (pdf && b.dataset.pdf) pdf.href = b.dataset.pdf;
+        if (epub && b.dataset.epub) epub.href = b.dataset.epub;
+      }));
+    }
+
+    // Reveal on scroll
+    const els = document.querySelectorAll('.home .reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('is-in')); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach((el) => io.observe(el));
+  }
+  document.addEventListener('astro:page-load', initHome);
+</script>

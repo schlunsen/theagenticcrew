@@ -1,0 +1,42 @@
+---
+import Helm from './Helm.astro';
+---
+<section class="hero2" aria-labelledby="hero-title">
+  <div class="hero2__helm" aria-hidden="true"><Helm size="100%" stroke={0.6} /></div>
+  <div class="wrap">
+    <div class="hero2__grid">
+      <div>
+        <a href="#new" class="hero2__badge"><b>New</b> Second edition · September 2026</a>
+        <h1 id="hero-title" class="hero2__title">The Agentic <em>Crew</em></h1>
+        <p class="hero2__sub">Engineering in the age of AI agents</p>
+        <p class="hero2__lede">
+          A field guide for software engineers learning to work <em>with</em> agents instead of against them —
+          context, guardrails, tests, conventions, and the judgement that ties them together.
+          Written by an engineer who ships with agents every day. Free, forever.
+        </p>
+        <div class="hero2__actions">
+          <a href="#download" class="btn btn--brass">
+            Download free
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg>
+          </a>
+          <a href="#new" class="btn btn--ghost">What's new in the 2nd edition</a>
+          <a href="/presentation/" class="btn btn--link">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><polygon points="6,3 6,17 17,10"/></svg>
+            Presentation
+          </a>
+        </div>
+        <ul class="hero2__facts" aria-label="At a glance">
+          <li><strong>19</strong><span>chapters</span></li>
+          <li><strong>2</strong><span>appendices</span></li>
+          <li><strong>4</strong><span>languages</span></li>
+          <li><strong>€0</strong><span>always free</span></li>
+        </ul>
+      </div>
+      <div class="hero2__book">
+        <div class="cover3d">
+          <img src="/book-cover-2e.png" alt="The Agentic Crew, second edition — book cover with a gold ship's helm on midnight blue" width="1165" height="1654" loading="eager" fetchpriority="high" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

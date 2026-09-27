@@ -1,0 +1,30 @@
+---
+const items = [
+  { tag: 'New chapter', title: 'The Agent Attack Surface', body: 'Prompt injection, the lethal trifecta, poisoned tools, and slopsquatting — and the layered defences that keep a stranger\'s text from steering your agent.' },
+  { tag: 'New chapter', title: 'Building Your Own Agents', body: 'From driving a coding agent to shipping your own: owning the loop and the context, humans as a tool call, durable state, and evals.' },
+  { tag: 'Rewritten', title: 'Context engineering & the new toolchain', body: 'Compaction, context rot, sub-agents, AGENTS.md, skills, hooks, cloud agents that return PRs — and a rewritten chapter on models.' },
+  { tag: 'New appendix', title: 'The State of the Tools', body: 'The perishable details — models, prices, products — moved to one dated appendix, so the chapters can age gracefully.' },
+];
+---
+<section class="band band--night" id="new" aria-labelledby="new-title">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Second edition</span>
+      <h2 id="new-title" class="h2">Six months is a long time <em>at sea.</em></h2>
+      <p class="lede">
+        The first edition shipped in March 2026. Since then the tools converged, cloud agents started sending pull requests,
+        and prompt injection went from a curiosity to a string of real incidents. This edition catches up — and fixes what I got wrong.
+      </p>
+    </div>
+    <div class="news reveal">
+      {items.map((it, i) => (
+        <article class="news__item">
+          <span class="news__num">{['i', 'ii', 'iii', 'iv'][i]}</span>
+          <span class="news__tag">{it.tag}</span>
+          <h3>{it.title}</h3>
+          <p>{it.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

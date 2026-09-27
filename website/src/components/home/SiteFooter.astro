@@ -1,0 +1,44 @@
+---
+import Helm from './Helm.astro';
+const year = new Date().getFullYear();
+---
+<footer class="home-footer">
+  <div class="wrap">
+    <div class="home-footer__grid">
+      <div>
+        <div class="home-footer__brand"><Helm size={28} stroke={5} /> The Agentic Crew</div>
+        <p class="home-footer__motto">Chart your course. Lead your crew.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul>
+          <li><a href="/the-agentic-crew.pdf" download>PDF · 2nd edition</a></li>
+          <li><a href="/the-agentic-crew.epub" download>EPUB · 2nd edition</a></li>
+          <li><a href="/presentation/">Presentation</a></li>
+          <li><a href="/revisions/">Revision archive</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>The series</h4>
+        <ul>
+          <li><a href="/books/the-agentic-crew">The Agentic Crew</a></li>
+          <li><a href="/books/crew-guide">Crew Member's Guide</a></li>
+          <li><a href="/books/hands-on">Hands-On Guide</a></li>
+          <li><a href="/polly/">Ask Polly</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/rasmusbs/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/schlunsen" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://buymeacoffee.com/schlunsen" target="_blank" rel="noopener">Buy me a coffee</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="home-footer__base">
+      <span>&copy; {year} Rasmus Bornhøft Schlünsen</span>
+      <span>Second edition · September 2026</span>
+    </div>
+  </div>
+</footer>
