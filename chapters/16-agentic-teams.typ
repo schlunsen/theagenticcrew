@@ -18,6 +18,16 @@ The 10x multiplier isn't a flat multiplier across your day. It's a spike graph. 
 
 Teams that understand this deploy agents strategically. They don't hand every task to an agent and expect magic. They identify the high-leverage zones — the tasks where agents genuinely compress timelines — and they focus agent effort there. The rest stays human.
 
+And be careful about how you know it's working. In mid-2025, METR ran a randomised controlled trial with experienced open-source developers working on their own mature codebases. With the AI tools of early 2025, they were about 19% _slower_. The striking part: they believed they'd been about 20% faster. The gap between how productive it felt and how productive it was ran to nearly forty percentage points.
+
+That's one study, with specific conditions, and the tools have moved on since. I don't read it as "agents don't work" — I read it as "your gut is not a measuring instrument." Waiting for an agent feels like progress. Reviewing its output feels like progress. Neither is the same as shipping.
+
+Google's DORA 2025 report adds the other half. AI adoption among respondents was near-universal, and the clearest finding was that AI acts as an _amplifier_. Teams with good tests, small batches, clear ownership and fast feedback got better. Teams with weak foundations got their weaknesses amplified — more code, more churn, more instability.
+
+That matches everything else in this book. Agents don't fix a team. They make it more of what it already is.
+
+So measure outcomes, not activity. Lead time, change failure rate, time to restore, how often you ship — not lines generated, PRs opened, or how busy everyone feels. If those numbers move the right way, the multiplier is real for your team. If they don't, the "10x" is a feeling.
+
 == Code Review Changes
 
 Here's what happens when agents enter a team's workflow: PR volume goes up. _Way_ up. An engineer who used to open two PRs a day now opens five. The code in those PRs is syntactically correct, well-formatted, and passes tests. And reviewing it is _exhausting_.
@@ -28,13 +38,15 @@ The shift is from "is this correct?" to "is this the right approach?" Agent-gene
 
 Reviewers become architects. They zoom out. They check intent, not implementation.
 
+AI review bots help with the other half. Most teams using agents seriously now run one as a first pass — it flags the unhandled error, the missing test, the inconsistent name, before a human opens the PR. That's genuinely useful. But it's a filter, not a reviewer. A bot can tell you the code has a bug. It can't tell you the feature shouldn't exist. The human review is still where intent gets checked, and where someone on the team takes ownership of what's being merged.
+
 Practical adaptations that work:
 - Smaller, more focused PRs — easier for both agents and reviewers
-- Automated checks handle the mechanical stuff (linting, test coverage, type checking)
+- Automated checks handle the mechanical stuff (linting, test coverage, type checking) — and an AI review bot takes the first pass at the rest
 - Review time is protected on the calendar, not squeezed between meetings
 - Teams agree on "trusted patterns" — if a PR follows a known pattern and passes CI, it gets a faster review track
 
-Review fatigue is the silent killer of agent-assisted teams. Take it seriously.
+Review fatigue is the silent killer of agent-assisted teams. Review bots don't cure it — they add their own comments to read. Take it seriously.
 
 == The Junior Engineer Question
 
@@ -70,7 +82,8 @@ The bus factor drops to one. Not because anyone planned it, but because velocity
 
 This is a management problem, not a technology problem. The fix is structural:
 
-- *Shared `CLAUDE.md` files.* Every project has one. Everyone contributes to it. It encodes the team's collective knowledge, not one person's.
+- *Shared instruction files.* Every project has an `AGENTS.md` (or `CLAUDE.md`, or both — the Convention Over Configuration chapter covers the options). Everyone contributes to it. It encodes the team's collective knowledge, not one person's. Changes go through PRs like any other code.
+- *Shared skills.* When one engineer works out how to get an agent to do something well — run a database migration safely, write tests the way your team likes them, triage a flaky build — that shouldn't live in their head or their private prompt folder. Package it as a skill in the repository. Now every engineer's agent gets it, and the team can review and improve it. Skills are the closest thing agentic teams have to shared muscle memory.
 - *Shared workflows and conventions.* The team agrees on how they use agents — which tools, which patterns, which guardrails. No lone-wolf setups.
 - *Rotation.* Agent-fluent engineers rotate to different parts of the codebase. Knowledge spreads through work, not documentation.
 - *Agent session sharing.* Some teams have started sharing interesting agent sessions — the prompts, the outputs, the decisions. It's a form of knowledge transfer that didn't exist before.
@@ -81,7 +94,7 @@ The goal isn't to slow down your fastest engineer. It's to make sure the team's 
 
 We covered conventions in an earlier chapter. In a team context, the stakes are higher.
 
-When a solo engineer uses agents, their conventions affect one person. When a team uses agents, conventions affect _every agent session across the entire team_. A well-structured project with clear naming, consistent patterns, and a maintained `CLAUDE.md` means every engineer's agents start from a strong foundation.
+When a solo engineer uses agents, their conventions affect one person. When a team uses agents, conventions affect _every agent session across the entire team_. A well-structured project with clear naming, consistent patterns, and a maintained instruction file means every engineer's agents start from a strong foundation.
 
 A messy project means every agent reinvents the wheel. Different engineers get different outputs. The codebase drifts. Reviews get harder because you're now reviewing not just the code but the _style_ of the code, which varies by which engineer's agent wrote it.
 
@@ -112,6 +125,9 @@ The good news is that the answer isn't actually that complicated. The tooling an
 *The reviewer owns it.* The practical answer for most organisations is straightforward: the engineer who reviews and approves the PR takes responsibility, same as they would for any code from any source. Agent-generated code doesn't get a different accountability standard. If you approve a PR, you're saying "I've reviewed this and I believe it's correct." The tool that generated the code is irrelevant to that statement. This also means reviews of agent-generated code need to be _real_ reviews, not rubber stamps. If the volume of agent-generated PRs is making thorough review impossible, that's a workflow problem to solve, not a standard to lower.
 
 *For regulated industries.* Document your agentic workflow as part of your SDLC documentation. Which models are used, what version, what guardrails are in place, what review process agent-generated code goes through before it reaches production. Auditors want to see a _process_, not perfection. A documented process that includes "AI-assisted code generation with mandatory human review and CI verification" is auditable. An undocumented process where engineers use whatever tools they like with no consistent approach is not. If you're in fintech, healthcare, or anything with regulatory oversight, get this documented before someone asks for it.
+
+Regulation is catching up, slowly. The EU AI Act is phasing in obligations over several years. Most of them land on the companies building AI models and on "high-risk" AI systems — things like hiring, credit scoring, or medical devices — rather than on a team using a coding assistant. But if the software _you_ build falls into one of those categories, how it was built may matter, and the rules are still being clarified. I'm not a lawyer, and this isn't legal advice. The practical takeaway is the same as above: a documented, consistent process is your best position whatever the rules end up requiring.
+// v2-verify: EU AI Act status and phase-in dates as of Sept 2026
 
 *Keep session logs.* Retain logs of agent sessions, especially for code that touches sensitive systems — billing, authentication, data handling, anything with regulatory implications. Not because you'll read them routinely, but because you might need them during an incident review. "What did the agent see when it generated this code? What prompt produced this output? What context was it working with?" These are questions you want to be able to answer six months later. Most agentic tools can export or log sessions. Set up the retention before you need it. The cost of storage is trivial compared to the cost of not having the logs when compliance comes knocking.
 

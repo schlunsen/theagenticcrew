@@ -30,13 +30,7 @@ The decomposition you choose depends on the shape of the work. But the principle
 
 == Branch-per-Agent
 
-Every agent gets its own branch. We covered this in the Git chapter. In multi-agent work, it becomes absolutely essential.
-
-But branches alone aren't enough. Two agents on different branches sharing the same working directory will fight over the filesystem — they'll overwrite each other's files, corrupt each other's builds, break each other's test runs. You need _worktrees_.
-
-Each agent gets its own git worktree: a separate directory, on its own branch, with its own copy of the codebase. The agents share history but nothing else. They can build, run tests, install dependencies, and make a mess — all without affecting each other.
-
-The setup is quick:
+Every agent gets its own branch _and_ its own worktree. The Git chapter covers why — two agents sharing one working directory will trample each other's files, builds and test runs. In multi-agent work it stops being good practice and becomes non-negotiable:
 
 ```bash
 git worktree add ../project-api agent/api-endpoint
@@ -44,7 +38,25 @@ git worktree add ../project-frontend agent/frontend-component
 git worktree add ../project-tests agent/integration-tests
 ```
 
-Three directories. Three branches. Three agents. Full isolation. This is the sandbox model from earlier chapters made concrete for multi-agent work. When an agent finishes, you review its branch, merge if it's good, and remove the worktree. If the work is bad, you throw the whole thing away. Zero cost.
+Three directories. Three branches. Three agents. When one finishes, review its branch, merge or throw it away, and remove the worktree.
+
+== Two Shapes of Multi-Agent Work
+
+"Multi-agent" used to mean one thing: you, several terminals, several agents. Today there are two quite different shapes, and it helps to keep them apart.
+
+*Sub-agents inside one session.* Your main agent spawns helpers — most tools now support this, and in Claude Code you can define your own in `.claude/agents/`. The obvious pitch is speed: fan out, work in parallel. But in practice the bigger win is _context isolation_. A sub-agent that searches the codebase for every caller of a function might read forty files and burn through a large chunk of its window. It then hands back a ten-line summary. Your main session gets the answer without the forty files of noise. Exploration, search, log-digging, a second-opinion review — anything that reads a lot and concludes a little is a good fit. The Context chapter covers why keeping the main window clean matters so much.
+
+The limits: sub-agents only report back what they summarise, so nuance gets lost. And when several of them _edit_ files in the same working directory at once, you're back to the trampling problem above.
+
+*Background and cloud agents.* The other shape is delegation of a whole task. You assign an issue or write a task description, an agent works on it in its own environment — often a cloud sandbox — and comes back later with a pull request. Most major vendors now ship something like this; Appendix B lists the current options. This is the "overnight agent" from the Agents in the Pipeline chapter turned into a product.
+
+When does each fit?
+
+- *Sub-agents* when you're in the middle of a task and need to find something out, check something, or review something without polluting your own context. You stay in the loop, minute to minute.
+- *Background agents* when the task is well-scoped, testable, and doesn't need you watching — a clear ticket with acceptance criteria. You review the PR, not the process.
+- *Neither* when the task is ambiguous. Delegating a vague task to a background agent just means reviewing a vague PR an hour later.
+
+The skills are the same in both shapes: decompose well, hand over explicitly, review the result. The rest of this chapter applies to both.
 
 == The Handover Pattern
 
@@ -59,6 +71,7 @@ The fix is _structured handover_. Agent A doesn't just plan — it produces an a
 - *A summary document.* A markdown file dropped into the repo: `PLAN.md`. It describes what needs to happen, what trade-offs were considered, what was rejected and why. Agent B reads this before writing a line of code.
 - *A set of files.* Agent A creates stub files — empty functions with docstrings, interface definitions, type signatures. Agent B fills them in. The stubs _are_ the handover.
 - *A structured prompt.* Agent A's output becomes Agent B's input, formatted as a detailed task description with acceptance criteria. You paste it directly into Agent B's context.
+- *A progress file or task list.* For long-running work, the handover isn't just the plan — it's the _execution state_. A checklist of tasks with what's done, what's in progress, and what's blocked, plus notes on anything surprising. Many agent tools now keep a task list natively; a plain `PROGRESS.md` works everywhere. The next agent — or the same agent after its context has been compacted — reads it and picks up where the last one stopped. This is the Ship's Log idea applied to a single piece of work.
 
 The key is that the handover must be _explicit and complete_. No implicit assumptions. No "the next agent will figure it out." Every decision, every constraint, every edge case — written down.
 
@@ -86,7 +99,10 @@ In practice, you'll use all three. Prevent what you can. Automate the rest. Revi
 
 There is a practical challenge that hits the moment you move from one agent to three: you lose track of what's happening. Four terminal windows open, agents working on different tasks, one crashed silently twenty minutes ago and you haven't noticed. The agents are fine. _You_ are the bottleneck.
 
-This is a tooling problem, not an intelligence problem. If your workflow does not give you visibility into parallel work, you will either serialise everything — wasting the agents' potential — or run things in parallel and lose track, wasting your own time cleaning up the mess. Whatever tool you use — tmux panes, multiple editor windows, a browser-based control plane like wee (#link("https://wee.cat")), or even a sticky note tracking what is running where — solve the visibility problem first. The agents will not manage themselves.
+This is a tooling problem, not an intelligence problem. If your workflow does not give you visibility into parallel work, you will either serialise everything — wasting the agents' potential — or run things in parallel and lose track, wasting your own time cleaning up the mess. Whatever tool you use — tmux panes, multiple editor windows, a browser-based control plane like wee (#link("https://wee.cat")), // v2-verify: disclose author's relationship to wee if any
+or even a sticky note tracking what is running where — solve the visibility problem first. The agents will not manage themselves.
+
+The good news is that the tools have started to help. Agent CLIs now show running sub-agents and background tasks in the session itself, and the cloud agent products come with dashboards listing every task, its status, and the PR it produced. That covers a lot. What they don't give you is one view _across_ tools and machines — so if your crew spans several, you'll still want something of your own.
 
 #figure(
   image("../assets/wee-dashboard.png", width: 100%),
@@ -142,16 +158,12 @@ A single agent doing everything sequentially? Probably ninety minutes.
 
 The maths works when the task is big enough. And as you get better at decomposition, you'll develop an intuition for which tasks are worth splitting and which aren't. Like most things in engineering, it's a judgement call. But now you have the tools to make it.
 
-One more thing worth noting: you don't always have to orchestrate manually. As we discussed in the prompting chapter, you can _tell_ the agent to parallelise. "These three modules are independent — launch sub-agents and work on them simultaneously." The agent handles the worktrees, the branching, and the coordination. Your job is the part the agent can't do: knowing which pieces are safe to run in parallel. That architectural judgement is the highest-leverage prompt you can write.
+One more thing worth noting: you don't always have to orchestrate manually. As we discussed in the Articulating Intent chapter, you can _tell_ the agent to parallelise. "These three modules are independent — launch sub-agents and work on them simultaneously." But check what your tool actually does with that. Some tools can give each sub-agent its own worktree automatically; in others, sub-agents share your working directory by default, and parallel edits can collide. Know which you've got before you ask for parallel _writes_ — parallel reads are always safe. Either way, your job is the part the agent can't do: knowing which pieces are safe to run in parallel. That architectural judgement is the highest-leverage prompt you can write.
+
+// v2-verify: which tools isolate sub-agents in worktrees automatically as of Sept 2026 (e.g. Claude Code worktree isolation option)
 
 == Orchestration Beyond Code: A Security Example
 
-The notification example above is familiar territory — building features. But multi-agent orchestration shines in less obvious domains too.
+Multi-agent orchestration shines in less obvious domains too. Autonomous pentesting platforms — like Shannon by KeygraphHQ (#link("https://github.com/KeygraphHQ/shannon")) — run a dozen or more specialised agents through reconnaissance, parallel vulnerability analysis, parallel exploitation, and reporting. Each agent owns one vulnerability category: the "by concern" decomposition in its purest form. The merge problem is solved not with git but with deduplication and severity normalisation, and a durable workflow engine lets the whole thing run unattended for hours.
 
-Consider automated penetration testing. Autonomous pentesting platforms — like Shannon by KeygraphHQ (#link("https://github.com/KeygraphHQ/shannon")) — can run over a dozen specialised agents across multiple phases: reconnaissance, vulnerability analysis (several agents in parallel), exploitation (several agents in parallel), and reporting. Each agent focuses on a single vulnerability category — injection, XSS, authentication, authorization, or SSRF.
-
-The decomposition follows the "by concern" pattern. The injection agent never thinks about XSS. The authentication agent never thinks about SSRF. They work in parallel, touch different aspects of the target, and their findings get deduplicated and merged in a reporting phase — solving the merge problem not with git branches but with CVSS normalization and CWE classification.
-
-The orchestration overhead in such a platform is typically managed by a workflow engine like Temporal, which provides durability — if an agent crashes mid-scan, it resumes from where it left off. This is the kind of infrastructure you need when orchestration runs unattended for hours, not the thirty-minute feature sprint from the example above.
-
-Multi-agent orchestration isn't just for building software — Appendix A explores its application to automated security testing. Any complex task that can be decomposed into focused, loosely-coupled subtasks is a candidate.
+Appendix A walks through the architecture in detail. The lesson for here: any complex task that can be decomposed into focused, loosely coupled subtasks is a candidate.

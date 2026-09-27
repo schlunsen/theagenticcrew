@@ -4,7 +4,7 @@ My oldest son is five. He can't read yet, not really — he sounds out words on 
 
 I didn't have a good answer. I still don't, not entirely. But that question stuck with me through every chapter of this book. Because what I realized, sitting there with him, is that I wasn't writing a book about tools. I was writing a book about what it means to be an engineer at the exact moment the definition of engineering is being rewritten — and about what we carry forward into whatever comes next.
 
-This chapter is not a summary. You don't need me to recap fifteen chapters you just read. This is the stuff I want to say to you directly, one engineer to another, before we part ways.
+This chapter is not a summary. You don't need me to recap the chapters you just read. This is the stuff I want to say to you directly, one engineer to another, before we part ways.
 
 == What I Believe
 
@@ -22,13 +22,25 @@ I believe this shift is _good_. Not easy. Not painless. But good. Because the pa
 
 I'll be honest with you: I changed my mind at least three times while writing this book.
 
-When I started the chapter on sandboxes, I thought container isolation was overkill for most workflows. By the time I finished it, after an agent had rm -rf'd a directory I cared about on a Tuesday afternoon, I believed sandboxing was non-negotiable. That experience made it into the chapter. The conviction behind it is scar tissue.
+When I started writing about sandboxes, I thought container isolation was overkill for most workflows. By the time I finished it, after an agent had rm -rf'd a directory I cared about on a Tuesday afternoon, I believed sandboxing was non-negotiable. That experience made it into the chapter. The conviction behind it is scar tissue.
 
 I originally wrote the multi-agent chapter with the assumption that orchestrating five or six agents simultaneously was the natural end state — a factory floor of autonomous workers. I've pulled back from that. The coordination overhead is real, the failure modes multiply, and I've found that two or three well-directed agents outperform six unsupervised ones almost every time. The chapter reflects where I landed, but I may land somewhere different in six months.
 
 I was also, for a while, too dismissive of local models. I wrote an early draft that basically said "just use the commercial APIs." Then I spent a weekend running a fine-tuned local model on a codebase with proprietary constraints and realized there's a whole world of use cases where local is not just viable but _necessary_. The chapter on local versus commercial models exists because I was wrong and had to correct myself.
 
-Parts of this book are probably already wrong in ways I can't see yet. The landscape moves that fast. But the specific tools were never the point. If I've helped you build a mental model — a way of thinking about autonomy, trust, and structure — then the book did its job, even when every code example in it is outdated.
+== What Changed My Mind Since the First Edition
+
+The first edition ended with the sentence above about being wrong in ways I couldn't see yet. Six months later, I can see some of them.
+
+*I underestimated security.* The first edition told you to connect your agent to Slack, your database, your error tracker, and your tickets, with a paragraph about least privilege. That was the wrong emphasis. Every one of those integrations is a channel for someone else's text to reach your agent, and the agent can't reliably tell data from instructions. The Agent Attack Surface chapter exists because I got this wrong.
+
+*I thought the bottleneck was orchestration. It's review.* I worried about how to coordinate five agents. Cloud agents made that easy — you can hand out a dozen tasks before lunch. The hard part is that a dozen pull requests come back, and someone has to understand every one of them. Agent capacity is now cheap. Human attention is not. Plan your work around the reviewer, not the agents.
+
+*The local model gap closed faster than I expected.* I said the specifics would be out of date in six months. They were out of date in three. The framework — match the model to the task, and weigh capability, cost, privacy, and speed — held up. The numbers didn't.
+
+*The harness matters as much as the model.* Building agents myself, instead of only using them, taught me how much of what feels like "the model being smart" is really the loop around it: what goes into the context, which tools exist, when it stops, what it's allowed to touch. The same model can feel brilliant in one harness and hopeless in another. That's good news. The harness is engineering, and engineering is our job.
+
+Parts of this edition are probably wrong in ways I can't see yet, too. The landscape moves that fast. But the specific tools were never the point. If I've helped you build a mental model — a way of thinking about autonomy, trust, and structure — then the book did its job, even when every code example in it is outdated.
 
 == The Crew Metaphor, One Last Time
 
@@ -47,6 +59,8 @@ Most days, what I actually do is spin up an agent, give it a job, take the outpu
 And that's fine. That's how most real crews worked throughout maritime history. The ship was the continuity. The captain was the continuity. The charts, the logbook, the rigging — those persisted between voyages. The crew was often assembled for a single crossing and dissolved at the destination. What made it work was not that the sailors knew the captain. It was that the captain knew the _ship_ — and had systems good enough that any competent sailor could step aboard and be useful.
 
 That's what your codebase is. That's what your conventions, your test suites, your CLAUDE.md files, your guardrails are. They're the ship. Every new agent you spin up is a fresh crew member stepping aboard a well-rigged vessel. They don't need to know your history. They need to know the ship. And if you've built the ship well, they'll be productive in minutes.
+
+Even with a good ship's log, that doesn't change. Memory makes the ship smarter, not the sailors. The log is there for whoever comes aboard next.
 
 So yes — throw them overboard. Spin up new ones. That's not a failure of the metaphor. That's the metaphor working exactly as intended. The crew is disposable. The ship is not.
 
@@ -80,5 +94,5 @@ I hope you'll be one of them.
 
 #align(right)[
   _Rasmus Bornhøft Schlünsen_ \
-  _March 2026_
+  _March 2026, revised September 2026_
 ]

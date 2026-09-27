@@ -4,7 +4,7 @@
   image("../assets/illustrations/ch09-mcp-connections.jpg", width: 70%),
 )
 
-Last month I was debugging a production issue — intermittent 502s on a checkout endpoint. The logs were in Datadog. The relevant config was in our Kubernetes cluster. The ticket history was in Linear. The database schema was in PostgreSQL. The code was in my editor.
+A while back I was debugging a production issue — intermittent 502s on a checkout endpoint. The logs were in Datadog. The relevant config was in our Kubernetes cluster. The ticket history was in Linear. The database schema was in PostgreSQL. The code was in my editor.
 
 I had six browser tabs open, copying and pasting between them, trying to assemble enough context to understand the problem. The agent sat in my terminal, ready to help, but it could only see my local files. It was like having a brilliant colleague chained to a desk — eager to help, but blind to everything outside the repo.
 
@@ -44,32 +44,32 @@ Tool integrations eliminate that middleware layer. The agent queries Datadog dir
 
 == The Practical Setup
 
-Setting up MCP servers is simpler than it sounds. Most agent frameworks that support MCP — Claude Code, Cline, Continue, and others — let you configure servers in a JSON file. Here's what a typical configuration looks like:
+Setting up MCP servers is simpler than it sounds. Virtually every agent harness now speaks MCP — Claude Code, Codex, Cursor, Copilot, Gemini CLI, Cline, and plenty more — and most let you declare servers in a config file, per project or per user.
+
+Servers come in two flavours. A *local* server runs as a process on your machine, and the agent talks to it over standard input and output (stdio). A *remote* server runs somewhere else — usually hosted by the vendor whose system it wraps — and the agent talks to it over HTTP. Here's what a configuration with one of each might look like:
 
 ```json
+// Illustrative — exact syntax varies by tool
 {
   "mcpServers": {
-    "postgres": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres"],
-      "env": {
-        "DATABASE_URL": "postgresql://user:pass@localhost:5432/mydb"
-      }
-    },
     "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_TOKEN": "ghp_..."
-      }
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "internal-deploy": {
+      "command": "node",
+      "args": ["./tools/internal-deploy/server.js"]
     }
   }
 }
 ```
+// v2-verify: GitHub remote MCP URL (api.githubcopilot.com/mcp/) and the "type": "http" key match Claude Code's .mcp.json format at publication.
 
-That's it. Two servers. Your agent can now query your database and interact with GitHub — read issues, check PR status, search code. The servers start automatically when the agent session begins. No code to write. No plugins to install beyond the MCP server packages.
+That's it. Two servers. The first is GitHub's official remote server — your agent can now read issues, check PR status, and search code. The second is a small internal server of the kind we'll build in a moment, started as a local process when the session begins.
 
-The ecosystem is growing fast. As of early 2026, there are community-maintained MCP servers for:
+Notice what's missing from the remote entry: a token. The MCP spec builds authorisation for remote servers on OAuth, and most harnesses support it. The first time the agent connects, a browser window opens, you log in, you approve the scopes, and the harness holds the resulting token. No long-lived personal access token pasted into a JSON file that ends up in someone's dotfiles repo. That alone is a good reason to prefer an official remote server where one exists.
+
+When I wrote the first edition, most MCP servers were community side projects. That's changed. Many vendors now build and host their own official servers — GitHub, Sentry, Linear, Atlassian, Stripe, Notion, and a long list of others — and there's an official MCP Registry where servers are published and discovered, much like a package registry. Between the official servers and the community ones, the categories cover most of what an engineer touches in a day:
 
 - *Databases:* PostgreSQL, MySQL, SQLite, MongoDB, Redis
 - *Project management:* GitHub, GitLab, Linear, Jira, Notion
@@ -98,10 +98,15 @@ const server = new McpServer({
   version: "1.0.0",
 });
 
-server.tool(
+server.registerTool(
   "get-deploy-status",
-  "Get the current deployment status for a service",
-  { service: z.string().describe("Service name, e.g. 'checkout-api'") },
+  {
+    title: "Get deploy status",
+    description: "Get the current deployment status for a service",
+    inputSchema: {
+      service: z.string().describe("Service name, e.g. 'checkout-api'"),
+    },
+  },
   async ({ service }) => {
     const status = await fetchDeployStatus(service);
     return {
@@ -113,10 +118,15 @@ server.tool(
   }
 );
 
-server.tool(
+server.registerTool(
   "list-recent-deploys",
-  "List recent deployments across all services",
-  { hours: z.number().default(24).describe("How many hours back") },
+  {
+    title: "List recent deploys",
+    description: "List recent deployments across all services",
+    inputSchema: {
+      hours: z.number().default(24).describe("How many hours back"),
+    },
+  },
   async ({ hours }) => {
     const deploys = await fetchRecentDeploys(hours);
     return {
@@ -136,38 +146,15 @@ await server.connect(transport);
 
 That's a working MCP server. It exposes two tools: one to check a specific service's deploy status, another to list recent deployments. The agent can now ask "what's the deploy status of checkout-api?" and get a real answer from your internal systems.
 
-The pattern is always the same: define a tool with a name, a description, a schema for inputs, and a function that does the work. The description matters more than you'd think — it's what the agent reads to decide _when_ to call your tool. A vague description like "does deploy stuff" will confuse the agent about when to use it. A precise description like "Get the current deployment status for a service, including version, health, and last deploy timestamp" gives the agent exactly the information it needs to call the right tool at the right time.
+The pattern is always the same: register a tool with a name, a description, a schema for its inputs, and a function that does the work. The description matters more than you'd think — it's what the agent reads to decide _when_ to call your tool. A vague description like "does deploy stuff" will confuse the agent about when to use it. A precise description like "Get the current deployment status for a service, including version, health, and last deploy timestamp" gives the agent exactly the information it needs to call the right tool at the right time.
 
 Most custom MCP servers are under 200 lines of code. If you can write an API client, you can write an MCP server. The investment is small and the payoff is immediate: your agent now speaks your infrastructure's language.
 
-== How Tool Calling Actually Works
-
-We've been talking about tools as if the agent just "calls" them — like a function call in your code. But what actually happens under the hood is worth understanding, because it explains a lot of agent behaviour that otherwise seems mysterious.
-
-When you send a message to an agent, the LLM doesn't execute code. It generates text. Tool calling is a structured form of that text generation. Here's the cycle:
-
-+ *You send a prompt.* "What tables exist in the database?"
-+ *The model sees available tools.* Along with your message, the model receives a list of every tool it can use — their names, descriptions, and input schemas. This is part of the system prompt or tool configuration, injected by the agent framework before the model sees your message.
-+ *The model decides to call a tool.* Instead of generating a text response, the model outputs a structured tool call: the tool name and the arguments, formatted as JSON. It's not "running" anything — it's _requesting_ that the framework run something.
-+ *The framework executes the tool.* The agent framework takes that structured output, validates the arguments against the schema, and actually calls the function — queries the database, reads the file, hits the API.
-+ *The result goes back to the model.* The tool's output is injected into the conversation as a new message, and the model generates its next response based on that result.
-+ *Repeat.* The model might call another tool, or it might finally respond to you with text. Complex tasks can involve ten, twenty, or more tool calls in sequence, each one informed by the results of the last.
-
-This is the fundamental loop of agentic behaviour. The model _thinks_ about what to do, _acts_ by requesting a tool call, _observes_ the result, and _thinks_ again. It's a reasoning loop with real-world side effects.
-
-Understanding this loop explains several things that trip up new agent users:
-
-*Why agents sometimes call the wrong tool.* The model picks tools based on descriptions and the current conversation context. If two tools have similar descriptions, the model might pick the wrong one. If the description is vague, the model guesses. The tool selection is a _language_ task — the model is pattern-matching your request against tool descriptions, not executing a lookup table.
-
-*Why agents sometimes pass wrong arguments.* The model generates arguments as structured text. If the schema isn't clear about what a parameter means, the model fills in its best guess. A parameter called `id` with no description could be a user ID, an order ID, or a database row ID. The model will guess based on conversation context, and it will sometimes guess wrong.
-
-*Why agents sometimes call tools unnecessarily.* The model doesn't have a cost function for tool calls. It doesn't know that querying the database takes 200ms or that checking Datadog costs API credits. If a tool _might_ be relevant, the model might call it — even when the answer is already in context. This is why curating the tool list matters.
-
-*Why agents get better with better descriptions.* This is the single most important thing to internalise. The model's _only_ information about a tool is its name, description, and parameter schema. Better descriptions lead to better tool selection. Better parameter descriptions lead to better arguments. This isn't a minor optimisation — it's the difference between an agent that works and one that flails.
-
 == Designing Good Tools
 
-If you're building MCP servers — or even just configuring which tools your agent can access — tool design matters enormously. A well-designed tool makes the agent smarter. A poorly designed one makes it confused.
+The What Is an Agent? chapter walked through what actually happens when an agent "calls" a tool: the model reads a list of names, descriptions, and schemas, and emits a structured request that the harness executes. That list is the whole interface. The model never sees your code — only what you wrote _about_ it.
+
+So if you're building MCP servers — or even just choosing which tools your agent can access — tool design matters enormously. A well-designed tool makes the agent smarter. A poorly designed one makes it confused.
 
 Here are the principles I've learned the hard way:
 
@@ -201,6 +188,16 @@ A practical example: you build an MCP server that exposes your database schema a
 
 The combination of tools and resources is powerful. Resources give the agent the _map_. Tools give it the _hands_. Together, they let the agent navigate your infrastructure the way you do — with both knowledge and capability.
 
+== Skills: Teaching, Not Just Connecting
+
+MCP gives an agent _access_. It doesn't give it _know-how_. A Datadog server lets the agent fetch logs; it doesn't tell it how your team actually investigates a 502 — which dashboards to check first, which services are usually the culprit, what "normal" looks like.
+
+That's what *skills* are for. A skill is a folder containing a `SKILL.md` file — a short name and description in YAML frontmatter, followed by instructions — plus any scripts or reference files the instructions need. Only the name and description sit in the agent's context up front. The full body is loaded when the task calls for it. Started by Anthropic and since published as an open standard, skills are supported by a growing number of harnesses.
+
+The two fit together naturally. An "investigate production error" skill can describe your team's playbook step by step, and tell the agent which MCP tools to use at each step. The server is the hands; the skill is the training. And because a skill is just files in a repo, it gets versioned, reviewed in pull requests, and shared like any other code.
+
+Often a skill replaces an MCP server entirely. If the workflow is "run these three commands and interpret the output," a skill with a small script does the job with no server to run. The Articulating Intent and Convention Over Configuration chapters go deeper on writing good skills.
+
 == Trust and Guardrails for Connected Agents
 
 Here's where the guardrails chapter comes back with a vengeance.
@@ -209,23 +206,22 @@ An agent with access to your filesystem can delete files. An agent with access t
 
 The guardrails principles are the same — least privilege, approval gates, read-only defaults — but the implementation needs to be specific to each integration.
 
-*Databases: read-only by default.* Your database MCP server should connect with a read-only user. The agent can query tables, inspect schemas, and understand data shapes. It cannot insert, update, or delete. If you need write access for specific tasks — running a migration in a dev database, inserting test fixtures — use a separate server with a separate connection string, and only enable it when the task requires it.
+*Databases: read-only by default — enforced by the database.* Your database MCP server should connect as a user that _cannot_ write. Not a server that promises not to write. A user that can't.
 
-A minimal safe setup:
+The distinction isn't academic. The original reference Postgres MCP server — the one the first edition of this book used in its examples — advertised itself as read-only. It wrapped every query in a read-only transaction. Researchers at Datadog Security Labs showed that a crafted query could simply end that transaction and run whatever it liked afterwards. The server has since been archived. The lesson is the one I keep coming back to: the read-only guarantee lived in a few lines of someone else's code, and anyone who read those lines closely could see how to step around it.
 
-```json
-{
-  "mcpServers": {
-    "db-readonly": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres"],
-      "env": {
-        "DATABASE_URL": "postgresql://readonly_user:pass@localhost/mydb"
-      }
-    }
-  }
-}
+So put the guarantee where it can't be stepped around — in the database's own permission system:
+
+```sql
+-- A role that can read, and nothing else
+CREATE ROLE agent_readonly LOGIN PASSWORD '...';
+GRANT CONNECT ON DATABASE mydb TO agent_readonly;
+GRANT USAGE ON SCHEMA public TO agent_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO agent_readonly;
+ALTER ROLE agent_readonly SET default_transaction_read_only = on;
 ```
+
+Now it doesn't matter which MCP server you use, or how clever the query is. The database refuses. If you need write access for specific tasks — running a migration in a dev database, inserting test fixtures — use a separate role against a separate database, and only enable it when the task requires it.
 
 *Project management: read and comment, not create.* Let the agent read tickets, search issues, and add comments. Don't let it create tickets, close issues, or reassign work — those are human decisions with human consequences. The engineer who discovers their agent auto-closed twenty tickets because they were "resolved by the code changes" will not have a good morning.
 
@@ -234,6 +230,8 @@ A minimal safe setup:
 *Communication tools: proceed with extreme caution.* Giving an agent access to Slack means it can send messages as you. Think carefully about whether "the agent posted in \#engineering" is something you're comfortable with. If so, scope it to specific channels. If not, let the agent _draft_ messages that you review before sending.
 
 The general principle: every new integration is a new attack surface. Add them deliberately, scope them tightly, and start read-only. Expand permissions only when you've seen enough successful read-only sessions to trust the workflow.
+
+And there's a second half to that principle that's easy to miss. Every integration isn't just a way for the agent to _act_ on the world — it's a way for the world to _talk to the agent_. Every ticket, log line, doc page, and tool description it reads is text from someone else, and the model can't reliably tell data from instructions. A connected agent with broad credentials, reading content anyone can write, is a real security problem, and it has already been exploited in public. That's the subject of the next chapter, The Agent Attack Surface.
 
 == What Changes When Agents Can See Everything
 
@@ -257,7 +255,7 @@ There's a failure mode here, and it's worth naming: integration creep.
 
 You start with a database connection. Then you add Datadog. Then Notion. Then Slack. Then Jira. Then your internal admin panel. Then Stripe. Then your analytics platform. Before long, your agent has access to _everything_, and two problems emerge.
 
-First, *context overload*. The agent now has so many tools available that it spends tokens deciding which one to use. For a simple code change, it might try to check Datadog logs, query the database, and read Jira tickets — none of which are relevant. More tools means more opportunities for the agent to take unnecessary detours.
+First, *context overload*. Every tool you connect has a name, a description, and a schema, and all of it goes into the model's context before you've typed a word. A single server can expose dozens of tools. Connect a handful of servers and you can burn tens of thousands of tokens on tool definitions before any work starts — context the model then can't spend on your code. And a model staring at a hundred tools makes worse choices: for a simple code change, it might check Datadog, query the database, and read Jira tickets, none of which are relevant.
 
 Second, *security surface*. Each integration is a set of credentials the agent can use. Each one is a system the agent can interact with, intentionally or accidentally. The more integrations you add, the harder it is to reason about what the agent can do. You lose the ability to hold the full picture in your head — which is ironic, given that the whole point of agents is to handle complexity you can't.
 
@@ -265,21 +263,29 @@ The fix is the same as with context management: curate deliberately. Don't conne
 
 A useful heuristic: if you wouldn't have a browser tab open to that system during a typical work session on this project, the agent doesn't need access to it either.
 
-== The Ecosystem Is Young
+The tooling has started to help with the context cost, too:
 
-I want to be honest about where things stand. MCP is real, it works, and it's the closest thing we have to a standard for agent-tool integration. But the ecosystem is still maturing.
+*Deferred loading.* Some harnesses no longer put every tool definition in context up front. The model gets a way to _search_ for tools, and full definitions are loaded only when one looks relevant. It's the same progressive-disclosure idea that makes skills cheap.
 
-Some MCP servers are rock-solid — the official database servers, the GitHub server, the filesystem server. Others are community-maintained side projects that may break on edge cases or fall behind on API changes. Before connecting your agent to a critical system through a third-party MCP server, read the source. It's usually a few hundred lines. Understand what it does, what permissions it requests, and what data it sends where.
+*Code execution instead of direct calls.* Another pattern presents MCP servers to the agent as code libraries. Instead of calling a tool, dumping ten thousand log lines into context, and calling another tool, the agent writes a short script that fetches the logs, filters them, and returns only the three lines that matter. The intermediate data never touches the context window.
 
-The protocol itself is still evolving. New capabilities — streaming responses, OAuth flows, multi-step tool interactions — are being added. The servers you set up today might need updating in six months. That's fine. The pattern doesn't change, even when the specifics do.
+*A CLI the model already knows.* This is the unglamorous one, and often the best. Models have seen enormous amounts of `gh`, `psql`, `kubectl`, `aws`, and `git` usage in training. If the agent has a shell, a well-known CLI costs zero tokens of tool definitions, and the model already knows how to drive it. Before adding an MCP server, ask whether a CLI would do. Reach for MCP when there's no good CLI, when you want OAuth instead of a token in the shell environment, or when you want tighter control over exactly which operations are exposed.
 
-And some integrations that _should_ exist don't yet. If your team uses a niche internal tool, you'll probably need to build the MCP server yourself. The good news is that it's not hard — a few hours at most for a basic read-only server. The better news is that once you build it, everyone on your team benefits, and every future agent session has access to that system.
+// v2-verify: confirm "tool search"/deferred MCP tool loading is shipping in Claude Code (and ideally one other harness) at publication.
 
-This is the same early-adopter curve we've seen with every developer tool ecosystem. The people who invest now — building servers, contributing to the standard, figuring out the patterns — will have a significant advantage when the ecosystem matures. And it will mature. The problem MCP solves is too real and too universal for it not to.
+== The Ecosystem Is Growing Up
+
+In the first edition, this section was called "The Ecosystem Is Young," and I predicted it would mature because the problem MCP solves is too real and too universal for it not to. That's broadly what happened. MCP is no longer one company's project — it now sits under the Linux Foundation's Agentic AI Foundation, alongside AGENTS.md. Almost every agent harness supports it. The vendors whose systems you use every day ship their own servers, and there's a registry to find them.
+
+Growing up also meant some pruning. Several of the original reference servers — including the Postgres and GitHub ones the first edition used as examples — were archived, replaced by vendor-maintained servers or simply retired. The protocol moved on too: remote servers now use a streamable HTTP transport and OAuth-based authorisation, and the older ways of doing both were phased out. The servers you set up today may still need updating next year. That's fine. The pattern doesn't change, even when the specifics do.
+
+What hasn't changed is the advice to read the source. Maturity at the protocol level says nothing about any individual server. An official, vendor-hosted server is a reasonable default. For anything else — especially anything that touches a critical system — read the code before you connect it. It's usually a few hundred lines. Understand what it does, what permissions it requests, and what data it sends where. The Postgres story above is what happens when nobody does.
+
+And some integrations that _should_ exist still don't. If your team uses a niche internal tool, you'll need to build the server yourself. The good news is that it's not hard — a few hours at most for a basic read-only server. The better news is that once you build it, everyone on your team benefits, and every future agent session has access to that system.
 
 == Start Here
 
-If you're going to set up one integration today, make it your database. The ability to say "check the schema for the users table" or "what indexes exist on the orders table" eliminates an entire category of context-switching. A read-only database connection is low-risk, high-reward, and takes five minutes to configure.
+If you're going to set up one integration today, make it your database. The ability to say "check the schema for the users table" or "what indexes exist on the orders table" eliminates an entire category of context-switching. Connected through a read-only database role, it's low-risk, high-reward, and takes minutes to configure.
 
 If you're going to set up two, add your project management tool — GitHub Issues, Linear, Jira, whatever your team uses. The ability to say "read ticket PROJ-1234 and implement it" or "what tickets are assigned to me this sprint" turns the agent from a code generator into a task executor.
 

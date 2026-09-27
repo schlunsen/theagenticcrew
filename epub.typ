@@ -1,5 +1,6 @@
 // The Agentic Crew — EPUB source
 // Stripped of PDF-only features (page layout, headers, counters)
+// Kept in sync with book.typ (second edition).
 
 #set document(
   title: "The Agentic Crew",
@@ -13,11 +14,11 @@
 
 = The Agentic Crew
 
-_How software engineers learn to build with agents_
+_Engineering in the age of AI agents_
 
 Rasmus Bornhøft Schlünsen
 
-Draft — March 2026
+Second Edition — September 2026
 
 // ─── Dedication ───
 
@@ -27,35 +28,79 @@ _To my kids — you're the best crew I've ever had. This whole thing was for you
 
 == Foreword
 
-I've been a software engineer for a long time. I know what it feels like to have a codebase in your head — to open an editor, navigate to the right file, and just _write_ the thing. That muscle memory, built over years of keystrokes and debugging sessions, is real. It's earned.
+It was a Tuesday evening, sometime last year. My kids were asleep, and I was staring at a migration script I'd been dreading all week — the kind of tedious, table-by-table reshuffling that eats an entire day if you're careful, and destroys production if you're not. On a whim, I described the problem to an agent. Schema here, constraints there, watch out for this foreign key. Then I hit enter and went to make tea.
 
-And now the ground is shifting under our feet.
+When I came back, the script was done. Not a rough draft. _Done._ Correct edge cases, rollback logic, comments I would have written myself. I sat there for a long time, tea going cold, feeling two things at once: genuine awe — and a quiet, creeping dread.
 
-AI agents can write code, run tests, refactor modules, and ship pull requests. Not perfectly — but well enough that ignoring them is no longer an option. For engineers like us, this raises an uncomfortable question: if the machine can do what I do, what's left for me?
+Because that migration? That was _my_ thing. I was the person on the team who could hold the whole schema in my head, who knew which joins were cursed, who could write the careful SQL by hand. Fifteen years of muscle memory, and an LLM had just matched it in four minutes while I boiled water.
 
-This book is my answer. The craft isn't dying — it's evolving. We're moving from writing every line by hand to something more like directing, orchestrating, and collaborating. Less typing, more thinking. Less editor, more engineering. The skills that got us here — systems thinking, taste, judgement, knowing what to build and why — those matter _more_ now, not less.
+I want to be honest with you: I didn't sleep well that night. I lay in bed running the same loop every engineer I know has run. _What am I for now? What happens to the craft I spent half my life building? Am I training my replacement?_
 
-But the transition is messy. I wrote this book because I'm living it, and I know you are too.
+It took me months — and a lot of building, failing, and rebuilding with these tools — to find the answer. And the answer surprised me. The craft isn't dying. It's _molting._ The outer shell — the keystrokes, the syntax, the boilerplate — that part is falling away. But the animal underneath? The part that knows _what_ to build and _why_, that smells a bad abstraction from three files away, that can hold a whole system in mind and feel where it's fragile? That part is more alive than ever.
 
-_Rasmus Bornhøft Schlünsen — March 2026_
+
+We're not being replaced. We're being promoted. From typists to thinkers. From writing code to directing it — orchestrating, reviewing, shaping. The skills that made you a good engineer — systems thinking, taste, judgement, the instinct for simplicity — those are the _whole game_ now, not just the background hum.
+
+But nobody gave us a manual for this transition. It's messy and uncomfortable and sometimes humbling. I wrote this book because I'm living through it, and I have a feeling you are too. These pages are everything I've learned about working _with_ the agents instead of against them — or worse, pretending they don't exist.
+
+If you've ever watched an AI write code that looked like yours and felt your stomach drop, this book is for you. Keep reading. It gets better — and stranger — than you think.
+
+_Rasmus Bornhøft Schlünsen_ — _March 2026_
+
+
+
+
+
+== Preface to the Second Edition
+
+The first edition of this book came out in March 2026. Six months later, I'm writing a second one. In most fields that would be embarrassing. In this one, it's overdue.
+
+A lot moved in those six months. Agent instruction files converged on a shared standard. Skills turned the prompt library into something you can version, review, and load on demand. The "overnight agent" I described as a hand-rolled shell script became a product feature — you assign an issue, and a pull request comes back. Open-weight models closed much of the gap I described in the models chapter. And prompt injection went from a curiosity to a string of real, public incidents involving the exact integrations I'd cheerfully told you to set up.
+
+Something moved for me, too. I spent most of those months _building_ agentic systems rather than just driving them — writing the loops, the tools, the handovers, and the guardrails myself. Sitting on the other side of the harness changed how I think about everything in this book. It made me a better user of agents, mostly by taking away the last of my surprise.
+
+Here's what's new in this edition:
+
+- *A new chapter on the agent attack surface* — prompt injection, poisoned tools, and supply-chain attacks, and how to limit the blast radius. This was the biggest gap in the first edition.
+- *A new chapter on building your own agents* — for when you move from using a coding agent to shipping agents inside your own products and pipelines.
+- *Context, conventions, and prompting updated* for how the field now works: context engineering, compaction, `AGENTS.md`, skills, hooks, and plan-first workflows.
+- *The models chapter rewritten*, and the pipeline and orchestration chapters updated for cloud agents that do the work and send you a pull request.
+- *A new appendix, "The State of the Tools"*, where I've moved the specific model names, prices, and product details that go out of date fastest. The chapters should age better as a result. The appendix won't — that's its job.
+- *Corrections.* A few commands and examples in the first edition were wrong. For a book that warns you about hallucinated libraries, that stung. They're fixed.
+
+What didn't change is the core of the book: context, guardrails, tests, conventions, and judgement. If anything, the last six months made me more confident that those are the parts that last. The tools keep changing. The ship is still the ship.
+
+_Rasmus Bornhøft Schlünsen_ — _September 2026_
 
 // ─── Chapters ───
 
 #include "chapters/01-introduction.typ"
-#include "chapters/02-context.typ"
-#include "chapters/03-what-is-an-agent.typ"
-#include "chapters/04-guardrails.typ"
+#include "chapters/02-what-is-an-agent.typ"
+#include "chapters/03-context.typ"
+#include "chapters/04-guardrails-trust-and-sandboxes.typ"
 #include "chapters/05-git.typ"
-#include "chapters/06-sandboxes.typ"
-#include "chapters/07-testing-as-the-feedback-loop.typ"
-#include "chapters/08-convention-over-configuration.typ"
-#include "chapters/09-tool-integrations.typ"
-#include "chapters/10-local-vs-commercial-llms.typ"
-#include "chapters/11-prompting-as-engineering.typ"
+#include "chapters/06-testing-as-the-feedback-loop.typ"
+#include "chapters/07-convention-over-configuration.typ"
+#include "chapters/08-the-ships-log.typ"
+#include "chapters/09-extending-the-agents-reach.typ"
+#include "chapters/09b-the-agent-attack-surface.typ"
+#include "chapters/10-articulating-intent.typ"
+#include "chapters/11-local-commercial-and-hybrid-models.typ"
 #include "chapters/12-multi-agent-orchestration.typ"
-#include "chapters/13-cicd-and-agents.typ"
-#include "chapters/14-war-stories.typ"
-#include "chapters/15-agents-as-pentesters.typ"
-#include "chapters/16-when-not-to-use-agents.typ"
-#include "chapters/17-agentic-teams.typ"
-#include "chapters/18-final-words.typ"
+#include "chapters/13-agents-in-the-pipeline.typ"
+#include "chapters/13b-building-your-own-agents.typ"
+#include "chapters/14-when-agents-get-it-wrong.typ"
+#include "chapters/15-when-not-to-use-agents.typ"
+#include "chapters/16-agentic-teams.typ"
+#include "chapters/17-final-words.typ"
+
+// ─── Appendices ───
+
+#heading(outlined: true, numbering: none)[Appendix A: Agents as Pentesters]
+
+#include "chapters/appendix-a-agents-as-pentesters.typ"
+
+#heading(outlined: true, numbering: none)[Appendix B: The State of the Tools (September 2026)]
+
+#include "chapters/appendix-b-state-of-the-tools.typ"
+

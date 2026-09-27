@@ -12,6 +12,8 @@ For complex tasks that would take you an hour, spending two minutes on prompt an
 
 Renaming a variable. Fixing a typo. Tweaking a config value. Adding a log line. These are muscle-memory tasks. Your fingers know the keystrokes. By the time you've typed a prompt describing what you want, you could have already done it.
 
+There's evidence for this, too. In a 2025 randomised trial by METR, experienced open-source developers working in codebases they knew intimately were measurably _slower_ with AI tools — while believing they'd been faster. The tools have improved since, but the lesson holds: the better you know the code, the smaller the task, the more likely the agent's overhead eats the gain. And your sense of how fast you went is not a measurement.
+
 This isn't a failure of agents. It's arithmetic. Small tasks have small payoffs, and the fixed cost of agent interaction eats the margin. Don't let the novelty of agents trick you into using them for everything. Some work is just faster by hand.
 
 == Novel Architecture Decisions
@@ -33,6 +35,12 @@ Security bugs are different from regular bugs. A broken sort function produces w
 Agents produce plausible code. That's their strength and, in security contexts, their danger. A subtle flaw in a JWT validation flow, a missing check on a redirect URL, a timing side-channel in a password comparison — these are the kinds of mistakes that survive code review because they _look right_.
 
 Write security-critical code yourself. Review it carefully. Get a second pair of human eyes on it. If you do use an agent to draft security code, treat that draft with more suspicion than you'd give a junior developer's first attempt, not less.
+
+There's an asymmetry worth using, though. Agents are poor _authors_ of security-critical code and surprisingly useful _critics_ of it. Asking an agent to attack your auth flow — "find every way this token check could be bypassed" — costs little, and a plausible-but-wrong answer costs you only the time to check it. Let the agent hunt. Keep the pen.
+
+== When the Agent Would Read Hostile Input
+
+One more situation deserves a hard stop, and it's new since the first edition. If a task requires the agent to read content an outsider controls — public issues, inbound emails, scraped web pages, user uploads — _and_ to act with real privileges at the same time, don't hand it to a single agent. Either strip the privileges, keep the agent away from the untrusted content, or put a human between reading and acting. The Agent Attack Surface chapter explains why. The short version: an agent that reads a stranger's text with your keys in its pocket works for whoever wrote the text.
 
 == When You Need to Learn
 

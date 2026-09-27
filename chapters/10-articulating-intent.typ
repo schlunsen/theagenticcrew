@@ -67,34 +67,29 @@ This isn't just good prompting — it's good engineering. You're applying the sa
 
 == Prompting for Parallelism
 
-Here's something most people miss: you can tell the agent to parallelise.
+Here's something people still miss: you can tell the agent to parallelise.
 
-Modern agentic tools — Claude Code, Cursor, Cline — can launch sub-agents. Each sub-agent gets its own context, its own workspace, its own thread of execution. They run simultaneously. The parent agent coordinates, waits for results, and assembles the output. This isn't some hidden feature you need to unlock. It's right there. But almost nobody prompts for it.
+Sub-agents are now standard in the major agent tools. Each one gets its own context and its own thread of execution. The parent agent hands out the work, waits, and assembles the results. It's right there — but agents default to doing things one at a time, because sequential is safe. Unless you ask.
 
-Consider the difference. You have a feature that touches three independent modules — the API, the worker, and the notification service. The sequential approach:
+Say a feature touches three independent modules — the API, the worker, and the notification service. The sequential prompt:
 
 _"Implement the webhook handler in the API module. Then update the worker to process webhook events. Then add notifications for failed webhooks."_
 
-The agent does each step one at a time. Twenty minutes, maybe thirty. Fine.
-
-Now the parallel approach:
+The parallel prompt:
 
 _"This feature touches three independent modules. Launch sub-agents to work on them in parallel: one for the webhook handler in the API module, one for the worker that processes webhook events, and one for the notification service that alerts on failures. Each module has its own directory and its own tests. Merge the results when all three are done."_
 
-Same work. A third of the wall-clock time. The key word in that prompt is _independent_ — you're telling the agent that these pieces don't depend on each other, so it's safe to parallelise. You're giving it permission to be fast.
+Same work, a fraction of the wall-clock time. The key word is _independent_. You have the architectural overview — you know which modules are coupled and which aren't. The agent doesn't always. Your job is to see the parallelism and make it explicit.
 
-This works because _you_ have the architectural overview. You know which modules are coupled and which aren't. You know which pieces can be built simultaneously and which need to be sequential. The agent doesn't always know this — it defaults to doing things one at a time, because sequential is safe. Your job is to see the parallelism and make it explicit.
+A few phrasings that work:
 
-Some prompting patterns that encourage parallelism:
+- *"These tasks are independent — run them in parallel."* Direct permission.
+- *"Work on the API and the frontend simultaneously — they share the interface in `types.ts` but don't depend on each other's implementation."* Tells the agent _why_ parallelism is safe.
+- *"Use a sub-agent to survey how errors are handled across the codebase and report back a summary."* Parallelism for research, too — and it keeps the exploration noise out of your main context.
 
-- *"These tasks are independent — run them in parallel."* Direct and effective. The agent knows it has permission.
-- *"Launch a sub-agent for each of these."* Explicit instruction to use the parallel execution capability.
-- *"Work on the API and the frontend simultaneously — they share the interface defined in `types.ts` but don't depend on each other's implementation."* Context about _why_ parallelism is safe.
-- *"Start all three and report back when they're done."* Frames it as a coordination task, which is exactly what it is.
+The same thinking now extends beyond your terminal. Background and cloud agents — OpenAI Codex, GitHub's Copilot coding agent, Cursor's background agents, Claude Code on the web, and others — let you delegate a whole task and get a pull request back later. That changes what a prompt is for. A delegated task can't tap you on the shoulder halfway through, so the prompt has to stand on its own: the outcome, the constraints, how to verify. Everything in this chapter applies twice over.
 
-The mental model shift is subtle but important. You're not just telling the agent _what_ to build — you're telling it _how to organise the work_. You're being a tech lead, not just a ticket writer. You're saying "I've looked at this problem, I see three independent streams, and I want you to staff all three simultaneously."
-
-This is the engineering leverage that experienced developers bring to agentic work. A junior engineer might not know which pieces are safe to parallelise. You do. And when you encode that knowledge into the prompt, the agent becomes dramatically faster — not because it's smarter, but because you gave it a better plan.
+You're not just telling the agent _what_ to build — you're telling it _how to organise the work_. That's being a tech lead, not a ticket writer.
 
 == The Prompt as a Spec
 
@@ -110,6 +105,26 @@ A good spec also considers what the agent already has access to. You don't need 
 
 Writing prompts this way takes practice. It also takes discipline — the discipline to think through what you actually want before you start typing. But that discipline pays dividends. A well-specified prompt produces a result you can merge. A vague prompt produces a result you have to rewrite.
 
+== Plan Before You Build
+
+For anything bigger than a small fix, the most useful prompt you can write often isn't "do this." It's "tell me how you'd do this."
+
+Ask for a plan first. Most agent tools now have a plan mode — in Claude Code it's a read-only permission mode where the agent can explore the codebase but can't edit anything — and where they don't, you can simply say it: _"Don't change any code yet. Read the relevant files and propose a plan: which files you'll touch, what you'll change, and how you'll verify it."_
+
+Then read the plan. Properly. This is the cheapest review you'll ever do. A wrong assumption caught in a ten-line plan costs you a sentence of correction. The same wrong assumption caught in a four-hundred-line diff costs you the whole diff. You'll find the agent planning to add a dependency you don't want, or missing the module that actually owns the behaviour, or solving a slightly different problem from the one you meant. Fix it in the plan. Then say "go."
+
+The pattern that's emerged for serious work has three phases:
+
++ *Research.* The agent explores — reads the code, traces the flow, finds the relevant tests — and writes down what it learned.
++ *Plan.* From that research, it proposes concrete steps. You review and correct.
++ *Implement.* It executes the approved plan, step by step, verifying as it goes.
+
+Between phases, it often pays to start fresh or compact the session, carrying forward only the research notes or the plan. Exploration leaves a lot of noise in the context window, and implementation works better without it. The Context chapter covers why.
+
+Spec-driven development is the formalised version of the same idea. Tools like GitHub's Spec Kit and AWS's Kiro structure the work as spec → plan → tasks before any code gets written, with each artefact saved to the repo where it can be reviewed like anything else. Whether you adopt one of those tools or just keep a `plan.md` next to your branch, the principle is the one from the previous section: the prompt is a spec. Plan mode just makes the agent help you write it — and gives you a checkpoint to catch misunderstandings before they become code.
+
+You don't need this for a one-line fix. You do need it whenever you'd have wanted a design conversation with a human colleague before they started.
+
 == Iteration Over Perfection
 
 Your first prompt won't be perfect. That's fine. Prompting is an iterative process, and the skill isn't in writing the perfect prompt — it's in _reading the output_, understanding where the communication broke down, and refining.
@@ -124,45 +139,41 @@ Each iteration tightens the loop. First prompt gets you 70% of the way. A follow
 
 == Voice-Driven Development
 
-Most of us prompt by typing. That makes sense — we are engineers, we live in text. But there is another input channel that is faster, more natural, and surprisingly underused: your voice.
+Most of us prompt by typing. That makes sense — we're engineers, we live in text. But there's another input channel that's faster, more natural, and surprisingly underused: your voice.
 
-Let me be honest: the first time I tried speaking a prompt instead of typing it, I felt ridiculous. There is something deeply awkward about talking to your editor. You feel self-conscious. You stumble over your words. You wonder if this is really how serious engineering gets done. That initial discomfort is real, and it stops most people from ever trying again.
+I'll be honest: the first time I spoke a prompt instead of typing it, I felt ridiculous. There's something deeply awkward about talking to your editor. You feel self-conscious, you stumble, you wonder if this is really how serious engineering gets done. That discomfort stops most people from ever trying again.
 
 Push through it. The payoff is enormous.
 
-Modern speech-to-text has reached the point where you can speak a prompt into your terminal and have it transcribed with near-perfect accuracy. Tools like Whisper, macOS Dictation, and SuperWhisper let you talk to your agent instead of typing. The result is the same — text goes in, code comes out. But the experience is fundamentally different.
+Speech-to-text is now good enough that you can talk to your agent and get a near-perfect transcript. Tools like Whisper, macOS Dictation, and SuperWhisper all do the job. Text goes in, code comes out — same as typing. But the experience is fundamentally different.
 
-Here is why: typing and speaking are different modes of thinking. When you type, you edit as you go. You delete a word, rephrase, backspace, restructure. The text you produce is _polished_ — you had time to smooth out the rough edges before it left your fingers. Speaking doesn't give you that luxury. When you speak, you commit. The words leave your mouth and they're gone. There is no backspace.
+Typing and speaking are different modes of thinking. When you type, you edit as you go — delete, rephrase, restructure. When you speak, you commit. There's no backspace.
 
-This sounds like a disadvantage. It is actually a training ground.
+That sounds like a disadvantage. It's actually a training ground.
 
-When you speak a prompt, you are forced to organise your thoughts _before_ you open your mouth. You cannot rely on the crutch of editing mid-sentence. You have to know what you want, structure it mentally, and deliver it clearly — in real time. The first few times you try this, you will ramble. You will say "uh" and "um" and circle back and contradict yourself. The agent will receive a messy transcript, and the output will reflect that mess.
+Speaking forces you to organise your thoughts _before_ you open your mouth. The first few times, you'll ramble. You'll say "um", circle back, contradict yourself — and the agent's output will reflect the mess. But keep at it and you get better. Not just at prompting — at _speaking clearly about technical problems_. You learn to front-load context, state constraints early, and finish with a clear ask.
 
-But something happens if you keep doing it. You get better. Not just at prompting — at _speaking clearly about technical problems_. You develop the ability to describe a bug, a feature, or a refactoring task in a single coherent stream. You learn to front-load context, state constraints early, and finish with a clear ask. You stop rambling because rambling produces bad results.
-
-This skill transfers everywhere. Standup meetings. Architecture discussions. Pair programming. Incident calls. Every situation where you need to articulate a technical idea clearly, under time pressure, without the safety net of a text editor. Voice-driven development is not just a faster way to prompt — it is practice for every technical conversation you will ever have.
+That skill transfers everywhere: standups, architecture discussions, pair programming, incident calls. Voice-driven development isn't just a faster way to prompt — it's practice for every technical conversation you'll ever have.
 
 === The Context Advantage
 
-There is also a practical speed advantage. Most people speak at 130 words per minute. Most people type at 40 to 80. But speed is only half the story. The real advantage is _volume of context_.
+Most people speak at around 130 words per minute and type at 40 to 80. But speed is only half the story. The real advantage is _volume of context_.
 
-Think about what happens when you type a prompt. There is a cost to every character — the physical effort of pressing keys, the mental overhead of spelling and formatting, the fatigue that builds over a long session. That cost acts as a filter. You unconsciously abbreviate. You leave out background. You skip the "obvious" context that is only obvious to you. By the time you hit enter, your prompt is a compressed summary of what you actually know about the problem.
+Every typed character has a cost — the keystrokes, the spelling, the fatigue that builds over a long session. That cost acts as a filter. You abbreviate. You skip the "obvious" context that's only obvious to you. By the time you hit enter, your prompt is a compressed summary of what you actually know.
 
-Now think about what happens when you speak. The friction drops to nearly zero. You can describe the full history of a bug — how you first noticed it, what you already tried, why the obvious fix did not work, what you suspect the root cause might be. You can narrate your mental model of the system. You can provide the kind of rich, layered context that we talked about in the context chapter — the intent, the constraints, the tribal knowledge — without the fatigue of typing it all out.
+Speaking drops that friction to almost nothing. You can describe the full history of a bug — how you noticed it, what you tried, why the obvious fix didn't work, what you suspect. You can narrate your mental model of the system: the intent, the constraints, the tribal knowledge the Context chapter talks about.
 
-I have found that my spoken prompts routinely contain two to three times as much useful context as my typed ones. Not because I am a slow typist, but because typing is _tiring_ in a way that speaking is not. Over a long engineering session — the kind where you are steering agents through a complex feature for hours — typing fatigue is real. Your prompts get shorter. Your context gets thinner. Your agent's output gets worse. Speaking eliminates that decay. You can provide the same quality of context in hour four as you did in hour one, because your voice does not get tired the way your fingers do.
-
-This is the underappreciated argument for voice input: it is not just faster, it is _more sustainable_. The engineer who speaks their prompts can maintain high-quality context delivery across an entire work session. The engineer who types will, inevitably, start cutting corners as the day wears on.
+I've found my spoken prompts routinely carry two to three times as much useful context as my typed ones. Not because I'm a slow typist, but because typing is _tiring_ in a way speaking isn't. Hours into steering agents through a complex feature, typed prompts get shorter, context gets thinner, and output gets worse. Your voice doesn't decay the way your fingers do. That's the underappreciated argument: voice isn't just faster, it's _more sustainable_.
 
 === Getting Started with Voice
 
-Try it for a week. Pick a speech-to-text tool, wire it into your workflow, and speak your prompts instead of typing them. The first day will feel awkward. By the third day, you will notice your spoken prompts getting tighter. By the end of the week, you will notice your _spoken communication in general_ getting tighter.
+Try it for a week. Pick a speech-to-text tool, wire it into your workflow, and speak your prompts. The first day will feel awkward. By the third, your spoken prompts will be tighter. By the end of the week, your _spoken communication in general_ will be tighter.
 
-Here is a practical workflow that works well: open a recorder in your editor or terminal, speak your thoughts, let the transcription run, and then review the text before sending it to the agent. You do not have to go fully live — a quick review pass lets you catch the worst rambling while still getting the speed and context benefits of speech. Over time, you will need that review step less and less.
+You don't have to go fully live. Speak, let the transcription run, give the text a quick review, then send it. The review catches the worst rambling while keeping the speed and context benefits. You'll need it less over time.
 
-It is also worth noting that speech-to-text models can run entirely on your machine. NVIDIA's Parakeet family of models — compact, high-accuracy ASR models — run locally without any cloud dependency. Tools like SuperWhisper and whisper.cpp do the same using OpenAI's Whisper weights. A modern MacBook can run these models in near real-time with accurate transcription and low latency. You do not need a cloud service to turn speech into text — the local tooling is already there. And yes, there is a pleasing irony in using locally running AI to transcribe your voice so that another AI can act on it.
+And you don't need a cloud service. Speech recognition runs happily on your own machine — NVIDIA's compact Parakeet models, or whisper.cpp and SuperWhisper using OpenAI's Whisper weights. A modern MacBook transcribes in near real time. There's a pleasing irony in using a local AI to transcribe your voice so another AI can act on it.
 
-The agents don't care whether your prompt was typed or spoken. But _you_ will be a clearer thinker for having spoken it — and you will have given your agent far more to work with.
+The agents don't care whether your prompt was typed or spoken. But _you'll_ be a clearer thinker for having spoken it — and your agent will have far more to work with.
 
 == Visual Context: When Words Aren't Enough
 
@@ -199,7 +210,7 @@ Some prompting habits consistently produce poor results. Learn to recognise them
 
 *Kitchen-sink prompts.* "Fix the auth bug, also refactor the database layer, and while you're at it update the README and add TypeScript types to the API client." These are four separate tasks jammed into one prompt. The agent will attempt all of them, do none of them well, and produce a diff so large that reviewing it takes longer than doing the work yourself. One prompt, one task.
 
-*Assuming shared context.* "Do it the same way we did the payments module." The agent doesn't remember your last session. It doesn't know what "we" decided in standup. Every prompt starts from scratch. Provide the context explicitly, every time.
+*Assuming shared context.* "Do it the same way we did the payments module." Unless you've built the memory — an instruction file, the tool's memory feature, notes the agent wrote and re-reads, as the Ship's Log chapter describes — the agent doesn't remember your last session. It certainly doesn't know what "we" decided in standup. And even when the memory exists, don't bet on the agent retrieving the right piece of it. If something matters for this task, say it — or point straight at where it's written down.
 
 *Doing the agent's job for it.* You spend five minutes grepping through the codebase to find the exact file, line number, and function name, then paste all of that into your prompt. That's work the agent's tools can do in seconds. Provide the _problem_ — the symptom, the context, the failing test name. Let the agent investigate. That's what its tools are for. Your time is better spent on the parts the agent _can't_ do: understanding the domain, defining the constraints, knowing why this behaviour is wrong in the first place.
 
@@ -209,19 +220,25 @@ Here's something most engineers don't think about until it bites them: your prom
 
 The `CLAUDE.md` file is already versioned — it lives in git. But the prompts you type into agent sessions? They're ephemeral. You discover a phrasing that works beautifully for database migrations, use it for a month, then one day rephrase it slightly and the output degrades. You can't diff what you changed because the old prompt was never written down.
 
-The fix is simple: keep a prompt library. A directory in your project — `prompts/` or `.agent/prompts/` — with your team's proven prompt templates. Not rigid scripts, but starting points:
+The fix is to write them down where the agent can use them. In the first edition of this book I suggested a `prompts/` folder of templates. That still works, but the tools have since given us something better: skills and custom slash commands.
+
+A custom slash command is a Markdown file in your repo — in Claude Code, `.claude/commands/new-endpoint.md` becomes `/new-endpoint` — containing the prompt you'd otherwise retype. A skill goes further: a folder with a `SKILL.md` file (a name, a short description, then the instructions) plus any scripts or reference files it needs. The agent only sees the name and description up front and loads the rest when the task calls for it, so you can keep dozens of them without bloating every session. Agent Skills started in Claude Code and have since been published as an open standard that other tools support.
 
 ```
-prompts/
-  new-endpoint.md      — "Add a REST endpoint following our pattern..."
-  refactor-module.md   — "Refactor this module. Preserve all tests..."
-  debug-test-failure.md — "This test is failing. Read the error..."
-  migration.md         — "Write a database migration that..."
+.claude/
+  commands/
+    debug-test-failure.md   — "This test is failing. Read the error..."
+  skills/
+    new-endpoint/
+      SKILL.md              — our endpoint pattern, contract-first
+    db-migration/
+      SKILL.md              — migration rules + rollback checklist
+      check_migration.sh
 ```
 
-Each file contains the prompt template plus notes on what works and what doesn't. "Include the API contract in the prompt or the agent will invent its own." "Always specify 'no new dependencies' or you'll get a dependency avalanche." These are your team's hard-won lessons about communicating with agents, stored where they compound.
+Either way, the files hold your team's hard-won lessons about communicating with agents. "Include the API contract or the agent will invent its own." "Always specify no new dependencies or you'll get a dependency avalanche." Because they live in git, they get versioned, diffed, and reviewed in pull requests like any other code. When someone improves the migration skill, the whole team gets the improvement on their next pull. The Convention Over Configuration chapter goes deeper on how these fit alongside instruction files.
 
-Evaluation is the other half. When you change a prompt — or change models, or update your `CLAUDE.md` — how do you know the output got better and not worse? For critical prompts, keep a small set of test cases. Run the prompt against them before and after the change. This isn't formal benchmarking — it's the prompt equivalent of running the test suite before you merge.
+Evaluation is the other half. When you change a skill or command — or change models, or update your instruction file — how do you know the output got better and not worse? For critical prompts, keep a small set of test cases. Run the prompt against them before and after the change. This isn't formal benchmarking — it's the prompt equivalent of running the test suite before you merge.
 
 The teams that treat prompting as an engineering discipline — versioned, reviewed, evaluated — get consistently better output than the ones who treat it as improvisation.
 

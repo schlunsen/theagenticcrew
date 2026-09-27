@@ -34,35 +34,96 @@ In practice this means:
 - Read-only access as the default, write access as the exception
 - Network isolation where possible — if the agent doesn't need internet, don't give it internet
 
-Tools like Claude Code already have built-in permission systems — allow/deny lists for commands, file access controls, approval prompts for destructive operations. Use them. Don't blindly approve everything because clicking "yes" is faster.
+Every serious agent tool now ships a permission system — allow and deny rules for commands, file access controls, approval prompts for anything risky. Use it. Don't blindly approve everything because clicking "yes" is faster.
 
-A concrete allowlist might start like this:
+In Claude Code, the rules live in `.claude/settings.json`, checked into the repo so the whole team shares them. A day-one config might look like this:
 
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run lint)"
+    ],
+    "ask": [
+      "Bash(npm install:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [
+      "Bash(git push:*)",
+      "Bash(npm publish:*)",
+      "Bash(curl:*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  }
+}
 ```
-allowed_commands:
-  - git status
-  - git diff
-  - git log
-  - npm test
-  - npm run lint
-  - cat
-  - ls
-  - find
 
-denied_commands:
-  - rm
-  - git push
-  - npm publish
-  - curl
-  - wget
-  - docker
-```
+// v2-verify: confirm rule syntax against current Claude Code permissions docs (e.g. `Bash(git status)` exact-match form, `.env.*` glob).
 
-That's a day-one config. It's conservative. The agent can read, test, and explore — but it can't delete, deploy, or reach the network. You'll feel the friction immediately. The agent will ask for permission to run `npm install` when it needs a dependency. It will ask before creating a file. That's the point.
+Three lists, three levels of trust. `allow` runs without asking. `ask` always stops for a human. `deny` is a wall — the agent can't do it, and it can't read your secrets file either. Other tools have their own equivalents — Codex, Cursor, Copilot and the rest all offer some form of approval policy — and the syntax differs, but the shape is the same.
 
-After a week, you've watched it work. You trust its judgement on file creation. You add `touch` and `mkdir` to the allowlist. After a month, you let it run `npm install` without asking — but only in the project directory, not globally. After three months, you let it push to feature branches but never to `main`.
+That's a day-one config. It's conservative. The agent can read, test, and explore — but it can't push, publish, or reach the network. You'll feel the friction immediately. The agent will ask for permission to run `npm install` when it needs a dependency. It will ask before every commit. That's the point.
+
+After a week, you've watched it work. You trust its judgement on commits to feature branches, so `git commit` moves from `ask` to `allow`. After a month, you let it run `npm install` without asking. After three months, you let it push to feature branches — but `git push` to `main` stays denied forever.
 
 The allowlist _grows_ with your experience. It's a log of trust decisions, and reading an engineer's allowlist tells you exactly how much agentic experience they have.
+
+=== Permission Modes
+
+On top of the rule lists, most tools offer _modes_ — a coarse dial for the whole session.
+
+*Plan mode* is the one I'd encourage everyone to use more. The agent can read, search, and think, but it can't change anything. It explores the codebase and comes back with a plan; you review the plan before a single file is touched. For any task bigger than a quick fix, this is the cheapest guardrail there is.
+
+At the other end sit the "skip all permissions" modes — Claude Code's `bypassPermissions`, and equivalents in other tools. They exist for a reason: inside a throwaway container with no secrets and no network, approval prompts are pure friction. Outside that container, they're a loaded gun on the kitchen table.
+
+This isn't theoretical. In August 2025, the "s1ngularity" supply-chain attack compromised several Nx packages on npm. The malicious code looked for AI coding CLIs installed on the developer's machine and invoked them with their permission-skipping flags, asking them to hunt for secrets and credentials. The attackers didn't need to write their own file-system crawler — they borrowed the developer's agent and switched its guardrails off. If an agent tool on your machine can run unsupervised with one flag, assume someone else knows that flag too.
+
+Use the bypass modes only inside a sandbox. Never on the machine that holds your SSH keys.
+
+=== Hooks: Rules the Model Can't Talk Its Way Around
+
+Permission rules and instruction files have a weakness: the agent interprets them. You write "never modify the ESLint config" in your instruction file, and nine times out of ten the agent complies. The tenth time, it's deep in a lint failure, decides the rule is "too strict for this case", and relaxes it. It's not malicious. It's resourceful.
+
+Hooks close that gap. A hook is a script that the agent tool runs — deterministically, every time — on a lifecycle event: before a tool call, after a tool call, when the agent thinks it's finished. The model doesn't decide whether the hook runs. It can't argue with it, forget it, or reinterpret it. If the hook says no, the answer is no.
+
+Two examples worth stealing:
+
+- *A PreToolUse hook that blocks protected files.* Before any edit, the hook checks the target path. If it's `.eslintrc`, `tsconfig.json`, or anything under `.github/workflows/`, the edit is rejected with a message explaining why. The agent has to fix the code, not the rules.
+- *A Stop hook that runs the tests.* When the agent declares it's done, the hook runs the test suite. If anything fails, the failure is fed back and the agent keeps working. "Done" now means "done and green", not "done in the agent's opinion".
+
+The shape in Claude Code looks roughly like this:
+
+```json
+// Illustrative — exact syntax varies by tool
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command",
+            "command": "./scripts/block-protected-files.sh" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command",
+            "command": "./scripts/tests-must-pass.sh" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+The script does the thinking; the tool just guarantees it runs. That's the distinction that matters. Instructions are advice. Permissions are policy. Hooks are law.
 
 == Approval Gates
 
@@ -90,6 +151,7 @@ Here's a real scenario. An engineer had `rm` and `rm -rf` on the deny list — s
 The lesson isn't that `git checkout` should be denied. It's that guardrails are _defense in depth_, not a single wall. You need multiple layers:
 
 - *The allowlist* catches the obvious dangerous commands.
+- *Hooks* enforce the rules that must never bend, whatever the model decides.
 - *The sandbox* (a worktree, a container) limits the blast radius.
 - *The commit history* lets you recover when something slips through.
 - *Your own review* catches the things that no automated rule would flag.
@@ -99,6 +161,14 @@ No single layer is sufficient. An agent that's blocked from running `rm` will fi
 The response isn't to remove autonomy — it's to improve the guardrails and add layers. Every failure is a signal. Treat it like a bug: understand what happened, add a check, and move on. Over time, your guardrail configuration becomes a reflection of hard-won experience, not unlike how a `.gitignore` grows with a project.
 
 The best agentic engineers don't fear agent mistakes. They build systems where mistakes are caught early, contained quickly, and learned from automatically.
+
+== Accidents and Adversaries
+
+Everything in this chapter so far is about _accidents_ — an agent that's trying to help and gets it wrong. The `git checkout` story is an accident. So is the relaxed lint rule. The agent is on your side; its judgement just isn't perfect.
+
+There's a second category, and it's nastier: _adversaries_. Someone else's text ends up in your agent's context — a GitHub issue, a web page, a README in a dependency, a tool description — and that text contains instructions. The agent can't reliably tell your instructions from theirs. Now the resourcefulness we just discussed is working for someone else.
+
+The guardrails in this chapter are necessary for that fight, but they're not sufficient. Adversaries change the question from "what might my agent get wrong?" to "what could someone make my agent do?" That's the subject of the Agent Attack Surface chapter. Read this one first — you can't defend against an attacker if you can't contain an accident.
 
 == When Your Agent _Is_ the Threat Model
 
@@ -130,7 +200,7 @@ These aren't technical questions. They're ethical ones, and they deserve explici
 
 Three principles that hold up well in practice:
 
-*Transparency about provenance.* If an agent generated the code, the commit should say so. If an agent drafted the document, the reader should know. Not because agent work is inferior — often it isn't — but because hiding the provenance undermines trust. When a colleague reviews a PR and later discovers it was agent-generated with no indication, they feel deceived — even if the code is flawless. A simple `Co-Authored-By` tag or a note in the PR description is enough. Transparency costs nothing and buys trust.
+*Transparency about provenance.* If an agent generated the code, the commit should say so. If an agent drafted the document, the reader should know. Not because agent work is inferior — often it isn't — but because hiding the provenance undermines trust. When a colleague reviews a PR and later discovers it was agent-generated with no indication, they feel deceived — even if the code is flawless. A simple `Co-Authored-By` tag or a note in the PR description is enough — and several agent tools now add that attribution to commits and PRs by default. Leave it on. Transparency costs nothing and buys trust.
 
 *Accountability doesn't delegate.* The agent doesn't have a performance review. It doesn't get paged at 2am. When you delegate to an agent, you're still the engineer of record. If the agent introduces a bug, you own it. If the agent makes a design decision that creates technical debt, you own that too. This isn't about blame — it's about recognising that delegation doesn't transfer responsibility. You are the pilot. The agent is the autopilot. When the autopilot makes a mistake, the investigation starts with the pilot.
 
@@ -172,7 +242,7 @@ This isn't just a safety measure. It fundamentally changes how productive an age
 
 There's a spectrum of sandboxing, and the right choice depends on the task:
 
-*Git worktrees* — for pure code changes. A worktree is a separate checkout of your repo in a different directory, on its own branch, sharing the same `.git` history. Creating one takes seconds. The agent works in its own branch, its own directory. If the result is good, you merge it. If not, you delete the worktree and move on. No containers, no VMs, no cloud resources. Just Git.
+*Git worktrees* — for pure code changes. The agent gets its own directory on its own branch; if the result is good, you merge it, and if not, you delete it. The Git chapter covers worktrees properly. Here, what matters is that they're the cheapest sandbox there is — but they isolate _code_, not the machine. An agent in a worktree can still read your home directory and reach the internet.
 
 I keep a shell alias for this because I use it so often:
 
@@ -187,13 +257,17 @@ agent-sandbox() {
 }
 ```
 
-*Containers* — for code plus environment. Isolated filesystem, network, and processes. Good for: dependency changes, system-level work, anything that might pollute your local machine. The key is to make your project container-friendly — a good `Dockerfile` and `docker-compose.yml` aren't just for deployment anymore, they're agent infrastructure. Optimise for rebuild speed: layer your dependencies, use slim base images, cache aggressively.
+*Native agent sandboxing* — isolation built into the agent tool itself. Several tools, Claude Code and Codex among them, can now wrap the agent's commands in OS-level sandboxing primitives: the agent can write inside the project directory and nowhere else, and network access is blocked or limited to domains you approve. This is the biggest change since the first edition. It flips the default from "the agent can touch anything you can" to "the agent can touch the project", and it removes most of the approval prompts that caused fatigue in the first place — because inside the fence, there's much less to approve. If your tool offers it, turn it on.
 
-*Ephemeral cloud environments* — for full-stack verification. Services like Railway, Fly.io, or cloud dev environments give you a full running stack that's completely disposable. A preview environment that runs for two hours while the agent works costs pennies. The production incident it prevents costs thousands.
+*Containers and devcontainers* — for code plus environment. Isolated filesystem, network, and processes. Good for: dependency changes, system-level work, anything that might pollute your local machine. A `devcontainer.json` in the repo gives every engineer — and every agent — the same reproducible environment, and it's the natural place to run an agent with permissions loosened, because the container holds no secrets worth stealing. A good `Dockerfile` isn't just for deployment any more; it's agent infrastructure. Optimise for rebuild speed: layer your dependencies, use slim base images, cache aggressively.
+
+*Hosted cloud sandboxes* — where background agents live. When you hand a task to a cloud agent — Codex, the GitHub Copilot coding agent, Claude Code on the web, Cursor's background agents — it runs in a disposable environment on someone else's machine, clones your repo, does the work, and hands back a branch or a PR. Your laptop is never involved. The sandbox question doesn't go away, though; it moves. What secrets does that environment have? What network can it reach? Check before you connect your production credentials to it.
+
+*Ephemeral preview environments* — for full-stack verification. A full running stack that's completely disposable. A preview environment that runs for two hours while the agent works costs very little. The production incident it prevents costs a great deal more.
 
 *VMs* — for maximum isolation. Separate kernel, separate everything. Good for: security-sensitive work, untrusted agents, infrastructure automation.
 
-Start with worktrees. Move up the spectrum when the task demands it. Most day-to-day agentic work never needs more than a worktree.
+Start with a worktree plus your tool's native sandbox. Move up the spectrum when the task demands it. Most day-to-day agentic work never needs more.
 
 === The Sandbox Mindset
 

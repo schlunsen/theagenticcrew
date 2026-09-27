@@ -24,7 +24,7 @@ Now multiply that across a team. Across weeks of work. Across the dozens of subt
 
 The solutions we've discussed so far help, but they have limits.
 
-*`CLAUDE.md` files* are excellent for stable, structural knowledge — architecture decisions, coding conventions, build commands. But they're manually maintained. Nobody updates the `CLAUDE.md` to note "the payment gateway truncates responses over 2MB." It's too specific, too ephemeral-seeming, too easy to forget to write down. And yet it's exactly the kind of knowledge that would save the next session twenty minutes.
+*Instruction files* (`AGENTS.md`, `CLAUDE.md`) are excellent for stable, structural knowledge — architecture decisions, coding conventions, build commands. But they're manually maintained. Nobody updates the instruction file to note "the payment gateway truncates responses over 2MB." It's too specific, too ephemeral-seeming, too easy to forget to write down. And yet it's exactly the kind of knowledge that would save the next session twenty minutes.
 
 *Git history* captures what changed but not what was _learned_. A commit message might say "handle truncated API responses" — but it won't say "we discovered this because the integration tests were flaking on large datasets, and it took three sessions to figure out the root cause was upstream truncation, not our serialisation logic." The _what_ is in the diff. The _why_ and the _journey_ are lost.
 
@@ -36,7 +36,7 @@ What's missing is a system that captures knowledge _automatically_, stores it _s
 
 Think of the memory solutions we've discussed as a spectrum.
 
-*Passive memory* is what your project already has. File structure, naming conventions, `CLAUDE.md`, git history, code comments, type signatures. Agents read these, but nobody designed them as a memory system. They're artefacts of development that happen to carry information. Passive memory is stable, low-maintenance, and limited to what you deliberately put there.
+*Passive memory* is what your project already has. File structure, naming conventions, instruction files, git history, code comments, type signatures. Agents read these, but nobody designed them as a memory system. They're artefacts of development that happen to carry information. Passive memory is stable, low-maintenance, and limited to what you deliberately put there.
 
 *Active memory* is something different. It's a system that _captures_ knowledge as it's created, _organises_ it for retrieval, and _serves_ it to agents when they need it. The agent doesn't just read your files — it queries a knowledge store. "What do we know about the payment gateway?" returns every relevant discovery, decision, and warning that any session has ever recorded.
 
@@ -46,6 +46,7 @@ This is the difference between a captain who keeps a log and one who doesn't. Th
 
 == What a Memory System Looks Like
 
+// v2-verify: disclose author's relationship to Wee if any
 To make active memory concrete, let's walk through what the architecture of such a system actually looks like. The category is young and the tooling is evolving fast — tools like Wee Memory (#link("https://wee.cat")), mem0, and Zep are all exploring this space — but the design patterns are converging. What follows is a blueprint — a way of thinking about how to organise engineering knowledge so that agents can store it, search it, and build on it across sessions.
 
 The core idea is structured storage with semantic retrieval. Your knowledge isn't dumped into a flat text file — it's organised into a hierarchy that mirrors how you actually think about your work.
@@ -60,29 +61,19 @@ This structure means searches can be precise. "What do we know about timeout iss
 
 === Setting It Up
 
-The setup is simpler than it sounds. A typical memory tool installs as a CLI and runs as an MCP server — the same protocol we discussed in the tool integrations chapter. Here's what the setup looks like with a tool like Wee Memory:
+The setup is simpler than it sounds. Most memory tools install as an MCP server — the same protocol we discuss in the Extending the Agent's Reach chapter. The steps are broadly the same whichever tool you pick: install it, create a store for your project, optionally import your existing agent session history, and register the server with your agent.
 
-```bash
-# Install the memory CLI
-npm install -g @anthropic/wee-memory  # or your tool of choice
+That import step is worth pausing on. Some tools can take your _existing_ conversation history — all those sessions you've already had — and index it into the memory store. Knowledge you thought was lost is recovered. Every discovery, every dead end, every "oh, _that's_ why it works that way" moment that happened in a past session becomes searchable.
 
-# Initialise a memory store for your project
-wee memory init --project my-billing-app
-
-# Mine existing Claude sessions into the store
-wee memory mine --sessions ~/.claude/sessions/
-```
-
-That last step — mining existing sessions — is worth pausing on. It takes your _existing_ conversation history — all those sessions you've already had — and indexes them into the memory store. Knowledge you thought was lost is recovered. Every discovery, every dead end, every "oh, _that's_ why it works that way" moment that happened in a past session becomes searchable.
-
-Once running, the memory server exposes tools to your agent via MCP — `store_memory`, `recall_memories`, `search_memories`. Your agent can now _remember_ and _recall_ as naturally as it reads files and runs tests. A typical MCP configuration looks like this:
+Once running, the memory server exposes tools to your agent — typically something like "store a memory", "recall memories", "search memories". The exact names vary. Your agent can now _remember_ and _recall_ as naturally as it reads files and runs tests. Registering the server usually looks something like this:
 
 ```json
+// Illustrative — exact syntax varies by tool
 {
   "mcpServers": {
     "memory": {
-      "command": "wee",
-      "args": ["memory", "serve", "--project", "my-billing-app"]
+      "command": "your-memory-server",
+      "args": ["--project", "my-billing-app"]
     }
   }
 }
@@ -132,7 +123,7 @@ Beyond verbatim memory, there's a category of knowledge that's better represente
 
 Some memory tools include a temporal knowledge graph — often backed by a local database like SQLite. Entities (people, projects, services, technologies) are connected by relationships with validity windows. You can add facts, query current state, invalidate outdated information, and trace the timeline of how things changed.
 
-This is especially useful for the kind of tribal knowledge that `CLAUDE.md` files struggle with. A `CLAUDE.md` is a snapshot — it tells you what's true now. A knowledge graph tells you what's true now, what was true before, and when things changed. When an agent is debugging a regression that started three weeks ago, the ability to ask "what changed in our infrastructure around that time?" and get a structured answer is genuinely powerful.
+This is especially useful for the kind of tribal knowledge that instruction files struggle with. An instruction file is a snapshot — it tells you what's true now. A knowledge graph tells you what's true now, what was true before, and when things changed. When an agent is debugging a regression that started three weeks ago, the ability to ask "what changed in our infrastructure around that time?" and get a structured answer is genuinely powerful.
 
 == What to Remember and What to Forget
 
@@ -156,11 +147,37 @@ The heuristic is the same one from the context chapter: will the agent make a _d
 
 Over time, you develop an instinct for what's worth remembering. The same instinct you've built over your career for what's worth documenting, what's worth commenting, what's worth mentioning in a commit message. Active memory is just another expression of that judgement.
 
+== Knowledge Memory and Execution State
+
+There are two different things people mean by "agent memory", and it pays to keep them apart.
+
+*Knowledge memory* is what this chapter is about: what we've _learned_. The truncation quirk, the rejected approach, the reason behind the design. It outlives any single task and is useful to anyone who works on the project.
+
+*Execution state* is where a task _is_. A long-running agent job — a migration across two hundred files, a multi-hour refactor, a background agent working overnight — needs to know what's done, what's next, and what's blocked, so it can pause, resume after a crash or a context reset, or hand over to another agent or a human. That's not wisdom. It's a bookmark.
+
+The tools for execution state are different and mostly simpler: a progress file the agent updates as it goes, a task list or checklist in the repo, the agent tool's own to-do tracking, and — for work that genuinely has to survive failures — a durable workflow engine that checkpoints each step. The Context chapter's structured note-taking lives here too.
+
+Mixing the two causes trouble in both directions. Execution state dumped into a knowledge store is noise within a week ("step 14 of 30 complete"). Knowledge left only in a progress file is deleted when the task finishes. When a task ends, skim its progress notes and promote anything that was genuinely _learned_ into long-term memory. Throw the rest away.
+
+== You May Already Have Enough
+
+Before you install anything, check what your tools already do. Agent tools now ship lightweight memory built in: instruction files the agent can update itself when you tell it to remember something, memory tools exposed directly by some model APIs, and structured progress notes that carry a task across context resets. For a solo engineer or a small team, that may be all you need on day one.
+
+A dedicated memory system earns its place when the volume grows past what a single file can hold, when several people and agents need to share it, or when you want search across months of history. Start with the built-in, notice where it strains, and upgrade then.
+
+== Memory Is an Attack Surface
+
+One warning before we move on. Anything your agent reads can carry instructions — and memory is something your agent reads at the start of _every_ session.
+
+If an agent processes a malicious issue, web page, or document and is persuaded to store a "fact" from it, that poisoned memory doesn't vanish when the session ends. It persists. It gets recalled next week, by a different engineer's agent, in a session that never touched the original malicious content. A one-off injection becomes a standing one.
+
+Treat writes to shared memory with the same suspicion as writes to your codebase: know which sessions can write, prefer memories that record their source, and review what's being stored — especially from sessions that handled untrusted content. The Agent Attack Surface chapter covers prompt injection in depth.
+
 == Memory and the Convention Layer
 
 There's an interesting interaction between active memory and the conventions we discussed in the previous chapter.
 
-Conventions are _structural_ memory. They're encoded in file naming, directory layout, linter rules, and `CLAUDE.md` files. They tell agents how things _should_ work. They're stable, rarely changing, and implicitly communicated through the shape of the project.
+Conventions are _structural_ memory. They're encoded in file naming, directory layout, linter rules, and instruction files. They tell agents how things _should_ work. They're stable, rarely changing, and implicitly communicated through the shape of the project.
 
 Active memory is _experiential_ memory. It captures what agents _encountered_ while working. It's dynamic, growing with every session, and explicitly stored and retrieved.
 
@@ -168,17 +185,19 @@ The two layers complement each other. Conventions prevent agents from making the
 
 Together, they form a complete memory system. Conventions are the habits. Memories are the experiences. A well-functioning team has both — and so does a well-functioning agentic workflow.
 
-There's also a promotion path between them. When a memory keeps coming up — "the third time an agent stored a note about the 2MB truncation issue" — that's a signal. It should be promoted from experiential memory to structural convention. Add it to the `CLAUDE.md`. Add a code comment. Maybe add a test that catches it explicitly. The memory system becomes a _discovery engine_ for conventions you haven't formalised yet.
+There's also a promotion path between them. When a memory keeps coming up — "the third time an agent stored a note about the 2MB truncation issue" — that's a signal. It should be promoted from experiential memory to structural convention. Add it to the instruction file. Add a code comment. Maybe add a test that catches it explicitly. The memory system becomes a _discovery engine_ for conventions you haven't formalised yet.
 
 == The Knowledge Flywheel
 
-Active memory compounds in a way that's qualitatively different from the other investments in this book.
+Active memory pays off differently from the other investments in this book — and it's worth being precise about how.
 
-A test suite compounds linearly — each new test catches one more class of bug. Conventions compound through consistency — each new convention makes the next agent session slightly smoother. But memory compounds _exponentially_ with the number of sessions and agents.
+The store itself grows roughly linearly. A solo engineer running ten sessions generates ten sessions' worth of knowledge. A team of five engineers, each running three sessions a day, generates fifteen sessions' worth _every day_. After a month, the memory store holds hundreds of sessions' worth of discoveries, decisions, quirks, and lessons. More sessions, more notes. Nothing magic.
 
-A solo engineer running ten sessions generates ten sessions' worth of knowledge. A team of five engineers, each running three sessions a day, generates fifteen sessions' worth of knowledge _every day_. After a month, the memory store contains hundreds of sessions' worth of discoveries, decisions, quirks, and lessons. Every new session starts richer than the last.
+The multiplier is in the _reuse_. A discovery is paid for once — by whoever hit the rock — and then collected by every session that would otherwise have hit it too. On your own, each lesson saves you a few repeats. On a team of five, each lesson saves up to five people's repeats, and each of them is contributing lessons you'll collect in turn. The value per note scales with the number of people and agents reading from the store. That's the network effect: not more knowledge per session, but more beneficiaries per piece of knowledge.
 
-This is the network effect applied to engineering knowledge. Each agent session makes every future session better — not just for the engineer who ran it, but for everyone on the team. The engineer who discovered the database quirk on Tuesday saves the engineer who would have rediscovered it on Friday. The knowledge is shared automatically, without a meeting, without a Slack message, without anyone having to remember to tell anyone.
+And the returns are uneven. Most notes are never read again. A handful — the 2MB truncation, the OAuth mismatch between staging and production — get read dozens of times. You don't need every memory to pay off. You need the expensive ones to be findable.
+
+Each agent session can make future sessions better — not just for the engineer who ran it, but for everyone on the team. The engineer who discovered the database quirk on Tuesday saves the engineer who would have rediscovered it on Friday. The knowledge is shared automatically, without a meeting, without a Slack message, without anyone having to remember to tell anyone.
 
 Over time, the memory store becomes the most complete and up-to-date record of your team's collective understanding. More complete than any wiki, because it's captured automatically. More up-to-date than any documentation, because it's updated with every session. More accessible than any person's memory, because it's searchable.
 
@@ -188,21 +207,21 @@ This is what institutional knowledge looks like in the agentic era. Not locked i
 
 Start small. Memory is infrastructure, and like all infrastructure, the value compounds but the setup is an investment.
 
-*Day one:* Pick a memory tool, install it, initialise a store for one project, and mine your existing agent sessions into it. That alone gives you a searchable archive of everything you've already discussed with agents. You might be surprised what's in there.
+*Day one:* Use what your tool already gives you. Let the agent append hard-won discoveries to the instruction file or a notes file, and review those changes like any other diff. Get a feel for what's worth remembering before you buy infrastructure to remember it.
 
-*Week one:* Wire the memory server into your agent configuration. Start your sessions by loading context from the memory store. Notice what the agent already knows before you tell it anything. When you discover something non-obvious during a session, store it. Get a feel for what's worth remembering.
+*Week one:* If the built-in memory starts to strain — too much to fit in one file, too many people writing to it — pick a dedicated memory tool, create a store for one project, and import your existing agent sessions if it supports that. Wire the memory server into your agent configuration. Start your sessions by loading context from the memory store. Notice what the agent already knows before you tell it anything. When you discover something non-obvious during a session, store it. Get a feel for what's worth remembering.
 
 *Week two:* Set up the auto-save hooks. Now the capture happens without you thinking about it. End-of-session discipline is no longer required — the system handles it. Start searching the memory store before diving into unfamiliar parts of the codebase. "What do we know about the notification system?" might save you thirty minutes of code archaeology.
 
-*Month one:* If you're on a team, share the memory store. Each engineer's sessions feed the same knowledge base. The compound effect starts. You'll notice agents referencing discoveries from sessions you didn't run, solving problems faster because someone else already explored the dead ends.
+*Month one:* If you're on a team, share the memory store. Each engineer's sessions feed the same knowledge base. The network effect starts. You'll notice agents referencing discoveries from sessions you didn't run, solving problems faster because someone else already explored the dead ends.
 
 The pattern mirrors the incremental adoption we've discussed throughout this book. Start conservative, build confidence, expand. The engineers who get the most from memory systems are the ones who let the value prove itself gradually — not the ones who try to capture everything on day one and drown in noise.
 
 == The Log Is the Ship
 
-I said in the final chapters that the crew is disposable but the ship is not. Your codebase, your conventions, your test suite, your guardrails — those are the ship. Each new agent is a fresh crew member stepping aboard.
+We'll come back to this idea in the Final Words chapter: the crew is disposable but the ship is not. Your codebase, your conventions, your test suite, your guardrails — those are the ship. Each new agent is a fresh crew member stepping aboard.
 
-The memory palace is the ship's log. It's the accumulated wisdom of every crew that ever sailed on this vessel. The new sailor who checks the log before entering unfamiliar waters is the agent that queries the palace before starting a task. The officer who writes in the log at the end of their watch is the auto-save hook that captures the session's discoveries.
+A memory system is the ship's log. It's the accumulated wisdom of every crew that ever sailed on this vessel. The new sailor who checks the log before entering unfamiliar waters is the agent that queries the memory store before starting a task. The officer who writes in the log at the end of their watch is the auto-save hook that captures the session's discoveries.
 
 You can sail without a log. People did it for centuries. But the ships that kept logs went further, lost fewer, and learned faster. The knowledge survived the crew. The next voyage started from understanding, not from ignorance.
 

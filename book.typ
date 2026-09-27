@@ -152,7 +152,7 @@
 
     // Date & revision
     #place(dx: 8%, dy: 93%)[
-      #text(size: 7.5pt, fill: gold-dim)[March 2026]
+      #text(size: 7.5pt, fill: gold-dim)[Second Edition · September 2026]
       #h(1fr)
     ]
     #place(dx: 0%, dy: 93%)[
@@ -194,6 +194,34 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 
 #pagebreak()
 
+// ─── Preface to the Second Edition ───
+
+#heading(outlined: false, numbering: none)[Preface to the Second Edition]
+
+The first edition of this book came out in March 2026. Six months later, I'm writing a second one. In most fields that would be embarrassing. In this one, it's overdue.
+
+A lot moved in those six months. Agent instruction files converged on a shared standard. Skills turned the prompt library into something you can version, review, and load on demand. The "overnight agent" I described as a hand-rolled shell script became a product feature — you assign an issue, and a pull request comes back. Open-weight models closed much of the gap I described in the models chapter. And prompt injection went from a curiosity to a string of real, public incidents involving the exact integrations I'd cheerfully told you to set up.
+
+Something moved for me, too. I spent most of those months _building_ agentic systems rather than just driving them — writing the loops, the tools, the handovers, and the guardrails myself. Sitting on the other side of the harness changed how I think about everything in this book. It made me a better user of agents, mostly by taking away the last of my surprise.
+
+Here's what's new in this edition:
+
+- *A new chapter on the agent attack surface* — prompt injection, poisoned tools, and supply-chain attacks, and how to limit the blast radius. This was the biggest gap in the first edition.
+- *A new chapter on building your own agents* — for when you move from using a coding agent to shipping agents inside your own products and pipelines.
+- *Context, conventions, and prompting updated* for how the field now works: context engineering, compaction, `AGENTS.md`, skills, hooks, and plan-first workflows.
+- *The models chapter rewritten*, and the pipeline and orchestration chapters updated for cloud agents that do the work and send you a pull request.
+- *A new appendix, "The State of the Tools"*, where I've moved the specific model names, prices, and product details that go out of date fastest. The chapters should age better as a result. The appendix won't — that's its job.
+- *Corrections.* A few commands and examples in the first edition were wrong. For a book that warns you about hallucinated libraries, that stung. They're fixed.
+
+What didn't change is the core of the book: context, guardrails, tests, conventions, and judgement. If anything, the last six months made me more confident that those are the parts that last. The tools keep changing. The ship is still the ship.
+
+#align(right)[
+  _Rasmus Bornhøft Schlünsen_ \
+  _September 2026_
+]
+
+#pagebreak()
+
 // ─── Table of Contents ───
 
 #outline(title: "Contents", indent: 1.5em, depth: 2)
@@ -209,10 +237,12 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 #include "chapters/07-convention-over-configuration.typ"
 #include "chapters/08-the-ships-log.typ"
 #include "chapters/09-extending-the-agents-reach.typ"
+#include "chapters/09b-the-agent-attack-surface.typ"
 #include "chapters/10-articulating-intent.typ"
 #include "chapters/11-local-commercial-and-hybrid-models.typ"
 #include "chapters/12-multi-agent-orchestration.typ"
 #include "chapters/13-agents-in-the-pipeline.typ"
+#include "chapters/13b-building-your-own-agents.typ"
 #include "chapters/14-when-agents-get-it-wrong.typ"
 #include "chapters/15-when-not-to-use-agents.typ"
 #include "chapters/16-agentic-teams.typ"
@@ -223,6 +253,10 @@ If you've ever watched an AI write code that looked like yours and felt your sto
 #heading(outlined: true, numbering: none)[Appendix A: Agents as Pentesters]
 
 #include "chapters/appendix-a-agents-as-pentesters.typ"
+
+#heading(outlined: true, numbering: none)[Appendix B: The State of the Tools (September 2026)]
+
+#include "chapters/appendix-b-state-of-the-tools.typ"
 
 // ─── Dedication (End) ───
 

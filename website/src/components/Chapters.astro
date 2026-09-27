@@ -8,22 +8,22 @@ const engineeringChapters = [
   {
     number: "02",
     title: "What Is an Agent?",
-    description: "Placing AI tools on a spectrum from autocomplete to autonomous systems. What makes something truly agentic, how agents fail, and the right mental model for working with them."
+    description: "Model, tools, loop, and harness. What makes something truly agentic, how tool calling actually works, how agents fail, and the right mental model for working with them."
   },
   {
     number: "03",
     title: "Context",
-    description: "The single most important skill in agentic engineering isn't prompting — it's context management. Learn to curate what your agents see."
+    description: "The most important skill in agentic engineering is context engineering. Curating what agents see, compaction, sub-agents for isolation, and why bigger windows didn't remove the tax."
   },
   {
     number: "04",
     title: "Guardrails, Trust, and Sandboxes",
-    description: "The trust gradient, permission scoping, approval gates, sandboxing, and the ethics of delegation. How to give agents power and freedom without giving them the keys to production."
+    description: "The trust gradient, real permission configs, hooks the model can't talk its way around, sandboxing, and the ethics of delegation."
   },
   {
     number: "05",
     title: "Git as Agent Infrastructure",
-    description: "Small commits, descriptive messages, branch-per-task, and worktrees for parallel agents. Git as your undo button and review interface."
+    description: "Small commits, descriptive messages, branch-per-task, worktrees for parallel agents, and reviewing at the volume agents produce."
   },
   {
     number: "06",
@@ -33,57 +33,67 @@ const engineeringChapters = [
   {
     number: "07",
     title: "Convention Over Configuration",
-    description: "Why consistent file naming, formatters, project layouts, and agent instruction files make agents dramatically more effective."
+    description: "Consistent structure, AGENTS.md instruction files, and skills — conventions your agents can execute, not just read."
   },
   {
     number: "08",
     title: "The Ship's Log",
-    description: "Active memory for agentic workflows — capturing knowledge across sessions and agents, structured retrieval, and making hard-won discoveries persist."
+    description: "Memory for agentic workflows — capturing knowledge across sessions and agents, separating knowledge from execution state, and keeping memory safe."
   },
   {
     number: "09",
     title: "Extending the Agent's Reach",
-    description: "MCP, tool integrations, and connecting agents to databases, monitoring, and project management. How to give agents eyes beyond the filesystem — and the guardrails to do it safely."
+    description: "MCP, remote servers, and connecting agents to databases, monitoring, and project management — without drowning them in tools."
   },
   {
     number: "10",
-    title: "Articulating Intent",
-    description: "The shift from doing to articulating. Task decomposition, constraint specification, voice-driven development, visual context, prompt versioning, and the prompt-as-spec pattern."
+    title: "The Agent Attack Surface",
+    description: "New in the second edition. Prompt injection, the lethal trifecta, poisoned tools, slopsquatting, and layered defences that limit the blast radius."
   },
   {
     number: "11",
-    title: "Local, Commercial, and Hybrid Models",
-    description: "Privacy, cost, capability trade-offs, team cost management, and getting started without paying the farm. The practical hybrid approach of matching the model to the task."
+    title: "Articulating Intent",
+    description: "From doing to articulating. Plan-first workflows, specs, constraints, task decomposition, voice and visual context, and skills as the modern prompt library."
   },
   {
     number: "12",
-    title: "Multi-Agent Orchestration",
-    description: "Running agents in parallel, the handover pattern for sequential work, branch-per-agent isolation, and knowing when more agents isn't better."
+    title: "Local, Commercial, and Hybrid Models",
+    description: "Capability, cost, privacy, and speed. Open-weight models, subscriptions versus API spend, honest ROI, and matching the model to the task."
   },
   {
     number: "13",
-    title: "Agents in the Pipeline",
-    description: "Using agents in CI/CD — PR pre-screening, overnight agents, cost control in automation, and the trust question when nobody's watching."
+    title: "Multi-Agent Orchestration",
+    description: "Sub-agents for context isolation, background agents that return PRs, the handover pattern, and knowing when more agents isn't better."
   },
   {
     number: "14",
-    title: "When Agents Get It Wrong",
-    description: "War stories from the field — the eager refactorer, the hallucinated library, the infinite loop — plus debugging the agent itself and a diagnostic playbook for systematically fixing agent failures."
+    title: "Agents in the Pipeline",
+    description: "Agents in CI/CD — review bots, the overnight agent turned product, cost control, and untrusted input when nobody's watching."
   },
   {
     number: "15",
-    title: "When Not to Use Agents",
-    description: "The overhead tax, architecture decisions, security-critical code, working with legacy codebases, and the craft argument. Knowing when to put the agent away."
+    title: "Building Your Own Agents",
+    description: "New in the second edition. From driving a coding agent to shipping your own — owning the loop, the context, human approvals, durable state, and evals."
   },
   {
     number: "16",
-    title: "Agentic Teams",
-    description: "How agent-assisted development changes code review, a structured path for junior engineers, knowledge distribution, compliance and audit trails, hiring, and team rhythms."
+    title: "When Agents Get It Wrong",
+    description: "War stories from the field — the eager refactorer, the hallucinated library, the poisoned ticket — plus a diagnostic playbook for fixing agent failures."
   },
   {
     number: "17",
+    title: "When Not to Use Agents",
+    description: "The overhead tax, architecture decisions, security-critical code, hostile input, legacy codebases, and the craft argument."
+  },
+  {
+    number: "18",
+    title: "Agentic Teams",
+    description: "Measured versus perceived productivity, code review at volume, a path for junior engineers, knowledge distribution, compliance, and hiring."
+  },
+  {
+    number: "19",
     title: "Final Words",
-    description: "The craft isn't dying — it's shedding its skin. What endures, what changes, and why the captain still matters."
+    description: "The craft isn't dying — it's shedding its skin. What changed my mind since the first edition, and why the captain still matters."
   },
 ];
 
@@ -198,7 +208,7 @@ const crewChapters = [
     </div>
 
     <div class="book-panel active" data-book="engineering">
-      <p class="chapters-subtitle">17 chapters covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
+      <p class="chapters-subtitle">Second edition, September 2026. 19 chapters and two appendices covering the shift, the tools, and the engineering practices that make agentic work actually work.</p>
       <div class="chapters-illustration">
         <img src="/generated/chapters-illustration.png" alt="Nautical treasure map with circuit traces" loading="lazy" />
         <div class="chapters-illustration-overlay"></div>
