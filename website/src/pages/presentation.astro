@@ -1,3749 +1,606 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Helm from '../components/home/Helm.astro';
+import '../styles/home.css';
+
+// Bilingual text: [english, spanish]. May contain inline HTML (<em>, <br/>).
+type T = [string, string];
+interface Slide {
+  id: string;
+  layout: 'title' | 'statement' | 'cards' | 'spectrum' | 'versus' | 'trifecta' | 'loop' | 'crew' | 'cta';
+  audio?: string;          // existing narration file number (presentation-audio/slide-XX*.mp3)
+  notes: T;                // speaker notes / narration script
+  eyebrow?: T;
+  heading?: T;
+  quote?: T;
+  body?: T;
+  items?: { title: T; body?: T; tag?: T }[];
+}
+
+const slides: Slide[] = [
+  {
+    id: 'title', layout: 'title', audio: '01',
+    notes: ['Welcome everyone. This is a talk about how software engineering is changing in the age of AI agents.',
+            'Bienvenidos. Esta es una charla sobre cómo está cambiando la ingeniería de software en la era de los agentes de IA.'],
+  },
+  {
+    id: 'new', layout: 'cards', audio: '14',
+    notes: ['The first edition came out in March 2026. Six months later, a lot had moved: instruction files converged, cloud agents started sending pull requests, and prompt injection became a string of real incidents. The second edition adds two new chapters — on the agent attack surface and on building your own agents — and moves the perishable details into one dated appendix.',
+            'La primera edición salió en marzo de 2026. Seis meses después, mucho había cambiado: los archivos de instrucciones convergieron, los agentes en la nube empezaron a enviar pull requests y la inyección de prompts se convirtió en una serie de incidentes reales. La segunda edición añade dos capítulos nuevos — sobre la superficie de ataque del agente y sobre construir tus propios agentes — y mueve los detalles perecederos a un apéndice fechado.'],
+    eyebrow: ['Second edition · September 2026', 'Segunda edición · Septiembre 2026'],
+    heading: ['Six months is a long time <em>at sea.</em>', 'Seis meses es mucho tiempo <em>en el mar.</em>'],
+    items: [
+      { tag: ['New chapter', 'Capítulo nuevo'], title: ['The Agent Attack Surface', 'La superficie de ataque del agente'], body: ['Prompt injection, poisoned tools, slopsquatting.', 'Inyección de prompts, herramientas envenenadas, slopsquatting.'] },
+      { tag: ['New chapter', 'Capítulo nuevo'], title: ['Building Your Own Agents', 'Construye tus propios agentes'], body: ['Own the loop, the context, and the control flow.', 'Controla el bucle, el contexto y el flujo.'] },
+      { tag: ['Rewritten', 'Reescrito'], title: ['Context engineering', 'Ingeniería de contexto'], body: ['Compaction, sub-agents, AGENTS.md, skills, hooks.', 'Compactación, subagentes, AGENTS.md, skills, hooks.'] },
+      { tag: ['New appendix', 'Apéndice nuevo'], title: ['The State of the Tools', 'El estado de las herramientas'], body: ['The perishable details, in one dated place.', 'Los detalles perecederos, en un solo lugar fechado.'] },
+    ],
+  },
+  {
+    id: 'shift', layout: 'statement', audio: '02',
+    notes: ['For two decades, the feedback loop was simple: write code, run it, ship it. AI agents are fundamentally changing that loop.',
+            'Durante dos décadas, el ciclo fue simple: escribir código, ejecutarlo, desplegarlo. Los agentes de IA están cambiando ese ciclo de raíz.'],
+    eyebrow: ['The ground is shifting', 'El terreno está cambiando'],
+    heading: ['You write code, you ship it. <em>That loop is breaking.</em>', 'Escribes código, lo despliegas. <em>Ese ciclo se está rompiendo.</em>'],
+    items: [
+      { title: ['Old loop', 'Antes'], body: ['write → run → ship', 'escribir → ejecutar → desplegar'] },
+      { title: ['New loop', 'Ahora'], body: ['instruct → review → steer', 'instruir → revisar → dirigir'] },
+      { title: ['Measured, not felt', 'Medido, no sentido'], body: ['In METR’s 2025 trial, experienced developers were ~19% slower with AI — while feeling ~20% faster.', 'En el ensayo de METR de 2025, desarrolladores expertos fueron ~19% más lentos con IA — sintiéndose ~20% más rápidos.'] },
+    ],
+  },
+  {
+    id: 'molting', layout: 'statement', audio: '03',
+    notes: ['The craft is evolving. The mechanical parts are being automated, but the judgment, taste, and architectural thinking are more important than ever.',
+            'El oficio está evolucionando. Las partes mecánicas se automatizan, pero el juicio, el gusto y el pensamiento arquitectónico importan más que nunca.'],
+    eyebrow: ['From the foreword', 'Del prólogo'],
+    heading: ['The craft isn’t dying. It’s <em>molting.</em>', 'El oficio no está muriendo. Está <em>mudando.</em>'],
+    body: ['The keystrokes and boilerplate fall away. Systems thinking, taste, and judgement become the whole game.', 'Las pulsaciones y el código repetitivo desaparecen. El pensamiento sistémico, el gusto y el juicio lo son todo.'],
+  },
+  {
+    id: 'agent', layout: 'spectrum', audio: '04',
+    notes: ['Agents exist on a spectrum. Most practical work today happens at the tool-using agent level, where the agent can call tools, read files, and iterate.',
+            'Los agentes existen en un espectro. La mayor parte del trabajo práctico hoy ocurre en el nivel del agente con herramientas, que puede llamar herramientas, leer archivos e iterar.'],
+    eyebrow: ['What is an agent?', '¿Qué es un agente?'],
+    heading: ['Model + tools + loop + <em>harness.</em>', 'Modelo + herramientas + bucle + <em>arnés.</em>'],
+    items: [
+      { title: ['Autocomplete', 'Autocompletado'], body: ['Suggests the next line.', 'Sugiere la siguiente línea.'] },
+      { title: ['Copilot', 'Copiloto'], body: ['Generates on request.', 'Genera cuando se lo pides.'] },
+      { title: ['Tool-using agent', 'Agente con herramientas'], body: ['Reads, runs, iterates. Most real work happens here.', 'Lee, ejecuta, itera. Aquí ocurre casi todo el trabajo real.'] },
+      { title: ['Background agent', 'Agente en segundo plano'], body: ['Takes a task, returns a pull request.', 'Toma una tarea y devuelve un pull request.'] },
+    ],
+  },
+  {
+    id: 'rainman', layout: 'versus', audio: '05',
+    notes: ['Think of it like Rain Man. Tom Cruise provides the direction and judgment. Dustin Hoffman provides extraordinary capability but needs guidance.',
+            'Piénsalo como Rain Man. Tom Cruise aporta la dirección y el juicio. Dustin Hoffman aporta una capacidad extraordinaria, pero necesita guía.'],
+    eyebrow: ['The Rain Man analogy', 'La analogía de Rain Man'],
+    heading: ['You’re Tom Cruise. The agent is <em>Dustin Hoffman.</em>', 'Tú eres Tom Cruise. El agente es <em>Dustin Hoffman.</em>'],
+    items: [
+      { title: ['You — the captain', 'Tú — el capitán'], body: ['Direction and vision · Judgement and taste · Knows when to walk away', 'Dirección y visión · Juicio y gusto · Sabe cuándo retirarse'] },
+      { title: ['The agent — the savant', 'El agente — el savant'], body: ['Speed and throughput · Tireless execution · Pattern recognition at scale', 'Velocidad y rendimiento · Ejecución incansable · Reconocimiento de patrones a escala'] },
+    ],
+  },
+  {
+    id: 'capabilities', layout: 'cards', audio: '06',
+    notes: ['These are the three core capabilities that make an agent an agent: planning, tool use, and iteration. Without any one of these, you just have a chatbot.',
+            'Estas son las tres capacidades que hacen que un agente sea un agente: planificación, uso de herramientas e iteración. Sin cualquiera de ellas, solo tienes un chatbot.'],
+    eyebrow: ['Three core capabilities', 'Tres capacidades fundamentales'],
+    heading: ['Without any one of these, it’s <em>just a chatbot.</em>', 'Sin cualquiera de ellas, es <em>solo un chatbot.</em>'],
+    items: [
+      { tag: ['i', 'i'], title: ['Planning', 'Planificación'], body: ['Breaks a goal into ordered, verifiable steps.', 'Divide un objetivo en pasos ordenados y verificables.'] },
+      { tag: ['ii', 'ii'], title: ['Tool use', 'Uso de herramientas'], body: ['Reads files, runs commands, calls APIs. The tools are the promotion.', 'Lee archivos, ejecuta comandos, llama APIs. Las herramientas son el ascenso.'] },
+      { tag: ['iii', 'iii'], title: ['Iteration', 'Iteración'], body: ['Act, observe, adjust — until the tests are green.', 'Actuar, observar, ajustar — hasta que los tests pasen.'] },
+    ],
+  },
+  {
+    id: 'fail', layout: 'cards', audio: '07',
+    notes: ['Understanding failure modes is critical. These are the four most common ways agents go wrong, and how to mitigate each one.',
+            'Entender los modos de fallo es crucial. Estas son las cuatro formas más comunes en que los agentes fallan, y cómo mitigar cada una.'],
+    eyebrow: ['When agents fail', 'Cuando los agentes fallan'],
+    heading: ['Every failure mode has a <em>mitigation.</em>', 'Cada modo de fallo tiene una <em>mitigación.</em>'],
+    items: [
+      { tag: ['Fix: tight scope', 'Solución: alcance acotado'], title: ['Scope creep', 'Expansión del alcance'], body: ['You asked for a bug fix; it refactored thirty files.', 'Pediste un arreglo; refactorizó treinta archivos.'] },
+      { tag: ['Fix: run the tests', 'Solución: ejecutar los tests'], title: ['Hallucinated APIs', 'APIs alucinadas'], body: ['Plausible code against libraries that don’t exist.', 'Código plausible contra librerías que no existen.'] },
+      { tag: ['Fix: verify', 'Solución: verificar'], title: ['Overconfidence', 'Exceso de confianza'], body: ['A sleep() and a mutex arrive with the same certainty.', 'Un sleep() y un mutex llegan con la misma certeza.'] },
+      { tag: ['Fix: compact, start fresh', 'Solución: compactar, empezar de nuevo'], title: ['Context loss', 'Pérdida de contexto'], body: ['Constraints from an hour ago quietly fade.', 'Las restricciones de hace una hora se desvanecen.'] },
+    ],
+  },
+  {
+    id: 'toolkit', layout: 'cards', audio: '08',
+    notes: ['These five practices form the engineering toolkit for working with agents effectively. Each one reinforces the others.',
+            'Estas cinco prácticas forman el kit de ingeniería para trabajar con agentes de forma eficaz. Cada una refuerza a las demás.'],
+    eyebrow: ['The engineering toolkit', 'El kit de ingeniería'],
+    heading: ['The boring things <em>win.</em>', 'Lo aburrido <em>gana.</em>'],
+    items: [
+      { title: ['Context', 'Contexto'], body: ['What the agent can see — and reach.', 'Lo que el agente puede ver — y alcanzar.'] },
+      { title: ['Guardrails', 'Barandillas'], body: ['Permissions, hooks, sandboxes.', 'Permisos, hooks, sandboxes.'] },
+      { title: ['Tests', 'Tests'], body: ['The agent’s eyes.', 'Los ojos del agente.'] },
+      { title: ['Conventions', 'Convenciones'], body: ['AGENTS.md, skills, structure.', 'AGENTS.md, skills, estructura.'] },
+      { title: ['Memory', 'Memoria'], body: ['The ship’s log across sessions.', 'El cuaderno de bitácora entre sesiones.'] },
+    ],
+  },
+  {
+    id: 'context', layout: 'loop', audio: '15',
+    notes: ['Context engineering is the discipline of deciding what goes into the model’s window. Bigger windows didn’t remove the tax — performance still degrades as context grows. So research first, then plan, then implement, with a fresh or compacted context between each phase, and use sub-agents to explore without polluting the main window.',
+            'La ingeniería de contexto es la disciplina de decidir qué entra en la ventana del modelo. Las ventanas más grandes no eliminaron el coste — el rendimiento sigue degradándose a medida que crece el contexto. Así que primero investiga, luego planifica, luego implementa, con un contexto nuevo o compactado entre cada fase, y usa subagentes para explorar sin contaminar la ventana principal.'],
+    eyebrow: ['Context engineering', 'Ingeniería de contexto'],
+    heading: ['Bigger windows didn’t remove <em>the tax.</em>', 'Las ventanas más grandes no eliminaron <em>el coste.</em>'],
+    items: [
+      { title: ['Research', 'Investigar'], body: ['Sub-agents explore; only a summary comes back.', 'Los subagentes exploran; solo vuelve un resumen.'] },
+      { title: ['Plan', 'Planificar'], body: ['A written plan you review before any code changes.', 'Un plan escrito que revisas antes de cambiar código.'] },
+      { title: ['Implement', 'Implementar'], body: ['Fresh, compacted context. Tests as the signal.', 'Contexto nuevo y compactado. Los tests como señal.'] },
+    ],
+  },
+  {
+    id: 'trifecta', layout: 'trifecta', audio: '16',
+    notes: ['The biggest gap in the first edition was security. An agent that has access to private data, is exposed to untrusted content, and has a way to communicate externally can be tricked into leaking that data. Simon Willison calls it the lethal trifecta. You can’t fully prevent prompt injection yet — so remove at least one leg for any session.',
+            'La mayor carencia de la primera edición era la seguridad. Un agente con acceso a datos privados, expuesto a contenido no confiable y con una forma de comunicarse hacia fuera puede ser engañado para filtrar esos datos. Simon Willison lo llama la tríada letal. Aún no puedes evitar del todo la inyección de prompts — así que elimina al menos una pata en cada sesión.'],
+    eyebrow: ['The agent attack surface', 'La superficie de ataque del agente'],
+    heading: ['Remove one leg of <em>the lethal trifecta.</em>', 'Elimina una pata de <em>la tríada letal.</em>'],
+    items: [
+      { title: ['Private data', 'Datos privados'] },
+      { title: ['Untrusted content', 'Contenido no confiable'] },
+      { title: ['A way out', 'Una salida al exterior'] },
+    ],
+    body: ['An agent that reads a stranger’s text with your keys in its pocket works for whoever wrote the text.', 'Un agente que lee el texto de un desconocido con tus llaves en el bolsillo trabaja para quien escribió ese texto.'],
+  },
+  {
+    id: 'cloud', layout: 'statement', audio: '17',
+    notes: ['The overnight agent I described as a shell script became a product feature. You assign an issue, and a pull request comes back. That makes agent capacity cheap. What isn’t cheap is human attention — a dozen pull requests still need someone who understands every one of them. Plan your work around the reviewer, not the agents.',
+            'El agente nocturno que describí como un script se convirtió en una función de producto. Asignas un issue y vuelve un pull request. Eso abarata la capacidad de los agentes. Lo que no es barato es la atención humana — una docena de pull requests sigue necesitando a alguien que entienda cada uno. Planifica el trabajo en torno al revisor, no a los agentes.'],
+    eyebrow: ['Agents in the pipeline', 'Agentes en el pipeline'],
+    heading: ['Agents are cheap now. <em>Attention isn’t.</em>', 'Los agentes ya son baratos. <em>La atención no.</em>'],
+    items: [
+      { title: ['Assign an issue', 'Asigna un issue'], body: ['A cloud agent works in a sandbox.', 'Un agente en la nube trabaja en un sandbox.'] },
+      { title: ['Get a pull request', 'Recibe un pull request'], body: ['Tests, a diff, a summary.', 'Tests, un diff, un resumen.'] },
+      { title: ['Review is the bottleneck', 'La revisión es el cuello de botella'], body: ['Plan around the reviewer, not the agents.', 'Planifica en torno al revisor, no a los agentes.'] },
+    ],
+  },
+  {
+    id: 'build', layout: 'statement', audio: '18',
+    notes: ['Once you build agents yourself, you see how much of what feels like the model being smart is really the loop around it: what goes into the context, which tools exist, when it stops, and what it is allowed to touch. The loop is small. Everything around it is the work — and that part is engineering.',
+            'Cuando construyes agentes tú mismo, ves cuánto de lo que parece inteligencia del modelo es en realidad el bucle que lo rodea: qué entra en el contexto, qué herramientas existen, cuándo se detiene y qué puede tocar. El bucle es pequeño. Todo lo que lo rodea es el trabajo — y esa parte es ingeniería.'],
+    eyebrow: ['Building your own agents', 'Construye tus propios agentes'],
+    heading: ['The loop is small. <em>The harness is the work.</em>', 'El bucle es pequeño. <em>El arnés es el trabajo.</em>'],
+    items: [
+      { title: ['Own the context', 'Controla el contexto'], body: ['You build the prompt every turn.', 'Construyes el prompt en cada turno.'] },
+      { title: ['Own the control flow', 'Controla el flujo'], body: ['Budgets, stop conditions, escalation.', 'Presupuestos, condiciones de parada, escalado.'] },
+      { title: ['Humans as a tool call', 'Humanos como una llamada'], body: ['Pause, persist, resume when they answer.', 'Pausa, persiste, reanuda cuando respondan.'] },
+      { title: ['Evals are your tests', 'Las evals son tus tests'], body: ['Run them on every prompt or model change.', 'Ejecútalas en cada cambio de prompt o modelo.'] },
+    ],
+  },
+  {
+    id: 'wee', layout: 'statement', audio: '19',
+    notes: ['I built Wee Editor to practice what the book preaches: a self-hosted workspace for running many agent sessions in parallel — each in its own worktree, with its own permissions, and with visibility into what every agent is doing. The best way to learn agentic engineering is to build agentic tooling.',
+            'Construí Wee Editor para practicar lo que predica el libro: un espacio de trabajo autoalojado para ejecutar muchas sesiones de agentes en paralelo — cada una en su propio worktree, con sus propios permisos y con visibilidad de lo que hace cada agente. La mejor manera de aprender ingeniería agéntica es construir herramientas agénticas.'],
+    eyebrow: ['Orchestration in practice', 'Orquestación en la práctica'],
+    heading: ['Build the tooling. <em>Learn the craft.</em>', 'Construye las herramientas. <em>Aprende el oficio.</em>'],
+    body: ['Wee Editor — my self-hosted workspace for running agent sessions in parallel. <a href="https://wee.cat" target="_blank" rel="noopener">wee.cat</a>', 'Wee Editor — mi espacio de trabajo autoalojado para ejecutar sesiones de agentes en paralelo. <a href="https://wee.cat" target="_blank" rel="noopener">wee.cat</a>'],
+    items: [
+      { title: ['Session per worktree', 'Una sesión por worktree'], body: ['Multi-agent orchestration', 'Orquestación multiagente'] },
+      { title: ['Granular permissions', 'Permisos granulares'], body: ['Guardrails in code', 'Barandillas en código'] },
+      { title: ['One view of the crew', 'Una vista de la tripulación'], body: ['Solving the visibility problem', 'Resolviendo el problema de visibilidad'] },
+    ],
+  },
+  {
+    id: 'hostile', layout: 'cards', audio: '11',
+    notes: ['When your agent IS the threat model, guardrails become existential. Never run on production. Require written authorization. Human-verify every finding.',
+            'Cuando tu agente ES el modelo de amenaza, las barandillas se vuelven existenciales. Nunca en producción. Exige autorización por escrito. Verifica cada hallazgo con humanos.'],
+    eyebrow: ['Agents as pentesters', 'Agentes como pentesters'],
+    heading: ['When your agent <em>is</em> the threat model.', 'Cuando tu agente <em>es</em> el modelo de amenaza.'],
+    items: [
+      { title: ['Never production', 'Nunca en producción'], body: ['A SQL injection test against prod isn’t a test. It’s an incident.', 'Un test de inyección SQL contra producción no es un test. Es un incidente.'] },
+      { title: ['Written authorisation', 'Autorización por escrito'], body: ['From whoever controls every system in scope.', 'De quien controle cada sistema en alcance.'] },
+      { title: ['Human-verify findings', 'Verificación humana'], body: ['Agents hallucinate vulnerabilities, too.', 'Los agentes también alucinan vulnerabilidades.'] },
+    ],
+  },
+  {
+    id: 'crew', layout: 'crew', audio: '12',
+    notes: ['This is the central metaphor of the book. You are the captain. The agents are your crew. The codebase is the ship. The crew is replaceable. The ship is not.',
+            'Esta es la metáfora central del libro. Tú eres el capitán. Los agentes son tu tripulación. La base de código es el barco. La tripulación es reemplazable. El barco no.'],
+    eyebrow: ['The crew metaphor', 'La metáfora de la tripulación'],
+    heading: ['The crew is disposable. <em>The ship is not.</em>', 'La tripulación es desechable. <em>El barco no.</em>'],
+    items: [
+      { title: ['Hull', 'Casco'], body: ['Your codebase', 'Tu base de código'] },
+      { title: ['Rigging', 'Aparejo'], body: ['Conventions', 'Convenciones'] },
+      { title: ['Soundings', 'Sondeos'], body: ['Tests', 'Tests'] },
+      { title: ['Log', 'Bitácora'], body: ['Memory', 'Memoria'] },
+      { title: ['Captain', 'Capitán'], body: ['You', 'Tú'] },
+      { title: ['Crew', 'Tripulación'], body: ['Agents', 'Agentes'] },
+    ],
+  },
+  {
+    id: 'cta', layout: 'cta', audio: '13',
+    notes: ['The call to action. Don’t wait. Open your terminal tonight. Pick a real task. Let the agent try. You’ll learn more in one hour than in a week of reading.',
+            'La llamada a la acción. No esperes. Abre tu terminal esta noche. Elige una tarea real. Deja que el agente lo intente. Aprenderás más en una hora que en una semana de lectura.'],
+    eyebrow: ['Go build something', 'Ve a construir algo'],
+    heading: ['Tonight — not tomorrow — <em>open your terminal.</em>', 'Esta noche — no mañana — <em>abre tu terminal.</em>'],
+    body: ['The book is free, in four languages. Second edition, September 2026.', 'El libro es gratuito, en cuatro idiomas. Segunda edición, septiembre de 2026.'],
+  },
+];
+const total = slides.length;
+const t = (v?: T) => v ? `<span class="t-en">${v[0]}</span><span class="t-es" lang="es">${v[1]}</span>` : '';
 ---
 
-<BaseLayout title="The Agentic Crew — Interactive Presentation" description="An interactive slide presentation with voice narration about agentic software engineering. 13 slides covering what agents are, how they fail, autonomous pentesting, and how to work with them.">
-  <canvas id="bg-canvas"></canvas>
+<BaseLayout
+  title="The Agentic Crew — Presentation (Second Edition)"
+  description="An interactive, narrated presentation of The Agentic Crew, second edition: what agents are, how they fail, context engineering, the agent attack surface, cloud agents, and building your own."
+>
+  <div class="home deck" id="deck" data-lang="en">
+    <div class="deck__bg" aria-hidden="true"><Helm size="100%" stroke={0.5} /></div>
 
-  <div class="presentation" id="presentation">
-    <!-- Slide Counter -->
-    <div class="slide-counter" id="slide-counter">1 / 13</div>
+    <header class="deck__top">
+      <a href="/" class="deck__brand"><Helm size={22} stroke={5} /> The Agentic Crew</a>
+      <div class="deck__tools">
+        <div class="seg" role="group" aria-label="Language">
+          <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-set-lang="es" aria-pressed="false">ES</button>
+        </div>
+        <div class="seg" role="group" aria-label="Narrator voice">
+          <button type="button" data-set-voice="" aria-pressed="true" title="Narrator voice 1">Voice 1</button>
+          <button type="button" data-set-voice="-female" aria-pressed="false" title="Narrator voice 2">Voice 2</button>
+        </div>
+        <button type="button" class="icon-btn" data-notes-toggle aria-pressed="false" title="Speaker notes (N)">Notes</button>
+        <button type="button" class="icon-btn" data-fullscreen title="Fullscreen (F)">⤢</button>
+      </div>
+    </header>
 
-    <!-- Language Selector -->
-    <div class="lang-selector" id="lang-selector">
-      <button class="lang-btn active" data-lang="en">EN</button>
-      <button class="lang-btn" data-lang="es">ES</button>
-    </div>
-
-
-    <!-- Progress Dots -->
-    <div class="progress-dots" id="progress-dots">
-      {Array.from({ length: 13 }).map((_, i) => (
-        <button class={`dot ${i === 0 ? 'active' : ''}`} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>
+    <main class="deck__stage" aria-live="polite">
+      {slides.map((s, i) => (
+        <section class={`sl sl--${s.layout}`} data-i={i} data-audio={s.audio ?? ''} aria-hidden={i === 0 ? 'false' : 'true'} aria-label={`Slide ${i + 1} of ${total}`}>
+          <div class="sl__inner">
+            {s.layout === 'title' ? (
+              <div class="sl-title">
+                <span class="eyebrow"><Fragment set:html={t(['Second edition · September 2026', 'Segunda edición · Septiembre 2026'])} /></span>
+                <h1>The Agentic <em>Crew</em></h1>
+                <p class="sl-title__sub"><Fragment set:html={t(['Engineering in the age of AI agents', 'Ingeniería en la era de los agentes de IA'])} /></p>
+                <p class="sl-title__by">Rasmus Bornhøft Schlünsen</p>
+              </div>
+            ) : (
+              <>
+                {s.eyebrow && <span class="eyebrow st"><Fragment set:html={t(s.eyebrow)} /></span>}
+                {s.heading && <h2 class="sl-h st"><Fragment set:html={t(s.heading)} /></h2>}
+                {s.layout === 'trifecta' && s.items && (
+                  <div class="trifecta st">
+                    {s.items.map((it, k) => (
+                      <div class={`trifecta__c trifecta__c--${k}`}><span><Fragment set:html={t(it.title)} /></span></div>
+                    ))}
+                  </div>
+                )}
+                {s.layout === 'spectrum' && s.items && (
+                  <ol class="spectrum st">
+                    {s.items.map((it, k) => (
+                      <li class={k === 2 ? 'is-focus' : ''}>
+                        <span class="spectrum__n">{String(k).padStart(2, '0')}</span>
+                        <strong><Fragment set:html={t(it.title)} /></strong>
+                        {it.body && <p><Fragment set:html={t(it.body)} /></p>}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+                {s.layout === 'loop' && s.items && (
+                  <ol class="loop st">
+                    {s.items.map((it, k) => (
+                      <li>
+                        <span class="loop__n">{['i', 'ii', 'iii'][k]}</span>
+                        <strong><Fragment set:html={t(it.title)} /></strong>
+                        {it.body && <p><Fragment set:html={t(it.body)} /></p>}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+                {s.layout === 'versus' && s.items && (
+                  <div class="versus st">
+                    {s.items.map((it) => (
+                      <div class="versus__col">
+                        <strong><Fragment set:html={t(it.title)} /></strong>
+                        {it.body && <p><Fragment set:html={t(it.body)} /></p>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {s.layout === 'crew' && s.items && (
+                  <dl class="crewmap st">
+                    {s.items.map((it) => (
+                      <div><dt><Fragment set:html={t(it.title)} /></dt><dd><Fragment set:html={t(it.body)} /></dd></div>
+                    ))}
+                  </dl>
+                )}
+                {(s.layout === 'cards' || s.layout === 'statement') && s.items && (
+                  <div class={`cards cards--${s.items.length} st`}>
+                    {s.items.map((it) => (
+                      <article class="card">
+                        {it.tag && <span class="card__tag"><Fragment set:html={t(it.tag)} /></span>}
+                        <strong><Fragment set:html={t(it.title)} /></strong>
+                        {it.body && <p><Fragment set:html={t(it.body)} /></p>}
+                      </article>
+                    ))}
+                  </div>
+                )}
+                {s.body && <p class="sl-body st"><Fragment set:html={t(s.body)} /></p>}
+                {s.layout === 'cta' && (
+                  <div class="cta st">
+                    <a class="btn btn--brass" href="/#download"><Fragment set:html={t(['Read the book — free', 'Lee el libro — gratis'])} /></a>
+                    <a class="btn btn--ghost" href="/"><Fragment set:html={t(['theagenticcrew.com', 'theagenticcrew.com'])} /></a>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+          <template class="sl-notes"><Fragment set:html={t(s.notes)} /></template>
+        </section>
       ))}
-    </div>
+    </main>
 
-    <!-- Navigation Arrows -->
-    <button class="nav-arrow nav-prev" id="nav-prev" aria-label="Previous slide">
-      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <path d="M15 18l-6-6 6-6" />
-      </svg>
-    </button>
-    <button class="nav-arrow nav-next" id="nav-next" aria-label="Next slide">
-      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <path d="M9 18l6-6-6-6" />
-      </svg>
-    </button>
+    <aside class="deck__notes" data-notes hidden>
+      <span class="eyebrow"><Fragment set:html={t(['Speaker notes', 'Notas del orador'])} /></span>
+      <div data-notes-body></div>
+    </aside>
 
-    <!-- Audio Controls -->
-    <div class="audio-controls" id="audio-controls">
-      <button class="audio-toggle" id="audio-toggle" aria-label="Toggle narration audio" title="Toggle narration (A)">
-        <svg class="audio-icon audio-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-        </svg>
-        <svg class="audio-icon audio-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-          <line x1="23" y1="9" x2="17" y2="15" />
-          <line x1="17" y1="9" x2="23" y2="15" />
-        </svg>
+    <footer class="deck__bar">
+      <button type="button" class="icon-btn" data-prev aria-label="Previous slide">←</button>
+      <button type="button" class="play" data-play aria-pressed="false">
+        <span class="play__icon" aria-hidden="true">▶</span>
+        <span class="play__label"><Fragment set:html={t(['Play with narration', 'Reproducir con narración'])} /></span>
       </button>
-      <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="80" aria-label="Narration volume" title="Volume" />
-      <div class="audio-progress" id="audio-progress">
-        <div class="audio-progress-bar" id="audio-progress-bar"></div>
-      </div>
-      <div class="bgm-divider"></div>
-      <button class="bgm-toggle active" id="bgm-toggle" aria-label="Toggle background music" title="Toggle music (M)">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M9 18V5l12-2v13"/>
-          <circle cx="6" cy="18" r="3"/>
-          <circle cx="18" cy="16" r="3"/>
-        </svg>
-      </button>
-      <input type="range" class="bgm-volume" id="bgm-volume" min="0" max="100" value="50" aria-label="Music volume" title="Music volume" />
-    </div>
-
-    <!-- Play Overlay -->
-    <div class="play-overlay" id="play-overlay">
-      <button class="play-overlay-btn" id="play-overlay-btn" aria-label="Start presentation">
-        <svg viewBox="0 0 80 80" width="80" height="80" fill="none">
-          <circle cx="40" cy="40" r="38" stroke="var(--color-accent)" stroke-width="2" opacity="0.6" />
-          <polygon points="32,22 32,58 60,40" fill="var(--color-accent)" opacity="0.9" />
-        </svg>
-        <span data-i18n="play-overlay-text">Start Presentation</span>
-      </button>
-    </div>
-
-    <!-- Presenter Notes Overlay -->
-    <div class="presenter-notes" id="presenter-notes">
-      <div class="notes-inner" id="notes-content"></div>
-    </div>
-
-    <!-- ============ SLIDE 1: Title ============ -->
-    <section class="slide slide-active" data-index="0" data-notes="Welcome everyone. This is a talk about how software engineering is changing in the age of AI agents.">
-      <div class="slide-content slide-title-layout">
-        <div class="title-wheel" aria-hidden="true">
-          <svg viewBox="0 0 200 200" width="280" height="280" fill="none" stroke="currentColor" class="ships-wheel">
-            <circle cx="100" cy="100" r="70" stroke-width="4" opacity="0.3" />
-            <circle cx="100" cy="100" r="50" stroke-width="3" opacity="0.2" />
-            <circle cx="100" cy="100" r="12" stroke-width="3" opacity="0.4" />
-            <!-- Spokes -->
-            {Array.from({ length: 8 }).map((_, i) => {
-              const angle = (i * 45) * Math.PI / 180;
-              const x1 = 100 + Math.cos(angle) * 12;
-              const y1 = 100 + Math.sin(angle) * 12;
-              const x2 = 100 + Math.cos(angle) * 70;
-              const y2 = 100 + Math.sin(angle) * 70;
-              return <line x1={x1.toString()} y1={y1.toString()} x2={x2.toString()} y2={y2.toString()} stroke-width="3" opacity="0.3" />;
-            })}
-            <!-- Handles -->
-            {Array.from({ length: 8 }).map((_, i) => {
-              const angle = (i * 45) * Math.PI / 180;
-              const cx = 100 + Math.cos(angle) * 82;
-              const cy = 100 + Math.sin(angle) * 82;
-              return <circle cx={cx.toString()} cy={cy.toString()} r="6" stroke-width="2.5" opacity="0.3" />;
-            })}
-          </svg>
-        </div>
-        <div id="lottie-title-glow" class="lottie-title-glow"></div>
-        <p class="slide-eyebrow" data-i18n="slide1-eyebrow">A Book by Rasmus Bornhoft Schlunsen</p>
-        <h1 class="slide-main-title" data-i18n="slide1-title">The Agentic<br/>Crew</h1>
-        <p class="slide-subtitle-big" data-i18n="slide1-subtitle">Engineering in the Age of AI Agents</p>
-        <p class="slide-date" data-i18n="slide1-date">March 2026</p>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 2: The Ground Is Shifting ============ -->
-    <section class="slide" data-index="1" data-notes="For two decades, the feedback loop was simple: write code, run it, ship it. AI agents are fundamentally changing that loop.">
-      <div class="slide-content slide-quote-layout">
-        <h2 class="slide-heading" data-i18n="slide2-heading">The Ground Is Shifting</h2>
-        <blockquote class="slide-blockquote reveal-text" id="quote-slide2" data-i18n="slide2-quote" data-i18n-html="true">
-          "You write code, you ship it. <em>That loop is breaking.</em>"
-        </blockquote>
-        <div class="stat-badges">
-          <span class="stat-badge" data-i18n="slide2-stat1">72% of developers used AI coding tools in 2025</span>
-          <span class="stat-badge" data-i18n="slide2-stat2">Agents now write 30%+ of code at leading firms</span>
-          <span class="stat-badge" data-i18n="slide2-stat3">Old: write → run → ship. New: instruct → review → steer.</span>
-        </div>
-        <div class="agent-loop-svg" aria-hidden="true">
-          <svg viewBox="0 0 500 200" width="500" height="200" fill="none">
-            <!-- Keyboard to agent loop -->
-            <g class="loop-group">
-              <!-- Keyboard icon -->
-              <rect x="20" y="70" width="80" height="50" rx="6" stroke="var(--color-accent)" stroke-width="2" opacity="0.6" />
-              <line x1="35" y1="85" x2="55" y2="85" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4" />
-              <line x1="35" y1="95" x2="85" y2="95" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4" />
-              <line x1="45" y1="105" x2="75" y2="105" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4" />
-              <!-- Arrow from keyboard -->
-              <path d="M110 95 L150 95" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-dasharray="4 4" class="flow-arrow" />
-              <polygon points="150,90 160,95 150,100" fill="var(--color-text-muted)" opacity="0.5" />
-              <!-- Agent loop circle -->
-              <circle cx="300" cy="95" r="75" stroke="var(--color-pirate-teal)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.3" class="loop-circle" />
-              <!-- Think -->
-              <text x="300" y="45" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="13" font-family="var(--font-mono)" opacity="0.8">Think</text>
-              <!-- Act -->
-              <text x="395" y="100" text-anchor="middle" fill="var(--color-accent)" font-size="13" font-family="var(--font-mono)" opacity="0.8">Act</text>
-              <!-- Observe -->
-              <text x="300" y="155" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="13" font-family="var(--font-mono)" opacity="0.8">Observe</text>
-              <!-- Adjust -->
-              <text x="205" y="100" text-anchor="middle" fill="var(--color-accent)" font-size="13" font-family="var(--font-mono)" opacity="0.8">Adjust</text>
-              <!-- Circular arrows -->
-              <path d="M300 22 A73 73 0 0 1 373 95" stroke="var(--color-pirate-teal)" stroke-width="1.5" fill="none" class="loop-path loop-path-1" />
-              <path d="M373 95 A73 73 0 0 1 300 168" stroke="var(--color-accent)" stroke-width="1.5" fill="none" class="loop-path loop-path-2" />
-              <path d="M300 168 A73 73 0 0 1 227 95" stroke="var(--color-pirate-teal)" stroke-width="1.5" fill="none" class="loop-path loop-path-3" />
-              <path d="M227 95 A73 73 0 0 1 300 22" stroke="var(--color-accent)" stroke-width="1.5" fill="none" class="loop-path loop-path-4" />
-              <!-- Arrow tips on the arcs -->
-              <polygon points="368,80 378,95 368,95" fill="var(--color-pirate-teal)" opacity="0.6" />
-              <polygon points="315,165 300,168 305,155" fill="var(--color-accent)" opacity="0.6" />
-            </g>
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 3: The Craft Is Molting ============ -->
-    <section class="slide" data-index="2" data-notes="The craft is evolving. The mechanical parts are being automated, but the judgment, taste, and architectural thinking are more important than ever.">
-      <div class="slide-content slide-image-quote-layout">
-        <div class="slide-text-side">
-          <h2 class="slide-heading" data-i18n="slide3-heading">The Craft Is Molting</h2>
-          <blockquote class="slide-blockquote" data-i18n="slide3-quote" data-i18n-html="true">
-            "The craft isn't dying — it's molting."
-          </blockquote>
-          <p class="topic-tags-eyebrow" data-i18n="slide3-topics-eyebrow">19 chapters covering:</p>
-          <div class="topic-tags">
-            <span class="topic-tag" data-i18n="slide3-tag1">Guardrails & Sandboxes</span>
-            <span class="topic-tag" data-i18n="slide3-tag2">Prompt Engineering</span>
-            <span class="topic-tag" data-i18n="slide3-tag3">Multi-Agent Orchestration</span>
-            <span class="topic-tag" data-i18n="slide3-tag4">Agents in CI/CD</span>
-            <span class="topic-tag" data-i18n="slide3-tag5">Testing as Feedback</span>
-            <span class="topic-tag" data-i18n="slide3-tag6">When NOT to Use Agents</span>
-          </div>
-        </div>
-        <div class="slide-image-side">
-          <img src="/illustrations/foreword-molting.jpg" alt="A cocoon cracking open with light emerging" class="oval-vignette slide-illustration" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 4: What Is an Agent? ============ -->
-    <section class="slide" data-index="3" data-notes="Agents exist on a spectrum. Most practical work today happens at the tool-using agent level, where the agent can call tools, read files, and iterate.">
-      <div class="slide-content slide-center-layout">
-        <h2 class="slide-heading" data-i18n="slide4-heading">What Is an Agent?</h2>
-        <p class="slide-body" data-i18n="slide4-body">The spectrum of AI assistance in software engineering:</p>
-        <div class="spectrum-container" id="spectrum">
-          <div class="spectrum-bar">
-            <div class="spectrum-fill" id="spectrum-fill"></div>
-          </div>
-          <div class="spectrum-levels">
-            <button class="spectrum-level" data-level="0" data-desc="Tab-completion suggestions. Predicts the next few tokens." data-desc-es="Sugerencias de autocompletado con Tab. Predice los próximos tokens.">
-              <div class="spectrum-icon">
-                <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
-                  <rect x="5" y="10" width="30" height="20" rx="3" />
-                  <path d="M12 20h6m-3-3v6" opacity="0.5" />
-                </svg>
-              </div>
-              <span data-i18n="slide4-level0">Autocomplete</span>
-            </button>
-            <button class="spectrum-level" data-level="1" data-desc="Inline code suggestions. Understands context within a file." data-desc-es="Sugerencias de código en línea. Entiende el contexto dentro de un archivo.">
-              <div class="spectrum-icon">
-                <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
-                  <rect x="5" y="5" width="30" height="30" rx="3" />
-                  <path d="M12 15l4 5-4 5m8 0h6" opacity="0.6" />
-                </svg>
-              </div>
-              <span data-i18n="slide4-level1">Copilot</span>
-            </button>
-            <button class="spectrum-level active-level" data-level="2" data-desc="Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today." data-desc-es="Puede leer archivos, ejecutar comandos, llamar APIs e iterar sobre resultados. Aquí es donde ocurre la mayor parte del trabajo práctico hoy.">
-              <div class="spectrum-icon">
-                <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
-                  <circle cx="20" cy="15" r="8" />
-                  <path d="M8 35c0-6 5-10 12-10s12 4 12 10" />
-                  <path d="M30 12l6-2m-6 6l6 2" stroke="var(--color-pirate-teal)" />
-                </svg>
-              </div>
-              <span data-i18n="slide4-level2">Tool-Using Agent</span>
-              <div class="spectrum-pointer" data-i18n="slide4-pointer">Most practical work happens here</div>
-            </button>
-            <button class="spectrum-level" data-level="3" data-desc="Fully autonomous operation. Plans, executes, and self-corrects across entire projects with minimal human input." data-desc-es="Operación completamente autónoma. Planifica, ejecuta y se autocorrige en proyectos completos con mínima intervención humana.">
-              <div class="spectrum-icon">
-                <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5">
-                  <circle cx="20" cy="20" r="14" stroke-dasharray="4 3" />
-                  <circle cx="20" cy="20" r="6" />
-                  <path d="M20 6v4m0 20v4M6 20h4m20 0h4" opacity="0.5" />
-                </svg>
-              </div>
-              <span data-i18n="slide4-level3">Autonomous Agent</span>
-            </button>
-          </div>
-          <div class="spectrum-desc" id="spectrum-desc" data-i18n="slide4-desc-default">Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 5: The Rain Man Analogy ============ -->
-    <section class="slide" data-index="4" data-notes="Think of it like Rain Man. Tom Cruise provides the direction and judgment. Dustin Hoffman provides extraordinary capability but needs guidance.">
-      <div class="slide-content slide-image-quote-layout">
-        <div class="slide-image-side slide-image-side-large">
-          <img src="/illustrations/ch03-rain-man.jpg" alt="Rain Man — captain and savant illustration" class="oval-vignette slide-illustration" loading="lazy" />
-        </div>
-        <div class="slide-text-side">
-          <h2 class="slide-heading" data-i18n="slide5-heading">The Rain Man Analogy</h2>
-          <blockquote class="slide-blockquote" data-i18n="slide5-quote">"You're Tom Cruise. The agent is Dustin Hoffman."</blockquote>
-          <div class="two-panels two-panels-stacked">
-            <div class="panel panel-captain">
-              <h3 data-i18n="slide5-captain-title">You — The Captain</h3>
-              <ul>
-                <li data-i18n="slide5-captain-1">Direction &amp; vision</li>
-                <li data-i18n="slide5-captain-2">Judgment &amp; taste</li>
-                <li data-i18n="slide5-captain-3">Knows when to walk away</li>
-              </ul>
-            </div>
-            <div class="panel panel-agent">
-              <h3 data-i18n="slide5-agent-title">Agent — The Savant</h3>
-              <ul>
-                <li data-i18n="slide5-agent-1">Speed &amp; throughput</li>
-                <li data-i18n="slide5-agent-2">Tireless execution</li>
-                <li data-i18n="slide5-agent-3">Infinite pattern recognition</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 6: Three Capabilities ============ -->
-    <section class="slide" data-index="5" data-notes="These are the three core capabilities that make an agent an agent: planning, tool use, and iteration. Without any one of these, you just have a chatbot.">
-      <div class="slide-content slide-center-layout">
-        <h2 class="slide-heading" data-i18n="slide6-heading">Three Core Capabilities</h2>
-        <div class="capability-cards" id="capability-cards">
-          <div class="cap-card" data-cap="planning">
-            <div class="cap-card-front">
-              <svg viewBox="0 0 60 60" width="60" height="60" fill="none" stroke="var(--color-pirate-teal)" stroke-width="1.5">
-                <circle cx="30" cy="30" r="24" stroke-dasharray="4 3" opacity="0.4" />
-                <circle cx="30" cy="30" r="3" fill="var(--color-pirate-teal)" opacity="0.6" />
-                <path d="M30 6v6m0 36v6M6 30h6m36 0h6" opacity="0.5" />
-                <path d="M30 10l2 18h-4z" fill="var(--color-pirate-teal)" opacity="0.3" />
-              </svg>
-              <h3 data-i18n="slide6-cap1-title">Planning</h3>
-              <p class="cap-hint" data-i18n="slide6-cap-hint">Click to reveal</p>
-            </div>
-            <div class="cap-card-back">
-              <p data-i18n="slide6-cap1-desc">Breaking down complex tasks into steps. Understanding dependencies, ordering work, and deciding what to do first.</p>
-            </div>
-          </div>
-          <div class="cap-card" data-cap="tools">
-            <div class="cap-card-front">
-              <svg viewBox="0 0 60 60" width="60" height="60" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
-                <path d="M20 40l-8 8a3 3 0 004 4l8-8" />
-                <path d="M24 36l12-12" stroke-width="2" />
-                <circle cx="42" cy="18" r="10" stroke-dasharray="3 3" opacity="0.4" />
-                <path d="M38 14l4 4m0-4l-4 4" opacity="0.6" />
-              </svg>
-              <h3 data-i18n="slide6-cap2-title">Tool Use</h3>
-              <p class="cap-hint" data-i18n="slide6-cap-hint2">Click to reveal</p>
-            </div>
-            <div class="cap-card-back">
-              <p data-i18n="slide6-cap2-desc">Reading files, running commands, calling APIs, writing code. The agent's hands in the real world.</p>
-            </div>
-          </div>
-          <div class="cap-card" data-cap="iteration">
-            <div class="cap-card-front">
-              <svg viewBox="0 0 60 60" width="60" height="60" fill="none" stroke="var(--color-accent-deep)" stroke-width="1.5">
-                <path d="M42 22A15 15 0 1118 30" />
-                <polygon points="18,24 18,36 12,30" fill="var(--color-accent-deep)" opacity="0.4" />
-                <path d="M18 38A15 15 0 1142 30" />
-                <polygon points="42,36 42,24 48,30" fill="var(--color-accent-deep)" opacity="0.4" />
-              </svg>
-              <h3 data-i18n="slide6-cap3-title">Iteration</h3>
-              <p class="cap-hint" data-i18n="slide6-cap-hint3">Click to reveal</p>
-            </div>
-            <div class="cap-card-back">
-              <p data-i18n="slide6-cap3-desc">Running code, seeing errors, fixing them, and trying again. The observe-adjust loop that makes agents powerful.</p>
-            </div>
-          </div>
-        </div>
-        <div id="lottie-capabilities" class="lottie-capabilities"></div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 7: When Agents Fail ============ -->
-    <section class="slide" data-index="6" data-notes="Understanding failure modes is critical. These are the four most common ways agents go wrong, and how to mitigate each one.">
-      <div class="slide-content slide-failures-layout">
-        <h2 class="slide-heading" data-i18n="slide7-heading">When Agents Fail</h2>
-        <div class="failure-cards" id="failure-cards">
-          <div class="failure-card" data-delay="0">
-            <div class="failure-icon">
-              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
-                <circle cx="20" cy="20" r="15" />
-                <path d="M12 12l16 16M28 12l-16 16" opacity="0.5" />
-              </svg>
-            </div>
-            <h3 data-i18n="slide7-fail1-title">Scope Creep</h3>
-            <p class="failure-desc" data-i18n="slide7-fail1-desc">Agent expands beyond the task, refactoring code you didn't ask it to touch.</p>
-            <p class="failure-fix" data-i18n="slide7-fail1-fix">Fix: Small, focused prompts. One task at a time.</p>
-          </div>
-          <div class="failure-card" data-delay="1">
-            <div class="failure-icon">
-              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
-                <path d="M10 30l10-20 10 20z" />
-                <line x1="20" y1="18" x2="20" y2="24" />
-                <circle cx="20" cy="27" r="1" fill="#d94f4f" />
-              </svg>
-            </div>
-            <h3 data-i18n="slide7-fail2-title">Hallucinated APIs</h3>
-            <p class="failure-desc" data-i18n="slide7-fail2-desc">Agent invents function signatures or library methods that don't exist.</p>
-            <p class="failure-fix" data-i18n="slide7-fail2-fix">Fix: Always run tests. Pin dependency docs in context.</p>
-          </div>
-          <div class="failure-card" data-delay="2">
-            <div class="failure-icon">
-              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
-                <circle cx="20" cy="20" r="15" />
-                <path d="M14 16c0-2 3-4 6-4s6 2 6 4" />
-                <circle cx="15" cy="22" r="1.5" fill="#d94f4f" />
-                <circle cx="25" cy="22" r="1.5" fill="#d94f4f" />
-                <path d="M14 28c2 2 4 3 6 3s4-1 6-3" />
-              </svg>
-            </div>
-            <h3 data-i18n="slide7-fail3-title">Overconfidence</h3>
-            <p class="failure-desc" data-i18n="slide7-fail3-desc">Agent presents wrong answers with certainty. No hedging, no doubt.</p>
-            <p class="failure-fix" data-i18n="slide7-fail3-fix">Fix: Verify everything. Trust but verify.</p>
-          </div>
-          <div class="failure-card" data-delay="3">
-            <div class="failure-icon">
-              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
-                <rect x="8" y="8" width="24" height="24" rx="3" stroke-dasharray="4 3" />
-                <path d="M14 20h12M14 15h8M14 25h10" opacity="0.4" />
-                <path d="M30 10l-20 20" stroke-width="2" opacity="0.6" />
-              </svg>
-            </div>
-            <h3 data-i18n="slide7-fail4-title">Context Loss</h3>
-            <p class="failure-desc" data-i18n="slide7-fail4-desc">Agent forgets earlier instructions as the conversation grows long.</p>
-            <p class="failure-fix" data-i18n="slide7-fail4-fix">Fix: Fresh sessions. Project rules files. Keep context lean.</p>
-          </div>
-        </div>
-        <div class="slide-image-accent">
-          <img src="/illustrations/ch13-storm.jpg" alt="Storm clouds illustration" class="oval-vignette slide-illustration-tiny" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 8: The Engineering Toolkit ============ -->
-    <section class="slide" data-index="7" data-notes="These five practices form the engineering toolkit for working with agents effectively. Each one reinforces the others.">
-      <div class="slide-content slide-center-layout">
-        <h2 class="slide-heading" data-i18n="slide8-heading">The Engineering Toolkit</h2>
-        <div class="pipeline" id="pipeline">
-          <div class="pipeline-node" data-node="guardrails" data-info="Constraints that keep agents on track: linters, type checkers, pre-commit hooks, and approval gates." data-info-es="Restricciones que mantienen a los agentes en el camino: linters, verificadores de tipos, hooks de pre-commit y puertas de aprobación.">
-            <div class="pipeline-icon">
-              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
-                <rect x="6" y="10" width="32" height="24" rx="4" />
-                <path d="M6 18h32" />
-                <path d="M16 26h12" opacity="0.5" />
-              </svg>
-            </div>
-            <span data-i18n="slide8-node1">Guardrails</span>
-          </div>
-          <div class="pipeline-connector"><div class="connector-line"></div></div>
-          <div class="pipeline-node" data-node="git" data-info="Version control as a safety net: branches for isolation, diffs for review, revert as your undo button." data-info-es="Control de versiones como red de seguridad: ramas para aislamiento, diffs para revisión, revert como botón de deshacer.">
-            <div class="pipeline-icon">
-              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-pirate-teal)" stroke-width="1.5">
-                <circle cx="22" cy="12" r="4" />
-                <circle cx="14" cy="32" r="4" />
-                <circle cx="30" cy="32" r="4" />
-                <path d="M22 16v6l-8 6m8-6l8 6" />
-              </svg>
-            </div>
-            <span>Git</span>
-          </div>
-          <div class="pipeline-connector"><div class="connector-line"></div></div>
-          <div class="pipeline-node" data-node="sandboxes" data-info="Isolated environments where agents can safely experiment without affecting production." data-info-es="Entornos aislados donde los agentes pueden experimentar de forma segura sin afectar la producción.">
-            <div class="pipeline-icon">
-              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent-deep)" stroke-width="1.5">
-                <rect x="8" y="8" width="28" height="28" rx="4" stroke-dasharray="4 3" />
-                <rect x="14" y="14" width="16" height="16" rx="2" />
-              </svg>
-            </div>
-            <span data-i18n="slide8-node3">Sandboxes</span>
-          </div>
-          <div class="pipeline-connector"><div class="connector-line"></div></div>
-          <div class="pipeline-node" data-node="testing" data-info="Tests as the feedback loop: the agent runs tests, sees failures, and iterates. Tests replace human eyes." data-info-es="Tests como bucle de retroalimentación: el agente ejecuta tests, ve fallos e itera. Los tests reemplazan los ojos humanos.">
-            <div class="pipeline-icon">
-              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-pirate-teal)" stroke-width="1.5">
-                <path d="M12 22l6 6 14-14" stroke-width="2" />
-                <circle cx="22" cy="22" r="16" stroke-dasharray="4 3" opacity="0.4" />
-              </svg>
-            </div>
-            <span data-i18n="slide8-node4">Testing</span>
-          </div>
-          <div class="pipeline-connector"><div class="connector-line"></div></div>
-          <div class="pipeline-node" data-node="conventions" data-info="Convention over configuration: project rules, naming patterns, and structure that agents can follow without being told." data-info-es="Convención sobre configuración: reglas del proyecto, patrones de nomenclatura y estructura que los agentes pueden seguir sin que se les diga.">
-            <div class="pipeline-icon">
-              <svg viewBox="0 0 44 44" width="44" height="44" fill="none" stroke="var(--color-accent)" stroke-width="1.5">
-                <path d="M10 10h24v24H10z" opacity="0.3" />
-                <path d="M16 16h12M16 22h8M16 28h10" />
-              </svg>
-            </div>
-            <span data-i18n="slide8-node5">Conventions</span>
-          </div>
-        </div>
-        <div class="pipeline-info" id="pipeline-info" data-i18n="slide8-info-default">Click any node to learn more</div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 9: Wee — Building My Own Control Plane ============ -->
-    <section class="slide" data-index="8" data-notes="I built Wee as a way to practice agentic engineering myself. It's a browser-based control plane for running multiple Claude agent sessions. Built in Go and Vue, single binary, no dependencies.">
-      <div class="slide-content slide-cct-layout">
-        <h2 class="slide-heading" data-i18n="slide9-heading">Multi-Agent Orchestration in Practice</h2>
-        <p class="slide-subtitle-cct" data-i18n="slide9-subtitle">Wee — from theory to working code</p>
-        <div class="cct-showcase">
-          <div class="cct-diagram">
-            <!-- Architecture SVG -->
-            <svg viewBox="0 0 480 110" width="480" height="110" fill="none" class="cct-arch-svg">
-              <!-- Browser -->
-              <rect x="10" y="20" width="120" height="70" rx="8" stroke="var(--color-pirate-teal)" stroke-width="1.5" />
-              <text x="70" y="48" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="11" font-family="var(--font-mono)">Browser</text>
-              <text x="70" y="65" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">Nuxt 4 + Vue</text>
-              <!-- WSS Arrow -->
-              <line x1="130" y1="55" x2="180" y2="55" stroke="var(--color-accent)" stroke-width="1.5" stroke-dasharray="4 3" />
-              <polygon points="178,50 188,55 178,60" fill="var(--color-accent)" opacity="0.7" />
-              <text x="155" y="48" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-mono)">WSS</text>
-              <!-- Go Server -->
-              <rect x="188" y="10" width="130" height="90" rx="8" stroke="var(--color-accent)" stroke-width="2" />
-              <text x="253" y="38" text-anchor="middle" fill="var(--color-accent)" font-size="12" font-weight="bold" font-family="var(--font-mono)">Go Server</text>
-              <text x="253" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">15MB binary</text>
-              <text x="253" y="70" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">REST + WebSocket</text>
-              <text x="253" y="85" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">SQLite embedded</text>
-              <!-- SDK Arrow -->
-              <line x1="318" y1="55" x2="358" y2="55" stroke="var(--color-pirate-teal)" stroke-width="1.5" stroke-dasharray="4 3" />
-              <polygon points="356,50 366,55 356,60" fill="var(--color-pirate-teal)" opacity="0.7" />
-              <text x="338" y="48" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-mono)">SDK</text>
-              <!-- Claude API -->
-              <rect x="366" y="25" width="100" height="60" rx="8" stroke="var(--color-accent-deep)" stroke-width="1.5" />
-              <text x="416" y="52" text-anchor="middle" fill="var(--color-accent-deep)" font-size="11" font-family="var(--font-mono)">Claude API</text>
-              <text x="416" y="68" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">+ DeepSeek, GLM...</text>
-            </svg>
-            <div class="lesson-callouts">
-              <div class="lesson-callout" data-i18n="slide9-lesson1">Multi-session = multi-agent orchestration (Ch 12)</div>
-              <div class="lesson-callout" data-i18n="slide9-lesson2">Granular permissions = guardrails in code (Ch 4)</div>
-              <div class="lesson-callout" data-i18n="slide9-lesson3">Pipeline integration = agents in CI/CD (Ch 13)</div>
-            </div>
-          </div>
-          <div class="cct-quote">
-            <blockquote class="slide-blockquote slide-blockquote-small" data-i18n="slide9-quote">
-              "The best way to learn agentic engineering is to build agentic tooling."
-            </blockquote>
-            <a href="https://github.com/schlunsen/wee" target="_blank" rel="noopener" class="cct-github-link">
-              <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              <span>schlunsen/wee</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 10: Agents as Pentesters ============ -->
-    <section class="slide" data-index="9" data-notes="The same agent patterns — orchestration, feedback loops, guardrails — apply to security. Donna is an open-source autonomous pentesting platform I maintain. It runs 13 agents across 5 phases — recon, analysis, exploitation, and reporting — to find and exploit vulnerabilities continuously. It's built on Claude Agent SDK and Temporal, and it's the culmination of every principle in the book.">
-      <div class="slide-content slide-center-layout">
-        <h2 class="slide-heading" data-i18n="slide10-heading">Agents as Pentesters</h2>
-        <p class="slide-body" data-i18n="slide10-body">What if your pipeline could hack itself before attackers do?</p>
-        <p class="slide-body-small" data-i18n="slide10-case-study">(Case study: <a href="https://github.com/schlunsen/donna" target="_blank" rel="noopener">Donna</a> — open-source, Claude Agent SDK + Temporal)</p>
-        <div class="pentest-pipeline" id="pentest-pipeline">
-          <svg viewBox="0 0 700 180" width="700" height="180" fill="none" class="pentest-pipeline-svg">
-            <!-- Phase 1: Recon -->
-            <rect x="10" y="30" width="120" height="60" rx="8" stroke="var(--color-pirate-teal)" stroke-width="1.5" />
-            <text x="70" y="55" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="11" font-family="var(--font-mono)" font-weight="bold">Recon</text>
-            <text x="70" y="72" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">nmap, source analysis</text>
-            <!-- Arrow -->
-            <line x1="130" y1="60" x2="150" y2="60" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-dasharray="4 3" />
-            <polygon points="148,55 158,60 148,65" fill="var(--color-text-muted)" opacity="0.5" />
-            <!-- Phase 2: Analysis (5 parallel) -->
-            <rect x="158" y="10" width="140" height="100" rx="8" stroke="var(--color-accent)" stroke-width="2" />
-            <text x="228" y="30" text-anchor="middle" fill="var(--color-accent)" font-size="11" font-family="var(--font-mono)" font-weight="bold">Analysis</text>
-            <text x="228" y="48" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-sans)">Injection | XSS</text>
-            <text x="228" y="62" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-sans)">Auth | AuthZ | SSRF</text>
-            <text x="228" y="80" text-anchor="middle" fill="var(--color-accent)" font-size="9" font-family="var(--font-mono)" opacity="0.7">5 agents in parallel</text>
-            <!-- Arrow -->
-            <line x1="298" y1="60" x2="318" y2="60" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-dasharray="4 3" />
-            <polygon points="316,55 326,60 316,65" fill="var(--color-text-muted)" opacity="0.5" />
-            <!-- Phase 3: Exploitation (5 parallel) -->
-            <rect x="326" y="10" width="140" height="100" rx="8" stroke="#d94f4f" stroke-width="2" />
-            <text x="396" y="30" text-anchor="middle" fill="#d94f4f" font-size="11" font-family="var(--font-mono)" font-weight="bold">Exploitation</text>
-            <text x="396" y="48" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-sans)">Confirm vulnerabilities</text>
-            <text x="396" y="62" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-sans)">by executing attacks</text>
-            <text x="396" y="80" text-anchor="middle" fill="#d94f4f" font-size="9" font-family="var(--font-mono)" opacity="0.7">5 agents in parallel</text>
-            <!-- Arrow -->
-            <line x1="466" y1="60" x2="486" y2="60" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-dasharray="4 3" />
-            <polygon points="484,55 494,60 484,65" fill="var(--color-text-muted)" opacity="0.5" />
-            <!-- Phase 4: Report -->
-            <rect x="494" y="30" width="120" height="60" rx="8" stroke="var(--color-pirate-teal)" stroke-width="1.5" />
-            <text x="554" y="55" text-anchor="middle" fill="var(--color-pirate-teal)" font-size="11" font-family="var(--font-mono)" font-weight="bold">Report</text>
-            <text x="554" y="72" text-anchor="middle" fill="var(--color-text-muted)" font-size="9" font-family="var(--font-sans)">CVSS, CWE, evidence</text>
-            <!-- Feedback loop arrow -->
-            <path d="M396 110 L396 140 L228 140 L228 110" stroke="var(--color-accent)" stroke-width="1.5" stroke-dasharray="5 3" fill="none" />
-            <polygon points="224,112 228,102 232,112" fill="var(--color-accent)" opacity="0.6" />
-            <text x="312" y="155" text-anchor="middle" fill="var(--color-accent)" font-size="9" font-family="var(--font-mono)" opacity="0.7">Exploitation feedback loop</text>
-            <!-- Temporal badge -->
-            <text x="628" y="55" text-anchor="middle" fill="var(--color-text-muted)" font-size="8" font-family="var(--font-mono)">Orchestrated by</text>
-            <text x="628" y="70" text-anchor="middle" fill="var(--color-accent)" font-size="11" font-family="var(--font-mono)" font-weight="bold">Temporal</text>
-          </svg>
-        </div>
-        <blockquote class="slide-blockquote" data-i18n="slide10-insight">"Every principle from the book — guardrails, sandboxes, orchestration, testing — converges here. If you can safely let agents attack your software, you've mastered agentic engineering."</blockquote>
-        <div class="pentest-badges">
-          <a href="https://github.com/schlunsen/donna" target="_blank" rel="noopener" class="cct-github-link">
-            <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            <span>schlunsen/donna</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 11: Guardrails for Hostile Agents ============ -->
-    <section class="slide" data-index="10" data-notes="When your agent IS the threat model, guardrails become existential. Never run on production. Require written authorization. Human-verify every finding.">
-      <div class="slide-content slide-center-layout">
-        <h2 class="slide-heading" data-i18n="slide11-heading">When Agents Attack (Responsibly)</h2>
-        <div class="hostile-guardrails">
-          <div class="guardrail-warning">
-            <div class="failure-icon">
-              <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="#d94f4f" stroke-width="1.5">
-                <path d="M10 30l10-20 10 20z" />
-                <line x1="20" y1="18" x2="20" y2="24" />
-                <circle cx="20" cy="27" r="1" fill="#d94f4f" />
-              </svg>
-            </div>
-            <blockquote class="slide-blockquote slide-blockquote-small" data-i18n="slide11-quote">
-              "The same guardrails that protect you FROM rogue agents now need to protect the world FROM your intentionally hostile agents."
-            </blockquote>
-          </div>
-          <div class="guardrail-rules">
-            <div class="failure-card" data-delay="0">
-              <h3 data-i18n="slide11-rule1-title">Isolate & Authorize</h3>
-              <p class="failure-desc" data-i18n="slide11-rule1-desc">Sandbox your pentesting agents. Get written permission. Scanning production isn't testing — it's an incident.</p>
-            </div>
-            <div class="failure-card" data-delay="1">
-              <h3 data-i18n="slide11-rule2-title">Verify Everything</h3>
-              <p class="failure-desc" data-i18n="slide11-rule2-desc">Agents hallucinate vulnerabilities. Every finding needs human eyes before it becomes an action item.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 12: The Crew Metaphor ============ -->
-    <section class="slide" data-index="11" data-notes="This is the central metaphor of the book. You are the captain. The agents are your crew. The codebase is the ship. The crew is replaceable. The ship is not.">
-      <div class="slide-content slide-image-quote-layout slide-image-quote-reverse">
-        <div class="slide-image-side">
-          <img src="/illustrations/ch15-crew.jpg" alt="A ship with its crew" class="oval-vignette slide-illustration" loading="lazy" />
-        </div>
-        <div class="slide-text-side">
-          <h2 class="slide-heading" data-i18n="slide12-heading">The Crew Metaphor</h2>
-          <blockquote class="slide-blockquote" data-i18n="slide12-quote">
-            "You're the captain. The crew is disposable. The ship is not."
-          </blockquote>
-          <div class="crew-labels" id="crew-labels">
-            <div class="crew-label" data-delay="0"><span class="label-icon">&#9875;</span> <span data-i18n="slide12-label1">Hull = Your Codebase</span></div>
-            <div class="crew-label" data-delay="1"><span class="label-icon">&#9878;</span> <span data-i18n="slide12-label2">Rigging = Conventions</span></div>
-            <div class="crew-label" data-delay="2"><span class="label-icon">&#128214;</span> <span data-i18n="slide12-label3">Logbook = Tests</span></div>
-            <div class="crew-label" data-delay="3"><span class="label-icon">&#9813;</span> <span data-i18n="slide12-label4">Captain = You</span></div>
-            <div class="crew-label" data-delay="4"><span class="label-icon">&#9823;</span> <span data-i18n="slide12-label5">Crew = Agents</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SLIDE 13: Go Build Something ============ -->
-    <section class="slide" data-index="12" data-notes="The call to action. Don't wait. Open your terminal tonight. Pick a real task. Let the agent try. You'll learn more in one hour than in a week of reading.">
-      <div class="slide-content slide-title-layout slide-final">
-        <div class="compass-rose-final" aria-hidden="true">
-          <svg viewBox="0 0 200 200" width="200" height="200" fill="none" stroke="var(--color-accent)" class="compass-spin">
-            <circle cx="100" cy="100" r="90" stroke-width="0.5" opacity="0.15" />
-            <circle cx="100" cy="100" r="70" stroke-width="0.3" stroke-dasharray="4 8" opacity="0.1" />
-            <circle cx="100" cy="100" r="50" stroke-width="0.3" opacity="0.15" />
-            <line x1="100" y1="5" x2="100" y2="195" stroke-width="0.5" opacity="0.15" />
-            <line x1="5" y1="100" x2="195" y2="100" stroke-width="0.5" opacity="0.15" />
-            <line x1="30" y1="30" x2="170" y2="170" stroke-width="0.3" opacity="0.1" />
-            <line x1="170" y1="30" x2="30" y2="170" stroke-width="0.3" opacity="0.1" />
-            <polygon points="100,10 105,40 100,35 95,40" fill="var(--color-accent)" opacity="0.2" />
-          </svg>
-        </div>
-        <h2 class="slide-heading slide-heading-big" data-i18n="slide13-heading">Go Build Something</h2>
-        <div class="typing-effect" id="typing-effect"></div>
-        <div class="final-actions">
-          <a href="/" class="btn-primary-slide">
-            <span data-i18n="slide13-cta">Get the Book -- Free</span>
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" />
-            </svg>
-          </a>
-        </div>
-        <div id="lottie-sparkle" class="lottie-sparkle"></div>
-      </div>
-    </section>
-
+      <div class="deck__progress" aria-hidden="true"><span data-progress></span></div>
+      <span class="deck__status" data-status></span>
+      <span class="deck__count"><b data-count>1</b> / {total}</span>
+      <button type="button" class="icon-btn" data-next aria-label="Next slide">→</button>
+    </footer>
   </div>
 </BaseLayout>
 
-<style>
-  /* ========================================
-     PRESENTATION GLOBAL STYLES
-     ======================================== */
-
-  body {
-    overflow: hidden;
-    background: var(--color-bg);
-  }
-
-  #bg-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .presentation {
-    position: relative;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  /* ========================================
-     SLIDES
-     ======================================== */
-
-  .slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem;
-    opacity: 0;
-    transform: translateX(60px);
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-    will-change: transform, opacity;
-  }
-
-  .slide-active {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: all;
-  }
-
-  .slide-exit-left {
-    opacity: 0;
-    transform: translateX(-60px);
-    pointer-events: none;
-  }
-
-  .slide-content {
-    max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  /* ========================================
-     NAVIGATION
-     ======================================== */
-
-  .nav-arrow {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-    background: rgba(255, 253, 247, 0.85);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-text);
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-
-  .nav-arrow:hover {
-    background: var(--color-accent);
-    color: white;
-    border-color: var(--color-accent);
-    box-shadow: 0 4px 20px rgba(232, 150, 62, 0.3);
-  }
-
-  .nav-prev { left: 1.5rem; }
-  .nav-next { right: 1.5rem; }
-
-  /* ========================================
-     PROGRESS DOTS
-     ======================================== */
-
-  .progress-dots {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    display: flex;
-    gap: 0.6rem;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 253, 247, 0.8);
-    backdrop-filter: blur(8px);
-    border-radius: 20px;
-    border: 1px solid var(--color-border-light);
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1.5px solid var(--color-accent);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0;
-  }
-
-  .dot:hover {
-    background: rgba(232, 150, 62, 0.3);
-  }
-
-  .dot.active {
-    background: var(--color-accent);
-    box-shadow: 0 0 8px rgba(232, 150, 62, 0.4);
-  }
-
-  /* ========================================
-     SLIDE COUNTER
-     ======================================== */
-
-  .slide-counter {
-    position: fixed;
-    top: 1.5rem;
-    right: 2rem;
-    z-index: 100;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    opacity: 0.6;
-  }
-
-  /* ========================================
-     LANGUAGE SELECTOR
-     ======================================== */
-
-  .lang-selector {
-    position: fixed;
-    top: 1.5rem;
-    right: 7rem;
-    z-index: 100;
-    display: flex;
-    gap: 2px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
-    padding: 3px;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-
-  .lang-btn {
-    background: transparent;
-    border: none;
-    padding: 0.25rem 0.65rem;
-    border-radius: 16px;
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    transition: all 0.25s ease;
-    letter-spacing: 0.05em;
-    line-height: 1;
-  }
-
-  .lang-btn:hover {
-    color: var(--color-text);
-    background: rgba(232, 150, 62, 0.08);
-  }
-
-  .lang-btn.active {
-    background: var(--color-accent);
-    color: white;
-    box-shadow: 0 1px 6px rgba(232, 150, 62, 0.35);
-  }
-
-  /* ========================================
-     VOICE SELECTOR
-     ======================================== */
-
-
-  /* ========================================
-     PLAY OVERLAY
-     ======================================== */
-
-  .play-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 253, 247, 0.85);
-    backdrop-filter: blur(12px);
-    transition: opacity 0.6s ease, visibility 0.6s ease;
-  }
-
-  .play-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .play-overlay-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-accent);
-    transition: transform 0.3s ease;
-  }
-
-  .play-overlay-btn:hover {
-    transform: scale(1.08);
-  }
-
-  .play-overlay-btn:hover circle {
-    opacity: 0.9;
-  }
-
-  .play-overlay-btn span {
-    font-family: var(--font-serif);
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--color-text);
-    letter-spacing: 0.02em;
-  }
-
-  /* ========================================
-     AUDIO CONTROLS
-     ======================================== */
-
-  .audio-controls {
-    position: fixed;
-    top: 1.5rem;
-    left: 2rem;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--color-border);
-    border-radius: 24px;
-    padding: 0.35rem 0.75rem;
-    transition: opacity 0.3s;
-  }
-
-  .audio-controls:hover {
-    opacity: 1 !important;
-  }
-
-  .audio-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-accent);
-    display: flex;
-    align-items: center;
-    padding: 0.2rem;
-    border-radius: 50%;
-    transition: background 0.2s;
-  }
-
-  .audio-toggle:hover {
-    background: rgba(232, 150, 62, 0.1);
-  }
-
-  .audio-toggle.muted .audio-on { display: none; }
-  .audio-toggle.muted .audio-off { display: block !important; }
-  .audio-toggle:not(.muted) .audio-on { display: block; }
-  .audio-toggle:not(.muted) .audio-off { display: none !important; }
-
-  .volume-slider {
-    width: 60px;
-    height: 4px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: var(--color-border);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    cursor: pointer;
-    border: 2px solid white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-
-  .volume-slider::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    cursor: pointer;
-    border: 2px solid white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-
-  .bgm-divider {
-    width: 1px;
-    height: 18px;
-    background: var(--color-border);
-    margin: 0 0.15rem;
-  }
-
-  .bgm-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-text-muted);
-    display: flex;
-    align-items: center;
-    padding: 0.2rem;
-    border-radius: 50%;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .bgm-toggle:hover {
-    background: rgba(232, 150, 62, 0.1);
-  }
-
-  .bgm-toggle.active {
-    color: var(--color-accent);
-  }
-
-  .bgm-toggle:not(.active) {
-    opacity: 0.5;
-  }
-
-  .bgm-volume {
-    width: 50px;
-    height: 4px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: var(--color-border);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .bgm-volume::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    cursor: pointer;
-    border: 2px solid white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-
-  .bgm-volume::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    cursor: pointer;
-    border: 2px solid white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-
-  .audio-progress {
-    width: 40px;
-    height: 4px;
-    background: var(--color-border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .audio-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: var(--color-accent);
-    border-radius: 2px;
-    transition: width 0.3s linear;
-  }
-
-  @media (max-width: 768px) {
-    .audio-controls {
-      top: auto;
-      bottom: 4rem;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .lang-selector {
-      top: auto;
-      bottom: 6.5rem;
-      right: auto;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-  }
-
-  /* ========================================
-     PRESENTER NOTES
-     ======================================== */
-
-  .presenter-notes {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 200;
-    background: rgba(26, 32, 64, 0.95);
-    backdrop-filter: blur(12px);
-    color: #f0ead6;
-    padding: 1.5rem 2rem;
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    transform: translateY(100%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    max-height: 30vh;
-    overflow-y: auto;
-  }
-
-  .presenter-notes.visible {
-    transform: translateY(0);
-  }
-
-  .notes-inner::before {
-    content: 'PRESENTER NOTES';
-    display: block;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    color: var(--color-accent);
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-  }
-
-  /* ========================================
-     TYPOGRAPHY
-     ======================================== */
-
-  .slide-eyebrow {
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-pirate-teal);
-    margin-bottom: 1rem;
-  }
-
-  .slide-main-title {
-    font-family: var(--font-serif);
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: 700;
-    line-height: 1.05;
-    margin-bottom: 1rem;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-deep) 35%, var(--color-pirate-teal) 75%, var(--color-accent) 100%);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradient-shift 8s ease-in-out infinite;
-  }
-
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  .slide-subtitle-big {
-    font-family: var(--font-serif);
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-    color: var(--color-text-muted);
-    font-style: italic;
-    margin-bottom: 0.75rem;
-  }
-
-  .slide-date {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    opacity: 0.6;
-  }
-
-  .slide-heading {
-    font-family: var(--font-serif);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.01em;
-  }
-
-  .slide-heading-big {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    background: linear-gradient(135deg, var(--color-accent), var(--color-pirate-teal));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .slide-heading-full {
-    width: 100%;
-    text-align: center;
-  }
-
-  .slide-tagline {
-    text-align: center;
-    font-family: var(--font-serif);
-    font-style: italic;
-    color: var(--color-text-muted);
-    font-size: 1.15rem;
-    margin-bottom: 2rem;
-    width: 100%;
-  }
-
-  .slide-body {
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-
-  .slide-body-small {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin-top: 0.5rem;
-  }
-
-  .slide-body-small a {
-    color: var(--color-accent);
-  }
-
-  .slide-blockquote {
-    font-family: var(--font-serif);
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
-    line-height: 1.7;
-    color: var(--color-text);
-    border-left: 3px solid var(--color-accent);
-    padding-left: 1.5rem;
-    margin: 1.5rem 0;
-    font-style: italic;
-  }
-
-  .slide-blockquote em {
-    color: var(--color-accent-deep);
-    font-style: italic;
-    font-weight: 600;
-  }
-
-  /* ========================================
-     SLIDE LAYOUTS
-     ======================================== */
-
-  .slide-title-layout {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  .slide-center-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .slide-quote-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2rem;
-  }
-
-  .slide-quote-layout .slide-blockquote {
-    max-width: 700px;
-    border-left: none;
-    padding-left: 0;
-    text-align: center;
-    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
-  }
-
-  .slide-image-quote-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .slide-image-quote-reverse {
-    direction: rtl;
-  }
-
-  .slide-image-quote-reverse > * {
-    direction: ltr;
-  }
-
-  .slide-two-panel-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .slide-failures-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  /* ========================================
-     OVAL VIGNETTE
-     ======================================== */
-
-  .oval-vignette {
-    mask-image: radial-gradient(ellipse 70% 65% at center, black 40%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 65% at center, black 40%, transparent 75%);
-  }
-
-  .slide-illustration {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-    border-radius: 12px;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .slide-illustration-small {
-    width: 100%;
-    max-width: 280px;
-    height: auto;
-    border-radius: 12px;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .slide-illustration-tiny {
-    width: 100%;
-    max-width: 180px;
-    height: auto;
-    border-radius: 12px;
-    display: block;
-    margin: 0 auto;
-    opacity: 0.7;
-  }
-
-  .slide-image-below {
-    margin-top: 1rem;
-  }
-
-  .slide-image-accent {
-    position: absolute;
-    bottom: 2rem;
-    right: 3rem;
-    opacity: 0.5;
-  }
-
-  /* ========================================
-     SHIP'S WHEEL (Slide 1)
-     ======================================== */
-
-  .title-wheel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--color-accent);
-    opacity: 0.12;
-    z-index: 0;
-  }
-
-  .ships-wheel {
-    animation: spin-slow 90s linear infinite;
-  }
-
-  @keyframes spin-slow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .lottie-title-glow {
-    position: absolute;
-    width: 500px;
-    height: 400px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .slide-main-title,
-  .slide-eyebrow,
-  .slide-subtitle-big,
-  .slide-date {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ========================================
-     AGENT LOOP SVG (Slide 2)
-     ======================================== */
-
-  .agent-loop-svg {
-    margin-top: 1rem;
-  }
-
-  .loop-circle {
-    animation: spin-slow 60s linear infinite;
-    transform-origin: 300px 95px;
-  }
-
-  .loop-path {
-    stroke-dasharray: 120;
-    stroke-dashoffset: 120;
-  }
-
-  .slide-active .loop-path-1 { animation: draw-loop 0.8s 0.5s ease forwards; }
-  .slide-active .loop-path-2 { animation: draw-loop 0.8s 0.9s ease forwards; }
-  .slide-active .loop-path-3 { animation: draw-loop 0.8s 1.3s ease forwards; }
-  .slide-active .loop-path-4 { animation: draw-loop 0.8s 1.7s ease forwards; }
-
-  @keyframes draw-loop {
-    to { stroke-dashoffset: 0; }
-  }
-
-  .flow-arrow {
-    animation: dash-flow 2s linear infinite;
-  }
-
-  @keyframes dash-flow {
-    to { stroke-dashoffset: -16; }
-  }
-
-  /* ========================================
-     STAT BADGES (Slide 2)
-     ======================================== */
-
-  .stat-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    justify-content: center;
-    margin: 1rem 0;
-  }
-
-  .stat-badge {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 2rem;
-    padding: 0.35rem 0.9rem;
-    font-size: 0.8rem;
-    font-family: var(--font-sans);
-    color: var(--color-text-muted);
-    white-space: nowrap;
-  }
-
-  /* ========================================
-     TOPIC TAGS (Slide 3)
-     ======================================== */
-
-  .topic-tags-eyebrow {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-muted);
-    margin: 1.2rem 0 0.5rem;
-    font-family: var(--font-mono);
-  }
-
-  .topic-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .topic-tag {
-    background: var(--color-surface);
-    border: 1px solid var(--color-pirate-teal);
-    border-radius: 4px;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.78rem;
-    font-family: var(--font-sans);
-    color: var(--color-pirate-teal);
-  }
-
-  /* ========================================
-     LESSON CALLOUTS (Slide 9)
-     ======================================== */
-
-  .lesson-callouts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 1rem;
-    justify-content: center;
-  }
-
-  .lesson-callout {
-    background: var(--color-surface);
-    border-left: 3px solid var(--color-pirate-teal);
-    border-radius: 4px;
-    padding: 0.5rem 0.8rem;
-    font-size: 0.8rem;
-    font-family: var(--font-sans);
-    color: var(--color-text);
-    flex: 1 1 200px;
-    max-width: 280px;
-  }
-
-  /* ========================================
-     SPECTRUM (Slide 4)
-     ======================================== */
-
-  .spectrum-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .spectrum-bar {
-    height: 6px;
-    background: var(--color-border);
-    border-radius: 3px;
-    position: relative;
-    margin-bottom: 2rem;
-    overflow: hidden;
-  }
-
-  .spectrum-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-pirate-teal));
-    border-radius: 3px;
-    width: 62%;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .spectrum-levels {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .spectrum-level {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 0.5rem;
-    border-radius: 12px;
-    cursor: pointer;
-    background: transparent;
-    border: 1.5px solid transparent;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    transition: all 0.3s ease;
-  }
-
-  .spectrum-level:hover,
-  .spectrum-level.active-level {
-    border-color: var(--color-accent);
-    background: rgba(232, 150, 62, 0.05);
-    color: var(--color-text);
-  }
-
-  .spectrum-level.active-level .spectrum-icon svg {
-    stroke: var(--color-accent);
-  }
-
-  .spectrum-pointer {
-    font-size: 0.7rem;
-    color: var(--color-accent);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 0.25rem;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .spectrum-level.active-level .spectrum-pointer {
-    opacity: 1;
-  }
-
-  .spectrum-desc {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    min-height: 2.5em;
-    transition: opacity 0.3s;
-    font-style: italic;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  /* ========================================
-     TWO PANELS (Slide 5)
-     ======================================== */
-
-  .two-panels {
-    display: flex;
-    gap: 2rem;
-    align-items: stretch;
-    width: 100%;
-    max-width: 750px;
-  }
-
-  .panel {
-    flex: 1;
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 1px solid var(--color-border);
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-  }
-
-  .panel h3 {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    color: var(--color-text);
-  }
-
-  .panel-captain h3 { color: var(--color-pirate-teal); }
-  .panel-agent h3 { color: var(--color-accent); }
-
-  .panel ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .panel li {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    padding: 0.35rem 0;
-    padding-left: 1.2rem;
-    position: relative;
-  }
-
-  .panel li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    transform: translateY(-50%);
-  }
-
-  .panel-captain li::before { background: var(--color-pirate-teal); opacity: 0.5; }
-  .panel-agent li::before { background: var(--color-accent); opacity: 0.5; }
-
-  .panel-divider {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .two-panels-stacked {
-    flex-direction: column;
-    gap: 0.75rem;
-    max-width: 100%;
-  }
-
-  .two-panels-stacked .panel {
-    padding: 1rem 1.25rem;
-  }
-
-  .two-panels-stacked .panel h3 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .two-panels-stacked .panel li {
-    font-size: 0.85rem;
-    padding: 0.2rem 0 0.2rem 1rem;
-  }
-
-  .slide-image-side-large {
-    flex: 1.2;
-  }
-
-  .slide-image-side-large .slide-illustration {
-    max-height: 70vh;
-    object-fit: contain;
-  }
-
-  /* ========================================
-     CAPABILITY CARDS (Slide 6)
-     ======================================== */
-
-  .capability-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    max-width: 750px;
-    width: 100%;
-    margin: 1rem auto;
-  }
-
-  .cap-card {
-    perspective: 600px;
-    cursor: pointer;
-    height: 220px;
-  }
-
-  .cap-card-front,
-  .cap-card-back {
-    position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    backface-visibility: hidden;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1.5px solid var(--color-border);
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
-  }
-
-  .cap-card {
-    position: relative;
-  }
-
-  .cap-card-back {
-    transform: rotateY(180deg);
-    background: linear-gradient(135deg, rgba(255, 253, 247, 0.95), rgba(255, 248, 237, 0.95));
-    border-color: var(--color-accent);
-  }
-
-  .cap-card.flipped .cap-card-front {
-    transform: rotateY(-180deg);
-  }
-
-  .cap-card.flipped .cap-card-back {
-    transform: rotateY(0);
-  }
-
-  .cap-card h3 {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    margin-top: 0.75rem;
-    color: var(--color-text);
-  }
-
-  .cap-hint {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-    opacity: 0.5;
-    margin-top: 0.5rem;
-  }
-
-  .cap-card-back p {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    line-height: 1.6;
-  }
-
-  .lottie-capabilities {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ========================================
-     FAILURE CARDS (Slide 7)
-     ======================================== */
-
-  .failure-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    max-width: 800px;
-    width: 100%;
-  }
-
-  .failure-card {
-    padding: 1.25rem;
-    border-radius: 12px;
-    border: 1px solid rgba(217, 79, 79, 0.15);
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-
-  .slide-active .failure-card {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .slide-active .failure-card[data-delay="0"] { transition-delay: 0.2s; }
-  .slide-active .failure-card[data-delay="1"] { transition-delay: 0.4s; }
-  .slide-active .failure-card[data-delay="2"] { transition-delay: 0.6s; }
-  .slide-active .failure-card[data-delay="3"] { transition-delay: 0.8s; }
-
-  .failure-icon {
-    margin-bottom: 0.5rem;
-  }
-
-  .failure-card h3 {
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    color: #d94f4f;
-    margin-bottom: 0.4rem;
-  }
-
-  .failure-desc {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-  }
-
-  .failure-fix {
-    font-size: 0.8rem;
-    color: var(--color-pirate-teal);
-    font-weight: 500;
-    font-family: var(--font-mono);
-  }
-
-  /* ========================================
-     PIPELINE (Slide 8)
-     ======================================== */
-
-  .pipeline {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    max-width: 900px;
-    width: 100%;
-    margin: 1.5rem auto;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .pipeline-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
-    border-radius: 12px;
-    border: 1.5px solid var(--color-border);
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 100px;
-  }
-
-  .pipeline-node:hover,
-  .pipeline-node.active-node {
-    border-color: var(--color-accent);
-    background: rgba(232, 150, 62, 0.05);
-    box-shadow: 0 4px 20px rgba(232, 150, 62, 0.12);
-    transform: translateY(-2px);
-  }
-
-  .pipeline-node span {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-text);
-  }
-
-  .pipeline-connector {
-    width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .connector-line {
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-pirate-teal));
-    opacity: 0.3;
-    position: relative;
-  }
-
-  .connector-line::after {
-    content: '';
-    position: absolute;
-    right: -3px;
-    top: -3px;
-    width: 0;
-    height: 0;
-    border-left: 6px solid var(--color-pirate-teal);
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-    opacity: 0.4;
-  }
-
-  .pipeline-info {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    font-style: italic;
-    margin-top: 1.5rem;
-    min-height: 3em;
-    max-width: 500px;
-    text-align: center;
-    transition: opacity 0.3s;
-  }
-
-  /* ========================================
-     Wee SLIDE (Slide 9)
-     ======================================== */
-
-  .slide-cct-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .slide-subtitle-cct {
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
-    font-style: italic;
-    margin-bottom: 0.5rem;
-  }
-
-  .cct-showcase {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 700px;
-  }
-
-  .cct-diagram {
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
-    padding: 1.5rem;
-    overflow-x: auto;
-  }
-
-  .cct-arch-svg {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    height: auto;
-  }
-
-  .cct-quote {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .slide-blockquote-small {
-    font-size: 1rem !important;
-    padding: 0.5rem 1rem !important;
-  }
-
-  .cct-github-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--color-border);
-    background: rgba(255, 255, 255, 0.6);
-    transition: all 0.3s ease;
-  }
-
-  .cct-github-link:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-    background: rgba(255, 255, 255, 0.9);
-    transform: translateY(-1px);
-  }
-
-  @media (max-width: 768px) {
-    .cct-diagram {
-      padding: 0.75rem;
-    }
-    .cct-arch-svg {
-      width: 100%;
-    }
-  }
-
-  /* ========================================
-     PENTEST PIPELINE (Slide 10)
-     ======================================== */
-
-  .donna-intro {
-    margin: 0.75rem auto 0.5rem;
-    max-width: 600px;
-    text-align: center;
-  }
-
-  .donna-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .donna-title {
-    font-family: var(--font-mono);
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    letter-spacing: 0.04em;
-  }
-
-  .donna-badge {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-pirate-teal);
-    border: 1px solid var(--color-pirate-teal);
-    border-radius: 4px;
-    padding: 0.15rem 0.5rem;
-    opacity: 0.8;
-  }
-
-  .donna-desc {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    line-height: 1.5;
-  }
-
-  .donna-features {
-    display: flex;
-    gap: 1rem;
-    max-width: 700px;
-    margin: 0.75rem auto 0;
-    justify-content: center;
-  }
-
-  .donna-feature {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    flex: 1;
-    padding: 0.6rem 0.75rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    text-align: left;
-  }
-
-  .donna-feature-icon {
-    font-size: 1.1rem;
-    flex-shrink: 0;
-    margin-top: 0.1rem;
-  }
-
-  .donna-feature strong {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: 0.15rem;
-  }
-
-  .donna-feature-desc {
-    font-size: 0.65rem;
-    color: var(--color-text-muted);
-    line-height: 1.4;
-  }
-
-  .donna-github-link {
-    font-size: 0.9rem !important;
-  }
-
-  @media (max-width: 640px) {
-    .donna-features {
-      flex-direction: column;
-    }
-  }
-
-  .pentest-pipeline {
-    margin: 0.75rem auto;
-    max-width: 720px;
-    overflow-x: auto;
-  }
-
-  .pentest-pipeline-svg {
-    width: 100%;
-    max-width: 700px;
-  }
-
-  .pentest-badges {
-    display: flex;
-    justify-content: center;
-    margin-top: 0.5rem;
-  }
-
-  /* ========================================
-     HOSTILE GUARDRAILS (Slide 11)
-     ======================================== */
-
-  .hostile-guardrails {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    width: 100%;
-  }
-
-  .guardrail-warning {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    max-width: 700px;
-  }
-
-  .guardrail-rules {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    max-width: 700px;
-    width: 100%;
-  }
-
-  @media (max-width: 768px) {
-    .guardrail-rules {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* ========================================
-     CREW LABELS (Slide 12)
-     ======================================== */
-
-  .crew-labels {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin-top: 1.5rem;
-  }
-
-  .crew-label {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-text);
-    opacity: 0;
-    transform: translateX(-15px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .slide-active .crew-label {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .slide-active .crew-label[data-delay="0"] { transition-delay: 0.3s; }
-  .slide-active .crew-label[data-delay="1"] { transition-delay: 0.6s; }
-  .slide-active .crew-label[data-delay="2"] { transition-delay: 0.9s; }
-  .slide-active .crew-label[data-delay="3"] { transition-delay: 1.2s; }
-  .slide-active .crew-label[data-delay="4"] { transition-delay: 1.5s; }
-
-  .label-icon {
-    font-size: 1.1rem;
-    width: 1.5rem;
-    text-align: center;
-  }
-
-  /* ========================================
-     FINAL SLIDE (Slide 11)
-     ======================================== */
-
-  .slide-final {
-    position: relative;
-  }
-
-  .compass-rose-final {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-    opacity: 0.5;
-  }
-
-  .compass-spin {
-    animation: spin-slow 120s linear infinite;
-  }
-
-  .typing-effect {
-    font-family: var(--font-mono);
-    font-size: clamp(0.9rem, 1.5vw, 1.15rem);
-    color: var(--color-text-muted);
-    min-height: 2em;
-    margin: 1.5rem 0 2rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .typing-effect::after {
-    content: '|';
-    animation: blink-cursor 0.8s step-end infinite;
-    color: var(--color-accent);
-  }
-
-  @keyframes blink-cursor {
-    50% { opacity: 0; }
-  }
-
-  .final-actions {
-    position: relative;
-    z-index: 1;
-  }
-
-  .btn-primary-slide {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
-    color: #fff;
-    padding: 0.85rem 2.5rem;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(232, 150, 62, 0.3);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-  }
-
-  .btn-primary-slide:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(232, 150, 62, 0.4);
-    color: #fff;
-  }
-
-  .lottie-sparkle {
-    position: absolute;
-    inset: -50px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ========================================
-     RESPONSIVE
-     ======================================== */
-
-  @media (max-width: 768px) {
-    .slide {
-      padding: 1.5rem;
-      padding-bottom: 5rem;
-    }
-
-    .slide-image-quote-layout {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .slide-image-quote-reverse {
-      direction: ltr;
-    }
-
-    .two-panels {
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .panel-divider { display: none; }
-
-    .spectrum-levels {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .capability-cards {
-      grid-template-columns: 1fr;
-      max-width: 300px;
-    }
-
-    .cap-card {
-      height: 180px;
-    }
-
-    .failure-cards {
-      grid-template-columns: 1fr;
-    }
-
-    .pipeline {
-      flex-direction: column;
-    }
-
-    .pipeline-connector {
-      width: 2px;
-      height: 30px;
-    }
-
-    .connector-line {
-      width: 2px;
-      height: 100%;
-    }
-
-    .connector-line::after {
-      right: -3px;
-      top: auto;
-      bottom: -3px;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-top: 6px solid var(--color-pirate-teal);
-      border-bottom: none;
-    }
-
-    .nav-arrow {
-      width: 40px;
-      height: 40px;
-    }
-
-    .nav-prev { left: 0.5rem; }
-    .nav-next { right: 0.5rem; }
-
-    .title-wheel svg {
-      width: 180px;
-      height: 180px;
-    }
-
-    .slide-image-accent { display: none; }
-
-    .agent-loop-svg svg {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .slide-main-title {
-      font-size: 2.5rem;
-    }
-
-    .spectrum-levels {
-      grid-template-columns: 1fr;
-    }
-
-    .progress-dots {
-      gap: 0.4rem;
-      padding: 0.4rem 0.8rem;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-    }
+<style is:global>
+  html:has(.deck), body:has(.deck) { overflow: hidden; height: 100%; background: #0a0e1a; }
+  .deck { position: fixed; inset: 0; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden;
+    background: radial-gradient(900px 600px at 80% 20%, rgba(40, 54, 110, 0.55), transparent 65%), linear-gradient(180deg, #111834, #0a0e1a 70%); }
+  .deck[data-lang="en"] .t-es, .deck[data-lang="es"] .t-en { display: none; }
+  .deck__bg { position: absolute; right: -18vmin; bottom: -30vmin; width: 95vmin; aspect-ratio: 1; color: var(--brass); opacity: 0.07; pointer-events: none; }
+  .deck__bg svg { width: 100%; height: 100%; animation: helm-turn 240s linear infinite; }
+
+  .deck__top, .deck__bar { position: relative; z-index: 2; display: flex; align-items: center; gap: 0.8rem; padding: 14px clamp(16px, 3vw, 32px); }
+  .deck__top { justify-content: space-between; }
+  .deck__brand { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--display); color: var(--cream); text-decoration: none; font-size: 1.05rem; }
+  .deck__brand svg { color: var(--brass); }
+  .deck__tools { display: flex; align-items: center; gap: 0.5rem; }
+  .seg { display: inline-flex; border: 1px solid var(--line-dark-strong); border-radius: 999px; padding: 2px; }
+  .seg button, .icon-btn { font: 500 0.78rem var(--sans); color: var(--cream-muted); background: transparent; border: 0; border-radius: 999px; padding: 0.4rem 0.7rem; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--cream); color: var(--ink); }
+  .icon-btn { border: 1px solid var(--line-dark-strong); min-width: 36px; }
+  .icon-btn:hover, .icon-btn[aria-pressed="true"] { border-color: var(--brass); color: var(--brass-light); }
+  .deck button:focus-visible, .deck a:focus-visible { outline: 2px solid var(--brass-light); outline-offset: 2px; }
+
+  .deck__stage { position: relative; z-index: 1; }
+  .sl { position: absolute; inset: 0; display: grid; place-items: center; padding: 2vh clamp(20px, 6vw, 96px);
+    opacity: 0; visibility: hidden; transform: translateX(24px); transition: opacity 0.5s ease, transform 0.6s cubic-bezier(.2,.7,.2,1), visibility 0s linear 0.6s; }
+  .sl.is-active { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .sl.is-before { transform: translateX(-24px); }
+  .sl__inner { width: min(1100px, 100%); }
+  .sl .st { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.7s cubic-bezier(.2,.7,.2,1); }
+  .sl.is-active .st { opacity: 1; transform: none; }
+  .sl.is-active .st:nth-child(2) { transition-delay: 0.08s; }
+  .sl.is-active .st:nth-child(3) { transition-delay: 0.2s; }
+  .sl.is-active .st:nth-child(4) { transition-delay: 0.32s; }
+
+  .sl-h { font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 5.2vw, 4.2rem); line-height: 1.04; letter-spacing: -0.025em; margin: 1rem 0 clamp(1.4rem, 4vh, 2.6rem); max-width: 22ch; font-variation-settings: 'opsz' 144, 'SOFT' 40; }
+  .sl-h em { font-style: italic; color: var(--brass-light); font-weight: 300; }
+  .sl-body { font-size: clamp(1rem, 1.6vw, 1.3rem); color: var(--cream-muted); max-width: 60ch; margin-top: clamp(1rem, 3vh, 2rem); font-family: var(--display); font-style: italic; font-weight: 300; }
+  .sl-body a { color: var(--brass-light); font-style: normal; }
+
+  .sl-title { text-align: left; }
+  .sl-title h1 { font-family: var(--display); font-weight: 400; font-size: clamp(3.4rem, 11vw, 9rem); line-height: 0.92; letter-spacing: -0.035em; margin: 1.4rem 0 1rem; font-variation-settings: 'opsz' 144, 'SOFT' 50; }
+  .sl-title h1 em { font-style: italic; font-weight: 300; color: var(--brass-light); }
+  .sl-title__sub { font-family: var(--display); font-style: italic; font-weight: 300; color: var(--brass); font-size: clamp(1.2rem, 2.4vw, 1.8rem); }
+  .sl-title__by { margin-top: clamp(1.5rem, 5vh, 3rem); color: var(--cream-muted); letter-spacing: 0.02em; }
+
+  .cards { display: grid; gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); border-radius: var(--radius); overflow: hidden; }
+  .cards--2 { grid-template-columns: repeat(2, 1fr); } .cards--3 { grid-template-columns: repeat(3, 1fr); }
+  .cards--4 { grid-template-columns: repeat(4, 1fr); } .cards--5 { grid-template-columns: repeat(5, 1fr); }
+  .card { background: rgba(13, 19, 36, 0.92); padding: clamp(1rem, 2.4vh, 1.6rem) 1.2rem; }
+  .card strong { display: block; font-family: var(--display); font-weight: 500; font-size: clamp(1.05rem, 1.6vw, 1.3rem); margin: 0.4rem 0 0.35rem; }
+  .card p { font-size: clamp(0.85rem, 1.1vw, 0.98rem); color: var(--cream-muted); }
+  .card__tag { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+
+  .spectrum { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line-dark-strong); }
+  .spectrum li { padding: 1.2rem 1.2rem 0 0; opacity: 0.55; position: relative; }
+  .spectrum li::before { content: ''; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--brass-dim); }
+  .spectrum li.is-focus { opacity: 1; }
+  .spectrum li.is-focus::before { background: var(--brass-light); box-shadow: 0 0 0 6px rgba(201,168,76,0.18); }
+  .spectrum__n { font-family: var(--mono); font-size: 0.72rem; color: var(--brass); }
+  .spectrum strong { display: block; font-family: var(--display); font-weight: 500; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin: 0.3rem 0; }
+  .spectrum p { color: var(--cream-muted); font-size: 0.95rem; }
+
+  .loop { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 3vw, 2.5rem); counter-reset: s; }
+  .loop li { position: relative; padding-top: 1rem; border-top: 1px solid var(--line-dark-strong); }
+  .loop li:not(:last-child)::after { content: '→'; position: absolute; right: -1.6rem; top: 1.6rem; color: var(--brass); font-size: 1.4rem; }
+  .loop__n { font-family: var(--display); font-style: italic; font-size: 1.8rem; color: var(--brass); line-height: 1; }
+  .loop strong { display: block; font-family: var(--display); font-weight: 500; font-size: clamp(1.2rem, 2vw, 1.6rem); margin: 0.4rem 0; }
+  .loop p { color: var(--cream-muted); }
+
+  .versus { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); border-radius: var(--radius); overflow: hidden; }
+  .versus__col { background: rgba(13,19,36,0.92); padding: clamp(1.2rem, 3vh, 2rem); }
+  .versus__col strong { font-family: var(--display); font-weight: 500; font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--brass-light); }
+  .versus__col p { margin-top: 0.8rem; color: var(--cream-muted); font-size: clamp(0.95rem, 1.4vw, 1.1rem); line-height: 1.9; }
+
+  .trifecta { position: relative; width: min(500px, 80vw, 62vh); aspect-ratio: 1.25; margin: 0 auto; }
+  .trifecta__c { position: absolute; width: 50%; aspect-ratio: 1; border-radius: 50%; border: 1.5px solid var(--brass); background: rgba(201,168,76,0.07); display: grid; place-items: center; text-align: center; padding: 1.2rem; }
+  .trifecta__c span { font-family: var(--display); font-size: clamp(0.95rem, 1.8vw, 1.25rem); }
+  .trifecta__c--0 { left: 10%; top: 0; } .trifecta__c--1 { right: 10%; top: 0; } .trifecta__c--2 { left: 25%; bottom: 0; }
+  .trifecta__c--0 span { transform: translate(-24%, -16%); max-width: 60%; } .trifecta__c--1 span { transform: translate(24%, -16%); max-width: 60%; } .trifecta__c--2 span { transform: translateY(22%); }
+  .sl--trifecta .sl-body { text-align: center; margin-left: auto; margin-right: auto; }
+  .sl--trifecta .sl-h, .sl--trifecta .eyebrow { text-align: center; margin-left: auto; margin-right: auto; }
+  .sl--trifecta .sl__inner { text-align: center; }
+  .sl--trifecta .sl-h { margin-bottom: 1.4rem; }
+
+  .crewmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); border-radius: var(--radius); overflow: hidden; }
+  .crewmap div { background: rgba(13,19,36,0.92); padding: 1.1rem 1.3rem; }
+  .crewmap dt { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+  .crewmap dd { font-family: var(--display); font-size: clamp(1.1rem, 1.8vw, 1.45rem); margin-top: 0.3rem; }
+
+  .cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+
+  .deck__notes { position: absolute; z-index: 3; left: clamp(16px, 3vw, 32px); right: clamp(16px, 3vw, 32px); bottom: 72px; max-width: 760px; margin: 0 auto;
+    background: rgba(10,14,26,0.95); border: 1px solid var(--line-dark-strong); border-radius: var(--radius); padding: 1rem 1.2rem; font-size: 0.95rem; color: var(--cream-muted); }
+  .deck__notes [data-notes-body] { margin-top: 0.5rem; }
+
+  .deck__bar { border-top: 1px solid var(--line-dark); background: rgba(10,14,26,0.6); }
+  .play { display: inline-flex; align-items: center; gap: 0.55rem; font: 600 0.85rem var(--sans); color: var(--ink); background: linear-gradient(180deg, var(--brass-light), var(--brass)); border: 0; border-radius: 999px; padding: 0.55rem 1rem; cursor: pointer; }
+  .play[aria-pressed="true"] .play__icon::before { content: '❚❚'; } .play[aria-pressed="true"] .play__icon { font-size: 0; } .play[aria-pressed="true"] .play__icon::before { font-size: 0.7rem; }
+  .deck__progress { flex: 1; height: 2px; background: var(--line-dark); border-radius: 2px; overflow: hidden; }
+  .deck__progress span { display: block; height: 100%; width: 0; background: var(--brass-light); transition: width 0.5s ease; }
+  .deck__status { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-faint); min-width: 0; white-space: nowrap; }
+  .deck__count { font-family: var(--mono); font-size: 0.78rem; color: var(--cream-muted); }
+  .deck__count b { color: var(--cream); font-weight: 500; }
+
+  @media (max-width: 860px) {
+    .cards--4, .cards--5, .spectrum, .crewmap { grid-template-columns: 1fr 1fr; }
+    .cards--3, .loop, .versus { grid-template-columns: 1fr; }
+    .loop li::after { display: none; }
+    .sl { align-items: start; overflow-y: auto; padding-top: 3vh; }
+    .play__label, .deck__status, .deck__brand { display: none; }
+    .card p { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .deck__bg svg { animation: none; }
+    .sl, .sl .st { transition: none; transform: none; }
   }
 </style>
 
 <script>
-  import * as THREE from 'three';
-  import lottie from 'lottie-web';
+  function initDeck() {
+    const deck = document.getElementById('deck');
+    if (!deck) return;
+    const slides = Array.from(deck.querySelectorAll<HTMLElement>('.sl'));
+    const total = slides.length;
+    const $ = <E extends HTMLElement>(sel: string) => deck.querySelector<E>(sel)!;
+    const countEl = $('[data-count]');
+    const progress = $('[data-progress]');
+    const status = $('[data-status]');
+    const playBtn = $<HTMLButtonElement>('[data-play]');
+    const notesPanel = $('[data-notes]');
+    const notesBody = $('[data-notes-body]');
 
-  // ========================================
-  // THREE.JS PARTICLE BACKGROUND
-  // ========================================
+    const store = {
+      get: (k: string) => { try { return localStorage.getItem(k); } catch { return null; } },
+      set: (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } },
+    };
+    let lang = store.get('deck-lang') === 'es' ? 'es' : 'en';
+    let voice = store.get('deck-voice') === '-female' ? '-female' : '';
+    let current = 0;
+    let playing = false;
+    let audio: HTMLAudioElement | null = null;
+    let timer: number | undefined;
 
-  const canvas = document.getElementById('bg-canvas') as HTMLCanvasElement;
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x000000, 0);
+    const setPressed = (sel: string, attr: string, val: string) =>
+      deck.querySelectorAll<HTMLButtonElement>(sel).forEach((b) => b.setAttribute('aria-pressed', String(b.getAttribute(attr) === val)));
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.z = 30;
+    function applyLang() {
+      deck!.dataset.lang = lang;
+      document.documentElement.lang = lang;
+      setPressed('[data-set-lang]', 'data-set-lang', lang);
+      renderNotes();
+    }
+    function applyVoice() { setPressed('[data-set-voice]', 'data-set-voice', voice); }
 
-  const PARTICLE_COUNT = 80;
-  const SPREAD = 50;
-  const CONNECTION_DISTANCE = 7;
-
-  const positions = new Float32Array(PARTICLE_COUNT * 3);
-  const velocities: THREE.Vector3[] = [];
-
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * SPREAD;
-    positions[i * 3 + 1] = (Math.random() - 0.5) * SPREAD;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 15 - 5;
-    velocities.push(new THREE.Vector3(
-      (Math.random() - 0.5) * 0.005,
-      (Math.random() - 0.5) * 0.005 + 0.0008,
-      (Math.random() - 0.5) * 0.002
-    ));
-  }
-
-  const pointsGeometry = new THREE.BufferGeometry();
-  pointsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-  const pointsMaterial = new THREE.PointsMaterial({
-    color: 0xf5a623,
-    size: 0.12,
-    transparent: true,
-    opacity: 0.25,
-    sizeAttenuation: true,
-  });
-
-  const points = new THREE.Points(pointsGeometry, pointsMaterial);
-  scene.add(points);
-
-  const MAX_LINES = PARTICLE_COUNT * 4;
-  const linePositions = new Float32Array(MAX_LINES * 6);
-  const lineColors = new Float32Array(MAX_LINES * 6);
-  const lineGeometry = new THREE.BufferGeometry();
-  lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-  lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-
-  const lineMaterial = new THREE.LineBasicMaterial({
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.1,
-  });
-
-  const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-  scene.add(lines);
-
-  const mouse = new THREE.Vector2(0, 0);
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
-    mouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  let bgTime = 0;
-
-  function animateBg() {
-    requestAnimationFrame(animateBg);
-    bgTime += 0.004;
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const wave = Math.sin(bgTime + positions[i * 3] * 0.1) * 0.002;
-      positions[i * 3] += velocities[i].x;
-      positions[i * 3 + 1] += velocities[i].y + wave;
-      positions[i * 3 + 2] += velocities[i].z;
-
-      const half = SPREAD / 2;
-      if (positions[i * 3] > half) positions[i * 3] = -half;
-      if (positions[i * 3] < -half) positions[i * 3] = half;
-      if (positions[i * 3 + 1] > half) positions[i * 3 + 1] = -half;
-      if (positions[i * 3 + 1] < -half) positions[i * 3 + 1] = half;
+    function renderNotes() {
+      const tpl = slides[current].querySelector<HTMLTemplateElement>('template.sl-notes');
+      notesBody.innerHTML = tpl ? tpl.innerHTML : '';
     }
 
-    pointsGeometry.attributes.position.needsUpdate = true;
-
-    let lineIndex = 0;
-    const r1 = 0.96, g1 = 0.65, b1 = 0.14;
-    const r2 = 0.18, g2 = 0.61, b2 = 0.72;
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      for (let j = i + 1; j < PARTICLE_COUNT; j++) {
-        if (lineIndex >= MAX_LINES) break;
-        const dx = positions[i * 3] - positions[j * 3];
-        const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
-        const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
-        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (dist < CONNECTION_DISTANCE) {
-          const alpha = 1 - dist / CONNECTION_DISTANCE;
-          const blend = (Math.sin(bgTime * 0.5 + i * 0.1) + 1) * 0.5;
-          const r = r1 * (1 - blend * 0.4) + r2 * blend * 0.4;
-          const g = g1 * (1 - blend * 0.4) + g2 * blend * 0.4;
-          const b = b1 * (1 - blend * 0.4) + b2 * blend * 0.4;
-
-          linePositions[lineIndex * 6] = positions[i * 3];
-          linePositions[lineIndex * 6 + 1] = positions[i * 3 + 1];
-          linePositions[lineIndex * 6 + 2] = positions[i * 3 + 2];
-          linePositions[lineIndex * 6 + 3] = positions[j * 3];
-          linePositions[lineIndex * 6 + 4] = positions[j * 3 + 1];
-          linePositions[lineIndex * 6 + 5] = positions[j * 3 + 2];
-
-          lineColors[lineIndex * 6] = r * alpha;
-          lineColors[lineIndex * 6 + 1] = g * alpha;
-          lineColors[lineIndex * 6 + 2] = b * alpha;
-          lineColors[lineIndex * 6 + 3] = r * alpha;
-          lineColors[lineIndex * 6 + 4] = g * alpha;
-          lineColors[lineIndex * 6 + 5] = b * alpha;
-
-          lineIndex++;
-        }
-      }
+    function stopAudio() {
+      if (timer) { clearTimeout(timer); timer = undefined; }
+      if (audio) { audio.pause(); audio.src = ''; audio = null; }
+      status.textContent = '';
     }
 
-    for (let i = lineIndex; i < MAX_LINES; i++) {
-      for (let k = 0; k < 6; k++) {
-        linePositions[i * 6 + k] = 0;
-      }
+    function readingTime(el: HTMLElement) {
+      const words = (el.querySelector('.sl__inner')?.textContent || '').split(/\s+/).length / 2; // both languages rendered
+      return Math.min(16000, Math.max(7000, words * 330));
     }
 
-    lineGeometry.attributes.position.needsUpdate = true;
-    lineGeometry.attributes.color.needsUpdate = true;
-
-    camera.position.x += (mouse.x * 1.5 - camera.position.x) * 0.015;
-    camera.position.y += (mouse.y * 1 - camera.position.y) * 0.015;
-    camera.lookAt(0, 0, 0);
-
-    renderer.render(scene, camera);
-  }
-
-  animateBg();
-
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-
-  // ========================================
-  // LANGUAGE STATE (initialized early, full i18n system below)
-  // ========================================
-
-  type Lang = 'en' | 'es';
-  let currentLang: Lang = (localStorage.getItem('presentation-lang') as Lang) || 'en';
-
-  // ========================================
-  // VOICE STATE
-  // ========================================
-
-  // Single voice (female/Q-style narrator)
-  const currentVoice = 'female';
-
-  // ========================================
-  // SLIDE NAVIGATION
-  // ========================================
-
-  const slides = document.querySelectorAll<HTMLElement>('.slide');
-  const dots = document.querySelectorAll<HTMLElement>('.dot');
-  const counter = document.getElementById('slide-counter')!;
-  const prevBtn = document.getElementById('nav-prev')!;
-  const nextBtn = document.getElementById('nav-next')!;
-  const notesPanel = document.getElementById('presenter-notes')!;
-  const notesContent = document.getElementById('notes-content')!;
-  let currentSlide = 0;
-  const totalSlides = slides.length;
-  let isTransitioning = false;
-  let notesVisible = false;
-
-  // Clicker sound using Web Audio API — crisp presentation remote click
-  let audioCtx: AudioContext | null = null;
-  function playClickSound() {
-    try {
-      if (!audioCtx) audioCtx = new AudioContext();
-      const ctx = audioCtx;
-
-      // Short noise burst filtered to a crisp click
-      const duration = 0.04;
-      const buffer = ctx.createBuffer(1, ctx.sampleRate * duration, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < data.length; i++) {
-        // Decaying white noise
-        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 8);
-      }
-
-      const source = ctx.createBufferSource();
-      source.buffer = buffer;
-
-      // Bandpass filter for that clicker feel
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.value = 3000;
-      filter.Q.value = 2;
-
-      const gain = ctx.createGain();
-      gain.gain.value = 0.3; // Subtle, not loud
-
-      source.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-      source.start();
-    } catch (e) {
-      // Silently ignore if audio context isn't available
-    }
-  }
-
-  function goToSlide(index: number, direction: 'next' | 'prev' = 'next') {
-    if (index < 0 || index >= totalSlides || index === currentSlide || isTransitioning) return;
-    isTransitioning = true;
-
-    const current = slides[currentSlide];
-    const next = slides[index];
-
-    // Remove all transition classes first
-    current.classList.remove('slide-active', 'slide-exit-left');
-    next.classList.remove('slide-active', 'slide-exit-left');
-
-    if (direction === 'next') {
-      next.style.transform = 'translateX(60px)';
-      next.style.opacity = '0';
-      current.classList.add('slide-exit-left');
-    } else {
-      next.style.transform = 'translateX(-60px)';
-      next.style.opacity = '0';
-      // Exit to the right
-      current.style.transform = 'translateX(60px)';
-      current.style.opacity = '0';
+    function narrate() {
+      stopAudio();
+      if (!playing) return;
+      const s = slides[current];
+      const file = s.dataset.audio;
+      const advance = () => { if (current < total - 1) { go(current + 1); } else { setPlaying(false); } };
+      const silent = () => {
+        status.textContent = lang === 'es' ? 'Sin narración todavía' : 'Narration coming soon';
+        timer = window.setTimeout(advance, readingTime(s));
+      };
+      if (!file) return silent();
+      const a = new Audio(`/presentation-audio/slide-${file}${lang === 'es' ? '-es' : ''}${voice}.mp3`);
+      audio = a;
+      a.addEventListener('ended', () => { timer = window.setTimeout(advance, 900); });
+      a.addEventListener('error', () => { if (audio === a) silent(); });
+      a.play().catch(() => { if (audio === a) silent(); });
     }
 
-    current.classList.remove('slide-active');
-
-    // Force reflow
-    void next.offsetWidth;
-
-    // Activate next
-    next.style.transform = '';
-    next.style.opacity = '';
-    next.classList.add('slide-active');
-
-    // Update dots
-    dots[currentSlide].classList.remove('active');
-    dots[index].classList.add('active');
-
-    // Update counter
-    counter.textContent = `${index + 1} / ${totalSlides}`;
-
-    // Update notes
-    const noteText = next.dataset.notes || '';
-    notesContent.textContent = noteText;
-
-    currentSlide = index;
-
-    // Trigger slide-specific animations
-    triggerSlideAnimations(index);
-
-    // Play clicker sound on transition
-    playClickSound();
-
-    // Play narration audio for this slide
-    if (typeof (window as any).__playSlideAudio === 'function') {
-      (window as any).__playSlideAudio(index);
+    function setPlaying(on: boolean) {
+      playing = on;
+      playBtn.setAttribute('aria-pressed', String(on));
+      if (on) narrate(); else stopAudio();
     }
 
-    setTimeout(() => {
-      isTransitioning = false;
-      current.classList.remove('slide-exit-left');
-      current.style.transform = '';
-      current.style.opacity = '';
-    }, 650);
-  }
-
-  function nextSlide() {
-    if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1, 'next');
-  }
-
-  function prevSlide() {
-    if (currentSlide > 0) goToSlide(currentSlide - 1, 'prev');
-  }
-
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    switch (e.key) {
-      case 'ArrowRight':
-      case 'ArrowDown':
-      case ' ':
-        e.preventDefault();
-        nextSlide();
-        break;
-      case 'ArrowLeft':
-      case 'ArrowUp':
-        e.preventDefault();
-        prevSlide();
-        break;
-      case 'n':
-      case 'N':
-        notesVisible = !notesVisible;
-        notesPanel.classList.toggle('visible', notesVisible);
-        break;
-      case 'f':
-      case 'F':
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen?.();
-        } else {
-          document.exitFullscreen?.();
-        }
-        break;
-    }
-  });
-
-  // Button navigation
-  prevBtn.addEventListener('click', prevSlide);
-  nextBtn.addEventListener('click', nextSlide);
-
-  // Dot navigation
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      const dir = i > currentSlide ? 'next' : 'prev';
-      goToSlide(i, dir);
-    });
-  });
-
-  // Touch/swipe navigation
-  let touchStartX = 0;
-  let touchStartY = 0;
-
-  document.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-
-  document.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-      if (dx < 0) nextSlide();
-      else prevSlide();
-    }
-  }, { passive: true });
-
-  // ========================================
-  // SLIDE-SPECIFIC INTERACTIONS
-  // ========================================
-
-  // Spectrum (Slide 4)
-  const spectrumLevels = document.querySelectorAll<HTMLElement>('.spectrum-level');
-  const spectrumFill = document.getElementById('spectrum-fill');
-  const spectrumDesc = document.getElementById('spectrum-desc');
-
-  spectrumLevels.forEach((level) => {
-    level.addEventListener('click', () => {
-      spectrumLevels.forEach(l => l.classList.remove('active-level'));
-      level.classList.add('active-level');
-      const lvl = parseInt(level.dataset.level || '0');
-      const fillWidths = ['18%', '40%', '62%', '90%'];
-      if (spectrumFill) spectrumFill.style.width = fillWidths[lvl];
-      if (spectrumDesc) {
-        const lang = currentLang;
-        spectrumDesc.textContent = (lang === 'es' && level.dataset.descEs)
-          ? level.dataset.descEs
-          : level.dataset.desc || '';
-      }
-      // Show/hide pointer
-      spectrumLevels.forEach(l => {
-        const ptr = l.querySelector('.spectrum-pointer') as HTMLElement;
-        if (ptr) ptr.style.opacity = l === level ? '1' : '0';
+    function go(i: number) {
+      const next = Math.max(0, Math.min(total - 1, i));
+      current = next;
+      slides.forEach((s, k) => {
+        s.classList.toggle('is-active', k === next);
+        s.classList.toggle('is-before', k < next);
+        s.setAttribute('aria-hidden', String(k !== next));
       });
-    });
-  });
+      countEl.textContent = String(next + 1);
+      progress.style.width = `${((next + 1) / total) * 100}%`;
+      history.replaceState(null, '', `#${next + 1}`);
+      renderNotes();
+      if (playing) narrate();
+    }
 
-  // Capability cards (Slide 6)
-  document.querySelectorAll('.cap-card').forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('flipped');
-    });
-  });
+    deck.querySelector('[data-prev]')!.addEventListener('click', () => go(current - 1));
+    deck.querySelector('[data-next]')!.addEventListener('click', () => go(current + 1));
+    playBtn.addEventListener('click', () => setPlaying(!playing));
+    deck.querySelectorAll<HTMLButtonElement>('[data-set-lang]').forEach((b) => b.addEventListener('click', () => {
+      lang = b.dataset.setLang === 'es' ? 'es' : 'en'; store.set('deck-lang', lang); applyLang(); if (playing) narrate();
+    }));
+    deck.querySelectorAll<HTMLButtonElement>('[data-set-voice]').forEach((b) => b.addEventListener('click', () => {
+      voice = b.dataset.setVoice || ''; store.set('deck-voice', voice); applyVoice(); if (playing) narrate();
+    }));
+    const notesBtn = $<HTMLButtonElement>('[data-notes-toggle]');
+    const toggleNotes = () => { notesPanel.hidden = !notesPanel.hidden; notesBtn.setAttribute('aria-pressed', String(!notesPanel.hidden)); };
+    notesBtn.addEventListener('click', toggleNotes);
+    const toggleFs = () => { if (document.fullscreenElement) document.exitFullscreen(); else deck.requestFullscreen?.().catch(() => {}); };
+    $('[data-fullscreen]').addEventListener('click', toggleFs);
 
-  // Pipeline nodes (Slide 8)
-  const pipelineNodes = document.querySelectorAll<HTMLElement>('.pipeline-node');
-  const pipelineInfo = document.getElementById('pipeline-info');
-
-  pipelineNodes.forEach(node => {
-    node.addEventListener('click', () => {
-      pipelineNodes.forEach(n => n.classList.remove('active-node'));
-      node.classList.add('active-node');
-      if (pipelineInfo) {
-        const lang = currentLang;
-        pipelineInfo.textContent = (lang === 'es' && node.dataset.infoEs)
-          ? node.dataset.infoEs
-          : node.dataset.info || '';
+    const onKey = (e: KeyboardEvent) => {
+      if (!document.getElementById('deck')) { document.removeEventListener('keydown', onKey); return; }
+      if (e.target instanceof HTMLInputElement) return;
+      switch (e.key) {
+        case 'ArrowRight': case 'PageDown': case ' ': e.preventDefault(); go(current + 1); break;
+        case 'ArrowLeft': case 'PageUp': e.preventDefault(); go(current - 1); break;
+        case 'Home': go(0); break;
+        case 'End': go(total - 1); break;
+        case 'n': case 'N': toggleNotes(); break;
+        case 'f': case 'F': toggleFs(); break;
+        case 'p': case 'P': setPlaying(!playing); break;
       }
-    });
-  });
-
-  // ========================================
-  // SLIDE ANIMATIONS
-  // ========================================
-
-  function triggerSlideAnimations(index: number) {
-    // Slide 10: typing effect
-    if (index === 9) {
-      startTypingEffect();
-    }
-  }
-
-  // Typing effect for final slide
-  let typingInterval: ReturnType<typeof setInterval> | null = null;
-
-  function startTypingEffect() {
-    const el = document.getElementById('typing-effect');
-    if (!el) return;
-    const lang = currentLang;
-    const text = translations[lang]['slide13-typing'] || "Tonight -- not tomorrow, not next week, tonight -- open your terminal.";
-    el.textContent = '';
-    let i = 0;
-
-    if (typingInterval) clearInterval(typingInterval);
-
-    typingInterval = setInterval(() => {
-      if (i < text.length) {
-        el.textContent += text[i];
-        i++;
-      } else {
-        if (typingInterval) clearInterval(typingInterval);
-      }
-    }, 45);
-  }
-
-  // ========================================
-  // LOTTIE ANIMATIONS
-  // ========================================
-
-  const orange = [0.96, 0.65, 0.14, 1];
-  const gold = [0.91, 0.76, 0.24, 1];
-  const teal = [0.18, 0.61, 0.72, 1];
-  const warm = [0.95, 0.85, 0.55, 1];
-
-  // Title glow animation (Slide 1)
-  const titleGlowData = {
-    v: "5.7.4", fr: 30, ip: 0, op: 180, w: 500, h: 400, nm: "TitleGlow", ddd: 0, assets: [],
-    layers: [
-      {
-        ddd: 0, ind: 0, ty: 4, nm: "orb1", sr: 1,
-        ks: {
-          o: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 30, s: [45], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 150, s: [45], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [0] }] },
-          r: { a: 0, k: 0 },
-          p: { a: 1, k: [{ t: 0, s: [60, 100, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [20, -15, 0], ti: [0, 0, 0] }, { t: 60, s: [400, 50, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [0, 0, 0], ti: [0, 0, 0] }, { t: 120, s: [450, 350, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [0, 0, 0], ti: [-20, 15, 0] }, { t: 180, s: [60, 100, 0] }] },
-          a: { a: 0, k: [0, 0, 0] },
-          s: { a: 1, k: [{ t: 0, s: [100, 100, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 90, s: [140, 140, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [100, 100, 100] }] }
-        },
-        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [6, 6] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: orange }, o: { a: 0, k: 55 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
-      },
-      {
-        ddd: 0, ind: 1, ty: 4, nm: "orb2", sr: 1,
-        ks: {
-          o: { a: 1, k: [{ t: 0, s: [35], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 90, s: [55], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [35] }] },
-          r: { a: 0, k: 0 },
-          p: { a: 1, k: [{ t: 0, s: [440, 320, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [-15, -20, 0], ti: [0, 0, 0] }, { t: 60, s: [100, 350, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [0, 0, 0], ti: [0, 0, 0] }, { t: 120, s: [50, 80, 0], i: { x: 0.4, y: 1 }, o: { x: 0.6, y: 0 }, to: [0, 0, 0], ti: [15, 20, 0] }, { t: 180, s: [440, 320, 0] }] },
-          a: { a: 0, k: [0, 0, 0] },
-          s: { a: 0, k: [100, 100, 100] }
-        },
-        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [5, 5] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: teal }, o: { a: 0, k: 50 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
-      },
-      {
-        ddd: 0, ind: 2, ty: 4, nm: "orb3", sr: 1,
-        ks: {
-          o: { a: 1, k: [{ t: 0, s: [25], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 60, s: [50], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 120, s: [25], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [25] }] },
-          r: { a: 0, k: 0 },
-          p: { a: 1, k: [{ t: 0, s: [250, 30, 0], i: { x: 0.3, y: 1 }, o: { x: 0.7, y: 0 }, to: [10, 15, 0], ti: [0, 0, 0] }, { t: 90, s: [480, 200, 0], i: { x: 0.3, y: 1 }, o: { x: 0.7, y: 0 }, to: [0, 0, 0], ti: [-10, -15, 0] }, { t: 180, s: [250, 30, 0] }] },
-          a: { a: 0, k: [0, 0, 0] },
-          s: { a: 0, k: [100, 100, 100] }
-        },
-        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [4, 4] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: warm }, o: { a: 0, k: 45 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
-      },
-      // Pulsing ring
-      {
-        ddd: 0, ind: 3, ty: 4, nm: "ring", sr: 1,
-        ks: {
-          o: { a: 1, k: [{ t: 0, s: [8], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 90, s: [16], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [8] }] },
-          r: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [360] }] },
-          p: { a: 0, k: [250, 200, 0] },
-          a: { a: 0, k: [0, 0, 0] },
-          s: { a: 1, k: [{ t: 0, s: [95, 95, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 90, s: [105, 105, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [95, 95, 100] }] }
-        },
-        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [400, 320] }, p: { a: 0, k: [0, 0] }, nm: "r" }, { ty: "st", c: { a: 0, k: orange }, o: { a: 0, k: 15 }, w: { a: 0, k: 1 }, lc: 2, lj: 2, bm: 0, nm: "s", d: [{ n: "d", nm: "dash", v: { a: 0, k: 6 } }, { n: "g", nm: "gap", v: { a: 0, k: 14 } }, { n: "o", nm: "offset", v: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [40] }] } }] }], ip: 0, op: 180, st: 0, bm: 0
-      }
-    ],
-    markers: []
-  };
-
-  const titleGlowContainer = document.getElementById('lottie-title-glow');
-  if (titleGlowContainer) {
-    lottie.loadAnimation({
-      container: titleGlowContainer,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: titleGlowData,
-    });
-  }
-
-  // Capabilities connecting dots (Slide 6)
-  const capLottieData = {
-    v: "5.7.4", fr: 30, ip: 0, op: 180, w: 800, h: 300, nm: "CapDots", ddd: 0, assets: [],
-    layers: [
-      {
-        ddd: 0, ind: 0, ty: 4, nm: "conn1", sr: 1,
-        ks: {
-          o: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 30, s: [30], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 150, s: [30], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [0] }] },
-          r: { a: 0, k: 0 },
-          p: { a: 1, k: [{ t: 0, s: [180, 150, 0], i: { x: 0.5, y: 1 }, o: { x: 0.5, y: 0 }, to: [10, -5, 0], ti: [0, 0, 0] }, { t: 90, s: [400, 120, 0], i: { x: 0.5, y: 1 }, o: { x: 0.5, y: 0 }, to: [0, 0, 0], ti: [-10, 5, 0] }, { t: 180, s: [620, 150, 0] }] },
-          a: { a: 0, k: [0, 0, 0] },
-          s: { a: 0, k: [100, 100, 100] }
-        },
-        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [5, 5] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: teal }, o: { a: 0, k: 50 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
-      },
-      {
-        ddd: 0, ind: 1, ty: 4, nm: "conn2", sr: 1,
-        ks: {
-          o: { a: 1, k: [{ t: 0, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 20, s: [25], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 160, s: [25], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } }, { t: 180, s: [0] }] },
-          r: { a: 0, k: 0 },
-          p: { a: 1, k: [{ t: 0, s: [620, 140, 0], i: { x: 0.5, y: 1 }, o: { x: 0.5, y: 0 }, to: [-10, 5, 0], ti: [0, 0, 0] }, { t: 90, s: [400, 170, 0], i: { x: 0.5, y: 1 }, o: { x: 0.5, y: 0 }, to: [0, 0, 0], ti: [10, -5, 0] }, { t: 180, s: [180, 140, 0] }] },
-          a: { a: 0, k: [0, 0, 0] },
-          s: { a: 0, k: [100, 100, 100] }
-        },
-        ao: 0, shapes: [{ ty: "el", d: 1, s: { a: 0, k: [4, 4] }, p: { a: 0, k: [0, 0] }, nm: "d" }, { ty: "fl", c: { a: 0, k: orange }, o: { a: 0, k: 40 }, r: 1, bm: 0, nm: "f" }], ip: 0, op: 180, st: 0, bm: 0
-      }
-    ],
-    markers: []
-  };
-
-  const capContainer = document.getElementById('lottie-capabilities');
-  if (capContainer) {
-    lottie.loadAnimation({
-      container: capContainer,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: capLottieData,
-    });
-  }
-
-  // Sparkle animation (Slide 10)
-  const sparkleLottieData = {
-    v: "5.7.4", fr: 30, ip: 0, op: 180, w: 600, h: 600, nm: "Sparkle", ddd: 0, assets: [],
-    layers: Array.from({ length: 12 }).map((_, i) => ({
-      ddd: 0, ind: i, ty: 4, nm: `sp${i}`, sr: 1,
-      ks: {
-        o: { a: 1, k: [
-          { t: (i * 15) % 180, s: [0], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-          { t: ((i * 15) + 15) % 180, s: [70], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-          { t: ((i * 15) + 30) % 180, s: [0] }
-        ]},
-        r: { a: 0, k: 0 },
-        p: { a: 0, k: [
-          80 + Math.random() * 440,
-          80 + Math.random() * 440,
-          0
-        ] },
-        a: { a: 0, k: [0, 0, 0] },
-        s: { a: 1, k: [
-          { t: (i * 15) % 180, s: [0, 0, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-          { t: ((i * 15) + 15) % 180, s: [180, 180, 100], i: { x: [0.5], y: [1] }, o: { x: [0.5], y: [0] } },
-          { t: ((i * 15) + 30) % 180, s: [0, 0, 100] }
-        ]}
-      },
-      ao: 0,
-      shapes: [
-        { ty: "el", d: 1, s: { a: 0, k: [3, 3] }, p: { a: 0, k: [0, 0] }, nm: "d" },
-        { ty: "fl", c: { a: 0, k: i % 3 === 0 ? orange : i % 3 === 1 ? teal : gold }, o: { a: 0, k: 70 }, r: 1, bm: 0, nm: "f" }
-      ],
-      ip: 0, op: 180, st: 0, bm: 0
-    })),
-    markers: []
-  };
-
-  const sparkleContainer = document.getElementById('lottie-sparkle');
-  if (sparkleContainer) {
-    lottie.loadAnimation({
-      container: sparkleContainer,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: sparkleLottieData,
-    });
-  }
-
-  // ========================================
-  // INITIALIZE
-  // ========================================
-
-  // ========================================
-  // AUDIO NARRATION SYSTEM
-  // ========================================
-
-  const audioToggle = document.getElementById('audio-toggle')!;
-  const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
-  const audioProgressBar = document.getElementById('audio-progress-bar')!;
-
-  let audioEnabled = true;
-  let audioVolume = 0.8;
-  let currentAudio: HTMLAudioElement | null = null;
-  let audioProgressInterval: number | null = null;
-
-  // Preload audio for all slides
-  const slideAudioCache: Record<number, HTMLAudioElement> = {};
-
-  function getAudioUrl(slideIndex: number): string {
-    const slideNum = slideIndex + 1;
-    const paddedNum = slideNum.toString().padStart(2, '0');
-    const langSuffix = currentLang === 'es' ? '-es' : '';
-    const voiceSuffix = currentVoice === 'female' ? '-female' : '';
-    return `/presentation-audio/slide-${paddedNum}${langSuffix}${voiceSuffix}.mp3`;
-  }
-
-  function preloadSlideAudio(slideIndex: number) {
-    const audioUrl = getAudioUrl(slideIndex);
-    if (slideAudioCache[slideIndex]) return;
-
-    const audio = new Audio();
-    audio.preload = 'auto';
-    audio.src = audioUrl;
-    audio.volume = audioVolume;
-    // Don't fail silently if file doesn't exist yet
-    audio.addEventListener('error', () => {
-      delete slideAudioCache[slideIndex];
-    });
-    audio.addEventListener('canplaythrough', () => {
-      slideAudioCache[slideIndex] = audio;
-    }, { once: true });
-    slideAudioCache[slideIndex] = audio;
-  }
-
-  // Preload all slides
-  for (let i = 0; i < totalSlides; i++) {
-    preloadSlideAudio(i);
-  }
-
-  const FADE_DURATION = 600; // ms for fade out/in
-  const FADE_STEPS = 30;
-
-  function fadeOutAudio(audio: HTMLAudioElement): Promise<void> {
-    return new Promise((resolve) => {
-      const startVol = audio.volume;
-      if (startVol === 0 || audio.paused) {
-        resolve();
-        return;
-      }
-      const step = startVol / FADE_STEPS;
-      const interval = FADE_DURATION / FADE_STEPS;
-      const timer = setInterval(() => {
-        const newVol = Math.max(0, audio.volume - step);
-        audio.volume = newVol;
-        if (newVol <= 0.01) {
-          clearInterval(timer);
-          audio.pause();
-          audio.volume = startVol; // restore for next play
-          resolve();
-        }
-      }, interval);
-    });
-  }
-
-  function fadeInAudio(audio: HTMLAudioElement, targetVol: number) {
-    audio.volume = 0;
-    audio.play().catch(() => {
-      console.log('Audio autoplay blocked. Click the speaker icon to enable.');
-    });
-    const step = targetVol / FADE_STEPS;
-    const interval = FADE_DURATION / FADE_STEPS;
-    const timer = setInterval(() => {
-      const newVol = Math.min(targetVol, audio.volume + step);
-      audio.volume = newVol;
-      if (newVol >= targetVol - 0.01) {
-        audio.volume = targetVol;
-        clearInterval(timer);
-      }
-    }, interval);
-  }
-
-  function stopCurrentAudio() {
-    if (currentAudio) {
-      // Quick fade out if still playing
-      const audio = currentAudio;
-      const startVol = audio.volume;
-      const step = startVol / 15; // faster fade for stop (300ms)
-      const timer = setInterval(() => {
-        const newVol = Math.max(0, audio.volume - step);
-        audio.volume = newVol;
-        if (newVol <= 0.01) {
-          clearInterval(timer);
-          audio.pause();
-          audio.currentTime = 0;
-          audio.volume = startVol;
-        }
-      }, 20);
-      currentAudio = null;
-    }
-    if (audioProgressInterval) {
-      clearInterval(audioProgressInterval);
-      audioProgressInterval = null;
-    }
-    audioProgressBar.style.width = '0%';
-  }
-
-  let pendingAudioTimer: number | null = null;
-
-  function playSlideAudio(slideIndex: number) {
-    // Cancel any pending audio start from a previous slide change
-    if (pendingAudioTimer) {
-      clearTimeout(pendingAudioTimer);
-      pendingAudioTimer = null;
-    }
-
-    if (!audioEnabled) {
-      stopCurrentAudio();
-      return;
-    }
-
-    const nextAudio = slideAudioCache[slideIndex];
-    if (!nextAudio) {
-      stopCurrentAudio();
-      return;
-    }
-
-    // If something is currently playing, fade it out first then fade in the new one
-    if (currentAudio && !currentAudio.paused) {
-      const prevAudio = currentAudio;
-      currentAudio = null;
-      if (audioProgressInterval) {
-        clearInterval(audioProgressInterval);
-        audioProgressInterval = null;
-      }
-
-      fadeOutAudio(prevAudio).then(() => {
-        prevAudio.currentTime = 0;
-        // Longer pause after fade-out before starting next narration
-        pendingAudioTimer = window.setTimeout(() => {
-          pendingAudioTimer = null;
-          // Double-check no other audio started in the meantime
-          if (!currentAudio || currentAudio.paused) {
-            startNewAudio(nextAudio, slideIndex);
-          }
-        }, 1000);
-      });
-    } else {
-      // Force-stop anything that might be playing
-      Object.values(slideAudioCache).forEach(a => {
-        if (a !== nextAudio && !a.paused) {
-          a.pause();
-          a.currentTime = 0;
-        }
-      });
-      stopCurrentAudio();
-      // Wait for slide transition to settle, then pause before narration
-      pendingAudioTimer = window.setTimeout(() => {
-        pendingAudioTimer = null;
-        startNewAudio(nextAudio, slideIndex);
-      }, 1200);
-    }
-  }
-
-  function startNewAudio(audio: HTMLAudioElement, slideIndex: number) {
-    if (!audioEnabled) return;
-
-    audio.currentTime = 0;
-    currentAudio = audio;
-
-    // Fade in
-    fadeInAudio(audio, audioVolume);
-
-    // Update progress bar
-    audioProgressInterval = window.setInterval(() => {
-      if (audio.duration && !audio.paused) {
-        const pct = (audio.currentTime / audio.duration) * 100;
-        audioProgressBar.style.width = `${pct}%`;
-      }
-    }, 200);
-
-    audio.addEventListener('ended', () => {
-      audioProgressBar.style.width = '100%';
-      setTimeout(() => { audioProgressBar.style.width = '0%'; }, 500);
-      if (audioProgressInterval) clearInterval(audioProgressInterval);
-    }, { once: true });
-  }
-
-  // Toggle mute
-  audioToggle.addEventListener('click', () => {
-    audioEnabled = !audioEnabled;
-    audioToggle.classList.toggle('muted', !audioEnabled);
-
-    if (!audioEnabled) {
-      stopCurrentAudio();
-    } else {
-      // Resume playing current slide's audio
-      playSlideAudio(currentSlide);
-    }
-  });
-
-  // Volume control
-  volumeSlider.addEventListener('input', () => {
-    audioVolume = parseInt(volumeSlider.value) / 100;
-    if (currentAudio) {
-      currentAudio.volume = audioVolume;
-    }
-    if (audioVolume === 0) {
-      audioToggle.classList.add('muted');
-      audioEnabled = false;
-    } else if (!audioEnabled) {
-      audioEnabled = true;
-      audioToggle.classList.remove('muted');
-    }
-  });
-
-  // 'A' key to toggle audio
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'a' || e.key === 'A') {
-      audioToggle.click();
-    }
-  });
-
-  // Export audio function so goToSlide can call it
-  (window as any).__playSlideAudio = playSlideAudio;
-
-  // ========================================
-  // BACKGROUND MUSIC SYSTEM
-  // ========================================
-
-  const bgMusic = new Audio('/presentation-audio/bg-music.mp3');
-  bgMusic.loop = true;
-  bgMusic.volume = 0;
-  bgMusic.preload = 'auto';
-
-  const BG_MUSIC_HIGH = 0.35;  // Base volume when no narration playing
-  const BG_MUSIC_LOW = 0.15;   // Base volume when narration is playing (ducked)
-  const BG_FADE_DURATION = 800; // ms for music volume transitions
-  const BG_FADE_STEPS = 40;
-  let bgMusicStarted = false;
-  let bgMusicEnabled = true;
-  let bgFadeTimer: number | null = null;
-
-  const bgmToggle = document.getElementById('bgm-toggle')!;
-  const bgmVolumeSlider = document.getElementById('bgm-volume') as HTMLInputElement;
-
-  // Scale base volumes by the user's music volume slider (0-100)
-  function getBgHighVol(): number {
-    return (parseInt(bgmVolumeSlider.value) / 100) * BG_MUSIC_HIGH * 3;
-  }
-
-  function getBgLowVol(): number {
-    return (parseInt(bgmVolumeSlider.value) / 100) * BG_MUSIC_LOW * 3;
-  }
-
-  function fadeBgMusicTo(targetVol: number, duration: number = BG_FADE_DURATION): Promise<void> {
-    return new Promise((resolve) => {
-      if (bgFadeTimer) clearInterval(bgFadeTimer);
-      const startVol = bgMusic.volume;
-      if (Math.abs(startVol - targetVol) < 0.005) {
-        bgMusic.volume = targetVol;
-        resolve();
-        return;
-      }
-      const steps = BG_FADE_STEPS;
-      const stepSize = (targetVol - startVol) / steps;
-      const interval = duration / steps;
-      let currentStep = 0;
-      bgFadeTimer = window.setInterval(() => {
-        currentStep++;
-        const newVol = Math.max(0, Math.min(1, startVol + stepSize * currentStep));
-        bgMusic.volume = newVol;
-        if (currentStep >= steps) {
-          clearInterval(bgFadeTimer!);
-          bgFadeTimer = null;
-          bgMusic.volume = targetVol;
-          resolve();
-        }
-      }, interval);
-    });
-  }
-
-  function startBgMusic() {
-    if (bgMusicStarted || !bgMusicEnabled) return;
-    bgMusicStarted = true;
-    bgMusic.volume = 0;
-    bgMusic.play().then(() => {
-      fadeBgMusicTo(getBgHighVol(), 2000); // 2s fade-in on page start
-    }).catch(() => {
-      bgMusicStarted = false;
-      console.log('Background music autoplay blocked');
-    });
-  }
-
-  function duckBgMusic() {
-    if (!bgMusicStarted || !bgMusicEnabled) return;
-    fadeBgMusicTo(getBgLowVol());
-  }
-
-  function unduckBgMusic() {
-    if (!bgMusicStarted || !bgMusicEnabled) return;
-    fadeBgMusicTo(getBgHighVol());
-  }
-
-  function stopBgMusic() {
-    if (!bgMusicStarted) return;
-    fadeBgMusicTo(0, 3000).then(() => { // 3s fade-out
-      bgMusic.pause();
-      bgMusicStarted = false;
-    });
-  }
-
-  // Hook into narration: duck when narration starts, unduck when it ends
-  const _origStartNewAudioBg = startNewAudio;
-  startNewAudio = function(audio: HTMLAudioElement, slideIndex: number) {
-    duckBgMusic();
-    _origStartNewAudioBg(audio, slideIndex);
-
-    audio.addEventListener('ended', () => {
-      // If this is the last slide, wait 3s then fade out music entirely
-      if (slideIndex >= totalSlides - 1) {
-        setTimeout(() => {
-          stopBgMusic();
-        }, 3000);
-      } else {
-        unduckBgMusic();
-      }
-    }, { once: true });
-  };
-
-  // Hook into stop: unduck when narration is stopped manually
-  const _origStopCurrentAudio = stopCurrentAudio;
-  stopCurrentAudio = function() {
-    _origStopCurrentAudio();
-    unduckBgMusic();
-  };
-
-  // Hook into narration mute toggle: also mute/unmute bg music
-  audioToggle.addEventListener('click', () => {
-    if (!bgMusicEnabled) return; // music independently disabled, leave it alone
-    if (!audioEnabled && bgMusicStarted) {
-      // Muting narration — fade bg music to silence but keep it playing
-      fadeBgMusicTo(0);
-    } else if (audioEnabled && bgMusicStarted) {
-      // Unmuting narration — restore bg music
-      const isNarrating = currentAudio && !currentAudio.paused;
-      fadeBgMusicTo(isNarrating ? getBgLowVol() : getBgHighVol());
-    }
-  });
-
-  // Music toggle button
-  bgmToggle.addEventListener('click', () => {
-    bgMusicEnabled = !bgMusicEnabled;
-    bgmToggle.classList.toggle('active', bgMusicEnabled);
-    if (!bgMusicEnabled && bgMusicStarted) {
-      // Turning off music — fade out and pause
-      fadeBgMusicTo(0, 500).then(() => {
-        bgMusic.pause();
-        bgMusicStarted = false;
-      });
-    } else if (bgMusicEnabled && audioEnabled) {
-      // Turning on music — start if presentation is running
-      startBgMusic();
-      const isNarrating = currentAudio && !currentAudio.paused;
-      if (bgMusicStarted) {
-        fadeBgMusicTo(isNarrating ? getBgLowVol() : getBgHighVol());
-      }
-    }
-  });
-
-  // Music volume slider
-  bgmVolumeSlider.addEventListener('input', () => {
-    if (!bgMusicStarted || !bgMusicEnabled) return;
-    const isNarrating = currentAudio && !currentAudio.paused;
-    bgMusic.volume = isNarrating ? getBgLowVol() : getBgHighVol();
-  });
-
-  // 'M' key to toggle music
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'm' || e.key === 'M') {
-      bgmToggle.click();
-    }
-  });
-
-  // ========================================
-  // INITIALIZE
-  // ========================================
-
-  // Set initial notes
-  const firstSlide = slides[0] as HTMLElement;
-  if (firstSlide && firstSlide.dataset.notes) {
-    notesContent.textContent = firstSlide.dataset.notes;
-  }
-
-  // ========================================
-  // PLAY OVERLAY — start presentation on click
-  // ========================================
-
-  const playOverlay = document.getElementById('play-overlay')!;
-  const playOverlayBtn = document.getElementById('play-overlay-btn')!;
-
-  playOverlayBtn.addEventListener('click', () => {
-    playOverlay.classList.add('hidden');
-    startBgMusic();
-    playSlideAudio(0);
-  });
-
-  // Also allow Enter/Space to start
-  document.addEventListener('keydown', function startOnKey(e) {
-    if (!playOverlay.classList.contains('hidden') && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault();
-      playOverlay.classList.add('hidden');
-      startBgMusic();
-      playSlideAudio(0);
-      document.removeEventListener('keydown', startOnKey);
-    }
-  });
-
-  // ========================================
-  // AUTO-ADVANCE — go to next slide when audio ends
-  // ========================================
-
-  let autoAdvanceEnabled = true;
-
-  // Patch startNewAudio to add auto-advance on audio end
-  const _origStartNewAudio = startNewAudio;
-  startNewAudio = function(audio: HTMLAudioElement, slideIndex: number) {
-    _origStartNewAudio(audio, slideIndex);
-
-    // When narration ends, auto-advance to next slide after a short pause
-    audio.addEventListener('ended', () => {
-      if (autoAdvanceEnabled && audioEnabled && slideIndex < totalSlides - 1) {
-        setTimeout(() => {
-          goToSlide(slideIndex + 1, 'next');
-        }, 1200); // 1.2s pause before advancing
-      }
-    }, { once: true });
-  };
-
-  // ========================================
-  // INTERNATIONALIZATION (i18n)
-  // ========================================
-
-  const translations: Record<Lang, Record<string, string>> = {
-    en: {
-      'play-overlay-text': 'Start Presentation',
-      // Slide 1
-      'slide1-eyebrow': 'A Book by Rasmus Bornhoft Schlunsen',
-      'slide1-title': 'The Agentic<br/>Crew',
-      'slide1-subtitle': 'Engineering in the Age of AI Agents',
-      'slide1-date': 'March 2026',
-      // Slide 2
-      'slide2-heading': 'The Ground Is Shifting',
-      'slide2-quote': '\u201CYou write code, you ship it. <em>That loop is breaking.</em>\u201D',
-      'slide2-stat1': '72% of developers used AI coding tools in 2025',
-      'slide2-stat2': 'Agents now write 30%+ of code at leading firms',
-      'slide2-stat3': 'Old: write \u2192 run \u2192 ship. New: instruct \u2192 review \u2192 steer.',
-      // Slide 3
-      'slide3-heading': 'The Craft Is Molting',
-      'slide3-quote': '\u201CThe craft isn\u2019t dying \u2014 it\u2019s molting.\u201D',
-      'slide3-topics-eyebrow': '19 chapters covering:',
-      'slide3-tag1': 'Guardrails & Sandboxes',
-      'slide3-tag2': 'Prompt Engineering',
-      'slide3-tag3': 'Multi-Agent Orchestration',
-      'slide3-tag4': 'Agents in CI/CD',
-      'slide3-tag5': 'Testing as Feedback',
-      'slide3-tag6': 'When NOT to Use Agents',
-      // Slide 4
-      'slide4-heading': 'What Is an Agent?',
-      'slide4-body': 'The spectrum of AI assistance in software engineering:',
-      'slide4-level0': 'Autocomplete',
-      'slide4-level1': 'Copilot',
-      'slide4-level2': 'Tool-Using Agent',
-      'slide4-level3': 'Autonomous Agent',
-      'slide4-pointer': 'Most practical work happens here',
-      'slide4-desc-default': 'Can read files, run commands, call APIs, and iterate on results. This is where most practical work happens today.',
-      // Slide 5
-      'slide5-heading': 'The Rain Man Analogy',
-      'slide5-quote': '\u201CYou\u2019re Tom Cruise. The agent is Dustin Hoffman.\u201D',
-      'slide5-captain-title': 'You \u2014 The Captain',
-      'slide5-captain-1': 'Direction & vision',
-      'slide5-captain-2': 'Judgment & taste',
-      'slide5-captain-3': 'Knows when to walk away',
-      'slide5-agent-title': 'Agent \u2014 The Savant',
-      'slide5-agent-1': 'Speed & throughput',
-      'slide5-agent-2': 'Tireless execution',
-      'slide5-agent-3': 'Infinite pattern recognition',
-      // Slide 6
-      'slide6-heading': 'Three Core Capabilities',
-      'slide6-cap1-title': 'Planning',
-      'slide6-cap-hint': 'Click to reveal',
-      'slide6-cap1-desc': 'Breaking down complex tasks into steps. Understanding dependencies, ordering work, and deciding what to do first.',
-      'slide6-cap2-title': 'Tool Use',
-      'slide6-cap-hint2': 'Click to reveal',
-      'slide6-cap2-desc': 'Reading files, running commands, calling APIs, writing code. The agent\u2019s hands in the real world.',
-      'slide6-cap3-title': 'Iteration',
-      'slide6-cap-hint3': 'Click to reveal',
-      'slide6-cap3-desc': 'Running code, seeing errors, fixing them, and trying again. The observe-adjust loop that makes agents powerful.',
-      // Slide 7
-      'slide7-heading': 'When Agents Fail',
-      'slide7-fail1-title': 'Scope Creep',
-      'slide7-fail1-desc': 'Agent expands beyond the task, refactoring code you didn\u2019t ask it to touch.',
-      'slide7-fail1-fix': 'Fix: Small, focused prompts. One task at a time.',
-      'slide7-fail2-title': 'Hallucinated APIs',
-      'slide7-fail2-desc': 'Agent invents function signatures or library methods that don\u2019t exist.',
-      'slide7-fail2-fix': 'Fix: Always run tests. Pin dependency docs in context.',
-      'slide7-fail3-title': 'Overconfidence',
-      'slide7-fail3-desc': 'Agent presents wrong answers with certainty. No hedging, no doubt.',
-      'slide7-fail3-fix': 'Fix: Verify everything. Trust but verify.',
-      'slide7-fail4-title': 'Context Loss',
-      'slide7-fail4-desc': 'Agent forgets earlier instructions as the conversation grows long.',
-      'slide7-fail4-fix': 'Fix: Fresh sessions. Project rules files. Keep context lean.',
-      // Slide 8
-      'slide8-heading': 'The Engineering Toolkit',
-      'slide8-node1': 'Guardrails',
-      'slide8-node3': 'Sandboxes',
-      'slide8-node4': 'Testing',
-      'slide8-node5': 'Conventions',
-      'slide8-info-default': 'Click any node to learn more',
-      // Slide 9
-      'slide9-heading': 'Multi-Agent Orchestration in Practice',
-      'slide9-subtitle': 'Wee \u2014 from theory to working code',
-      'slide9-quote': '\u201CThe best way to learn agentic engineering is to build agentic tooling.\u201D',
-      'slide9-lesson1': 'Multi-session = multi-agent orchestration (Ch 12)',
-      'slide9-lesson2': 'Granular permissions = guardrails in code (Ch 4)',
-      'slide9-lesson3': 'Pipeline integration = agents in CI/CD (Ch 13)',
-      // Slide 10 - Agents as Pentesters
-      'slide10-heading': 'Agents as Pentesters',
-      'slide10-body': 'What if your pipeline could hack itself before attackers do?',
-      'slide10-case-study': '(Case study: <a href="https://github.com/schlunsen/donna" target="_blank" rel="noopener">Donna</a> \u2014 open-source, Claude Agent SDK + Temporal)',
-      'slide10-insight': '\u201CEvery principle from the book \u2014 guardrails, sandboxes, orchestration, testing \u2014 converges here. If you can safely let agents attack your software, you\u2019ve mastered agentic engineering.\u201D',
-      // Slide 11 - Guardrails for Hostile Agents
-      'slide11-heading': 'When Agents Attack (Responsibly)',
-      'slide11-quote': '\u201CThe same guardrails that protect you FROM rogue agents now need to protect the world FROM your intentionally hostile agents.\u201D',
-      'slide11-rule1-title': 'Isolate & Authorize',
-      'slide11-rule1-desc': 'Sandbox your pentesting agents. Get written permission. Scanning production isn\u2019t testing \u2014 it\u2019s an incident.',
-      'slide11-rule2-title': 'Verify Everything',
-      'slide11-rule2-desc': 'Agents hallucinate vulnerabilities. Every finding needs human eyes before it becomes an action item.',
-      // Slide 12 - The Crew Metaphor
-      'slide12-heading': 'The Crew Metaphor',
-      'slide12-quote': '\u201CYou\u2019re the captain. The crew is disposable. The ship is not.\u201D',
-      'slide12-label1': 'Hull = Your Codebase',
-      'slide12-label2': 'Rigging = Conventions',
-      'slide12-label3': 'Logbook = Tests',
-      'slide12-label4': 'Captain = You',
-      'slide12-label5': 'Crew = Agents',
-      // Slide 13
-      'slide13-heading': 'Go Build Something',
-      'slide13-cta': 'Get the Book \u2014 Free',
-      'slide13-typing': 'Tonight \u2014 not tomorrow, not next week, tonight \u2014 open your terminal.',
-    },
-    es: {
-      'play-overlay-text': 'Iniciar Presentaci\u00F3n',
-      // Slide 1
-      'slide1-eyebrow': 'Un libro de Rasmus Bornhoft Schlunsen',
-      'slide1-title': 'The Agentic<br/>Crew',
-      'slide1-subtitle': 'Ingenier\u00EDa en la Era de los Agentes de IA',
-      'slide1-date': 'Marzo 2026',
-      // Slide 2
-      'slide2-heading': 'El Terreno Est\u00E1 Cambiando',
-      'slide2-quote': '\u201CEscribes c\u00F3digo, lo despliegas. <em>Ese ciclo se est\u00E1 rompiendo.</em>\u201D',
-      'slide2-stat1': 'El 72% de los desarrolladores usaron herramientas de IA para programar en 2025',
-      'slide2-stat2': 'Los agentes escriben m\u00E1s del 30% del c\u00F3digo en empresas l\u00EDderes',
-      'slide2-stat3': 'Antes: escribir \u2192 ejecutar \u2192 desplegar. Ahora: instruir \u2192 revisar \u2192 dirigir.',
-      // Slide 3
-      'slide3-heading': 'El Oficio Est\u00E1 Mudando',
-      'slide3-quote': '\u201CEl oficio no est\u00E1 muriendo \u2014 est\u00E1 mudando.\u201D',
-      'slide3-topics-eyebrow': '18 cap\u00EDtulos que cubren:',
-      'slide3-tag1': 'Barandillas y Sandboxes',
-      'slide3-tag2': 'Ingenier\u00EDa de Prompts',
-      'slide3-tag3': 'Orquestaci\u00F3n Multi-Agente',
-      'slide3-tag4': 'Agentes en CI/CD',
-      'slide3-tag5': 'Testing como Retroalimentaci\u00F3n',
-      'slide3-tag6': 'Cu\u00E1ndo NO Usar Agentes',
-      // Slide 4
-      'slide4-heading': '\u00BFQu\u00E9 Es un Agente?',
-      'slide4-body': 'El espectro de la asistencia de IA en ingenier\u00EDa de software:',
-      'slide4-level0': 'Autocompletado',
-      'slide4-level1': 'Copiloto',
-      'slide4-level2': 'Agente con Herramientas',
-      'slide4-level3': 'Agente Aut\u00F3nomo',
-      'slide4-pointer': 'La mayor\u00EDa del trabajo pr\u00E1ctico ocurre aqu\u00ED',
-      'slide4-desc-default': 'Puede leer archivos, ejecutar comandos, llamar APIs e iterar sobre resultados. Aqu\u00ED es donde ocurre la mayor parte del trabajo pr\u00E1ctico hoy.',
-      // Slide 5
-      'slide5-heading': 'La Analog\u00EDa de Rain Man',
-      'slide5-quote': '\u201CT\u00FA eres Tom Cruise. El agente es Dustin Hoffman.\u201D',
-      'slide5-captain-title': 'T\u00FA \u2014 El Capit\u00E1n',
-      'slide5-captain-1': 'Direcci\u00F3n y visi\u00F3n',
-      'slide5-captain-2': 'Juicio y gusto',
-      'slide5-captain-3': 'Sabe cu\u00E1ndo retirarse',
-      'slide5-agent-title': 'Agente \u2014 El Savant',
-      'slide5-agent-1': 'Velocidad y rendimiento',
-      'slide5-agent-2': 'Ejecuci\u00F3n incansable',
-      'slide5-agent-3': 'Reconocimiento infinito de patrones',
-      // Slide 6
-      'slide6-heading': 'Tres Capacidades Fundamentales',
-      'slide6-cap1-title': 'Planificaci\u00F3n',
-      'slide6-cap-hint': 'Clic para revelar',
-      'slide6-cap1-desc': 'Descomponer tareas complejas en pasos. Entender dependencias, ordenar el trabajo y decidir qu\u00E9 hacer primero.',
-      'slide6-cap2-title': 'Uso de Herramientas',
-      'slide6-cap-hint2': 'Clic para revelar',
-      'slide6-cap2-desc': 'Leer archivos, ejecutar comandos, llamar APIs, escribir c\u00F3digo. Las manos del agente en el mundo real.',
-      'slide6-cap3-title': 'Iteraci\u00F3n',
-      'slide6-cap-hint3': 'Clic para revelar',
-      'slide6-cap3-desc': 'Ejecutar c\u00F3digo, ver errores, corregirlos e intentar de nuevo. El bucle observar-ajustar que hace poderosos a los agentes.',
-      // Slide 7
-      'slide7-heading': 'Cuando los Agentes Fallan',
-      'slide7-fail1-title': 'Expansi\u00F3n del Alcance',
-      'slide7-fail1-desc': 'El agente se expande m\u00E1s all\u00E1 de la tarea, refactorizando c\u00F3digo que no le pediste tocar.',
-      'slide7-fail1-fix': 'Soluci\u00F3n: Prompts peque\u00F1os y enfocados. Una tarea a la vez.',
-      'slide7-fail2-title': 'APIs Alucinadas',
-      'slide7-fail2-desc': 'El agente inventa firmas de funciones o m\u00E9todos de librer\u00EDa que no existen.',
-      'slide7-fail2-fix': 'Soluci\u00F3n: Siempre ejecutar tests. Fijar docs de dependencias en el contexto.',
-      'slide7-fail3-title': 'Exceso de Confianza',
-      'slide7-fail3-desc': 'El agente presenta respuestas incorrectas con certeza. Sin matices, sin dudas.',
-      'slide7-fail3-fix': 'Soluci\u00F3n: Verificar todo. Confiar pero verificar.',
-      'slide7-fail4-title': 'P\u00E9rdida de Contexto',
-      'slide7-fail4-desc': 'El agente olvida instrucciones anteriores a medida que la conversaci\u00F3n crece.',
-      'slide7-fail4-fix': 'Soluci\u00F3n: Sesiones nuevas. Archivos de reglas del proyecto. Mantener el contexto ligero.',
-      // Slide 8
-      'slide8-heading': 'El Kit de Herramientas de Ingenier\u00EDa',
-      'slide8-node1': 'Barandillas',
-      'slide8-node3': 'Sandboxes',
-      'slide8-node4': 'Testing',
-      'slide8-node5': 'Convenciones',
-      'slide8-info-default': 'Haz clic en cualquier nodo para saber m\u00E1s',
-      // Slide 9
-      'slide9-heading': 'Orquestaci\u00F3n Multi-Agente en la Pr\u00E1ctica',
-      'slide9-subtitle': 'Wee \u2014 de la teor\u00EDa al c\u00F3digo funcional',
-      'slide9-quote': '\u201CLa mejor manera de aprender ingenier\u00EDa ag\u00E9ntica es construir herramientas ag\u00E9nticas.\u201D',
-      'slide9-lesson1': 'Multi-sesi\u00F3n = orquestaci\u00F3n multi-agente (Cap 12)',
-      'slide9-lesson2': 'Permisos granulares = barandillas en c\u00F3digo (Cap 4)',
-      'slide9-lesson3': 'Integraci\u00F3n de pipeline = agentes en CI/CD (Cap 13)',
-      // Slide 10 - Agentes como Pentesters
-      'slide10-heading': 'Agentes como Pentesters',
-      'slide10-body': '\u00BFY si tu pipeline pudiera hackearse a s\u00ED mismo antes que los atacantes?',
-      'slide10-case-study': '(Caso de estudio: <a href="https://github.com/schlunsen/donna" target="_blank" rel="noopener">Donna</a> \u2014 c\u00F3digo abierto, Claude Agent SDK + Temporal)',
-      'slide10-insight': '\u201CCada principio del libro \u2014 barandillas, sandboxes, orquestaci\u00F3n, testing \u2014 converge aqu\u00ED. Si puedes dejar que los agentes ataquen tu software de forma segura, has dominado la ingenier\u00EDa ag\u00E9ntica.\u201D',
-      // Slide 11 - Barandillas para Agentes Hostiles
-      'slide11-heading': 'Cuando los Agentes Atacan (Responsablemente)',
-      'slide11-quote': '\u201CLas mismas barandillas que te protegen DE agentes descontrolados ahora necesitan proteger al mundo DE tus agentes intencionalmente hostiles.\u201D',
-      'slide11-rule1-title': 'Aislar y Autorizar',
-      'slide11-rule1-desc': 'Pon tus agentes de pentesting en sandbox. Obt\u00E9n permiso por escrito. Escanear producci\u00F3n no es testing \u2014 es un incidente.',
-      'slide11-rule2-title': 'Verificar Todo',
-      'slide11-rule2-desc': 'Los agentes alucinan vulnerabilidades. Cada hallazgo necesita ojos humanos antes de convertirse en una acci\u00F3n.',
-      // Slide 12 - La Met\u00E1fora de la Tripulaci\u00F3n
-      'slide12-heading': 'La Met\u00E1fora de la Tripulaci\u00F3n',
-      'slide12-quote': '\u201CT\u00FA eres el capit\u00E1n. La tripulaci\u00F3n es desechable. El barco no lo es.\u201D',
-      'slide12-label1': 'Casco = Tu Base de C\u00F3digo',
-      'slide12-label2': 'Aparejo = Convenciones',
-      'slide12-label3': 'Cuaderno de Bit\u00E1cora = Tests',
-      'slide12-label4': 'Capit\u00E1n = T\u00FA',
-      'slide12-label5': 'Tripulaci\u00F3n = Agentes',
-      // Slide 13
-      'slide13-heading': 'Ve a Construir Algo',
-      'slide13-cta': 'Obtener el Libro \u2014 Gratis',
-      'slide13-typing': 'Esta noche \u2014 no ma\u00F1ana, no la pr\u00F3xima semana \u2014 esta noche \u2014 abre tu terminal.',
-    }
-  };
-
-  const langBtns = document.querySelectorAll<HTMLButtonElement>('.lang-btn');
-
-  function applyLanguage(lang: Lang) {
-    currentLang = lang;
-    localStorage.setItem('presentation-lang', lang);
-
-    // Update language selector buttons
-    langBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === lang);
+    };
+    document.addEventListener('keydown', onKey);
+
+    let touchX: number | null = null;
+    deck.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+    deck.addEventListener('touchend', (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX; touchX = null;
+      if (Math.abs(dx) > 50) go(current + (dx < 0 ? 1 : -1));
     });
 
-    // Update all data-i18n elements
-    const elements = document.querySelectorAll<HTMLElement>('[data-i18n]');
-    elements.forEach(el => {
-      const key = el.dataset.i18n!;
-      const text = translations[lang][key];
-      if (text !== undefined) {
-        if (el.dataset.i18nHtml === 'true') {
-          el.innerHTML = text;
-        } else {
-          el.innerHTML = text;
-        }
-      }
-    });
+    document.addEventListener('astro:before-swap', () => { stopAudio(); document.removeEventListener('keydown', onKey); }, { once: true });
 
-    // Update spectrum descriptions with language-specific data attributes
-    const spectrumDescEl = document.getElementById('spectrum-desc');
-    if (spectrumDescEl) {
-      const activeLevel = document.querySelector('.spectrum-level.active-level') as HTMLElement | null;
-      if (activeLevel) {
-        const descKey = lang === 'es' ? 'descEs' : 'desc';
-        spectrumDescEl.textContent = (lang === 'es' && activeLevel.dataset.descEs)
-          ? activeLevel.dataset.descEs
-          : activeLevel.dataset.desc || '';
-      }
-    }
-
-    // Update pipeline info if showing a node description
-    const pipelineInfoEl = document.getElementById('pipeline-info');
-    const activeNode = document.querySelector('.pipeline-node.active-node') as HTMLElement | null;
-    if (pipelineInfoEl && activeNode) {
-      pipelineInfoEl.textContent = (lang === 'es' && activeNode.dataset.infoEs)
-        ? activeNode.dataset.infoEs
-        : activeNode.dataset.info || '';
-    }
-
-    // If typing effect is or was running on the final slide, restart it with new language
-    if (currentSlide === 10) {
-      startTypingEffect();
-    }
-
-    // Reload audio for current slide in correct language
-    reloadAudioForLanguage();
+    applyLang(); applyVoice();
+    const fromHash = parseInt(location.hash.slice(1), 10);
+    go(Number.isFinite(fromHash) ? fromHash - 1 : 0);
   }
-
-  function reloadAudioForLanguage() {
-    const wasPlaying = audioEnabled && currentAudio && !currentAudio.paused;
-
-    // Fade out current audio smoothly before switching
-    const fadePromise = (currentAudio && !currentAudio.paused)
-      ? fadeOutAudio(currentAudio)
-      : Promise.resolve();
-
-    fadePromise.then(() => {
-      // Cancel any pending audio timer
-      if (pendingAudioTimer) {
-        clearTimeout(pendingAudioTimer);
-        pendingAudioTimer = null;
-      }
-
-      // Stop and clear all cached audio
-      Object.keys(slideAudioCache).forEach(k => {
-        const idx = parseInt(k);
-        const audio = slideAudioCache[idx];
-        if (audio) {
-          audio.pause();
-          audio.currentTime = 0;
-          audio.src = '';
-        }
-        delete slideAudioCache[idx];
-      });
-      currentAudio = null;
-
-      // Rebuild audio cache with language/voice-specific paths
-      for (let i = 0; i < totalSlides; i++) {
-        const audioUrl = getAudioUrl(i);
-
-        const audio = new Audio();
-        audio.preload = 'auto';
-        audio.src = audioUrl;
-        audio.volume = audioVolume;
-        audio.addEventListener('error', () => {
-          delete slideAudioCache[i];
-        });
-        audio.addEventListener('canplaythrough', () => {
-          slideAudioCache[i] = audio;
-        }, { once: true });
-        slideAudioCache[i] = audio;
-      }
-
-      // If audio was playing, restart with new language after a smooth pause
-      if (wasPlaying) {
-        setTimeout(() => playSlideAudio(currentSlide), 400);
-      }
-    });
-  }
-
-  // Language button click handlers
-  langBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.dataset.lang as Lang;
-      if (lang !== currentLang) {
-        applyLanguage(lang);
-      }
-    });
-  });
-
-  // Voice is fixed — no switcher needed
-
-  // Apply saved language on load
-  if (currentLang !== 'en') {
-    applyLanguage(currentLang);
-  }
+  document.addEventListener('astro:page-load', initDeck);
 </script>

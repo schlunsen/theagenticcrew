@@ -1,0 +1,45 @@
+{
+  "voices": {
+    "": "default narrator (matches slide-01..13)",
+    "-female": "second narrator"
+  },
+  "output": "website/public/presentation-audio/{file}{-es if Spanish}{voice suffix}.mp3",
+  "slides": [
+    {
+      "file": "slide-14",
+      "slide_id": "new",
+      "en": "The first edition came out in March 2026. Six months later, a lot had moved: instruction files converged, cloud agents started sending pull requests, and prompt injection became a string of real incidents. The second edition adds two new chapters — on the agent attack surface and on building your own agents — and moves the perishable details into one dated appendix.",
+      "es": "La primera edición salió en marzo de 2026. Seis meses después, mucho había cambiado: los archivos de instrucciones convergieron, los agentes en la nube empezaron a enviar pull requests y la inyección de prompts se convirtió en una serie de incidentes reales. La segunda edición añade dos capítulos nuevos — sobre la superficie de ataque del agente y sobre construir tus propios agentes — y mueve los detalles perecederos a un apéndice fechado."
+    },
+    {
+      "file": "slide-15",
+      "slide_id": "context",
+      "en": "Context engineering is the discipline of deciding what goes into the model’s window. Bigger windows didn’t remove the tax — performance still degrades as context grows. So research first, then plan, then implement, with a fresh or compacted context between each phase, and use sub-agents to explore without polluting the main window.",
+      "es": "La ingeniería de contexto es la disciplina de decidir qué entra en la ventana del modelo. Las ventanas más grandes no eliminaron el coste — el rendimiento sigue degradándose a medida que crece el contexto. Así que primero investiga, luego planifica, luego implementa, con un contexto nuevo o compactado entre cada fase, y usa subagentes para explorar sin contaminar la ventana principal."
+    },
+    {
+      "file": "slide-16",
+      "slide_id": "trifecta",
+      "en": "The biggest gap in the first edition was security. An agent that has access to private data, is exposed to untrusted content, and has a way to communicate externally can be tricked into leaking that data. Simon Willison calls it the lethal trifecta. You can’t fully prevent prompt injection yet — so remove at least one leg for any session.",
+      "es": "La mayor carencia de la primera edición era la seguridad. Un agente con acceso a datos privados, expuesto a contenido no confiable y con una forma de comunicarse hacia fuera puede ser engañado para filtrar esos datos. Simon Willison lo llama la tríada letal. Aún no puedes evitar del todo la inyección de prompts — así que elimina al menos una pata en cada sesión."
+    },
+    {
+      "file": "slide-17",
+      "slide_id": "cloud",
+      "en": "The overnight agent I described as a shell script became a product feature. You assign an issue, and a pull request comes back. That makes agent capacity cheap. What isn’t cheap is human attention — a dozen pull requests still need someone who understands every one of them. Plan your work around the reviewer, not the agents.",
+      "es": "El agente nocturno que describí como un script se convirtió en una función de producto. Asignas un issue y vuelve un pull request. Eso abarata la capacidad de los agentes. Lo que no es barato es la atención humana — una docena de pull requests sigue necesitando a alguien que entienda cada uno. Planifica el trabajo en torno al revisor, no a los agentes."
+    },
+    {
+      "file": "slide-18",
+      "slide_id": "build",
+      "en": "Once you build agents yourself, you see how much of what feels like the model being smart is really the loop around it: what goes into the context, which tools exist, when it stops, and what it is allowed to touch. The loop is small. Everything around it is the work — and that part is engineering.",
+      "es": "Cuando construyes agentes tú mismo, ves cuánto de lo que parece inteligencia del modelo es en realidad el bucle que lo rodea: qué entra en el contexto, qué herramientas existen, cuándo se detiene y qué puede tocar. El bucle es pequeño. Todo lo que lo rodea es el trabajo — y esa parte es ingeniería."
+    },
+    {
+      "file": "slide-19",
+      "slide_id": "wee",
+      "en": "I built Wee Editor to practice what the book preaches: a self-hosted workspace for running many agent sessions in parallel — each in its own worktree, with its own permissions, and with visibility into what every agent is doing. The best way to learn agentic engineering is to build agentic tooling.",
+      "es": "Construí Wee Editor para practicar lo que predica el libro: un espacio de trabajo autoalojado para ejecutar muchas sesiones de agentes en paralelo — cada una en su propio worktree, con sus propios permisos y con visibilidad de lo que hace cada agente. La mejor manera de aprender ingeniería agéntica es construir herramientas agénticas."
+    }
+  ]
+}
