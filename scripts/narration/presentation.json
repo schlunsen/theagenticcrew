@@ -1,0 +1,108 @@
+{
+  "voice_reference": "assets/voice-ref.wav",
+  "note": "Narration for website/src/pages/presentation.astro, in slide order. Output: website/public/presentation-audio/slide-NN.mp3 (English) and slide-NN-es.mp3 (Spanish).",
+  "slides": [
+    {
+      "n": 1,
+      "id": "title",
+      "en": "Welcome, everyone. I'm Rasmus, and this is The Agentic Crew, now in its second edition. A field guide to engineering in the age of AI agents. Let me take you through the ideas that held up, and the ones that changed.",
+      "es": "Bienvenidos a todos. Soy Rasmus, y esto es The Agentic Crew, ahora en su segunda edición. Una guía práctica para la ingeniería en la era de los agentes de inteligencia artificial. Permítanme presentarles las ideas que resistieron, y las que cambiaron."
+    },
+    {
+      "n": 2,
+      "id": "new",
+      "en": "The first edition came out in March, twenty twenty-six. Six months later, I wrote a second one. In most fields, that would be embarrassing. In this one, it's overdue. Instruction files converged on a shared standard. Cloud agents started sending pull requests. And prompt injection went from a curiosity to a string of real incidents. So there are two new chapters. One on the agent attack surface, and one on building your own agents. And the details that go out of date fastest now live in a single, dated appendix.",
+      "es": "La primera edición salió en marzo de dos mil veintiséis. Seis meses después, escribí una segunda. En la mayoría de los campos, eso sería vergonzoso. En este, ya tocaba. Los archivos de instrucciones convergieron en un estándar común. Los agentes en la nube empezaron a enviar pull requests. Y la inyección de prompts pasó de ser una curiosidad a una serie de incidentes reales. Así que hay dos capítulos nuevos. Uno sobre la superficie de ataque del agente, y otro sobre cómo construir tus propios agentes. Y los detalles que caducan más rápido ahora viven en un único apéndice, con fecha."
+    },
+    {
+      "n": 3,
+      "id": "shift",
+      "en": "For twenty years, being a software engineer meant one thing. You open an editor, you write code, you ship it. That loop is breaking. The old loop was write, run, ship. The new loop is instruct, review, steer. But be careful with how it feels. In a twenty twenty-five study by METR, experienced developers were about nineteen percent slower with AI tools, while believing they had been twenty percent faster. So measure. Don't trust the feeling.",
+      "es": "Durante veinte años, ser ingeniero de software significaba una cosa. Abres un editor, escribes código, lo despliegas. Ese ciclo se está rompiendo. El viejo ciclo era escribir, ejecutar, desplegar. El nuevo ciclo es instruir, revisar, dirigir. Pero cuidado con cómo se siente. En un estudio de METR de dos mil veinticinco, desarrolladores con experiencia fueron alrededor de un diecinueve por ciento más lentos con herramientas de IA, mientras creían haber sido un veinte por ciento más rápidos. Así que mide. No te fíes de la sensación."
+    },
+    {
+      "n": 4,
+      "id": "molting",
+      "en": "The craft isn't dying. It's molting. The keystrokes, the syntax, the boilerplate. That part is falling away. But the judgment and the taste underneath? More alive than ever. Systems thinking. Knowing what to build, and why. Smelling a bad abstraction from three files away. Those aren't the background hum any more. They're the whole game.",
+      "es": "El oficio no está muriendo. Está mudando. Las pulsaciones, la sintaxis, el código repetitivo. Esa parte se está cayendo. ¿Pero el juicio y el gusto que hay debajo? Más vivos que nunca. El pensamiento sistémico. Saber qué construir, y por qué. Oler una mala abstracción a tres archivos de distancia. Eso ya no es ruido de fondo. Es todo el juego."
+    },
+    {
+      "n": 5,
+      "id": "agent",
+      "en": "So what actually is an agent? Let's get precise. A model, some tools, a loop, and a harness around it. At one end, autocomplete suggests the next line. A copilot generates when you ask. Then come tool-using agents. They read files, run commands, inspect the results, and try again. That's where most real work happens today. And at the far end, background agents take a whole task, and come back with a pull request.",
+      "es": "Entonces, ¿qué es exactamente un agente? Seamos precisos. Un modelo, unas herramientas, un bucle, y un arnés alrededor. En un extremo, el autocompletado sugiere la siguiente línea. Un copiloto genera cuando se lo pides. Luego vienen los agentes con herramientas. Leen archivos, ejecutan comandos, inspeccionan los resultados, y lo intentan de nuevo. Ahí ocurre la mayor parte del trabajo real hoy. Y en el otro extremo, los agentes en segundo plano toman una tarea completa, y vuelven con un pull request."
+    },
+    {
+      "n": 6,
+      "id": "rainman",
+      "en": "The best analogy I've found is Rain Man. You're Tom Cruise. The agent is Dustin Hoffman. Raymond can count cards like no human alive. He sees patterns in mountains of data, processes them instantly, and never gets tired. But he can't navigate a casino floor. He doesn't know why they're counting cards. Charlie is the one with the plan. He knows which casino to hit, when to bet big, and when to cash out. That's agentic engineering. You provide direction, judgment, and taste. The agent provides speed and breadth. The combination is more powerful than either alone.",
+      "es": "La mejor analogía que he encontrado es Rain Man. Tú eres Tom Cruise. El agente es Dustin Hoffman. Raymond puede contar cartas como ningún humano. Ve patrones en montañas de datos, los procesa al instante, y nunca se cansa. Pero no sabe moverse por un casino. No sabe por qué están contando cartas. Charlie es el que tiene el plan. Sabe a qué casino ir, cuándo apostar fuerte, y cuándo retirarse. Eso es la ingeniería agéntica. Tú aportas dirección, juicio y gusto. El agente aporta velocidad y amplitud. La combinación es más poderosa que cualquiera de los dos por separado."
+    },
+    {
+      "n": 7,
+      "id": "capabilities",
+      "en": "Three capabilities separate an agent from a fancy chatbot. First, planning. An agent breaks a goal into steps. Add authentication to this app becomes a series of actions. Second, tool use. An agent interacts with the world. It reads your files and runs your tests. The tools you give an agent define what kind of agent it is. And third, iteration. An agent can try, fail, and try again. Write a function, run the tests, see a failure, read the error, adjust, and rerun. That cycle is the magic.",
+      "es": "Tres capacidades separan a un agente de un chatbot sofisticado. Primero, la planificación. Un agente descompone un objetivo en pasos. Añadir autenticación a esta app se convierte en una serie de acciones. Segundo, el uso de herramientas. Un agente interactúa con el mundo. Lee tus archivos y ejecuta tus tests. Las herramientas que le das a un agente definen qué tipo de agente es. Y tercero, la iteración. Un agente puede intentar, fallar, e intentar de nuevo. Escribir una función, ejecutar los tests, ver un fallo, leer el error, ajustar, y volver a ejecutar. Ese ciclo es la magia."
+    },
+    {
+      "n": 8,
+      "id": "fail",
+      "en": "Agents will fail. Understanding how they fail helps you build better workflows. Scope creep. You ask for a bug fix, and the agent refactors thirty files. Keep the scope tight. Hallucinated APIs. The agent calls functions or libraries that don't exist. Run the tests. Overconfidence. The agent says it's done, and it looks done, but there's a subtle bug. Verify. And context loss. On long tasks, the agent quietly forgets earlier decisions. Compact, and start fresh. Every failure mode has a mitigation, and those mitigations are the chapters of this book.",
+      "es": "Los agentes van a fallar. Entender cómo fallan te ayuda a construir mejores flujos de trabajo. Expansión del alcance. Pides un arreglo, y el agente refactoriza treinta archivos. Mantén el alcance acotado. APIs alucinadas. El agente llama a funciones o librerías que no existen. Ejecuta los tests. Exceso de confianza. El agente dice que ha terminado, y parece terminado, pero hay un bug sutil. Verifica. Y pérdida de contexto. En tareas largas, el agente olvida en silencio decisiones anteriores. Compacta, y empieza de nuevo. Cada modo de fallo tiene una mitigación, y esas mitigaciones son los capítulos de este libro."
+    },
+    {
+      "n": 9,
+      "id": "toolkit",
+      "en": "Five practices form the engineering toolkit. Context: what the agent can see, and what it can reach. Guardrails: permissions, hooks, and sandboxes. Tests: the agent's eyes. Conventions: an instruction file, skills, and a structure the agent can follow without being told. And memory: a ship's log that survives the end of a session. None of these are glamorous. That's the point. The boring things win.",
+      "es": "Cinco prácticas forman el kit de ingeniería. El contexto: lo que el agente puede ver, y lo que puede alcanzar. Las barandillas: permisos, hooks y sandboxes. Los tests: los ojos del agente. Las convenciones: un archivo de instrucciones, skills, y una estructura que el agente puede seguir sin que se lo digan. Y la memoria: un cuaderno de bitácora que sobrevive al final de una sesión. Nada de esto es glamuroso. Esa es la idea. Lo aburrido gana."
+    },
+    {
+      "n": 10,
+      "id": "context",
+      "en": "Context engineering is the discipline of deciding what goes into the model's window. And here's the thing. Bigger windows didn't remove the tax. Performance still degrades as the context grows. So work in phases. First, research. Let sub-agents explore, and bring back only a summary. Then plan. Write it down, and review the plan before any code changes. Then implement, with a fresh or compacted context, and the tests as your signal.",
+      "es": "La ingeniería de contexto es la disciplina de decidir qué entra en la ventana del modelo. Y aquí está la clave. Las ventanas más grandes no eliminaron el coste. El rendimiento sigue degradándose a medida que crece el contexto. Así que trabaja por fases. Primero, investiga. Deja que los subagentes exploren, y que solo traigan un resumen. Luego, planifica. Escríbelo, y revisa el plan antes de cambiar ningún código. Después, implementa, con un contexto nuevo o compactado, y con los tests como señal."
+    },
+    {
+      "n": 11,
+      "id": "trifecta",
+      "en": "The biggest gap in the first edition was security. Here's the pattern to remember. An agent with access to private data, exposed to untrusted content, and with a way to send data out, can be tricked into leaking that data. Simon Willison calls it the lethal trifecta. We can't fully prevent prompt injection yet. So for any session, remove at least one leg. An agent that reads a stranger's text with your keys in its pocket works for whoever wrote the text.",
+      "es": "La mayor carencia de la primera edición era la seguridad. Este es el patrón que hay que recordar. Un agente con acceso a datos privados, expuesto a contenido no confiable, y con una forma de enviar datos hacia fuera, puede ser engañado para filtrar esos datos. Simon Willison lo llama la tríada letal. Todavía no podemos evitar del todo la inyección de prompts. Así que, en cada sesión, elimina al menos una pata. Un agente que lee el texto de un desconocido con tus llaves en el bolsillo trabaja para quien escribió ese texto."
+    },
+    {
+      "n": 12,
+      "id": "cloud",
+      "en": "In the first edition, I described the overnight agent as a shell script. It became a product feature. You assign an issue, a cloud agent works in a sandbox, and a pull request comes back. That makes agent capacity cheap. What isn't cheap is human attention. A dozen pull requests still need someone who understands every one of them. So plan your work around the reviewer, not the agents.",
+      "es": "En la primera edición, describí el agente nocturno como un script. Se convirtió en una función de producto. Asignas un issue, un agente en la nube trabaja en un sandbox, y vuelve un pull request. Eso abarata la capacidad de los agentes. Lo que no es barato es la atención humana. Una docena de pull requests sigue necesitando a alguien que entienda cada uno. Así que planifica el trabajo en torno al revisor, no en torno a los agentes."
+    },
+    {
+      "n": 13,
+      "id": "build",
+      "en": "When I started building agents myself, instead of just driving them, something changed. I saw how much of what feels like the model being smart is really the loop around it. What goes into the context. Which tools exist. When it stops. What it's allowed to touch. The loop itself is small. Everything around it is the work, and that part is engineering. Own the context. Own the control flow. Treat asking a human as just another tool call. And treat your evals as your test suite.",
+      "es": "Cuando empecé a construir agentes yo mismo, en lugar de solo dirigirlos, algo cambió. Vi cuánto de lo que parece inteligencia del modelo es en realidad el bucle que lo rodea. Qué entra en el contexto. Qué herramientas existen. Cuándo se detiene. Qué puede tocar. El bucle en sí es pequeño. Todo lo que lo rodea es el trabajo, y esa parte es ingeniería. Controla el contexto. Controla el flujo. Trata preguntarle a un humano como una llamada más a una herramienta. Y trata tus evaluaciones como tu suite de tests."
+    },
+    {
+      "n": 14,
+      "id": "wee",
+      "en": "Multi-agent orchestration sounds abstract until you build it. So I built Wee Editor. It's a self-hosted workspace for running many agent sessions in parallel. Each session gets its own worktree and its own permissions, and I can see what every agent is doing. Building it taught me more about orchestration than anything I've read. The best way to learn agentic engineering is to build agentic tooling.",
+      "es": "La orquestación multiagente suena abstracta hasta que la construyes. Así que construí Wee Editor. Es un espacio de trabajo autoalojado para ejecutar muchas sesiones de agentes en paralelo. Cada sesión tiene su propio worktree y sus propios permisos, y puedo ver lo que hace cada agente. Construirlo me enseñó más sobre orquestación que cualquier cosa que haya leído. La mejor manera de aprender ingeniería agéntica es construir herramientas agénticas."
+    },
+    {
+      "n": 15,
+      "id": "hostile",
+      "en": "Here's the irony of pentesting agents. The same guardrails that protect you from rogue agents in normal development now need to protect the world from your intentionally hostile ones. Three rules are non-negotiable. Never run against production. A SQL injection test against your production database is not a test. It's an incident. Get written authorisation, from whoever controls every system in scope. And verify every finding. Agents hallucinate vulnerabilities just as readily as they hallucinate library names.",
+      "es": "Esta es la ironía de los agentes de pentesting. Las mismas barandillas que te protegen de agentes descontrolados en el desarrollo normal ahora tienen que proteger al mundo de tus agentes intencionalmente hostiles. Tres reglas son innegociables. Nunca contra producción. Una prueba de inyección SQL contra tu base de datos de producción no es una prueba. Es un incidente. Consigue autorización por escrito, de quien controle cada sistema en el alcance. Y verifica cada hallazgo. Los agentes alucinan vulnerabilidades con la misma facilidad con la que alucinan nombres de librerías."
+    },
+    {
+      "n": 16,
+      "id": "crew",
+      "en": "This is the central metaphor of the book. You're the captain. The agents are your crew. The codebase is the ship. Most days, I spin up an agent, give it a job, take the output, and throw it overboard. Then I spin up another one. The crew is disposable. The ship is not. Your conventions, your tests, your instruction files, your memory. Those are the ship. And if you've built the ship well, any new crew member will be productive in minutes.",
+      "es": "Esta es la metáfora central del libro. Tú eres el capitán. Los agentes son tu tripulación. La base de código es el barco. La mayoría de los días, inicio un agente, le doy una tarea, tomo el resultado, y lo tiro por la borda. Luego inicio otro. La tripulación es desechable. El barco no lo es. Tus convenciones, tus tests, tus archivos de instrucciones, tu memoria. Eso es el barco. Y si has construido bien el barco, cualquier nuevo miembro de la tripulación será productivo en minutos."
+    },
+    {
+      "n": 17,
+      "id": "cta",
+      "en": "Here's what I want you to do. Tonight. Not tomorrow, not next week. Tonight, open your terminal. Pick a bug you've been avoiding. Point an agent at it. Give it context. Set a guardrail. And watch what happens. The engineers who will define this era are not waiting for permission. They are shipping, breaking things, learning, and shipping again, with a crew at their side that gets a little better every day. The book is free. Thank you.",
+      "es": "Esto es lo que quiero que hagas. Esta noche. No mañana, no la próxima semana. Esta noche, abre tu terminal. Elige un bug que llevas tiempo evitando. Apunta un agente hacia él. Dale contexto. Pon una barandilla. Y observa qué pasa. Los ingenieros que definirán esta era no están esperando permiso. Están desplegando, rompiendo cosas, aprendiendo, y desplegando otra vez, con una tripulación a su lado que mejora un poco cada día. El libro es gratuito. Gracias."
+    }
+  ]
+}

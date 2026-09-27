@@ -8,7 +8,7 @@ type T = [string, string];
 interface Slide {
   id: string;
   layout: 'title' | 'statement' | 'cards' | 'spectrum' | 'versus' | 'trifecta' | 'loop' | 'crew' | 'cta';
-  audio?: string;          // existing narration file number (presentation-audio/slide-XX*.mp3)
+  audio?: string;          // narration file number: presentation-audio/slide-NN.mp3 (+ -es); scripts in scripts/narration/presentation.json
   notes: T;                // speaker notes / narration script
   eyebrow?: T;
   heading?: T;
@@ -24,7 +24,7 @@ const slides: Slide[] = [
             'Bienvenidos. Esta es una charla sobre cómo está cambiando la ingeniería de software en la era de los agentes de IA.'],
   },
   {
-    id: 'new', layout: 'cards', audio: '14',
+    id: 'new', layout: 'cards', audio: '02',
     notes: ['The first edition came out in March 2026. Six months later, a lot had moved: instruction files converged, cloud agents started sending pull requests, and prompt injection became a string of real incidents. The second edition adds two new chapters — on the agent attack surface and on building your own agents — and moves the perishable details into one dated appendix.',
             'La primera edición salió en marzo de 2026. Seis meses después, mucho había cambiado: los archivos de instrucciones convergieron, los agentes en la nube empezaron a enviar pull requests y la inyección de prompts se convirtió en una serie de incidentes reales. La segunda edición añade dos capítulos nuevos — sobre la superficie de ataque del agente y sobre construir tus propios agentes — y mueve los detalles perecederos a un apéndice fechado.'],
     eyebrow: ['Second edition · September 2026', 'Segunda edición · Septiembre 2026'],
@@ -37,7 +37,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'shift', layout: 'statement', audio: '02',
+    id: 'shift', layout: 'statement', audio: '03',
     notes: ['For two decades, the feedback loop was simple: write code, run it, ship it. AI agents are fundamentally changing that loop.',
             'Durante dos décadas, el ciclo fue simple: escribir código, ejecutarlo, desplegarlo. Los agentes de IA están cambiando ese ciclo de raíz.'],
     eyebrow: ['The ground is shifting', 'El terreno está cambiando'],
@@ -49,7 +49,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'molting', layout: 'statement', audio: '03',
+    id: 'molting', layout: 'statement', audio: '04',
     notes: ['The craft is evolving. The mechanical parts are being automated, but the judgment, taste, and architectural thinking are more important than ever.',
             'El oficio está evolucionando. Las partes mecánicas se automatizan, pero el juicio, el gusto y el pensamiento arquitectónico importan más que nunca.'],
     eyebrow: ['From the foreword', 'Del prólogo'],
@@ -57,7 +57,7 @@ const slides: Slide[] = [
     body: ['The keystrokes and boilerplate fall away. Systems thinking, taste, and judgement become the whole game.', 'Las pulsaciones y el código repetitivo desaparecen. El pensamiento sistémico, el gusto y el juicio lo son todo.'],
   },
   {
-    id: 'agent', layout: 'spectrum', audio: '04',
+    id: 'agent', layout: 'spectrum', audio: '05',
     notes: ['Agents exist on a spectrum. Most practical work today happens at the tool-using agent level, where the agent can call tools, read files, and iterate.',
             'Los agentes existen en un espectro. La mayor parte del trabajo práctico hoy ocurre en el nivel del agente con herramientas, que puede llamar herramientas, leer archivos e iterar.'],
     eyebrow: ['What is an agent?', '¿Qué es un agente?'],
@@ -70,7 +70,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'rainman', layout: 'versus', audio: '05',
+    id: 'rainman', layout: 'versus', audio: '06',
     notes: ['Think of it like Rain Man. Tom Cruise provides the direction and judgment. Dustin Hoffman provides extraordinary capability but needs guidance.',
             'Piénsalo como Rain Man. Tom Cruise aporta la dirección y el juicio. Dustin Hoffman aporta una capacidad extraordinaria, pero necesita guía.'],
     eyebrow: ['The Rain Man analogy', 'La analogía de Rain Man'],
@@ -81,7 +81,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'capabilities', layout: 'cards', audio: '06',
+    id: 'capabilities', layout: 'cards', audio: '07',
     notes: ['These are the three core capabilities that make an agent an agent: planning, tool use, and iteration. Without any one of these, you just have a chatbot.',
             'Estas son las tres capacidades que hacen que un agente sea un agente: planificación, uso de herramientas e iteración. Sin cualquiera de ellas, solo tienes un chatbot.'],
     eyebrow: ['Three core capabilities', 'Tres capacidades fundamentales'],
@@ -93,7 +93,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'fail', layout: 'cards', audio: '07',
+    id: 'fail', layout: 'cards', audio: '08',
     notes: ['Understanding failure modes is critical. These are the four most common ways agents go wrong, and how to mitigate each one.',
             'Entender los modos de fallo es crucial. Estas son las cuatro formas más comunes en que los agentes fallan, y cómo mitigar cada una.'],
     eyebrow: ['When agents fail', 'Cuando los agentes fallan'],
@@ -106,7 +106,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'toolkit', layout: 'cards', audio: '08',
+    id: 'toolkit', layout: 'cards', audio: '09',
     notes: ['These five practices form the engineering toolkit for working with agents effectively. Each one reinforces the others.',
             'Estas cinco prácticas forman el kit de ingeniería para trabajar con agentes de forma eficaz. Cada una refuerza a las demás.'],
     eyebrow: ['The engineering toolkit', 'El kit de ingeniería'],
@@ -120,7 +120,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'context', layout: 'loop', audio: '15',
+    id: 'context', layout: 'loop', audio: '10',
     notes: ['Context engineering is the discipline of deciding what goes into the model’s window. Bigger windows didn’t remove the tax — performance still degrades as context grows. So research first, then plan, then implement, with a fresh or compacted context between each phase, and use sub-agents to explore without polluting the main window.',
             'La ingeniería de contexto es la disciplina de decidir qué entra en la ventana del modelo. Las ventanas más grandes no eliminaron el coste — el rendimiento sigue degradándose a medida que crece el contexto. Así que primero investiga, luego planifica, luego implementa, con un contexto nuevo o compactado entre cada fase, y usa subagentes para explorar sin contaminar la ventana principal.'],
     eyebrow: ['Context engineering', 'Ingeniería de contexto'],
@@ -132,7 +132,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'trifecta', layout: 'trifecta', audio: '16',
+    id: 'trifecta', layout: 'trifecta', audio: '11',
     notes: ['The biggest gap in the first edition was security. An agent that has access to private data, is exposed to untrusted content, and has a way to communicate externally can be tricked into leaking that data. Simon Willison calls it the lethal trifecta. You can’t fully prevent prompt injection yet — so remove at least one leg for any session.',
             'La mayor carencia de la primera edición era la seguridad. Un agente con acceso a datos privados, expuesto a contenido no confiable y con una forma de comunicarse hacia fuera puede ser engañado para filtrar esos datos. Simon Willison lo llama la tríada letal. Aún no puedes evitar del todo la inyección de prompts — así que elimina al menos una pata en cada sesión.'],
     eyebrow: ['The agent attack surface', 'La superficie de ataque del agente'],
@@ -145,7 +145,7 @@ const slides: Slide[] = [
     body: ['An agent that reads a stranger’s text with your keys in its pocket works for whoever wrote the text.', 'Un agente que lee el texto de un desconocido con tus llaves en el bolsillo trabaja para quien escribió ese texto.'],
   },
   {
-    id: 'cloud', layout: 'statement', audio: '17',
+    id: 'cloud', layout: 'statement', audio: '12',
     notes: ['The overnight agent I described as a shell script became a product feature. You assign an issue, and a pull request comes back. That makes agent capacity cheap. What isn’t cheap is human attention — a dozen pull requests still need someone who understands every one of them. Plan your work around the reviewer, not the agents.',
             'El agente nocturno que describí como un script se convirtió en una función de producto. Asignas un issue y vuelve un pull request. Eso abarata la capacidad de los agentes. Lo que no es barato es la atención humana — una docena de pull requests sigue necesitando a alguien que entienda cada uno. Planifica el trabajo en torno al revisor, no a los agentes.'],
     eyebrow: ['Agents in the pipeline', 'Agentes en el pipeline'],
@@ -157,7 +157,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'build', layout: 'statement', audio: '18',
+    id: 'build', layout: 'statement', audio: '13',
     notes: ['Once you build agents yourself, you see how much of what feels like the model being smart is really the loop around it: what goes into the context, which tools exist, when it stops, and what it is allowed to touch. The loop is small. Everything around it is the work — and that part is engineering.',
             'Cuando construyes agentes tú mismo, ves cuánto de lo que parece inteligencia del modelo es en realidad el bucle que lo rodea: qué entra en el contexto, qué herramientas existen, cuándo se detiene y qué puede tocar. El bucle es pequeño. Todo lo que lo rodea es el trabajo — y esa parte es ingeniería.'],
     eyebrow: ['Building your own agents', 'Construye tus propios agentes'],
@@ -170,7 +170,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'wee', layout: 'statement', audio: '19',
+    id: 'wee', layout: 'statement', audio: '14',
     notes: ['I built Wee Editor to practice what the book preaches: a self-hosted workspace for running many agent sessions in parallel — each in its own worktree, with its own permissions, and with visibility into what every agent is doing. The best way to learn agentic engineering is to build agentic tooling.',
             'Construí Wee Editor para practicar lo que predica el libro: un espacio de trabajo autoalojado para ejecutar muchas sesiones de agentes en paralelo — cada una en su propio worktree, con sus propios permisos y con visibilidad de lo que hace cada agente. La mejor manera de aprender ingeniería agéntica es construir herramientas agénticas.'],
     eyebrow: ['Orchestration in practice', 'Orquestación en la práctica'],
@@ -183,7 +183,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'hostile', layout: 'cards', audio: '11',
+    id: 'hostile', layout: 'cards', audio: '15',
     notes: ['When your agent IS the threat model, guardrails become existential. Never run on production. Require written authorization. Human-verify every finding.',
             'Cuando tu agente ES el modelo de amenaza, las barandillas se vuelven existenciales. Nunca en producción. Exige autorización por escrito. Verifica cada hallazgo con humanos.'],
     eyebrow: ['Agents as pentesters', 'Agentes como pentesters'],
@@ -195,7 +195,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'crew', layout: 'crew', audio: '12',
+    id: 'crew', layout: 'crew', audio: '16',
     notes: ['This is the central metaphor of the book. You are the captain. The agents are your crew. The codebase is the ship. The crew is replaceable. The ship is not.',
             'Esta es la metáfora central del libro. Tú eres el capitán. Los agentes son tu tripulación. La base de código es el barco. La tripulación es reemplazable. El barco no.'],
     eyebrow: ['The crew metaphor', 'La metáfora de la tripulación'],
@@ -210,7 +210,7 @@ const slides: Slide[] = [
     ],
   },
   {
-    id: 'cta', layout: 'cta', audio: '13',
+    id: 'cta', layout: 'cta', audio: '17',
     notes: ['The call to action. Don’t wait. Open your terminal tonight. Pick a real task. Let the agent try. You’ll learn more in one hour than in a week of reading.',
             'La llamada a la acción. No esperes. Abre tu terminal esta noche. Elige una tarea real. Deja que el agente lo intente. Aprenderás más en una hora que en una semana de lectura.'],
     eyebrow: ['Go build something', 'Ve a construir algo'],
@@ -235,10 +235,6 @@ const t = (v?: T) => v ? `<span class="t-en">${v[0]}</span><span class="t-es" la
         <div class="seg" role="group" aria-label="Language">
           <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
           <button type="button" data-set-lang="es" aria-pressed="false">ES</button>
-        </div>
-        <div class="seg" role="group" aria-label="Narrator voice">
-          <button type="button" data-set-voice="" aria-pressed="true" title="Narrator voice 1">Voice 1</button>
-          <button type="button" data-set-voice="-female" aria-pressed="false" title="Narrator voice 2">Voice 2</button>
         </div>
         <button type="button" class="icon-btn" data-notes-toggle aria-pressed="false" title="Speaker notes (N)">Notes</button>
         <button type="button" class="icon-btn" data-fullscreen title="Fullscreen (F)">⤢</button>
@@ -486,7 +482,6 @@ const t = (v?: T) => v ? `<span class="t-en">${v[0]}</span><span class="t-es" la
       set: (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } },
     };
     let lang = store.get('deck-lang') === 'es' ? 'es' : 'en';
-    let voice = store.get('deck-voice') === '-female' ? '-female' : '';
     let current = 0;
     let playing = false;
     let audio: HTMLAudioElement | null = null;
@@ -501,7 +496,6 @@ const t = (v?: T) => v ? `<span class="t-en">${v[0]}</span><span class="t-es" la
       setPressed('[data-set-lang]', 'data-set-lang', lang);
       renderNotes();
     }
-    function applyVoice() { setPressed('[data-set-voice]', 'data-set-voice', voice); }
 
     function renderNotes() {
       const tpl = slides[current].querySelector<HTMLTemplateElement>('template.sl-notes');
@@ -530,7 +524,7 @@ const t = (v?: T) => v ? `<span class="t-en">${v[0]}</span><span class="t-es" la
         timer = window.setTimeout(advance, readingTime(s));
       };
       if (!file) return silent();
-      const a = new Audio(`/presentation-audio/slide-${file}${lang === 'es' ? '-es' : ''}${voice}.mp3`);
+      const a = new Audio(`/presentation-audio/slide-${file}${lang === 'es' ? '-es' : ''}.mp3`);
       audio = a;
       a.addEventListener('ended', () => { timer = window.setTimeout(advance, 900); });
       a.addEventListener('error', () => { if (audio === a) silent(); });
@@ -564,9 +558,6 @@ const t = (v?: T) => v ? `<span class="t-en">${v[0]}</span><span class="t-es" la
     deck.querySelectorAll<HTMLButtonElement>('[data-set-lang]').forEach((b) => b.addEventListener('click', () => {
       lang = b.dataset.setLang === 'es' ? 'es' : 'en'; store.set('deck-lang', lang); applyLang(); if (playing) narrate();
     }));
-    deck.querySelectorAll<HTMLButtonElement>('[data-set-voice]').forEach((b) => b.addEventListener('click', () => {
-      voice = b.dataset.setVoice || ''; store.set('deck-voice', voice); applyVoice(); if (playing) narrate();
-    }));
     const notesBtn = $<HTMLButtonElement>('[data-notes-toggle]');
     const toggleNotes = () => { notesPanel.hidden = !notesPanel.hidden; notesBtn.setAttribute('aria-pressed', String(!notesPanel.hidden)); };
     notesBtn.addEventListener('click', toggleNotes);
@@ -598,7 +589,7 @@ const t = (v?: T) => v ? `<span class="t-en">${v[0]}</span><span class="t-es" la
 
     document.addEventListener('astro:before-swap', () => { stopAudio(); document.removeEventListener('keydown', onKey); }, { once: true });
 
-    applyLang(); applyVoice();
+    applyLang();
     const fromHash = parseInt(location.hash.slice(1), 10);
     go(Number.isFinite(fromHash) ? fromHash - 1 : 0);
   }
