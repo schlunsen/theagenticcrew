@@ -99,14 +99,13 @@ In practice, you'll use all three. Prevent what you can. Automate the rest. Revi
 
 There is a practical challenge that hits the moment you move from one agent to three: you lose track of what's happening. Four terminal windows open, agents working on different tasks, one crashed silently twenty minutes ago and you haven't noticed. The agents are fine. _You_ are the bottleneck.
 
-This is a tooling problem, not an intelligence problem. If your workflow does not give you visibility into parallel work, you will either serialise everything — wasting the agents' potential — or run things in parallel and lose track, wasting your own time cleaning up the mess. Whatever tool you use — tmux panes, multiple editor windows, a browser-based control plane like wee (#link("https://wee.cat")), // v2-verify: disclose author's relationship to wee if any
-or even a sticky note tracking what is running where — solve the visibility problem first. The agents will not manage themselves.
+This is a tooling problem, not an intelligence problem. If your workflow does not give you visibility into parallel work, you will either serialise everything — wasting the agents' potential — or run things in parallel and lose track, wasting your own time cleaning up the mess. Whatever tool you use — tmux panes, multiple editor windows, a browser-based control plane like Wee Editor (#link("https://wee.cat")) — which I built, so I'm biased — or even a sticky note tracking what is running where — solve the visibility problem first. The agents will not manage themselves.
 
 The good news is that the tools have started to help. Agent CLIs now show running sub-agents and background tasks in the session itself, and the cloud agent products come with dashboards listing every task, its status, and the PR it produced. That covers a lot. What they don't give you is one view _across_ tools and machines — so if your crew spans several, you'll still want something of your own.
 
 #figure(
   image("../assets/wee-dashboard.png", width: 100%),
-  caption: [A multi-session dashboard — multiple agent sessions running in parallel, with real-time status and cost tracking.],
+  caption: [Wee Editor's multi-session dashboard — multiple agent sessions running in parallel, with real-time status and cost tracking.],
 )
 
 #figure(

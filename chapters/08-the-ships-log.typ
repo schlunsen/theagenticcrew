@@ -46,8 +46,7 @@ This is the difference between a captain who keeps a log and one who doesn't. Th
 
 == What a Memory System Looks Like
 
-// v2-verify: disclose author's relationship to Wee if any
-To make active memory concrete, let's walk through what the architecture of such a system actually looks like. The category is young and the tooling is evolving fast — tools like Wee Memory (#link("https://wee.cat")), mem0, and Zep are all exploring this space — but the design patterns are converging. What follows is a blueprint — a way of thinking about how to organise engineering knowledge so that agents can store it, search it, and build on it across sessions.
+To make active memory concrete, let's walk through what the architecture of such a system actually looks like. The category is young and the tooling is evolving fast — the memory built into Wee Editor (#link("https://wee.cat")), mem0, and Zep are all exploring this space — but the design patterns are converging. (Full disclosure: I built Wee Editor, so weigh that mention accordingly.) What follows is a blueprint — a way of thinking about how to organise engineering knowledge so that agents can store it, search it, and build on it across sessions.
 
 The core idea is structured storage with semantic retrieval. Your knowledge isn't dumped into a flat text file — it's organised into a hierarchy that mirrors how you actually think about your work.
 
